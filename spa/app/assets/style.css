@@ -1,0 +1,70 @@
+html {
+  box-sizing: border-box;
+  font-family: "Poppins", sans-serif;
+  font-size: 16px;
+  height: 100%;
+}
+
+*,
+*:after,
+*:before {
+  box-sizing: inherit;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  margin: 0;
+  overflow-x: hidden;
+  height: 100%;
+}
+
+.main-container {
+  background-color: aqua;
+  height: 100%;
+}
+
+/* Imagen del fondo */
+.welcome {
+  background-color: blue;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  align-items: center;
+}
+
+.logo-container {
+  background-color: green;
+  margin-bottom: 40px;
+  width: 80px;
+  height: 100px;
+  display: flex;
+  justify-content: space-between;
+  flex-direction: column;
+}
+
+.logo {
+  background-color: red;
+  width: 80px;
+  height: 80px;
+  text-align: center;
+}
+
+.logo-name {
+  text-align: center;
+}
+
+.eslogan {
+  width: 80%;
+  text-align: center;
+}
+
+.inputs-container {
+  text-align: center;
+}
+
+.link {
+  color: #fff;
+  text-decoration: none;
+}
