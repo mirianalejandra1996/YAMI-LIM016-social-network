@@ -81,3 +81,23 @@ body {
   border-radius: 25px;
   border: 1px solid #ff6f00;
 }
+
+.btn {
+  background-color: #ff6f00;
+  text-decoration: none;
+  height: 30px;
+  padding: 20px;
+  color: #fff;
+  border-radius: 25px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+}
+
+.timeline {
+  background-color: black;
+  height: 100%;
+  width: 100%;
+  color: #ff6f00;
+}
