@@ -1,13 +1,24 @@
 // Este es el punto de entrada de tu aplicacion
 
-import { App } from "./App.js";
+import { App, onNavigate } from "./App.js";
 
-const d = document;
+ const d = document;
 
-d.addEventListener("DOMContentLoaded", App);
-//window.addEventListener("hashchange",App);
+
+//  export const onNavigate = (pathname) => {
+//   window.history.pushState(
+//     {},
+//     pathname,
+//     window.location.origin + pathname
+//   )
+//   $root.innerHtml= routes[window.location.pathname]
+// }
+
+ d.addEventListener("DOMContentLoaded", App);
+ //window.addEventListener("hashchange",App);
  window.addEventListener("hashchange", () => {
    console.log("estamos???");
+  
    console.log(window.location.hash);
  });
 
@@ -18,3 +29,6 @@ d.addEventListener("DOMContentLoaded", App);
 //   };
 
 //   window.addEventListener("load", init);
+// document.addEventListener("DOMContentLoaded", App);
+// window.addEventListener("hashchange", App);
+

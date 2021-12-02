@@ -1,21 +1,23 @@
 import { Welcome } from "./Welcome.js";
 import { Registro } from "./Register.js";
 
-export function Router (){
-    
-    const d = document,
+// export function Router (){ 
+//     const d = document,
    
-  $root = d.getElementById("root");
-//   w = window;
-    let {hash} = location;
-    if(!hash || hash === "#/" ){
-        console.log("hola")
-        $root.appendChild(Welcome());
-    }else if (hash.icludes("#/register")){
-        console.log("registro")
-        $root.innerHTML='<h2>holaa</h2>';
-    }
-}
+//   $root = d.getElementById("root");
+// //   w = window;
+//     let {hash} = location;
+//     if(!hash || hash === "#/" ){
+//       $root.append(Welcome())
+//     }else if (hash.icludes("/register")){
+//         $root.append(Welcome())
+//     }
+// }
+
+export const routes = {
+    '/' : Welcome,
+    '/register' : Registro
+  }
 
 // const PATHS ={
 // login:{
