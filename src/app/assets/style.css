@@ -1,6 +1,6 @@
 html {
   box-sizing: border-box;
-  font-family: "Poppins", sans-serif;
+  font-family: "Lato", sans-serif;
   font-size: 16px;
   height: 100%;
 }
@@ -20,7 +20,7 @@ body {
 }
 
 .main-container {
-  /* background-color: aqua; */
+  background-image: url("Login.svg");
   height: 100%;
 }
 
@@ -34,24 +34,24 @@ body {
 }
 
 .logo-container {
-  background-color: green;
-  margin-bottom: 40px;
+  /*   margin-bottom: 40px; */
   width: 80px;
-  height: 100px;
+  height: 110px;
   display: flex;
   justify-content: space-between;
   flex-direction: column;
 }
-
 .logo {
-  background-color: red;
+  /*  background-color: red; */
   width: 80px;
   height: 80px;
   text-align: center;
 }
 
 .logo-name {
+  color: #f61b16;
   text-align: center;
+  font-size: 24px;
 }
 
 .eslogan {
@@ -100,4 +100,70 @@ body {
   height: 100%;
   width: 100%;
   color: #ff6f00;
+}
+/* registro */
+.logo {
+  background-image: url("logo.svg");
+}
+.eslogan {
+  font-size: 20px;
+  margin: 20px;
+}
+.form__input-register {
+  margin-bottom: 10px;
+  height: 39px;
+  width: 258px;
+  border-radius: 25px;
+  border: 1px solid transparent;
+  background-image: linear-gradient(white, white),
+    radial-gradient(circle at top left, #ffb800, #ff6f00);
+  background-origin: border-box;
+  background-clip: content-box, border-box;
+}
+.register-container {
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  align-items: center;
+}
+.form__link {
+  width: 200px;
+  font-size: 12px;
+  text-decoration: none;
+}
+.form--oneline {
+  display: flex;
+  width: 250px;
+}
+.form__link:hover {
+  color: #ff2a2a;
+}
+.form__parrafo {
+  width: 250px;
+  font-size: 13px;
+  text-align: center;
+  margin: 10px;
+}
+.form__warning {
+  margin: 10px;
+  font-size: 14px;
+  color: #ff2a2a;
+}
+.form__button {
+  margin-bottom: 10px;
+  height: 39px;
+  width: 197px;
+  border-radius: 20px;
+  font-size: 14px;
+  font-weight: bold;
+  border: none;
+  background-image: linear-gradient(45deg, #f51616, #ffb800);
+}
+.form__button-g {
+  height: 35px;
+  width: 200px;
+  border-radius: 20px;
+  border: 1px solid #cbbdbd;
+  background-color: white;
 }

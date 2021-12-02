@@ -1,9 +1,10 @@
 export const Welcome = () => {
   // todas las variables que hacen referencia a elementos del dom le anteponemos el símbolo del dolar
   const $welcome = document.createElement("div");
-  $welcome.innerHTML = `<div class="welcome">
-  <div class="logo-container">
-    <div class="logo"><h3>icono</h3></div>
+  $welcome.classList.add("welcome");
+
+  $welcome.innerHTML = `<div class="logo-container">
+    <div class="logo"></div>
     <h3 class="logo-name">Yami</h3>
   </div>
 
@@ -44,9 +45,6 @@ export const Welcome = () => {
     </a>
     <br />
   </div>
-
-
-</div>
   `;
 
   return $welcome;
