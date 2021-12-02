@@ -77,22 +77,49 @@ body {
 
 .form__input {
   margin-bottom: 10px;
-  height: 30px;
+  height: 39px;
+  width: 258px;
   border-radius: 25px;
-  border: 1px solid #ff6f00;
+  border: 1px solid transparent;
+  background-image: linear-gradient(white, white),
+    radial-gradient(circle at top left, #ffb800, #ff6f00);
+  background-origin: border-box;
+  background-clip: content-box, border-box;
 }
 
 .btn {
-  background-color: #ff6f00;
   text-decoration: none;
   height: 30px;
   padding: 20px;
-  color: #fff;
+  color: #000;
   border-radius: 25px;
   display: flex;
   justify-content: center;
   align-items: center;
   width: 100%;
+  margin-bottom: 10px;
+  font-size: 14px;
+  font-weight: bold;
+  border: none;
+  background-image: linear-gradient(45deg, #f51616, #ffb800);
+}
+
+.btn-g {
+  text-decoration: none;
+  height: 30px;
+  padding: 20px;
+  color: #000;
+  border-radius: 25px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  margin-bottom: 10px;
+  font-size: 14px;
+  font-weight: bold;
+
+  border: 1px solid #cbbdbd;
+  background-color: white;
 }
 
 .timeline {
@@ -159,11 +186,4 @@ body {
   font-weight: bold;
   border: none;
   background-image: linear-gradient(45deg, #f51616, #ffb800);
-}
-.form__button-g {
-  height: 35px;
-  width: 200px;
-  border-radius: 20px;
-  border: 1px solid #cbbdbd;
-  background-color: white;
 }

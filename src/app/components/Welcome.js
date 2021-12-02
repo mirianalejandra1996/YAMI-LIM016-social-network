@@ -40,7 +40,7 @@ export const Welcome = () => {
       <span>Ingresar</span>
     </a>
     <br />
-    <a class="btn" href="/#nada">
+    <a class="btn-g" href="/#nada">
       <span>Ingresar con Google</span>
     </a>
     <br />
