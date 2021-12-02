@@ -2,7 +2,8 @@ export const Registro = () => {
     const d = document;
     const $register = d.createElement("div");
     $register.classList.add("register-container");
-
+    $register.id = 'register'
+    
     const $logoContainer = d.createElement("div");
     $logoContainer.classList.add("logo-container");
     const $logo = d.createElement("div");
