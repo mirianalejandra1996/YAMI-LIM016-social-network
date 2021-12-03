@@ -1,58 +1,75 @@
-export const Welcome = () => {
+export const Login = () => {
   // todas las variables que hacen referencia a elementos del dom le anteponemos el símbolo del dolar
-  const $welcome = document.createElement("div");
-  $welcome.classList.add("welcome");
+  const $login = document.createElement("div");
+  $login.classList.add("login");
+  const $boton=document.createElement("button")
+  $boton.textContent='prueba'
+  $boton.addEventListener('click', () =>{
+    window.location.hash='#/register'
+  })
+  $login.append($boton)
 
-  $welcome.innerHTML = `<div class="logo-container">
-  <div class="logo"></div>
-  <h3 class="logo-name">Yami</h3>
+  /*$login.innerHTML = `<div class="welcome">
+  <div class="logo-container">
+    <div class="logo"></div>
+    <h3 class="logo-name">Yami</h3>
   </div>
 
   <div class="eslogan">
-  <h2>¿Listo para una aventura culinaria?</h2>
+    <h2>¿Listo para una aventura culinaria?</h2>
   </div>
 
   <div class="inputs-container">
-  <form class="form" action="/action_page.php">
-    <div class="form__input-container">
-      <span class="icon-mail"></span>
-      <input
-        class="form__input"
-        type="text"
-        id="lname"
-        name="lname"
-        placeholder="Correo electrónico"
-      />
+    <form class="form" action="/action_page.php">
+      <div class="form__input-container">
+        <span class="icon-mail"></span>
+        <input
+          class="form__input"
+          type="email"
+          id="lname"
+          name="lname"
+          placeholder="Correo electrónico"
+        />
+      </div>
+
+      <div class="form__input-container">
+        <span class="icon-lock"></span>
+        <input
+          class="form__input"
+          type="password"
+          id="fname"
+          name="fname"
+          placeholder="Contraseña"
+        />
+      </div>
+
+      <br />
+    </form>
+
+    <span id="forgot-psw" class="link">Olvidé mi contraseña</span><br />
+
+    <div class="btn" href="/#timeline">
+      <span>Ingresar</span>
     </div>
-
-    <input
-      class="form__input"
-      type="text"
-      id="fname"
-      name="fname"
-      placeholder="Contraseña"
-    />
     <br />
-  </form>
+    <div class="btn-g" href="/#nada">
+      <span class="icon-google"
+        ><span class="path1"></span><span class="path2"></span
+        ><span class="path3"></span><span class="path4"></span
+        ><span class="path5"></span><span class="path6"></span
+      ></span>
+      <span>Ingresar con Google</span>
+    </div>
+    <br />
 
-  <span id="forgot-psw" class="link">Olvidé mi contraseña</span><br />
+    <div>
+      <span> ¿No tienes una cuenta? </span>
+      <span id="sign-up" class="link">Regístrate</span>
+    </div>
+  </div>
+</div>`;*/
 
-  <div class="btn" href="/#timeline">
-    <span>Ingresar</span>
-  </div>
-  <br />
-  <div class="btn-g" href="/#nada">
-    <span>Ingresar con Google</span>
-  </div>
-  <br />
-
-  <div>
-    <span> ¿No tienes una cuenta? </span> <span id="sign-up" class="link">Regístrate</span>
-  </div>
-  </div>
-  `;
-
-  return $welcome;
+  return $login;
 };
 
 // $welcome.innerHTML = `<div class="logo-container">

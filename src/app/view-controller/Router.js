@@ -1,17 +1,17 @@
-// import {components} from '../view-controller/index.js'
-
 import { components } from "../view-controller/index.js";
-import { Welcome } from "./Welcome.js";
 
 export const Router = (route) => {
   console.log("entró a función router");
-
+  
   const $root = document.getElementById("root");
   $root.textContent = "";
 
   switch (route) {
     case "#/": {
-      return $root.appendChild(components.welcome());
+      return $root.appendChild(components.login());
+    }
+    case "#/register":{
+      return $root.appendChild(components.registro())
     }
     case "#/timeline": {
       return $root.appendChild(components.timeline());
