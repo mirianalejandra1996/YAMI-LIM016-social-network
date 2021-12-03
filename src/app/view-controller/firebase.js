@@ -44,7 +44,19 @@ export function enviarRegistro(){
   })
   .catch((error) => {
     const errorCode = error.code;
-    const errorMessage = error.message;
+    //const errorMessage = error.message;
+    console.log(errorCode)
+    switch(errorCode){
+      case "auth/invalid-email":
+        console.log("Ingresa tus datos");
+        break;
+      case "auth/internal-error":
+        console.log("Ingresa tu contraseña");
+        break;
+      case "auth/missing-email":
+        console.log("Ingresa tu correo electrónico");
+        break;
+    }
     // ..
   });
 

@@ -67,6 +67,11 @@ export const Login = () => {
 
   document.createElement("br")
 
+  const $msgError = document.createElement("div")
+  $msgError.classList.add("error")
+  $msgError.id="errorLogin"
+  $msgError.textContent = "Error de prueba"
+
   const $btn = document.createElement("div")
   $btn.classList.add("btn")
   $btn.addEventListener('click', enviarIngreso)
@@ -127,6 +132,7 @@ export const Login = () => {
 
   $inputsContainer.append($form)
   $inputsContainer.append($forgotPsw)
+  $inputsContainer.append($msgError)
   $inputsContainer.append($btn)
   $inputsContainer.append($btnG)
   $inputsContainer.append($divLink)
