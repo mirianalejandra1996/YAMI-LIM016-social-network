@@ -62,6 +62,11 @@ body {
 .inputs-container {
   text-align: center;
 }
+form__input-container{
+  display: flex;
+  flex-direction: column;
+  background-color: #f61b16;
+}
 
 .link {
   font-weight: 600;
@@ -76,7 +81,7 @@ body {
   cursor: pointer;
 }
 
-/* .form {
+ /*.form {
   display: flex;
   flex-direction: column;
   justify-content: center;
