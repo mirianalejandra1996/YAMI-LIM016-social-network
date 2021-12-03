@@ -1,3 +1,4 @@
+import { enviarRegistro } from "../view-controller/firebase.js";
 export const Registro = () => {
 
   const $register = document.createElement("div");
@@ -35,8 +36,8 @@ export const Registro = () => {
   const $formInputFirst = document.createElement("input")
   $formInputFirst.classList.add("form__input")
   $formInputFirst.type="email"
-  $formInputFirst.id="lname"
-  $formInputFirst.name="lname"
+  $formInputFirst.id="remail"
+  $formInputFirst.name="remail"
   $formInputFirst.placeholder="Correo electrónico"
 
   $formInputContainerFirst.append($iconMail)
@@ -49,8 +50,8 @@ export const Registro = () => {
   const $formInputSecond = document.createElement("input")
   $formInputSecond.classList.add("form__input")
   $formInputSecond.type="password"
-  $formInputSecond.id="fname"
-  $formInputSecond.name="fname"
+  $formInputSecond.id="rpassword"
+  $formInputSecond.name="rpassword"
   $formInputSecond.placeholder="Contraseña"
   
   $formInputContainerSecond.append($iconLock)
@@ -63,6 +64,7 @@ export const Registro = () => {
 
   const $btn = document.createElement("div")
   $btn.classList.add("btn")
+  $btn.addEventListener('click', enviarRegistro)
   $btn.href="/#timeline"
   const $ingresar = document.createElement("span")
   $ingresar.textContent=`Registrarse`
