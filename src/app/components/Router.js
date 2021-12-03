@@ -1,11 +1,25 @@
+// import {components} from '../view-controller/index.js'
+
+import { components } from "../view-controller/index.js";
+import { Welcome } from "./Welcome.js";
+
 export const Router = (route) => {
-  //   const d = document,
-  //     w = window;
-  let { hash } = location;
+  console.log("entró a función router");
 
-    
+  const $root = document.getElementById("root");
+  $root.textContent = "";
 
+  switch (route) {
+    case "#/": {
+      return $root.appendChild(components.welcome());
+    }
+    case "#/timeline": {
+      return $root.appendChild(components.timeline());
+    }
+    default:
+      return ($root.innerHTML = "Estamos en el timeline");
+      break;
+  }
 
-  //   console.log(window.location.hash);
-  console.log(hash);
+  //   console.log(route);
 };

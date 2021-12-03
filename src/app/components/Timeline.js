@@ -1,10 +1,31 @@
 export const Timeline = () => {
-  // todas las variables que hacen referencia a elementos del dom le anteponemos el símbolo del dolar
-  const $timeline = document.createElement("div");
-  $timeline.id = "timeline";
-  $timeline.classList.add("timeline");
+  const $timelinePrueba = document.createElement("div");
 
-  $timeline.textContent = "timeline view";
+  const $logoContainer = document.createElement("div");
+  $logoContainer.classList.add("logo-container");
+  $timelinePrueba.append($logoContainer);
 
-  return $timeline;
+  const $iconLogo = document.createElement("div");
+  $iconLogo.classList.add("logo");
+
+  const $logoName = document.createElement("h3");
+  $logoName.textContent = "Yami";
+
+  $logoContainer.append($iconLogo);
+  $logoContainer.append($logoName);
+
+  const $linkContainer = document.createElement("div");
+  $timelinePrueba.append($linkContainer);
+
+  const $botonPrueba = document.createElement("span");
+  $botonPrueba.classList.add("link");
+  $botonPrueba.textContent = "Probando este link para que vaya a welcome";
+
+  $botonPrueba.addEventListener("click", () => {
+    window.location.hash = "#/";
+  });
+
+  $linkContainer.append($botonPrueba);
+
+  return $timelinePrueba;
 };

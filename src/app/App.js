@@ -1,12 +1,21 @@
 // aqui exportaras las funciones que necesites
 import { Welcome } from "./components/Welcome.js";
-import { Registro } from "./components/Register.js";
 import { Router } from "./components/Router.js";
-import { Timeline } from "./components/Timeline.js";
 
 export const App = () => {
-  const d = document,
-    $root = d.getElementById("root");
+  const $root = document.getElementById("root");
   $root.appendChild(Welcome());
-  Router();
+
+  const $signUp = document.getElementById("sign-up");
+  $signUp.addEventListener("click", () => {
+    window.location.hash = "#/timeline";
+  });
+
+  const $forgotPsw = document.getElementById("forgot-psw");
+  $forgotPsw.addEventListener("click", () => {
+    window.location.hash = "#/prueba";
+  });
+
+  Router(window.location.hash);
 };
+
