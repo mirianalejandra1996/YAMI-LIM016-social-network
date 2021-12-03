@@ -26,7 +26,6 @@ export const Login = () => {
 
   const $form = document.createElement("form")
   $form.classList.add("form")
-  //$form.action.add("/action_page.php")
 
   const $formInputContainerFirst = document.createElement("div")
   $formInputContainerFirst.classList.add("form__input-container")
@@ -34,10 +33,10 @@ export const Login = () => {
   $iconMail.classList.add("icon-mail")
   const $formInputFirst = document.createElement("input")
   $formInputFirst.classList.add("form__input")
-  //$formInputFirst.type.add("email")
-  //$formInputFirst.id.add("lname")
-  //$formInputFirst.name.add("lname")
-  //$formInputFirst.placeholder.add("Correo electrónico")
+  $formInputFirst.type="email"
+  $formInputFirst.id="name"
+  $formInputFirst.name="lname"
+  $formInputFirst.placeholder="Correo electrónico"
 
   $formInputContainerFirst.append($iconMail)
   $formInputContainerFirst.append($formInputFirst)
@@ -48,13 +47,13 @@ export const Login = () => {
   $iconLock.classList.add("icon-lock")
   const $formInputSecond = document.createElement("input")
   $formInputSecond.classList.add("form__input")
-  //$formInputSecond.type.add("password")
-  //$formInputSecond.id.add("fname")
-  //$formInputSecond.name.add("fname")
-  //$formInputSecond.placeholder.add("Contraseña")
+  $formInputSecond.type="password"
+  $formInputSecond.id="fname"
+  $formInputSecond.name="fname"
+  $formInputSecond.placeholder="Contraseña"
   
-  $formInputContainerFirst.append($iconLock)
-  $formInputContainerFirst.append($formInputSecond)
+  $formInputContainerSecond.append($iconLock)
+  $formInputContainerSecond.append($formInputSecond)
 
   $form.append($formInputContainerFirst)
   $form.append($formInputContainerSecond)
@@ -69,7 +68,7 @@ export const Login = () => {
 
   const $btn = document.createElement("div")
   $btn.classList.add("btn")
-  //$btn.href.add("/#timeline")
+  $btn.href="/#timeline"
   const $ingresar = document.createElement("span")
   $ingresar.textContent=`Iniciar sesión`
 
@@ -79,7 +78,7 @@ export const Login = () => {
 
   const $btnG = document.createElement("div")
   $btnG.classList.add("btn-g")
-  //$btn.href.add("/#nada")
+  $btn.href="/#nada"
   const $googleIcon = document.createElement("span")
   $googleIcon.classList.add("icon-google")
 
@@ -115,7 +114,7 @@ export const Login = () => {
   const $spanAsk = document.createElement("span")
   $spanAsk.textContent=`¿No tienes una cuenta?`
   const $link = document.createElement("span")
-  //$link.id.add("sign-up")
+  $link.id="sign-up"
   $link.classList.add("link")
   $link.textContent=`Regístrate`
   $link.addEventListener('click', () =>{
@@ -135,146 +134,4 @@ export const Login = () => {
   $login.append($inputsContainer)
 
   return $login
-
-
-
-
-  /*$login.innerHTML = `<div class="welcome">
-  <div class="logo-container">
-    <div class="logo"></div>
-    <h3 class="logo-name">Yami</h3>
-  </div>
-
-  <div class="eslogan">
-    <h2>¿Listo para una aventura culinaria?</h2>
-  </div>
-
-  <div class="inputs-container">
-    <form class="form" action="/action_page.php">
-      <div class="form__input-container">
-        <span class="icon-mail"></span>
-        <input
-          class="form__input"
-          type="email"
-          id="lname"
-          name="lname"
-          placeholder="Correo electrónico"
-        />
-      </div>
-
-      <div class="form__input-container">
-        <span class="icon-lock"></span>
-        <input
-          class="form__input"
-          type="password"
-          id="fname"
-          name="fname"
-          placeholder="Contraseña"
-        />
-      </div>
-
-      <br />
-    </form>
-
-    <span id="forgot-psw" class="link">Olvidé mi contraseña</span><br />
-
-    <div class="btn" href="/#timeline">
-      <span>Ingresar</span>
-    </div>
-    <br />
-    <div class="btn-g" href="/#nada">
-      <span class="icon-google"
-        ><span class="path1"></span><span class="path2"></span
-        ><span class="path3"></span><span class="path4"></span
-        ><span class="path5"></span><span class="path6"></span
-      ></span>
-      <span>Ingresar con Google</span>
-    </div>
-    <br />
-
-    <div>
-      <span> ¿No tienes una cuenta? </span>
-      <span id="sign-up" class="link">Regístrate</span>
-    </div>
-  </div>
-</div>`;
-
-  return $login;*/
-};
-
-// $welcome.innerHTML = `<div class="logo-container">
-// <div class="logo"></div>
-// <h3 class="logo-name">Yami</h3>
-// </div>
-
-// <div class="eslogan">
-// <h2>¿Listo para una aventura culinaria?</h2>
-// </div>
-
-// <div class="inputs-container">
-// <form class="form" action="/action_page.php">
-//   <div class="form__input-container">
-//     <input
-//       class="form__input"
-//       type="text"
-//       id="lname"
-//       name="lname"
-//       placeholder="Correo electrónico"
-//     />
-//   </div>
-
-//   <input
-//     class="form__input"
-//     type="text"
-//     id="fname"
-//     name="fname"
-//     placeholder="Contraseña"
-//   />
-//   <br />
-// </form>
-
-// <span id="forgot-psw" class="link">Olvidé mi contraseña</span><br />
-
-// <div class="btn" href="/#timeline">
-//   <span>Ingresar</span>
-// </div>
-// <br />
-// <div class="btn-g" href="/#nada">
-//   <span>Ingresar con Google</span>
-// </div>
-// <br />
-
-// <div>
-//   <span> ¿No tienes una cuenta? </span> <span id="sign-up" class="link">Regístrate</span>
-// </div>
-// </div>
-// `;
-
-// --
-// // Creación del logo
-// const $logoContainer = document.createElement("div");
-// $logoContainer.classList.add("logo-container");
-// $welcome.append($logoContainer);
-
-// const $iconLogo = document.createElement("div");
-// $iconLogo.classList.add("logo");
-
-// const $logoName = document.createElement("h3");
-// $logoName.textContent = "Yami";
-
-// $logoContainer.append($iconLogo);
-// $logoContainer.append($logoName);
-
-// // Creación del slogan
-// const $sloganContainer = document.createElement('div')
-// const $sloganText = document.createElement('h2')
-// $sloganText.textContent = '¿Listo para una aventura culinaria?'
-// $sloganContainer.append($sloganText)
-
-// $welcome.append($sloganContainer)
-
-// // Creación de inputs del formulario
-// const $inputsContainer = document.createElement('div');
-
-// const $form = document.createElement('form');
-// $form.action = '/action_page.php'
+}

@@ -1,34 +1,32 @@
 export const Registro = () => {
-    const $register = document.createElement("div");
-    $register.classList.add("register-container");
 
-    const $logoContainer = document.createElement("div");
-    $logoContainer.classList.add("logo-container");
-    const $logo = document.createElement("div");
-    $logo.classList.add("logo");
-    const $logoName = document.createElement("h3");
-    $logoName.classList.add("logo-name");
-    $logoName.textContent = `Yami`;
+  const $register = document.createElement("div");
+  $register.classList.add("register-container");
 
-    $logoContainer.append($logo);
-    $logoContainer.append($logoName);
+  const $logoContainer = document.createElement("div");
+  $logoContainer.classList.add("logo-container");
+  const $logo = document.createElement("div");
+  $logo.classList.add("logo");
+  const $logoName = document.createElement("h3");
+  $logoName.classList.add("logo-name");
+  $logoName.textContent = `Yami`;
 
-    const $eslogan = document.createElement("div");
-    $eslogan.classList.add("eslogan");
-    const $esloganText = document.createElement("h2");
-    $esloganText.textContent = `¿Listo para una nueva aventura culinaria?`;
-    
-    $eslogan.append($esloganText);
+  $logoContainer.append($logo);
+  $logoContainer.append($logoName);
 
-    $register.append($logoContainer);
-    $register.append($eslogan);
+  const $eslogan = document.createElement("div");
+  $eslogan.classList.add("eslogan");
+  const $esloganText = document.createElement("h2");
+  $esloganText.textContent = `¿Listo para una nueva aventura culinaria?`;
+  
+  $eslogan.append($esloganText);
 
-    const $inputsContainer = document.createElement("div")
+  const $inputsContainer = document.createElement("div")
   $inputsContainer.classList.add("inputs-container")
 
   const $form = document.createElement("form")
   $form.classList.add("form")
-  //$form.action.add("/action_page.php")
+
 
   const $formInputContainerFirst = document.createElement("div")
   $formInputContainerFirst.classList.add("form__input-container")
@@ -36,10 +34,10 @@ export const Registro = () => {
   $iconMail.classList.add("icon-mail")
   const $formInputFirst = document.createElement("input")
   $formInputFirst.classList.add("form__input")
-  //$formInputFirst.type.add("email")
-  //$formInputFirst.id.add("lname")
-  //$formInputFirst.name.add("lname")
-  //$formInputFirst.placeholder.add("Correo electrónico")
+  $formInputFirst.type="email"
+  $formInputFirst.id="lname"
+  $formInputFirst.name="lname"
+  $formInputFirst.placeholder="Correo electrónico"
 
   $formInputContainerFirst.append($iconMail)
   $formInputContainerFirst.append($formInputFirst)
@@ -50,13 +48,13 @@ export const Registro = () => {
   $iconLock.classList.add("icon-lock")
   const $formInputSecond = document.createElement("input")
   $formInputSecond.classList.add("form__input")
-  //$formInputSecond.type.add("password")
-  //$formInputSecond.id.add("fname")
-  //$formInputSecond.name.add("fname")
-  //$formInputSecond.placeholder.add("Contraseña")
+  $formInputSecond.type="password"
+  $formInputSecond.id="fname"
+  $formInputSecond.name="fname"
+  $formInputSecond.placeholder="Contraseña"
   
-  $formInputContainerFirst.append($iconLock)
-  $formInputContainerFirst.append($formInputSecond)
+  $formInputContainerSecond.append($iconLock)
+  $formInputContainerSecond.append($formInputSecond)
 
   $form.append($formInputContainerFirst)
   $form.append($formInputContainerSecond)
@@ -65,7 +63,7 @@ export const Registro = () => {
 
   const $btn = document.createElement("div")
   $btn.classList.add("btn")
-  //$btn.href.add("/#timeline")
+  $btn.href="/#timeline"
   const $ingresar = document.createElement("span")
   $ingresar.textContent=`Registrarse`
 
@@ -75,7 +73,7 @@ export const Registro = () => {
 
   const $btnG = document.createElement("div")
   $btnG.classList.add("btn-g")
-  //$btn.href.add("/#nada")
+  $btn.href="/#nada"
   const $googleIcon = document.createElement("span")
   $googleIcon.classList.add("icon-google")
 
@@ -111,7 +109,7 @@ export const Registro = () => {
   const $spanAsk = document.createElement("span")
   $spanAsk.textContent=`¿Ya tienes una cuenta?`
   const $link = document.createElement("span")
-  //$link.id.add("sign-up")
+  $link.id="sign-up"
   $link.classList.add("link")
   $link.textContent=`Inicia sesión`
   $link.addEventListener('click', () =>{
@@ -127,6 +125,7 @@ export const Registro = () => {
 
   $register.append($logo)
   $register.append($logoContainer)
+  $register.append($eslogan)
   $register.append($inputsContainer)
   
   return $register;
