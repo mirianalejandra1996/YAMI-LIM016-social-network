@@ -25,7 +25,7 @@ body {
 }
 
 /* Imagen del fondo */
-.welcome {
+.login {
   height: 100%;
   display: flex;
   justify-content: center;
@@ -64,16 +64,24 @@ body {
 }
 
 .link {
-  /* color: #fff; */
+  font-weight: 600;
+  color: #000;
   text-decoration: none;
+  cursor: pointer;
 }
 
-.form {
+.link:hover {
+  color: #ff2a2a;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+/* .form {
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
-}
+} */
 
 .form__input {
   margin-bottom: 10px;
