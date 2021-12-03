@@ -1,7 +1,6 @@
 // aqui exportaras las funciones que necesites
 import { Welcome } from "./components/Welcome.js";
-//import { Router } from "./components/Router.js";
-import {routes} from "./components/Router.js";
+import {Router} from "./components/Router.js";
 
 export const App = () => {
    const d = document,
@@ -15,15 +14,15 @@ export const App = () => {
 
 };
 
-export const onNavigate = (pathname) => {
-  const d = document,
-  $root = d.getElementById("root");
-  window.history.pushState(
-    {},
-    pathname,
-    window.location.origin + pathname
-  )
-  $root.innerHtml= routes[window.location.pathname]
-}
+// export const onNavigate = (pathname) => {
+//   const d = document,
+//   $root = d.getElementById("root");
+//   window.history.pushState(
+//     {},
+//     pathname,
+//     window.location.origin + pathname
+//   )
+//   $root.innerHtml= routes[window.location.pathname]
+// }
 
 

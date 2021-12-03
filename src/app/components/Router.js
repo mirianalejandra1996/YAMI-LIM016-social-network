@@ -1,35 +1,42 @@
 import { Welcome } from "./Welcome.js";
 import { Registro } from "./Register.js";
 
-// export function Router (){ 
-//     const d = document,
-   
-//   $root = d.getElementById("root");
-// //   w = window;
-//     let {hash} = location;
-//     if(!hash || hash === "#/" ){
-//       $root.append(Welcome())
-//     }else if (hash.icludes("/register")){
-//         $root.append(Welcome())
-//     }
-// }
 
-export const routes = {
+function checkRoutes($root) {
+    let w = window;
+    let {hash} = w.location;
+ 
+    if (!hash || hash === "#/" ){
+      $root.innerHTML="";
+      $root.append(Welcome())
+    } else if (hash.includes("#register")){
+        $root.innerHTML="";
+        $root.append(Registro())
+    }
+}
+
+export function Router (){ 
+
+    const d = document
+    const $root = d.getElementById("root");
+  
+   checkRoutes($root)
+   window.addEventListener("hashchange", () => checkRoutes($root));
+     
+}
+
+
+
+/* export const routes = {
     '/' : Welcome,
     '/register' : Registro
-  }
+  } */
 
-// const PATHS ={
-// login:{
-//     path:'/',
-//     template:Welcome
-// },
-// register:{
-//     path:'/register',
-//     template:Registro
-// },
+const PATHS ={
+login: Welcome,
+register: Registro
+}
 // dashboard :{
-//     path:'/dashboard',
+//     path:'#/dashboard',
 //     template:Dashboard
-// }
 // }

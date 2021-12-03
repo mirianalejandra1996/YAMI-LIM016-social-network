@@ -1,8 +1,7 @@
 // Este es el punto de entrada de tu aplicacion
-
-import { App, onNavigate } from "./App.js";
-
- const d = document;
+//import { App } from "./App.js";
+import {Router} from "./components/Router.js"
+const d = document;
 
 
 //  export const onNavigate = (pathname) => {
@@ -14,11 +13,11 @@ import { App, onNavigate } from "./App.js";
 //   $root.innerHtml= routes[window.location.pathname]
 // }
 
- d.addEventListener("DOMContentLoaded", App);
+ d.addEventListener("DOMContentLoaded", Router);
  //window.addEventListener("hashchange",App);
+ 
  window.addEventListener("hashchange", () => {
    console.log("estamos???");
-  
    console.log(window.location.hash);
  });
 
