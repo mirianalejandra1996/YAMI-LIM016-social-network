@@ -17,7 +17,7 @@ export const Router = (route) => {
       return $root.appendChild(components.timeline());
     }
     default:
-      return ($root.innerHTML = "Estamos en el timeline");
+      return $root.appendChild(components.login());
       break;
   }
 
