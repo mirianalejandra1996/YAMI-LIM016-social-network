@@ -1,3 +1,4 @@
+import { enviarIngreso } from "../view-controller/firebase.js";
 export const Login = () => {
   // todas las variables que hacen referencia a elementos del dom le anteponemos el símbolo del dolar
   const $login = document.createElement("div");
@@ -34,8 +35,8 @@ export const Login = () => {
   const $formInputFirst = document.createElement("input")
   $formInputFirst.classList.add("form__input")
   $formInputFirst.type="email"
-  $formInputFirst.id="name"
-  $formInputFirst.name="lname"
+  $formInputFirst.id="lemail"
+  $formInputFirst.name="lemail"
   $formInputFirst.placeholder="Correo electrónico"
 
   $formInputContainerFirst.append($iconMail)
@@ -48,8 +49,8 @@ export const Login = () => {
   const $formInputSecond = document.createElement("input")
   $formInputSecond.classList.add("form__input")
   $formInputSecond.type="password"
-  $formInputSecond.id="fname"
-  $formInputSecond.name="fname"
+  $formInputSecond.id="lpassword"
+  $formInputSecond.name="lpassword"
   $formInputSecond.placeholder="Contraseña"
   
   $formInputContainerSecond.append($iconLock)
@@ -66,8 +67,14 @@ export const Login = () => {
 
   document.createElement("br")
 
+  const $msgError = document.createElement("div")
+  $msgError.classList.add("error")
+  $msgError.id="errorLogin"
+  $msgError.textContent = "Error de prueba"
+
   const $btn = document.createElement("div")
   $btn.classList.add("btn")
+  $btn.addEventListener('click', enviarIngreso)
   $btn.href="/#timeline"
   const $ingresar = document.createElement("span")
   $ingresar.textContent=`Iniciar sesión`
@@ -125,12 +132,14 @@ export const Login = () => {
 
   $inputsContainer.append($form)
   $inputsContainer.append($forgotPsw)
+  $inputsContainer.append($msgError)
   $inputsContainer.append($btn)
   $inputsContainer.append($btnG)
   $inputsContainer.append($divLink)
 
   $login.append($logo)
   $login.append($logoContainer)
+  $login.append($eslogan)
   $login.append($inputsContainer)
 
   return $login

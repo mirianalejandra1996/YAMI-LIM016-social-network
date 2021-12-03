@@ -11,7 +11,7 @@ export const Router = (route) => {
       return $root.appendChild(components.login());
     }
     case "#/register":{
-      return $root.appendChild(components.registro())
+      return $root.appendChild(components.registro());
     }
     case "#/timeline": {
       return $root.appendChild(components.timeline());
