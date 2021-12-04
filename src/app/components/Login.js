@@ -1,4 +1,4 @@
-import { enviarIngreso } from "../view-controller/firebase.js";
+import { enviarIngreso } from "../firebase/firebase.js";
 
 export const Login = () => {
   // todas las variables que hacen referencia a elementos del dom le anteponemos el símbolo del dolar
