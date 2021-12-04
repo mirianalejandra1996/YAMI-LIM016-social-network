@@ -71,7 +71,6 @@ export const Login = () => {
   const $msgError = document.createElement("div")
   $msgError.classList.add("error")
   $msgError.id="errorLogin"
-  $msgError.textContent = "Error de prueba"
 
   const $btn = document.createElement("div")
   $btn.classList.add("btn")
@@ -138,7 +137,6 @@ export const Login = () => {
   $inputsContainer.append($btnG)
   $inputsContainer.append($divLink)
 
-  $login.append($logo)
   $login.append($logoContainer)
   $login.append($eslogan)
   $login.append($inputsContainer)

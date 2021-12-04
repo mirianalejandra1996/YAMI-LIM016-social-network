@@ -34,37 +34,43 @@ body {
 }
 
 .logo-container {
-  width: 88px;
+  width: 100px;
   display: flex;
   justify-content: center;
   flex-direction: column;
+  /* min-width: 100px; */
 }
 
 .logo {
   /*  background-color: red; */
-  width: 88px;
-  height: 80px;
+  width: 100px;
+  height: auto;
   text-align: center;
+  content: url("logo.svg");
 }
 
 .logo-name {
   color: #f61b16;
   text-align: center;
-  font-size: 24px;
+  font-size: 26px;
+  font-family: "Poppins";
 }
 
-.eslogan {
+.eslogan-container {
+  display: flex;
+  justify-content: center;
   width: 80%;
+  margin: 30px auto 20px;
+}
+
+.eslogan-text {
   text-align: center;
+  font-size: 22px;
+  font-weight: 500;
 }
 
 .inputs-container {
   text-align: center;
-}
-form__input-container {
-  display: flex;
-  flex-direction: column;
-  background-color: #f61b16;
 }
 
 .link {
@@ -72,6 +78,7 @@ form__input-container {
   color: #000;
   text-decoration: none;
   cursor: pointer;
+  font-size: 13px;
 }
 
 .link:hover {
@@ -79,13 +86,6 @@ form__input-container {
   text-decoration: none;
   cursor: pointer;
 }
-
-/*.form {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-} */
 
 .form__input {
   margin-bottom: 10px;
@@ -97,6 +97,21 @@ form__input-container {
     radial-gradient(circle at top left, #ffb800, #ff6f00);
   background-origin: border-box;
   background-clip: content-box, border-box;
+  text-indent: 30px;
+}
+
+.icon-mail:before {
+  content: "\e90d";
+  position: relative;
+  top: 2px;
+  left: 23px;
+}
+
+.icon-lock:before {
+  content: "\e90b";
+  position: relative;
+  top: 2px;
+  left: 23px;
 }
 
 .btn {
@@ -140,25 +155,9 @@ form__input-container {
   width: 100%;
   color: #ff6f00;
 }
+
 /* registro */
-.logo {
-  background-image: url("logo.svg");
-}
-.eslogan {
-  font-size: 20px;
-  margin: 20px;
-}
-.form__input-register {
-  margin-bottom: 10px;
-  height: 39px;
-  width: 258px;
-  border-radius: 25px;
-  border: 1px solid transparent;
-  background-image: linear-gradient(white, white),
-    radial-gradient(circle at top left, #ffb800, #ff6f00);
-  background-origin: border-box;
-  background-clip: content-box, border-box;
-}
+
 .register-container {
   height: 100%;
   display: flex;
@@ -211,4 +210,60 @@ form__input-container {
 .error-msg {
   color: #ff2a2a;
   /* font-size: 0.9rem; */
+}
+.form__button-g {
+  height: 35px;
+  width: 200px;
+  border-radius: 20px;
+  border: 1px solid #cbbdbd;
+  background-color: white;
+}
+
+/*Estilos del Modal*/
+
+.modal-contenedor {
+  position: fixed;
+  z-index: 1000;
+  width: 100%;
+  height: 100vh;
+  top: 0;
+  left: 0;
+  background: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.modal {
+  width: 80%;
+  height: 60%;
+  background-color: #fff;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-evenly;
+  position: relative;
+  transition: transform 1s;
+  transform: translateY(0%);
+  border-radius: 10px;
+  align-items: center;
+  /*overflow: hidden;*/
+}
+
+.cerrar {
+  position: absolute;
+  top: 5px;
+  right: 5px;
+  display: block;
+  width: 25px;
+  height: 25px;
+  background: #c44a4a;
+  color: #fff;
+  line-height: 25px;
+  cursor: pointer;
+  border-radius: 50%;
+}
+
+.modal-cerrar {
+  transform: translateY(-200%);
 }
