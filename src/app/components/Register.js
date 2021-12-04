@@ -1,4 +1,4 @@
-import { enviarRegistro } from "../firebase/firebase.js";
+import { enviarRegistro } from "../firebase/firebase-auth.js";
 import { ModalTerminos } from "./Modal.js";
 
 export const Registro = () => {
@@ -19,7 +19,7 @@ export const Registro = () => {
   const $eslogan = document.createElement("div");
   $eslogan.classList.add("eslogan-container");
   const $esloganText = document.createElement("h2");
-  $esloganText.classList.add('eslogan-text')
+  $esloganText.classList.add("eslogan-text");
   $esloganText.textContent = `¿Listo para una nueva aventura culinaria?`;
 
   $eslogan.append($esloganText);
