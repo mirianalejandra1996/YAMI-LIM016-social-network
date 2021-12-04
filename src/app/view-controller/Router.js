@@ -13,6 +13,9 @@ export const Router = (route) => {
     case "#/register":{
       return $root.appendChild(components.registro());
     }
+    case "#/perfil":{
+      return $root.appendChild(components.perfil());
+    }
     case "#/timeline": {
       return $root.appendChild(components.timeline());
     }

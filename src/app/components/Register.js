@@ -1,4 +1,6 @@
 import { enviarRegistro } from "../view-controller/firebase.js";
+import { ModalTerminos } from "./Modal.js"
+
 export const Registro = () => {
 
   const $register = document.createElement("div");
@@ -131,10 +133,29 @@ export const Registro = () => {
   $inputsContainer.append($btnG)
   $inputsContainer.append($divLink)
 
+  const $terminos = document.createElement('a')
+  $terminos.textContent= 'terminos'
+ 
+
   $register.append($logo)
   $register.append($logoContainer)
   $register.append($eslogan)
   $register.append($inputsContainer)
+  $register.append($terminos)
+
+
+  const {$modalContenedor , abrirModal} =  ModalTerminos()
+
+  $register.append($terminos)
+  $register.append($modalContenedor)
+
+  $terminos.addEventListener('click', (e) => {
+    e.preventDefault()
+    abrirModal()
+  })
+
+
+ 
   
   return $register;
 };
