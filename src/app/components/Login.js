@@ -1,4 +1,4 @@
-import { enviarIngreso } from "../firebase/firebase-auth.js";
+import { enviarIngreso, loginGoogle } from "../firebase/firebase-auth.js";
 
 export const Login = () => {
   // todas las variables que hacen referencia a elementos del dom le anteponemos el símbolo del dolar
@@ -111,6 +111,7 @@ export const Login = () => {
 
   const $google = document.createElement("span");
   $google.textContent = `Iniciar con Google`;
+  $google.addEventListener('click', loginGoogle)
 
   $btnG.append($googleIcon);
   $btnG.append($google);
