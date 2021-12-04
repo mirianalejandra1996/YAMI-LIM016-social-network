@@ -25,7 +25,7 @@ const app = initializeApp(firebaseConfig);
 
 
 
-//Registro
+/******************Registro**************************/
 
 import { getAuth, createUserWithEmailAndPassword } from 'https://www.gstatic.com/firebasejs/9.5.0/firebase-auth.js';
 import { signInWithEmailAndPassword } from 'https://www.gstatic.com/firebasejs/9.5.0/firebase-auth.js';
@@ -46,7 +46,7 @@ export function enviarRegistro(){
     const errorCode = error.code;
     //const errorMessage = error.message;
     console.log(errorCode)
-    switch(errorCode){
+    /*switch(errorCode){
       case "auth/invalid-email":
         console.log("Ingresa tus datos");
         break;
@@ -56,29 +56,50 @@ export function enviarRegistro(){
       case "auth/missing-email":
         console.log("Ingresa tu correo electrónico");
         break;
-    }
+    }*/
     // ..
   });
 
 }
 
-//Inicio de sesion
-//import { signInWithEmailAndPassword } from 'https://www.gstatic.com/firebasejs/9.5.0/firebase-auth.js';
+
+
+
+
+
+
+
+/*******************Inicio de sesion***************************/
 
 export function enviarIngreso(){
+  
+  const email=document.getElementById("lemail").value
+  const password=document.getElementById("lpassword").value
+  console.log(email)
+  console.log(password)
 
-  let user=document.getElementById("lemail").value
-  let password=document.getElementById("lpassword").value
+  signInWithEmailAndPassword(auth, email, password)
 
-  signInWithEmailAndPassword(auth, user, password)
   .then((userCredential) => {
-    // Signed in
     const user = userCredential.user;
-    console.log("logueado")
-    // ...
+    window.location.hash = "#/timeline"
   })
+
   .catch((error) => {
     const errorCode = error.code;
-    const errorMessage = error.message;
+    switch(errorCode){
+      case "auth/user-not-found":
+        document.getElementById("errorLogin").innerHTML="Usuario no registrado"
+        break;
+      case "auth/wrong-password":
+        document.getElementById("errorLogin").innerHTML="Contraseña inválida"
+        break;
+      case "auth/invalid-email":
+        document.getElementById("errorLogin").innerHTML="Ingrese su correo"
+        break;
+      case "auth/internal-error":
+        document.getElementById("errorLogin").innerHTML="Ingrese su contraseña"
+        break;
+    }
   });
 }

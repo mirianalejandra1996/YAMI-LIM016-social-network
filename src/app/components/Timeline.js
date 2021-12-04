@@ -19,11 +19,11 @@ export const Timeline = () => {
 
   const $botonPrueba = document.createElement("span");
   $botonPrueba.classList.add("link");
-  $botonPrueba.textContent = "Probando este link para que vaya a welcome";
+  $botonPrueba.textContent = "Llegaste al timeline!!! Yay!!!";
 
-  $botonPrueba.addEventListener("click", () => {
+  /*$botonPrueba.addEventListener("click", () => {
     window.location.hash = "#/";
-  });
+  });*/
 
   $linkContainer.append($botonPrueba);
 

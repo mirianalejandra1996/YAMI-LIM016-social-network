@@ -40,11 +40,12 @@ body {
   display: flex;
   justify-content: space-between;
   flex-direction: column;
+  min-width: 110px;
 }
 .logo {
   /*  background-color: red; */
-  width: 80px;
-  height: 80px;
+  width: 110px;
+  height: auto;
   text-align: center;
 }
 
@@ -52,6 +53,7 @@ body {
   color: #f61b16;
   text-align: center;
   font-size: 24px;
+  margin-top: 5px;
 }
 
 .eslogan {
@@ -73,6 +75,7 @@ form__input-container{
   color: #000;
   text-decoration: none;
   cursor: pointer;
+  font-size: 13px;
 }
 
 .link:hover {
@@ -98,6 +101,21 @@ form__input-container{
     radial-gradient(circle at top left, #ffb800, #ff6f00);
   background-origin: border-box;
   background-clip: content-box, border-box;
+  text-indent: 30px;
+}
+
+.icon-mail:before {
+  content: "\e90d";
+  position: relative;
+  top: 2px;
+  left: 23px;
+}
+
+.icon-lock:before {
+  content: "\e90b";
+  position: relative;
+  top: 2px;
+  left: 23px;
 }
 
 .btn {
@@ -143,11 +161,11 @@ form__input-container{
 }
 /* registro */
 .logo {
-  background-image: url("logo.svg");
+  content: url("logo.svg");
 }
 .eslogan {
   font-size: 20px;
-  margin: 20px;
+  margin: 50px auto;
 }
 .form__input-register {
   margin-bottom: 10px;
