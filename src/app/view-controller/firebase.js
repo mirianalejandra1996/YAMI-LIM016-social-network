@@ -14,71 +14,67 @@ const firebaseConfig = {
   storageBucket: "yami-cbaa4.appspot.com",
   messagingSenderId: "183307954304",
   appId: "1:183307954304:web:e251753afe33cc0cf4de65",
-  measurementId: "G-VY53L4LKKC"
+  measurementId: "G-VY53L4LKKC",
 };
 
 // Initialize Firebase
 const app = initializeApp(firebaseConfig);
-//const analytics = getAnalytics(app);
-
-
-
-
+// const analytics = getAnalytics(app);
 
 //Registro
 
-import { getAuth, createUserWithEmailAndPassword } from 'https://www.gstatic.com/firebasejs/9.5.0/firebase-auth.js';
-import { signInWithEmailAndPassword } from 'https://www.gstatic.com/firebasejs/9.5.0/firebase-auth.js';
+import {
+  getAuth,
+  createUserWithEmailAndPassword,
+} from "https://www.gstatic.com/firebasejs/9.5.0/firebase-auth.js";
 
 const auth = getAuth();
 
-export function enviarRegistro(){
-  let user=document.getElementById("remail").value
-  let password=document.getElementById("rpassword").value
+export function enviarRegistro() {
+  let user = document.getElementById("remail").value;
+  let password = document.getElementById("rpassword").value;
 
   createUserWithEmailAndPassword(auth, user, password)
-  .then((userCredential) => {
-    // Signed in
-    const user = userCredential.user;
-    // ...
-  })
-  .catch((error) => {
-    const errorCode = error.code;
-    //const errorMessage = error.message;
-    console.log(errorCode)
-    switch(errorCode){
-      case "auth/invalid-email":
-        console.log("Ingresa tus datos");
-        break;
-      case "auth/internal-error":
-        console.log("Ingresa tu contraseña");
-        break;
-      case "auth/missing-email":
-        console.log("Ingresa tu correo electrónico");
-        break;
-    }
-    // ..
-  });
-
+    .then((userCredential) => {
+      // Signed in
+      const user = userCredential.user;
+      // ...
+    })
+    .catch((error) => {
+      const errorCode = error.code;
+      //const errorMessage = error.message;
+      console.log(errorCode);
+      switch (errorCode) {
+        case "auth/invalid-email":
+          console.log("Ingresa tus datos");
+          break;
+        case "auth/internal-error":
+          console.log("Ingresa tu contraseña");
+          break;
+        case "auth/missing-email":
+          console.log("Ingresa tu correo electrónico");
+          break;
+      }
+      // ..
+    });
 }
 
 //Inicio de sesion
-//import { signInWithEmailAndPassword } from 'https://www.gstatic.com/firebasejs/9.5.0/firebase-auth.js';
+import { signInWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/9.5.0/firebase-auth.js";
 
-export function enviarIngreso(){
-
-  let user=document.getElementById("lemail").value
-  let password=document.getElementById("lpassword").value
+export function enviarIngreso() {
+  let user = document.getElementById("lemail").value;
+  let password = document.getElementById("lpassword").value;
 
   signInWithEmailAndPassword(auth, user, password)
-  .then((userCredential) => {
-    // Signed in
-    const user = userCredential.user;
-    console.log("logueado")
-    // ...
-  })
-  .catch((error) => {
-    const errorCode = error.code;
-    const errorMessage = error.message;
-  });
+    .then((userCredential) => {
+      // Signed in
+      const user = userCredential.user;
+      console.log("logueado");
+      // ...
+    })
+    .catch((error) => {
+      const errorCode = error.code;
+      const errorMessage = error.message;
+    });
 }

@@ -34,16 +34,15 @@ body {
 }
 
 .logo-container {
-  /*   margin-bottom: 40px; */
-  width: 8px;
-  height: 110px;
+  width: 88px;
   display: flex;
-  justify-content: space-between;
+  justify-content: center;
   flex-direction: column;
 }
+
 .logo {
   /*  background-color: red; */
-  width: 80px;
+  width: 88px;
   height: 80px;
   text-align: center;
 }
@@ -62,7 +61,7 @@ body {
 .inputs-container {
   text-align: center;
 }
-form__input-container{
+form__input-container {
   display: flex;
   flex-direction: column;
   background-color: #f61b16;
@@ -81,7 +80,7 @@ form__input-container{
   cursor: pointer;
 }
 
- /*.form {
+/*.form {
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -199,4 +198,17 @@ form__input-container{
   font-weight: bold;
   border: none;
   background-image: linear-gradient(45deg, #f51616, #ffb800);
+}
+
+.err-container {
+  height: 3rem;
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+  margin-bottom: 0.5rem;
+}
+
+.error-msg {
+  color: #ff2a2a;
+  /* font-size: 0.9rem; */
 }
