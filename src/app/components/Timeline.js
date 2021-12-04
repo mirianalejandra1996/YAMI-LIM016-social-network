@@ -1,3 +1,5 @@
+import { logOutGoogle } from "../firebase/firebase-auth.js";
+
 export const Timeline = () => {
   const $timelinePrueba = document.createElement("div");
 
@@ -19,11 +21,9 @@ export const Timeline = () => {
 
   const $botonPrueba = document.createElement("span");
   $botonPrueba.classList.add("link");
-  $botonPrueba.textContent = "Llegaste al timeline!!! Yay!!!";
+  $botonPrueba.textContent = "Sign Out";
 
-  /*$botonPrueba.addEventListener("click", () => {
-    window.location.hash = "#/";
-  });*/
+  $botonPrueba.addEventListener("click", logOutGoogle);
 
   $linkContainer.append($botonPrueba);
 

@@ -7,9 +7,10 @@ import {
   getRedirectResult,
   GoogleAuthProvider,
   signInWithRedirect,
+  signOut,
 } from "https://www.gstatic.com/firebasejs/9.5.0/firebase-auth.js";
 
-const auth = getAuth();
+const auth = getAuth(app);
 
 /*******************Inicio de sesion***************************/
 export function enviarIngreso() {
@@ -48,23 +49,25 @@ export function enviarIngreso() {
 }
 
 // ---inicio de sesión con Google ----
-const provider = new GoogleAuthProvider();
-signInWithRedirect(auth, provider);
+const provider = new GoogleAuthProvider(app);
 
 export const loginGoogle = () => {
+  signInWithRedirect(auth, provider);
   console.log("entrando a función google");
-  
+
   getRedirectResult(auth)
     .then((result) => {
       // This gives you a Google Access Token. You can use it to access Google APIs.
       const credential = GoogleAuthProvider.credentialFromResult(result);
       const token = credential.accessToken;
+      console.log(token);
 
       // The signed-in user info.
       const user = result.user;
+      window.location.hash = "#/timeline";
       console.log({ user });
       console.log("mirian", user);
-      window.location.hash = "#/timeline";
+      //   debugger;
     })
     .catch((error) => {
       // Handle Errors here.
@@ -75,6 +78,21 @@ export const loginGoogle = () => {
       // The AuthCredential type that was used.
       const credential = GoogleAuthProvider.credentialFromError(error);
       // ...
+    });
+};
+
+// -----LogOut Google
+
+export const logOutGoogle = () => {
+  signOut(auth)
+    .then(() => {
+      // Sign-out successful.
+      console.log("Haz salido de tu cuenta");
+      window.location.hash = "#/";
+    })
+    .catch((error) => {
+      // An error happened.
+      console.log("Problemas al salir");
     });
 };
 
