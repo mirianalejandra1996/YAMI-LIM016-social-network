@@ -1,4 +1,4 @@
-import { enviarRegistro } from "../firebase/firebase-auth.js";
+import { enviarRegistro, loginGoogle } from "../firebase/firebase-auth.js";
 import { ModalTerminos } from "./Modal.js";
 
 export const Registro = () => {
@@ -114,7 +114,8 @@ export const Registro = () => {
   $googleIcon.append($span6);
 
   const $google = document.createElement("span");
-  $google.textContent = `Registrarse con Google`;
+  $google.textContent = `Continuar con Google`;
+  $google.addEventListener('click', loginGoogle);
 
   $btnG.append($googleIcon);
   $btnG.append($google);

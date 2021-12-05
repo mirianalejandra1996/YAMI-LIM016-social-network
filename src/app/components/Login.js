@@ -1,4 +1,4 @@
-import { enviarIngreso, loginGoogle } from "../firebase/firebase-auth.js";
+import { enviarIngreso, loginGoogle, olvideContrasena } from "../firebase/firebase-auth.js";
 
 export const Login = () => {
   // todas las variables que hacen referencia a elementos del dom le anteponemos el símbolo del dolar
@@ -65,6 +65,7 @@ export const Login = () => {
   const $forgotPsw = document.createElement("span");
   $forgotPsw.classList.add("link");
   $forgotPsw.textContent = `Olvidé mi contraseña`;
+  $forgotPsw.addEventListener("click", olvideContrasena)
 
   document.createElement("br");
 
@@ -75,7 +76,6 @@ export const Login = () => {
   const $btn = document.createElement("div");
   $btn.classList.add("btn");
   $btn.addEventListener("click", enviarIngreso);
-  $btn.href = "/#timeline";
   const $ingresar = document.createElement("span");
   $ingresar.textContent = `Iniciar sesión`;
 
@@ -85,7 +85,6 @@ export const Login = () => {
 
   const $btnG = document.createElement("div");
   $btnG.classList.add("btn-g");
-  $btn.href = "/#nada";
   const $googleIcon = document.createElement("span");
   $googleIcon.classList.add("icon-google");
 
@@ -110,7 +109,7 @@ export const Login = () => {
   $googleIcon.append($span6);
 
   const $google = document.createElement("span");
-  $google.textContent = `Iniciar con Google`;
+  $google.textContent = `Continuar con Google`;
   $google.addEventListener('click', loginGoogle)
 
   $btnG.append($googleIcon);
