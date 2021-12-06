@@ -1,25 +1,46 @@
 import { enviarRegistro, loginGoogle } from "../firebase/firebase-auth.js";
 import { ModalTerminos } from "./Modal.js";
-import { Logo } from "./Logo.js"
-import { Eslogan } from "./Eslogan.js"
+import { Logo } from "./Logo.js";
+import { Eslogan } from "./Eslogan.js";
 
 export const Registro = () => {
   const $register = document.createElement("div");
   $register.classList.add("register-container");
 
   const $logoContainer = Logo();
-  const $eslogan = Eslogan('¿Listo para una nueva aventura culinaria?')
+  const $eslogan = Eslogan("¿Listo para una nueva aventura culinaria?");
 
   const $inputsContainer = document.createElement("div");
   $inputsContainer.classList.add("inputs-container");
 
   const $form = document.createElement("form");
   $form.classList.add("form");
+  $form.id = "form-register";
+
+  // ---------------------
+
+  const $formInputContainerNombre = document.createElement("div");
+  $formInputContainerNombre.classList.add("form__input-container");
+  const $iconName = document.createElement("span");
+  $iconName.classList.add("icon-usuario");
+  const $formInputName = document.createElement("input");
+  $formInputName.classList.add("form__input");
+  $formInputName.type = "nombre";
+  $formInputName.id = "nombre";
+  $formInputName.name = "nombre";
+  $formInputName.placeholder = "Nombre";
+
+  $formInputContainerNombre.append($iconName);
+  $formInputContainerNombre.append($formInputName);
+
+  // ---------------------
 
   const $formInputContainerFirst = document.createElement("div");
   $formInputContainerFirst.classList.add("form__input-container");
   const $iconMail = document.createElement("span");
   $iconMail.classList.add("icon-mail");
+  $iconMail.classList.add("form__icon");
+  $iconMail.classList.add("form__icon--black");
   const $formInputFirst = document.createElement("input");
   $formInputFirst.classList.add("form__input");
   $formInputFirst.type = "email";
@@ -34,62 +55,50 @@ export const Registro = () => {
   $formInputContainerSecond.classList.add("form__input-container");
   const $iconLock = document.createElement("span");
   $iconLock.classList.add("icon-lock");
+  $iconLock.classList.add("form__icon");
+  $iconLock.classList.add("form__icon--black");
   const $formInputSecond = document.createElement("input");
   $formInputSecond.classList.add("form__input");
   $formInputSecond.type = "password";
   $formInputSecond.id = "rpassword";
   $formInputSecond.name = "rpassword";
   $formInputSecond.placeholder = "Contraseña";
-  
-  const $terminos = document.createElement("p")
-  $terminos.textContent = "Al continuar acepto los Términos de Servicio y"
-  $terminos.classList.add('parrafo-terminos')
-  const $política = document.createElement("a");
-  $política.textContent = "Política de Privacidad";
-  $política.classList.add('parrafo-terminos','parrafo-politica')
-
-
 
   $formInputContainerSecond.append($iconLock);
   $formInputContainerSecond.append($formInputSecond);
 
+  $form.append($formInputContainerNombre);
   $form.append($formInputContainerFirst);
   $form.append($formInputContainerSecond);
-  $form.append($terminos);
-  $form.append($política);
-
-
-  document.createElement("br");
 
   const $errorContainer = document.createElement("div");
   $errorContainer.classList.add("err-container");
 
   // aquiiii
   const $msgError = document.createElement("small");
-  // const $msgError = document.createElement("span");
   $msgError.classList.add("error-msg");
   $msgError.id = "errorLogin";
-  // $msgError.textContent = "Error de prueba";
-  $msgError.textContent = "Mensajito de error";
+  $msgError.textContent = "";
 
   $errorContainer.append($msgError);
 
   const $btn = document.createElement("div");
   $btn.classList.add("btn");
+  $btn.id = "submit-register";
   $btn.addEventListener("click", enviarRegistro);
   $btn.href = "/#timeline";
   const $ingresar = document.createElement("span");
+  $ingresar.classList.add("btn__text");
   $ingresar.textContent = `Registrarse`;
 
   $btn.append($ingresar);
-
-  document.createElement("br");
 
   const $btnG = document.createElement("div");
   $btnG.classList.add("btn-g");
   $btn.href = "/#nada";
   const $googleIcon = document.createElement("span");
   $googleIcon.classList.add("icon-google");
+  $googleIcon.classList.add("form__icon");
 
   const $span1 = document.createElement("span");
   $span1.classList.add("path1");
@@ -113,46 +122,64 @@ export const Registro = () => {
 
   const $google = document.createElement("span");
   $google.textContent = `Continuar con Google`;
-  $google.addEventListener('click', loginGoogle);
+  $google.addEventListener("click", loginGoogle);
 
   $btnG.append($googleIcon);
   $btnG.append($google);
 
-  document.createElement("br");
+  const linkLogIn = document.createElement("div");
+  linkLogIn.id = "linkLogin";
+  linkLogIn.classList.add("redirect-text");
 
-  const $divLink = document.createElement("div");
   const $spanAsk = document.createElement("span");
   $spanAsk.textContent = `¿Ya tienes una cuenta?`;
+  $spanAsk.classList.add("redirect-text__left");
   const $link = document.createElement("span");
-  $link.id = "sign-up";
-  $link.classList.add("link");
-  $link.classList.add("red_hover")
+  $link.classList.add("redirect-text__link");
+  $link.id = "log-in";
+
   $link.textContent = `Inicia sesión`;
   $link.addEventListener("click", () => {
     window.location.hash = "#/";
   });
 
-  $divLink.append($spanAsk);
-  $divLink.append($link);
+  linkLogIn.append($spanAsk);
+  linkLogIn.append($link);
+
+  // Terminos y Condiciones
+  const $termsContainer = document.createElement("div");
+  $termsContainer.id = "termsAndConditions";
+  $termsContainer.classList.add("redirect-text");
+
+  const $terminosText = document.createElement("span");
+  $terminosText.textContent = "Al continuar acepto los ";
+  $terminosText.classList.add("redirect-text__left-small");
+
+  const $terminosLink = document.createElement("span");
+  $terminosLink.textContent = "Términos de Servicio y Política de Privacidad";
+  $terminosLink.classList.add("redirect-text__link");
+  $terminosLink.classList.add("redirect-text__link--noMarginLeft");
+  $terminosLink.classList.add("redirect-text__link-small");
+
+  $termsContainer.append($terminosText);
+  $termsContainer.append($terminosLink);
 
   $inputsContainer.append($form);
+  $inputsContainer.append($termsContainer);
   $inputsContainer.append($errorContainer);
   $inputsContainer.append($btn);
   $inputsContainer.append($btnG);
-  $inputsContainer.append($divLink);
+  $inputsContainer.append(linkLogIn);
 
-
-  $register.append($logoContainer)
+  $register.append($logoContainer);
   $register.append($eslogan);
   $register.append($inputsContainer);
-
-
 
   const { $modalContenedor, abrirModal } = ModalTerminos();
 
   $register.append($modalContenedor);
 
-  $política.addEventListener("click", (e) => {
+  $terminosLink.addEventListener("click", (e) => {
     e.preventDefault();
     abrirModal();
   });

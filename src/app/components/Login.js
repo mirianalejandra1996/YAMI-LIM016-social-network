@@ -1,25 +1,58 @@
-import { enviarIngreso, loginGoogle, olvideContrasena } from "../firebase/firebase-auth.js";
+import {
+  enviarIngreso,
+  loginGoogle,
+  olvideContrasena,
+} from "../firebase/firebase-auth.js";
 import { Logo } from "./Logo.js";
-import { Eslogan } from "./Eslogan.js"
+import { Eslogan } from "./Eslogan.js";
+
+import { app } from "./../firebase/firebase-initializer.js";
+
+// import {
+//   getAuth,
+//   GoogleAuthProvider,
+//   getRedirectResult,
+// } from "https://www.gstatic.com/firebasejs/9.5.0/firebase-auth.js";
 
 export const Login = () => {
+  // const auth = getAuth(app);
+  // const user = auth.currentUser;
+  // console.log("este es el user actual", user);
+  // console.log("esto es auth", auth);
+  // const provider = new GoogleAuthProvider(app);
+
+  // getRedirectResult(auth)
+  //   .then((result) => {
+  //     console.log("check result getRedirectresult", result);
+  //     // window.location.hash = "#/timeline";
+  //     result ? (window.location.hash = "#/timeline") : false;
+  //   })
+  //   .catch((error) => {
+  //     console.log("error en getredirectresult", error);
+  //   });
+
+  // console.log("checking");
+
   // todas las variables que hacen referencia a elementos del dom le anteponemos el símbolo del dolar
   const $login = document.createElement("div");
   $login.classList.add("login");
 
   const $logoContainer = Logo();
-  const $eslogan = Eslogan('¿Listo para una nueva aventura culinaria?')
+  const $eslogan = Eslogan("¡Hola de nuevo!");
 
   const $inputsContainer = document.createElement("div");
   $inputsContainer.classList.add("inputs-container");
 
   const $form = document.createElement("form");
   $form.classList.add("form");
+  $form.id = "form-register";
 
   const $formInputContainerFirst = document.createElement("div");
   $formInputContainerFirst.classList.add("form__input-container");
   const $iconMail = document.createElement("span");
   $iconMail.classList.add("icon-mail");
+  $iconMail.classList.add("form__icon");
+  $iconMail.classList.add("form__icon--black");
   const $formInputFirst = document.createElement("input");
   $formInputFirst.classList.add("form__input");
   $formInputFirst.type = "email";
@@ -34,6 +67,8 @@ export const Login = () => {
   $formInputContainerSecond.classList.add("form__input-container");
   const $iconLock = document.createElement("span");
   $iconLock.classList.add("icon-lock");
+  $iconLock.classList.add("form__icon");
+  $iconLock.classList.add("form__icon--black");
   const $formInputSecond = document.createElement("input");
   $formInputSecond.classList.add("form__input");
   $formInputSecond.type = "password";
@@ -47,34 +82,40 @@ export const Login = () => {
   $form.append($formInputContainerFirst);
   $form.append($formInputContainerSecond);
 
-  
+  const $errorContainer = document.createElement("div");
+  $errorContainer.classList.add("err-container");
 
-  const $forgotPsw = document.createElement("span");
-  $forgotPsw.classList.add("link");
-  $forgotPsw.classList.add("red_hover")
-  $forgotPsw.textContent = `Olvidé mi contraseña`;
-  $forgotPsw.addEventListener("click", olvideContrasena)
-
- 
-
-  const $msgError = document.createElement("div");
+  const $msgError = document.createElement("small");
   $msgError.classList.add("error-msg");
   $msgError.id = "errorLogin";
+  $msgError.textContent = "";
+
+  $errorContainer.append($msgError);
+
+  const $forgotPsw = document.createElement("span");
+  $forgotPsw.classList.add("redirect-text__link");
+  $forgotPsw.classList.add("redirect-text__link-small");
+  $forgotPsw.textContent = `Olvidé mi contraseña`;
+
+  $forgotPsw.addEventListener("click", olvideContrasena);
 
   const $btn = document.createElement("div");
   $btn.classList.add("btn");
+  $btn.id = "submit-register";
   $btn.addEventListener("click", enviarIngreso);
+  $btn.href = "/#timeline";
   const $ingresar = document.createElement("span");
+  $ingresar.classList.add("btn__text");
   $ingresar.textContent = `Iniciar sesión`;
 
   $btn.append($ingresar);
 
- 
-
   const $btnG = document.createElement("div");
   $btnG.classList.add("btn-g");
+  $btn.href = "/#nada";
   const $googleIcon = document.createElement("span");
   $googleIcon.classList.add("icon-google");
+  $googleIcon.classList.add("form__icon");
 
   const $span1 = document.createElement("span");
   $span1.classList.add("path1");
@@ -98,34 +139,36 @@ export const Login = () => {
 
   const $google = document.createElement("span");
   $google.textContent = `Continuar con Google`;
-  $google.addEventListener('click', loginGoogle)
+  $google.addEventListener("click", loginGoogle);
 
   $btnG.append($googleIcon);
   $btnG.append($google);
 
-  document.createElement("br");
+  const $linkRegister = document.createElement("div");
+  $linkRegister.id = "linkLogin";
+  $linkRegister.classList.add("redirect-text");
 
-  const $divLink = document.createElement("div");
   const $spanAsk = document.createElement("span");
-  $spanAsk.textContent = `¿No tienes una cuenta? `;
+  $spanAsk.textContent = `¿No tienes una cuenta?`;
+  $spanAsk.classList.add("redirect-text__left");
   const $link = document.createElement("span");
-  $link.id = "sign-up";
-  $link.classList.add("link");
+  $link.classList.add("redirect-text__link");
+  $link.id = "register";
+
   $link.textContent = `Regístrate`;
-  $link.classList.add("red_hover")
   $link.addEventListener("click", () => {
     window.location.hash = "#/register";
   });
 
-  $divLink.append($spanAsk);
-  $divLink.append($link);
+  $linkRegister.append($spanAsk);
+  $linkRegister.append($link);
 
   $inputsContainer.append($form);
   $inputsContainer.append($forgotPsw);
-  $inputsContainer.append($msgError);
+  $inputsContainer.append($errorContainer);
   $inputsContainer.append($btn);
   $inputsContainer.append($btnG);
-  $inputsContainer.append($divLink);
+  $inputsContainer.append($linkRegister);
 
   $login.append($logoContainer);
   $login.append($eslogan);
