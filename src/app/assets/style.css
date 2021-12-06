@@ -71,47 +71,63 @@ body {
 
 .inputs-container {
   text-align: center;
+  width: 254px;
 }
 
-.link {
+.redirect-text__left {
+  font-size: 13px;
+}
+
+.redirect-text__link {
   font-weight: 600;
   color: #000;
   text-decoration: none;
   cursor: pointer;
   font-size: 13px;
+  margin-left: 5px;
 }
 
-.link:hover {
+.redirect-text__link--noMarginLeft {
+  margin-left: 0;
+}
+
+.redirect-text__link:hover {
   color: #ff2a2a;
   text-decoration: none;
   cursor: pointer;
 }
 
+.form__input-container {
+  position: relative;
+}
+
 .form__input {
   margin-bottom: 10px;
   height: 39px;
-  width: 258px;
+  width: 100%;
   border-radius: 25px;
   border: 1px solid transparent;
   background-image: linear-gradient(white, white),
     radial-gradient(circle at top left, #ffb800, #ff6f00);
   background-origin: border-box;
   background-clip: content-box, border-box;
-  text-indent: 30px;
+  text-indent: 45px;
+  font-family: lato;
 }
 
-.icon-mail:before {
-  content: "\e90d";
-  position: relative;
-  top: 2px;
-  left: 23px;
+.form__input::placeholder {
+  color: #cbbdbd;
 }
 
-.icon-lock:before {
-  content: "\e90b";
-  position: relative;
-  top: 2px;
-  left: 23px;
+.form__icon {
+  position: absolute;
+  top: 7px;
+  left: 13px;
+  font-size: 25px;
+}
+
+.form__icon--black {
+  color: #2e2e2e;
 }
 
 .btn {
@@ -144,9 +160,15 @@ body {
   margin-bottom: 10px;
   font-size: 14px;
   font-weight: bold;
-
   border: 1px solid #cbbdbd;
   background-color: white;
+  position: relative;
+}
+
+.btn__text,
+.btn-g__text {
+  color: #000;
+  font-size: 0.9rem;
 }
 
 .timeline {
@@ -266,4 +288,14 @@ body {
 
 .modal-cerrar {
   transform: translateY(-200%);
+}
+
+/* ----------------- */
+
+.form__input.success {
+  border-color: #2ecc71;
+}
+
+.form__input.error {
+  border-color: #e74c3c;
 }
