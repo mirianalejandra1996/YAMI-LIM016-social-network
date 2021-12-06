@@ -8,11 +8,14 @@ import {
   GoogleAuthProvider,
   signInWithRedirect,
   signOut,
+  sendPasswordResetEmail,
 } from "https://www.gstatic.com/firebasejs/9.5.0/firebase-auth.js";
 
 const auth = getAuth(app);
 
-/*******************Inicio de sesion***************************/
+
+
+/*******************Inicio de sesion con correo***************************/
 export function enviarIngreso() {
   const email = document.getElementById("lemail").value;
   const password = document.getElementById("lpassword").value;
@@ -22,7 +25,7 @@ export function enviarIngreso() {
   signInWithEmailAndPassword(auth, email, password)
     .then((userCredential) => {
       const user = userCredential.user;
-      console.log({ user });
+      //console.log({ user });
       window.location.hash = "#/timeline";
     })
 
@@ -48,7 +51,7 @@ export function enviarIngreso() {
     });
 }
 
-// ---inicio de sesión con Google ----
+/************************Continuar con Google**********************************/
 const provider = new GoogleAuthProvider(app);
 
 export const loginGoogle = () => {
@@ -61,16 +64,10 @@ export const loginGoogle = () => {
       const credential = GoogleAuthProvider.credentialFromResult(result);
       const token = credential.accessToken;
       console.log(token);
-
-      // The signed-in user info.
       const user = result.user;
-      window.location.hash = "#/timeline";
-      console.log({ user });
-      console.log("mirian", user);
-      //   debugger;
     })
+    .then(window.location.hash = "#/timeline")
     .catch((error) => {
-      // Handle Errors here.
       const errorCode = error.code;
       const errorMessage = error.message;
       // The email of the user's account used.
@@ -81,7 +78,7 @@ export const loginGoogle = () => {
     });
 };
 
-// -----LogOut Google
+/***************************Cerrar sesión***************************/
 
 export const logOutGoogle = () => {
   signOut(auth)
@@ -96,7 +93,7 @@ export const logOutGoogle = () => {
     });
 };
 
-/******************Registro**************************/
+/******************Registro con correo**************************/
 
 export function enviarRegistro() {
   let user = document.getElementById("remail").value;
@@ -106,23 +103,44 @@ export function enviarRegistro() {
     .then((userCredential) => {
       // Signed in
       const user = userCredential.user;
+      window.location.hash = "#/timeline"
       // ...
     })
     .catch((error) => {
       const errorCode = error.code;
       //const errorMessage = error.message;
       console.log(errorCode);
-      /*switch(errorCode){
-        case "auth/invalid-email":
-          console.log("Ingresa tus datos");
-          break;
-        case "auth/internal-error":
-          console.log("Ingresa tu contraseña");
-          break;
-        case "auth/missing-email":
-          console.log("Ingresa tu correo electrónico");
-          break;
-      }*/
-      // ..
     });
+}
+
+/********************Olvide mi contraseña**************************/
+
+export function olvideContrasena() {
+  //const auth = getAuth();
+  const email = document.getElementById("lemail").value;
+sendPasswordResetEmail(auth, email)
+  .then(() => {
+    document.getElementById("errorLogin").innerHTML =
+          "Se envió un mensaje a su correo";
+  })
+  .catch((error) => {
+    const errorCode = error.code;
+    console.log(errorCode)
+    switch (errorCode) {
+      case "auth/user-not-found":
+        document.getElementById("errorLogin").innerHTML =
+          "Usuario no registrado";
+        break;
+      case "auth/missing-email":
+        document.getElementById("errorLogin").innerHTML =
+          "Ingrese su correo";
+        break;
+      case "auth/invalid-email":
+        document.getElementById("errorLogin").innerHTML = 
+          "Correo inválido";
+        break;
+    }
+    // ..
+  });
+
 }

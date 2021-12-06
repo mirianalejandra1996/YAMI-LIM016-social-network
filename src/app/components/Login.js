@@ -1,4 +1,4 @@
-import { enviarIngreso, loginGoogle } from "../firebase/firebase-auth.js";
+import { enviarIngreso, loginGoogle, olvideContrasena } from "../firebase/firebase-auth.js";
 import { Logo } from "./Logo.js";
 import { Eslogan } from "./Eslogan.js"
 
@@ -51,18 +51,19 @@ export const Login = () => {
 
   const $forgotPsw = document.createElement("span");
   $forgotPsw.classList.add("link");
+  $forgotPsw.classList.add("red_hover")
   $forgotPsw.textContent = `Olvidé mi contraseña`;
+  $forgotPsw.addEventListener("click", olvideContrasena)
 
  
 
   const $msgError = document.createElement("div");
-  $msgError.classList.add("error");
+  $msgError.classList.add("error-msg");
   $msgError.id = "errorLogin";
 
   const $btn = document.createElement("div");
   $btn.classList.add("btn");
   $btn.addEventListener("click", enviarIngreso);
-  $btn.href = "/#timeline";
   const $ingresar = document.createElement("span");
   $ingresar.textContent = `Iniciar sesión`;
 
@@ -72,7 +73,6 @@ export const Login = () => {
 
   const $btnG = document.createElement("div");
   $btnG.classList.add("btn-g");
-  $btn.href = "/#nada";
   const $googleIcon = document.createElement("span");
   $googleIcon.classList.add("icon-google");
 
@@ -97,7 +97,7 @@ export const Login = () => {
   $googleIcon.append($span6);
 
   const $google = document.createElement("span");
-  $google.textContent = `Iniciar con Google`;
+  $google.textContent = `Continuar con Google`;
   $google.addEventListener('click', loginGoogle)
 
   $btnG.append($googleIcon);
@@ -107,11 +107,12 @@ export const Login = () => {
 
   const $divLink = document.createElement("div");
   const $spanAsk = document.createElement("span");
-  $spanAsk.textContent = `¿No tienes una cuenta?`;
+  $spanAsk.textContent = `¿No tienes una cuenta? `;
   const $link = document.createElement("span");
   $link.id = "sign-up";
   $link.classList.add("link");
   $link.textContent = `Regístrate`;
+  $link.classList.add("red_hover")
   $link.addEventListener("click", () => {
     window.location.hash = "#/register";
   });
