@@ -1,28 +1,14 @@
 import { enviarIngreso, loginGoogle, olvideContrasena } from "../firebase/firebase-auth.js";
+import { Logo } from "./Logo.js";
+import { Eslogan } from "./Eslogan.js"
 
 export const Login = () => {
   // todas las variables que hacen referencia a elementos del dom le anteponemos el símbolo del dolar
   const $login = document.createElement("div");
   $login.classList.add("login");
 
-  const $logoContainer = document.createElement("div");
-  $logoContainer.classList.add("logo-container");
-  const $logo = document.createElement("div");
-  $logo.classList.add("logo");
-  const $logoName = document.createElement("h3");
-  $logoName.classList.add("logo-name");
-  $logoName.textContent = `Yami`;
-
-  $logoContainer.append($logo);
-  $logoContainer.append($logoName);
-
-  const $eslogan = document.createElement("div");
-  $eslogan.classList.add("eslogan-container");
-  const $esloganText = document.createElement("h2");
-  $esloganText.classList.add("eslogan-text")
-  $esloganText.textContent = `¿Listo para una nueva aventura culinaria?`;
-
-  $eslogan.append($esloganText);
+  const $logoContainer = Logo();
+  const $eslogan = Eslogan('¿Listo para una nueva aventura culinaria?')
 
   const $inputsContainer = document.createElement("div");
   $inputsContainer.classList.add("inputs-container");
@@ -61,7 +47,7 @@ export const Login = () => {
   $form.append($formInputContainerFirst);
   $form.append($formInputContainerSecond);
 
-  document.createElement("br");
+  
 
   const $forgotPsw = document.createElement("span");
   $forgotPsw.classList.add("link");
@@ -69,7 +55,7 @@ export const Login = () => {
   $forgotPsw.textContent = `Olvidé mi contraseña`;
   $forgotPsw.addEventListener("click", olvideContrasena)
 
-  document.createElement("br");
+ 
 
   const $msgError = document.createElement("div");
   $msgError.classList.add("error-msg");
@@ -83,7 +69,7 @@ export const Login = () => {
 
   $btn.append($ingresar);
 
-  document.createElement("br");
+ 
 
   const $btnG = document.createElement("div");
   $btnG.classList.add("btn-g");

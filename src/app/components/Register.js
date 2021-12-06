@@ -1,28 +1,14 @@
 import { enviarRegistro, loginGoogle } from "../firebase/firebase-auth.js";
 import { ModalTerminos } from "./Modal.js";
+import { Logo } from "./Logo.js"
+import { Eslogan } from "./Eslogan.js"
 
 export const Registro = () => {
   const $register = document.createElement("div");
   $register.classList.add("register-container");
 
-  const $logoContainer = document.createElement("div");
-  $logoContainer.classList.add("logo-container");
-  const $logo = document.createElement("div");
-  $logo.classList.add("logo");
-  const $logoName = document.createElement("h3");
-  $logoName.classList.add("logo-name");
-  $logoName.textContent = `Yami`;
-
-  $logoContainer.append($logo);
-  $logoContainer.append($logoName);
-
-  const $eslogan = document.createElement("div");
-  $eslogan.classList.add("eslogan-container");
-  const $esloganText = document.createElement("h2");
-  $esloganText.classList.add("eslogan-text");
-  $esloganText.textContent = `¿Listo para una nueva aventura culinaria?`;
-
-  $eslogan.append($esloganText);
+  const $logoContainer = Logo();
+  const $eslogan = Eslogan('¿Listo para una nueva aventura culinaria?')
 
   const $inputsContainer = document.createElement("div");
   $inputsContainer.classList.add("inputs-container");
@@ -54,12 +40,24 @@ export const Registro = () => {
   $formInputSecond.id = "rpassword";
   $formInputSecond.name = "rpassword";
   $formInputSecond.placeholder = "Contraseña";
+  
+  const $terminos = document.createElement("p")
+  $terminos.textContent = "Al continuar acepto los Términos de Servicio y"
+  $terminos.classList.add('parrafo-terminos')
+  const $política = document.createElement("a");
+  $política.textContent = "Política de Privacidad";
+  $política.classList.add('parrafo-terminos','parrafo-politica')
+
+
 
   $formInputContainerSecond.append($iconLock);
   $formInputContainerSecond.append($formInputSecond);
 
   $form.append($formInputContainerFirst);
   $form.append($formInputContainerSecond);
+  $form.append($terminos);
+  $form.append($política);
+
 
   document.createElement("br");
 
@@ -143,21 +141,18 @@ export const Registro = () => {
   $inputsContainer.append($btnG);
   $inputsContainer.append($divLink);
 
-  const $terminos = document.createElement("a");
-  $terminos.textContent = "terminos";
 
-  $register.append($logo);
-  $register.append($logoContainer);
+  $register.append($logoContainer)
   $register.append($eslogan);
   $register.append($inputsContainer);
-  $register.append($terminos);
+
+
 
   const { $modalContenedor, abrirModal } = ModalTerminos();
 
-  $register.append($terminos);
   $register.append($modalContenedor);
 
-  $terminos.addEventListener("click", (e) => {
+  $política.addEventListener("click", (e) => {
     e.preventDefault();
     abrirModal();
   });
