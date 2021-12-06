@@ -17,6 +17,24 @@ export const Registro = () => {
   $form.classList.add("form");
   $form.id = "form-register";
 
+  // ---------------------
+
+  const $formInputContainerNombre = document.createElement("div");
+  $formInputContainerNombre.classList.add("form__input-container");
+  const $iconName = document.createElement("span");
+  $iconName.classList.add("icon-usuario");
+  const $formInputName = document.createElement("input");
+  $formInputName.classList.add("form__input");
+  $formInputName.type = "nombre";
+  $formInputName.id = "nombre";
+  $formInputName.name = "nombre";
+  $formInputName.placeholder = "Nombre";
+
+  $formInputContainerNombre.append($iconName);
+  $formInputContainerNombre.append($formInputName);
+
+  // ---------------------
+
   const $formInputContainerFirst = document.createElement("div");
   $formInputContainerFirst.classList.add("form__input-container");
   const $iconMail = document.createElement("span");
@@ -49,6 +67,7 @@ export const Registro = () => {
   $formInputContainerSecond.append($iconLock);
   $formInputContainerSecond.append($formInputSecond);
 
+  $form.append($formInputContainerNombre);
   $form.append($formInputContainerFirst);
   $form.append($formInputContainerSecond);
 
