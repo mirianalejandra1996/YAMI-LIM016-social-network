@@ -267,3 +267,6 @@ body {
 .modal-cerrar {
   transform: translateY(-200%);
 }
+red_hover:hover{
+  color: red;
+}

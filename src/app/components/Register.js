@@ -128,6 +128,7 @@ export const Registro = () => {
   const $link = document.createElement("span");
   $link.id = "sign-up";
   $link.classList.add("link");
+  $link.classList.add("red_hover")
   $link.textContent = `Inicia sesión`;
   $link.addEventListener("click", () => {
     window.location.hash = "#/";

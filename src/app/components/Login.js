@@ -17,8 +17,9 @@ export const Login = () => {
   $logoContainer.append($logoName);
 
   const $eslogan = document.createElement("div");
-  $eslogan.classList.add("eslogan");
+  $eslogan.classList.add("eslogan-container");
   const $esloganText = document.createElement("h2");
+  $esloganText.classList.add("eslogan-text")
   $esloganText.textContent = `¿Listo para una nueva aventura culinaria?`;
 
   $eslogan.append($esloganText);
@@ -64,13 +65,14 @@ export const Login = () => {
 
   const $forgotPsw = document.createElement("span");
   $forgotPsw.classList.add("link");
+  $forgotPsw.classList.add("red_hover")
   $forgotPsw.textContent = `Olvidé mi contraseña`;
   $forgotPsw.addEventListener("click", olvideContrasena)
 
   document.createElement("br");
 
   const $msgError = document.createElement("div");
-  $msgError.classList.add("error");
+  $msgError.classList.add("error-msg");
   $msgError.id = "errorLogin";
 
   const $btn = document.createElement("div");
@@ -119,11 +121,12 @@ export const Login = () => {
 
   const $divLink = document.createElement("div");
   const $spanAsk = document.createElement("span");
-  $spanAsk.textContent = `¿No tienes una cuenta?`;
+  $spanAsk.textContent = `¿No tienes una cuenta? `;
   const $link = document.createElement("span");
   $link.id = "sign-up";
   $link.classList.add("link");
   $link.textContent = `Regístrate`;
+  $link.classList.add("red_hover")
   $link.addEventListener("click", () => {
     window.location.hash = "#/register";
   });

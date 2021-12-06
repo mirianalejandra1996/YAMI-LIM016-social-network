@@ -120,9 +120,8 @@ export function olvideContrasena() {
   const email = document.getElementById("lemail").value;
 sendPasswordResetEmail(auth, email)
   .then(() => {
-    alert("Se envió un email para reestablecer su contraseña")
-    // Password reset email sent!
-    // ..
+    document.getElementById("errorLogin").innerHTML =
+          "Se envió un mensaje a su correo";
   })
   .catch((error) => {
     const errorCode = error.code;
