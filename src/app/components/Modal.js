@@ -8,24 +8,26 @@ export function ModalTerminos () {
 
     const $cerrar = document.createElement('p')
     $cerrar.classList.add('cerrar')
-    $cerrar.textContent = 'X'
+    $cerrar.textContent = 'Salir'
 
     const $modaltexto = document.createElement('div')
     $modaltexto.classList.add('modal-textos')
 
     const $Titulo = document.createElement('h2')
-    $Titulo.textContent='Terminos y Condiciones'
+    $Titulo.textContent='Términos y Condiciones'
     
-
+    const $contenedorMensaje = document.createElement('div')
+    $contenedorMensaje.classList.add('contenedor-mensaje')
     const $mensaje = document.createElement('p')
-    $mensaje.textContent = 'Mediante tu acceso o uso de los Servicios acuerdas obligarte al cumplimiento de los presentes Términos y Condiciones, los cuales regulan la relación contractual entre tu persona y el Proveedor del Servicio. Si no aceptas estos Términos y Condiciones, no podrás acceder o usar los Servicios. El Proveedor del Servicio podrá poner fin de manera inmediata a estos Términos y Condiciones o cualquiera de los Servicios respecto a ti, en general, y dejar de ofrecer o denegar el acceso o uso de los Servicios de manera total o parcial, en cualquier momento y por cualquier motivo'
+    $mensaje.textContent = 'El presente Política de Privacidad establece los términos en que YAMI usa y protege la información que es proporcionada por sus usuarios al momento de utilizar si app. Esta compañía está comprometida con la seguridad de los datos de sus usuarios. Cuando le pedimos llenar los campos de información personal con la cual usted pueda ser identificado, lo hacemos asegurando que sólo se empleará de acuerdo con los términos de este documento. Sin embargo esta Política de Privacidad puede cambiar con el tiempo o ser actualizada por lo que le recomendamos y enfatizamos revisar continuamente esta app para asegurarse que está de acuerdo con dichos cambios.'
    
    
     $modalContenedor.append($modalCerrar)
-    $modalCerrar.append($cerrar)
     $modalCerrar.append($modaltexto)
     $modaltexto.append($Titulo)
-    $modaltexto.append($mensaje)
+    $contenedorMensaje.append($mensaje)
+    $modaltexto.append($contenedorMensaje)
+    $modaltexto.append($cerrar)
 
     $modalContenedor.style.opacity = "0"
     $modalContenedor.style.visibility = "hidden"

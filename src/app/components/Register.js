@@ -54,12 +54,24 @@ export const Registro = () => {
   $formInputSecond.id = "rpassword";
   $formInputSecond.name = "rpassword";
   $formInputSecond.placeholder = "Contraseña";
+  
+  const $terminos = document.createElement("p")
+  $terminos.textContent = "Al continuar acepto los Términos de Servicio y"
+  $terminos.classList.add('parrafo-terminos')
+  const $política = document.createElement("a");
+  $política.textContent = "Política de Privacidad";
+  $política.classList.add('parrafo-terminos','parrafo-politica')
+
+
 
   $formInputContainerSecond.append($iconLock);
   $formInputContainerSecond.append($formInputSecond);
 
   $form.append($formInputContainerFirst);
   $form.append($formInputContainerSecond);
+  $form.append($terminos);
+  $form.append($política);
+
 
   document.createElement("br");
 
@@ -141,21 +153,19 @@ export const Registro = () => {
   $inputsContainer.append($btnG);
   $inputsContainer.append($divLink);
 
-  const $terminos = document.createElement("a");
-  $terminos.textContent = "terminos";
-
+ 
   $register.append($logo);
   $register.append($logoContainer);
   $register.append($eslogan);
   $register.append($inputsContainer);
-  $register.append($terminos);
+
+
 
   const { $modalContenedor, abrirModal } = ModalTerminos();
 
-  $register.append($terminos);
   $register.append($modalContenedor);
 
-  $terminos.addEventListener("click", (e) => {
+  $política.addEventListener("click", (e) => {
     e.preventDefault();
     abrirModal();
   });
