@@ -14,6 +14,7 @@ export function ModalTerminos () {
     $modaltexto.classList.add('modal-textos')
 
     const $Titulo = document.createElement('h2')
+    $Titulo.classList.add('modal-titulo')
     $Titulo.textContent='Términos y Condiciones'
     
     const $contenedorMensaje = document.createElement('div')
