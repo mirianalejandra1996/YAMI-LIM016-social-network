@@ -75,6 +75,10 @@ body {
 }
 
 .redirect-text__left {
+  font-size: 16px;
+}
+
+.redirect-text__left-small {
   font-size: 13px;
 }
 
@@ -83,8 +87,12 @@ body {
   color: #000;
   text-decoration: none;
   cursor: pointer;
-  font-size: 13px;
+  font-size: 16px;
   margin-left: 5px;
+}
+
+.redirect-text__link-small {
+  font-size: 13px;
 }
 
 .redirect-text__link--noMarginLeft {
@@ -257,33 +265,33 @@ body {
 }
 
 .modal {
-  width: 80%;
-  height: 60%;
+  width: 90%;
   background-color: #fff;
-  text-align: center;
   display: flex;
-  flex-direction: column;
-  justify-content: space-evenly;
-  position: relative;
   transition: transform 1s;
   transform: translateY(0%);
   border-radius: 10px;
-  align-items: center;
-  /*overflow: hidden;*/
 }
 
+.contenedor-mensaje {
+  padding: 20px;
+  border-top: 1px solid #efeff1;
+  border-bottom: 1px solid #efeff1;
+}
+
+.modal-textos {
+  text-align: justify;
+  font-size: smaller;
+}
+.modal-titulo {
+  padding: 20px;
+  text-align: center;
+}
 .cerrar {
-  position: absolute;
-  top: 5px;
-  right: 5px;
-  display: block;
-  width: 25px;
-  height: 25px;
-  background: #c44a4a;
-  color: #fff;
-  line-height: 25px;
+  padding: 20px;
+  text-align: center;
+  color: #f51616;
   cursor: pointer;
-  border-radius: 50%;
 }
 
 .modal-cerrar {
@@ -298,4 +306,15 @@ body {
 
 .form__input.error {
   border-color: #e74c3c;
+}
+
+.red_hover:hover {
+  color: red;
+}
+/* terminos y condiciones */
+.parrafo-terminos {
+  font-size: smaller;
+}
+.parrafo-politica:hover {
+  color: #f51616;
 }
