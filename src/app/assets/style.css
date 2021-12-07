@@ -318,3 +318,13 @@ body {
 .parrafo-politica:hover {
   color: #f51616;
 }
+/*EsTILOS Spinner*/
+.spinnerContainer{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+}
+.spinner{
+  width: 80px;
+}

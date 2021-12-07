@@ -12,7 +12,8 @@ import {
   onAuthStateChanged,
 } from "https://www.gstatic.com/firebasejs/9.5.0/firebase-auth.js";
 
-const auth = getAuth(app);
+export const auth = getAuth(app);
+
 const provider = new GoogleAuthProvider(app);
 
 /*******************Inicio de sesion con correo***************************/
@@ -58,36 +59,36 @@ const user = auth.currentUser;
 console.log("este es el user actual", user);
 console.log("esto es auth", auth);
 
-getRedirectResult(auth)
-  .then((result) => {
-    console.log("check result getRedirectresult", result);
-    // window.location.hash = "#/timeline";
-    result ? (window.location.hash = "#/timeline") : false;
-  })
-  .catch((error) => {
-    console.log("error en getredirectresult", error);
-  });
+// getRedirectResult(auth)
+//   .then((result) => {
+//     console.log("check result getRedirectresult", result);
+//     // window.location.hash = "#/timeline";
+//     result ? (window.location.hash = "#/timeline") : false;
+//   })
+//   .catch((error) => {
+//     console.log("error en getredirectresult", error);
+//   });
 
 
 // ! Consultar como se usa, cuando se usa??
-onAuthStateChanged(auth, (user) => {
-  if (user) {
-    window.location.hash = "#/timeline";
-    // User is signed in, see docs for a list of available properties
-    // https://firebase.google.com/docs/reference/js/firebase.User
-    const uid = user.uid;
+// onAuthStateChanged(auth, (user) => {
+//   if (user) {
+//     window.location.hash = "#/timeline";
+//     // User is signed in, see docs for a list of available properties
+//     // https://firebase.google.com/docs/reference/js/firebase.User
+//     const uid = user.uid;
 
-    console.log("el usuario ya está logueado!");
-    // ...
-  } else {
-      // User is signed out
-      // ...
+//     console.log("el usuario ya está logueado!");
+//     // ...
+//   } else {
+//       // User is signed out
+//       // ...
   
-      // window.location.hash = "#/";
+//       // window.location.hash = "#/";
 
-    console.log("el usuario ya está sign out!");
-  }
-});
+//     console.log("el usuario ya está sign out!");
+//   }
+// });
 
 export const loginGoogle = () => {
   signInWithRedirect(auth, provider);
@@ -101,7 +102,7 @@ export const logOutGoogle = () => {
     .then(() => {
       // Sign-out successful.
       console.log("Haz salido de tu cuenta");
-      window.location.hash = "#/";
+      // window.location.hash = "#/";
     })
     .catch((error) => {
       // An error happened.
@@ -120,9 +121,8 @@ export function enviarRegistro() {
 
   let email = $email.value.trim();
   let password = $password.value.trim();
-
   // Validando los campos
-  if (validate_email(email) == false || validate_password(password) == false) {
+  if (!validate_email(email) || !validate_password(password)) {
     // document.getElementById("errorLogin").textContent = "Datos inválidos";
     document.getElementById("errorLogin").textContent =
       "Datos inválidos, ingrese un correo y una clave entre 8-14 dìgitos";
@@ -147,14 +147,15 @@ export function enviarRegistro() {
     // if ()
     // console.log('Alguno de los campos es inválido')
 
-    createUserWithEmailAndPassword(auth, user, password)
+    createUserWithEmailAndPassword(auth, email, password)
       .then((userCredential) => {
         // Signed in
         const user = userCredential.user;
         const userCurrent = auth.currentUser;
 
         //Añadimos a este usuario en nuestra base de datos
-
+        
+        //quien hizo esto ?
         const database_ref = database.ref();
 
         // Creamos la data del usuario
@@ -166,7 +167,8 @@ export function enviarRegistro() {
         //   //
         // };
 
-        // Lo añadimos a nuestra base de datos de firebase
+        // Lo añadimos a nuestra base de datos de firebase 
+        //--! esta base de datos es muy antigua
         database_ref.child("user/" + user.uid).set(user_data);
 
         console.log("usuario creado");
@@ -190,13 +192,8 @@ export function enviarRegistro() {
 // Funciones validadoras
 function validate_email(email) {
   const expression = /^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$/;
+  return expression.test(email) 
 
-  if (expression.test(email) == true) {
-    // El email está bueno
-    return true;
-  } else {
-    return false;
-  }
 }
 
 function validate_password(password) {
@@ -210,13 +207,9 @@ function validate_password(password) {
   // Al menos 1 caracter especial
 
   const expression =
-    /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[$@$!%*?&])([A-Za-z\d$@$!%*?&]|[^ ]){8,16}$/;
-
-  if (expression.test(password) == true) {
-    return true;
-  } else {
-    return false;
-  }
+  /^.{6,14}$/;
+  return expression.test(password)
+  
 }
 
 function validate_field(field) {

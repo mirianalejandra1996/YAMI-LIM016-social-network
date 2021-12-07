@@ -3,10 +3,7 @@
 import { Router } from "./view-controller/Router.js";
 
 document.addEventListener("DOMContentLoaded", () => {
-  Router(window.location.hash);
-  window.addEventListener("hashchange", () => {
-    Router(window.location.hash);
-  });
+  Router();
 });
 
 
