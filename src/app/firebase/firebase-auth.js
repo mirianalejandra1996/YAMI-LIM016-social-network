@@ -19,6 +19,10 @@ const provider = new GoogleAuthProvider(app);
 export function enviarIngreso() {
   const email = document.getElementById("lemail").value;
   const password = document.getElementById("lpassword").value;
+
+  let $email = document.getElementById("lemail");
+  let $password = document.getElementById("lpassword");
+
   // console.log(email);
   // console.log(password);
 
@@ -32,6 +36,10 @@ export function enviarIngreso() {
 
     .catch((error) => {
       const errorCode = error.code;
+
+      $email.classList.add("error");
+      $password.classList.add("error");
+
       switch (errorCode) {
         case "auth/user-not-found":
           document.getElementById("errorLogin").innerHTML =
@@ -68,7 +76,6 @@ getRedirectResult(auth)
     console.log("error en getredirectresult", error);
   });
 
-
 // ! Consultar como se usa, cuando se usa??
 onAuthStateChanged(auth, (user) => {
   if (user) {
@@ -80,10 +87,10 @@ onAuthStateChanged(auth, (user) => {
     console.log("el usuario ya está logueado!");
     // ...
   } else {
-      // User is signed out
-      // ...
-  
-      // window.location.hash = "#/";
+    // User is signed out
+    // ...
+
+    // window.location.hash = "#/";
 
     console.log("el usuario ya está sign out!");
   }
@@ -115,31 +122,58 @@ export function enviarRegistro() {
   document.getElementById("errorLogin").textContent = "";
   // Primera vista de registro
 
+  let $name = document.getElementById("rname");
   let $email = document.getElementById("remail");
   let $password = document.getElementById("rpassword");
 
+  $name.classList.remove("error");
+  $email.classList.remove("error");
+  $password.classList.remove("error");
+
+  let name = $name.value.trim();
   let email = $email.value.trim();
   let password = $password.value.trim();
 
   // Validando los campos
-  if (validate_email(email) == false || validate_password(password) == false) {
-    // document.getElementById("errorLogin").textContent = "Datos inválidos";
-    document.getElementById("errorLogin").textContent =
-      "Datos inválidos, ingrese un correo y una clave entre 8-14 dìgitos";
-    console.log(
-      "Datos inválidos, ingrese un correo y una clave entre 8-14 dìgitos"
-    );
+
+  // ------------------------------------
+
+  if (!validate_email(email) || !validate_password(password)) {
+    document.getElementById("errorLogin").textContent = "Datos inválidos";
+  }
+
+  if (
+    !validate_field(name) ||
+    !validate_field(email) ||
+    !validate_field(password)
+  ) {
+  }
+  if (
+    validate_email(email) == false ||
+    validate_password(password) == false ||
+    validate_field(field) == false
+  ) {
+    // ------------------------------------
+
+    document.getElementById("errorLogin").textContent = "Datos inválidos";
+    // document.getElementById("errorLogin").textContent =
+    //   "Datos inválidos, ingrese un correo y una clave entre 8-14 dìgitos";
 
     // Pinta el input
+
+    $name.classList.remove("success");
     $email.classList.remove("success");
     $password.classList.remove("success");
 
+    $name.classList.add("error");
     $email.classList.add("error");
     $password.classList.add("error");
   } else {
+    $name.classList.remove("error");
     $email.classList.remove("error");
     $password.classList.remove("error");
 
+    $name.classList.add("success");
     $email.classList.add("success");
     $password.classList.add("success");
 
@@ -147,7 +181,7 @@ export function enviarRegistro() {
     // if ()
     // console.log('Alguno de los campos es inválido')
 
-    createUserWithEmailAndPassword(auth, user, password)
+    createUserWithEmailAndPassword(auth, email, password)
       .then((userCredential) => {
         // Signed in
         const user = userCredential.user;
@@ -220,6 +254,12 @@ function validate_password(password) {
 }
 
 function validate_field(field) {
+  // const expression = /^[a-zA-ZÀ-ÿ\s]{1,40}$/;
+
+  // if (!expression.test(field) == true){
+  //   return false
+  // }
+
   if (field == null) {
     return false;
   }

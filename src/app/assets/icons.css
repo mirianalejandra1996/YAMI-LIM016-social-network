@@ -1,10 +1,10 @@
 @font-face {
   font-family: "icomoon";
-  src: url("fonts/icomoon.eot?6tjx6i");
-  src: url("fonts/icomoon.eot?6tjx6i#iefix") format("embedded-opentype"),
-    url("fonts/icomoon.ttf?6tjx6i") format("truetype"),
-    url("fonts/icomoon.woff?6tjx6i") format("woff"),
-    url("fonts/icomoon.svg?6tjx6i#icomoon") format("svg");
+  src: url("fonts/icomoon.eot?k1nh3q");
+  src: url("fonts/icomoon.eot?k1nh3q#iefix") format("embedded-opentype"),
+    url("fonts/icomoon.ttf?k1nh3q") format("truetype"),
+    url("fonts/icomoon.woff?k1nh3q") format("woff"),
+    url("fonts/icomoon.svg?k1nh3q#icomoon") format("svg");
   font-weight: normal;
   font-style: normal;
   font-display: block;
@@ -26,6 +26,9 @@
   -moz-osx-font-smoothing: grayscale;
 }
 
+.icon-user:before {
+  content: "\e916";
+}
 .icon-google .path1:before {
   content: "\e900";
   color: rgb(22, 126, 230);
