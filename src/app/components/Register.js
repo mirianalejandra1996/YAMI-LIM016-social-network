@@ -22,11 +22,16 @@ export const Registro = () => {
   const $formInputContainerNombre = document.createElement("div");
   $formInputContainerNombre.classList.add("form__input-container");
   const $iconName = document.createElement("span");
-  $iconName.classList.add("icon-usuario");
+  $iconName.classList.add("icon-user");
+  $iconName.classList.add("form__icon");
+  $iconName.classList.add("form__icon--black");
   const $formInputName = document.createElement("input");
   $formInputName.classList.add("form__input");
-  $formInputName.type = "nombre";
-  $formInputName.id = "nombre";
+
+
+
+  $formInputName.type = "text";
+  $formInputName.id = "rname";
   $formInputName.name = "nombre";
   $formInputName.placeholder = "Nombre";
 
@@ -35,8 +40,8 @@ export const Registro = () => {
 
   // ---------------------
 
-  const $formInputContainerFirst = document.createElement("div");
-  $formInputContainerFirst.classList.add("form__input-container");
+  const $formInputContainerEmail = document.createElement("div");
+  $formInputContainerEmail.classList.add("form__input-container");
   const $iconMail = document.createElement("span");
   $iconMail.classList.add("icon-mail");
   $iconMail.classList.add("form__icon");
@@ -48,11 +53,11 @@ export const Registro = () => {
   $formInputFirst.name = "remail";
   $formInputFirst.placeholder = "Correo electrónico";
 
-  $formInputContainerFirst.append($iconMail);
-  $formInputContainerFirst.append($formInputFirst);
+  $formInputContainerEmail.append($iconMail);
+  $formInputContainerEmail.append($formInputFirst);
 
-  const $formInputContainerSecond = document.createElement("div");
-  $formInputContainerSecond.classList.add("form__input-container");
+  const $formInputContainerPassword = document.createElement("div");
+  $formInputContainerPassword.classList.add("form__input-container");
   const $iconLock = document.createElement("span");
   $iconLock.classList.add("icon-lock");
   $iconLock.classList.add("form__icon");
@@ -64,12 +69,12 @@ export const Registro = () => {
   $formInputSecond.name = "rpassword";
   $formInputSecond.placeholder = "Contraseña";
 
-  $formInputContainerSecond.append($iconLock);
-  $formInputContainerSecond.append($formInputSecond);
+  $formInputContainerPassword.append($iconLock);
+  $formInputContainerPassword.append($formInputSecond);
 
   $form.append($formInputContainerNombre);
-  $form.append($formInputContainerFirst);
-  $form.append($formInputContainerSecond);
+  $form.append($formInputContainerEmail);
+  $form.append($formInputContainerPassword);
 
   const $errorContainer = document.createElement("div");
   $errorContainer.classList.add("err-container");
