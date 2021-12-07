@@ -119,12 +119,6 @@ export function enviarRegistro() {
     !validate_field(email) ||
     !validate_field(password)
   ) {
-  }
-  if (
-    validate_email(email) == false ||
-    validate_password(password) == false ||
-    validate_field(field) == false
-  ) {
     // ------------------------------------
 
     document.getElementById("errorLogin").textContent = "Datos inválidos";
