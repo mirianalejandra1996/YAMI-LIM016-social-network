@@ -346,3 +346,18 @@ input[type="password"]:focus {
 .spinner{
   width: 80px;
 }
+
+/*Header*/
+
+.header-timeline{
+  width: 100%;
+  background-image: url("./Header-background.svg");
+  justify-content: center;
+  display: flex;
+  min-height: 80px;
+}
+.logo-timeline{
+  content:url("./logo.svg");
+  align-self: center;
+  height: 50px
+}
