@@ -2,6 +2,7 @@ import { logOutGoogle } from "../firebase/firebase-auth.js";
 import { HeaderRetro } from "./Header_retro.js"
 import { HeaderSimple } from "./Header_simple.js"
 
+import { Menu } from "./Menu.js"
 export const Timeline = () => {
   const root= document.getElementById("root")
   root.classList.remove("main-container")
@@ -29,6 +30,10 @@ export const Timeline = () => {
   $botonPrueba.addEventListener("click", logOutGoogle);
 
   $linkContainer.append($botonPrueba);
+
+  const menu = Menu();
+
+  $timelinePrueba.append(menu)
 
   return $timelinePrueba;
 };
