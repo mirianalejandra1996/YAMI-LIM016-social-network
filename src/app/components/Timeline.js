@@ -1,20 +1,24 @@
 import { logOutGoogle } from "../firebase/firebase-auth.js";
+import { HeaderRetro } from "./Header_retro.js"
+import { HeaderSimple } from "./Header_simple.js"
+
 import { Menu } from "./Menu.js"
 export const Timeline = () => {
+  const root= document.getElementById("root")
+  root.classList.remove("main-container")
+
   const $timelinePrueba = document.createElement("div");
 
-  const $logoContainer = document.createElement("div");
-  $logoContainer.classList.add("logo-container");
-  $timelinePrueba.append($logoContainer);
+  const header = HeaderRetro()
+  // const header = HeaderSimple()
+  $timelinePrueba.append(header)
 
-  const $iconLogo = document.createElement("div");
-  $iconLogo.classList.add("logo");
-
-  const $logoName = document.createElement("h3");
-  $logoName.textContent = "Yami";
-
-  $logoContainer.append($iconLogo);
-  $logoContainer.append($logoName);
+  const btn = document.createElement("button")
+  btn.textContent=`Postear`
+  btn.addEventListener("click", () => {
+    window.location.hash = "#/formPost";
+  })
+  $timelinePrueba.append(btn)
 
   const $linkContainer = document.createElement("div");
   $timelinePrueba.append($linkContainer);

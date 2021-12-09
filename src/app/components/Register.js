@@ -4,6 +4,9 @@ import { Logo } from "./Logo.js";
 import { Eslogan } from "./Eslogan.js";
 
 export const Registro = () => {
+  const root= document.getElementById("root")
+  root.classList.add("main-container")
+
   const $register = document.createElement("div");
   $register.classList.add("register-container");
 
