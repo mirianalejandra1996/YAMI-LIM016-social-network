@@ -1,5 +1,5 @@
 import { logOutGoogle } from "../firebase/firebase-auth.js";
-
+import { Menu } from "./Menu.js"
 export const Timeline = () => {
   const $timelinePrueba = document.createElement("div");
 
@@ -26,6 +26,10 @@ export const Timeline = () => {
   $botonPrueba.addEventListener("click", logOutGoogle);
 
   $linkContainer.append($botonPrueba);
+
+  const menu = Menu();
+
+  $timelinePrueba.append(menu)
 
   return $timelinePrueba;
 };
