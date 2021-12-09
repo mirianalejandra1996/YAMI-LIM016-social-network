@@ -16,6 +16,10 @@ export const auth = getAuth(app);
 
 const provider = new GoogleAuthProvider(app);
 
+// ! Qué dará esto?
+auth.languageCode = "es";
+console.log(auth.languageCode);
+
 /*******************Inicio de sesion con correo***************************/
 export function enviarIngreso() {
   const email = document.getElementById("lemail").value;
@@ -66,8 +70,6 @@ export function enviarIngreso() {
 const user = auth.currentUser;
 console.log("este es el user actual", user);
 console.log("esto es auth", auth);
-
-
 
 export const loginGoogle = () => {
   signInWithRedirect(auth, provider);
@@ -154,7 +156,7 @@ export function enviarRegistro() {
         const userCurrent = auth.currentUser;
 
         //Añadimos a este usuario en nuestra base de datos
-        
+
         //quien hizo esto ?
         const database_ref = database.ref();
 
@@ -167,7 +169,7 @@ export function enviarRegistro() {
         //   //
         // };
 
-        // Lo añadimos a nuestra base de datos de firebase 
+        // Lo añadimos a nuestra base de datos de firebase
         //--! esta base de datos es muy antigua
         database_ref.child("user/" + user.uid).set(user_data);
 
@@ -192,8 +194,7 @@ export function enviarRegistro() {
 // Funciones validadoras
 function validate_email(email) {
   const expression = /^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$/;
-  return expression.test(email) 
-
+  return expression.test(email);
 }
 
 function validate_password(password) {
@@ -206,10 +207,8 @@ function validate_password(password) {
   // No espacios en blanco
   // Al menos 1 caracter especial
 
-  const expression =
-  /^.{6,14}$/;
-  return expression.test(password)
-  
+  const expression = /^.{6,14}$/;
+  return expression.test(password);
 }
 
 function validate_field(field) {
