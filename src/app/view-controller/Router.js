@@ -1,9 +1,6 @@
 import { auth } from "../firebase/firebase-auth.js";
 import { components } from "../view-controller/index.js";
-import {
- 
-  onAuthStateChanged,
-} from "https://www.gstatic.com/firebasejs/9.5.0/firebase-auth.js";
+import { onAuthStateChanged } from "https://www.gstatic.com/firebasejs/9.5.0/firebase-auth.js";
 
 
 //se ejecuta una sola vez
@@ -47,9 +44,16 @@ export const Router = () => {
           return window.location.hash = "#/"
         }
       }
+      case "#/formPost": {
+        if(auth.currentUser) {
+          return $root.appendChild(components.formPost());
+        } else{
+          return window.location.hash = "#/"
+        }
+      }
       default:
-          return $root.appendChild(components.login());
-          break;
+        return $root.appendChild(components.login());
+        break;
     }
   }
 

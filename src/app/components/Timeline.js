@@ -12,6 +12,13 @@ export const Timeline = () => {
   // const header = HeaderSimple()
   $timelinePrueba.append(header)
 
+  const btn = document.createElement("button")
+  btn.textContent=`Postear`
+  btn.addEventListener("click", () => {
+    window.location.hash = "#/formPost";
+  })
+  $timelinePrueba.append(btn)
+
   const $linkContainer = document.createElement("div");
   $timelinePrueba.append($linkContainer);
 
