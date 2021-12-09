@@ -347,17 +347,28 @@ input[type="password"]:focus {
   width: 80px;
 }
 
-/*Header*/
+/*Header simple*/
 
 .header-timeline{
   width: 100%;
   background-image: url("./Header-background.svg");
-  justify-content: center;
   display: flex;
   min-height: 80px;
 }
 .logo-timeline{
   content:url("./logo.svg");
+  height: 50px;
   align-self: center;
-  height: 50px
+  position: relative;
+  width: 100%;
+}
+
+/*Header retroceso*/
+
+.header_icon{
+  transform: rotate(180deg);
+  position: absolute;
+  padding: 15px;
+  color:slategrey;
+  font-size: 22px;
 }

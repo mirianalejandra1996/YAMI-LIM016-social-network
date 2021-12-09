@@ -1,13 +1,15 @@
 import { logOutGoogle } from "../firebase/firebase-auth.js";
+import { HeaderRetro } from "./Header_retro.js"
 import { HeaderSimple } from "./Header_simple.js"
 
 export const Timeline = () => {
   const root= document.getElementById("root")
   root.classList.remove("main-container")
-  
+
   const $timelinePrueba = document.createElement("div");
 
-  const header = HeaderSimple()
+  const header = HeaderRetro()
+  // const header = HeaderSimple()
   $timelinePrueba.append(header)
 
   const $linkContainer = document.createElement("div");
