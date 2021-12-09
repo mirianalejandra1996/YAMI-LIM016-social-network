@@ -1,31 +1,24 @@
 import { logOutGoogle } from "../firebase/firebase-auth.js";
+import { Header } from "./Cabecera.js";
+import { Post } from "./Post.js";
 
 export const Timeline = () => {
-  const $timelinePrueba = document.createElement("div");
+  const $timeline = document.createElement("div");
 
-  const $logoContainer = document.createElement("div");
-  $logoContainer.classList.add("logo-container");
-  $timelinePrueba.append($logoContainer);
+  // Importamos la cabecera
+  const $header = Header();
 
-  const $iconLogo = document.createElement("div");
-  $iconLogo.classList.add("logo");
+  // Contenedor de las publicaciones
+  const $postsContainer = document.createElement("div");
+  $postsContainer.classList.add("notification-grid");
 
-  const $logoName = document.createElement("h3");
-  $logoName.textContent = "Yami";
+  const $post = Post();
 
-  $logoContainer.append($iconLogo);
-  $logoContainer.append($logoName);
+  $postsContainer.append($post);
 
-  const $linkContainer = document.createElement("div");
-  $timelinePrueba.append($linkContainer);
+  // --------------------------------------------------
+  $timeline.append($header);
+  $timeline.append($postsContainer);
 
-  const $botonPrueba = document.createElement("span");
-  $botonPrueba.classList.add("link");
-  $botonPrueba.textContent = "Sign Out";
-
-  $botonPrueba.addEventListener("click", logOutGoogle);
-
-  $linkContainer.append($botonPrueba);
-
-  return $timelinePrueba;
+  return $timeline;
 };
