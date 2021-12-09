@@ -34,6 +34,9 @@ export const Login = () => {
   // console.log("checking");
 
   // todas las variables que hacen referencia a elementos del dom le anteponemos el símbolo del dolar
+  const root= document.getElementById("root")
+  root.classList.add("main-container")
+
   const $login = document.createElement("div");
   $login.classList.add("login");
 
