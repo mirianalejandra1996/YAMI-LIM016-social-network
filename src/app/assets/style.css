@@ -426,23 +426,35 @@ input[type="password"]:focus {
   padding: 8px 0px;
   border-radius: 7px;
   font-size: 14px;
-  text-indent: 20px;
+  /* text-indent: 20px; */
   background-color:#FA610C;
   border: transparent;
   color: #ffff;
 }
 .btnIconsTag{
-  position: absolute;
-  color: #fff;
-  left: 55px;
-  top: 530px;
+  /* left: 55px;
+  top: 530px; */
   font-size: small;
+  margin-left: 12px;
 }
 .btnIconsPost{
   position: absolute;
-  color: #fff;
-  left: 242px;
-  top: 529px;
   font-size: large;
   transform: rotate(90deg);
+  margin-top: 1px;
+  left: 10px
+}
+.btnContent{
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  position: relative;
+}
+.postTextSpan{
+  position: absolute;
+  margin-left: 37px;
+}
+.tagTextSpan{
+  position: absolute;
+  margin-left: 31px;
 }

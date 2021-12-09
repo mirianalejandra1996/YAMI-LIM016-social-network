@@ -37,26 +37,50 @@ export const Form_Post = () => {
     const btnsContainer = document.createElement("div")
     btnsContainer.classList.add("formPost_btns")
     formPost.append(btnsContainer)
+    ///////////////////////////////////////////////
 
     const tagBtn = document.createElement("button")
-    const iconTag = document.createElement("span")
-    iconTag.classList.add("icon-plus2")
-    iconTag.classList.add("btnIconsTag")
-
     tagBtn.classList.add("formPost_button")
-    tagBtn.textContent=`Etiquetas`
-    btnsContainer.append(iconTag)
     btnsContainer.append(tagBtn)
 
+    const tagBtnDiv = document.createElement("div")
+    tagBtnDiv.classList.add("btnContent")
+    tagBtn.append(tagBtnDiv)
+
+    const iconTag = document.createElement("span")
+    iconTag.classList.add("icon-plus2")
+    // iconTag.classList.add("icon-acept-icon")
+    // iconTag.classList.add("path1")
+    // iconTag.classList.add("path2")
+    // iconTag.classList.add("path3")
+
+    iconTag.classList.add("btnIconsTag")
+    tagBtnDiv.append(iconTag)
+
+    const textTag = document.createElement("span")
+    textTag.classList.add("tagTextSpan")
+    textTag.textContent=`Etiquetas`
+    tagBtnDiv.append(textTag)
+
+    ///////////////////////////////////////////
+
     const postBtn = document.createElement("button")
+    postBtn.classList.add("formPost_button")
+    btnsContainer.append(postBtn)
+
+    const postBtnDiv = document.createElement("div")
+    postBtnDiv.classList.add("btnContent")
+    postBtn.append(postBtnDiv)
+
     const iconSend = document.createElement("span")
     iconSend.classList.add("icon-send")
     iconSend.classList.add("btnIconsPost")
+    postBtnDiv.append(iconSend)
 
-    postBtn.classList.add("formPost_button")
-    postBtn.textContent=`Publicar`
-    btnsContainer.append(iconSend)
-    btnsContainer.append(postBtn)
+    const textPost = document.createElement("span")
+    textPost.classList.add("postTextSpan")
+    textPost.textContent = `Publicar`
+    postBtnDiv.append(textPost)
 
     return formPost;
 };
