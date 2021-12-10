@@ -275,9 +275,9 @@ input[type="password"]:focus {
 
 /*Estilos del Modal*/
 
-.modal-contenedor {
+.modal__contenedor {
   position: fixed;
-  z-index: 1000;
+  z-index: 0;
   width: 100%;
   height: 100vh;
   top: 0;
@@ -383,13 +383,12 @@ input[type="password"]:focus {
   position: relative;
 }
 
-.card__header::before {
+.card__header::after {
   content: "";
   position: absolute;
   width: 100%;
   height: 1px;
   background-color: #efeff1;
-  /* bottom: -10px; */
   bottom: -0.7em;
 }
 .card__avatar-container {
@@ -446,7 +445,6 @@ input[type="password"]:focus {
   color: #848484;
 }
 
-/* claro EFEFF1 */
 .card__options-container,
 .modal__close-container {
   display: flex;
@@ -733,6 +731,7 @@ input[type="password"]:focus {
   align-items: center;
   font-size: 30px;
   background: linear-gradient(45deg, #fa610c, #ffbd00);
+  z-index: 1;
 }
 .menu__link {
   color: white;
@@ -744,4 +743,44 @@ input[type="password"]:focus {
 
 .tag__text {
   font-size: 14px;
+}
+
+/* Modal Lista */
+.modal__contenedor.align-end{
+  align-items: flex-end;
+  opacity: 1;
+  transition: opacity .5s;
+}
+.modal__lista{
+display: flex;
+flex-direction: column;
+margin-bottom: 60px;
+width: 100%;
+border-top-left-radius: 18px;
+border-top-right-radius: 18px;
+overflow: hidden;
+background-color: white;
+padding: 0 10px;
+transition: transform .5s ease-in-out;
+transform: translateY(0%);
+
+}
+.modal__button{
+  padding: 15px 10px;
+  border: none;
+  background-color: white;
+  font-size: 16px;
+  text-align: left;
+}
+.modal__button + .modal__button{
+  border-top: 1px solid #cbbdbd;
+}
+.modal__contenedor.cerrar{
+  opacity: 0;
+  z-index: -1;
+  padding: 0;
+}
+
+.modal__contenedor.cerrar .modal__lista {
+  transform: translateY(100%);
 }
