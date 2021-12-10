@@ -1,27 +1,34 @@
 import { logOutGoogle } from "../firebase/firebase-auth.js";
-import { HeaderRetro } from "./Header_retro.js"
-import { HeaderSimple } from "./Header_simple.js"
+import { Post } from "./Post.js";
+import { HeaderRetro } from "./Header_retro.js";
+import { Menu } from "./Menu.js";
 
-import { Menu } from "./Menu.js"
 export const Timeline = () => {
-  const root= document.getElementById("root")
-  root.classList.remove("main-container")
+  const $timeline = document.createElement("div");
 
-  const $timelinePrueba = document.createElement("div");
+  // Importamos la cabecera
+  const $header = HeaderRetro();
 
-  const header = HeaderRetro()
+  // Contenedor de las publicaciones
+  const $postsContainer = document.createElement("div");
+  $postsContainer.classList.add("notification-grid");
+
+  const $post = Post();
+
+  $postsContainer.append($post);
+
+  // const $timelinePrueba = document.createElement("div");
+
   // const header = HeaderSimple()
-  $timelinePrueba.append(header)
+  // $timelinePrueba.append(header)
 
-  const btn = document.createElement("button")
-  btn.textContent=`Postear`
+  const btn = document.createElement("button");
+  btn.textContent = `Postear`;
   btn.addEventListener("click", () => {
     window.location.hash = "#/formPost";
-  })
-  $timelinePrueba.append(btn)
+  });
 
-  const $linkContainer = document.createElement("div");
-  $timelinePrueba.append($linkContainer);
+  // --------------------------------------------------
 
   const $botonPrueba = document.createElement("span");
   $botonPrueba.classList.add("link");
@@ -29,11 +36,13 @@ export const Timeline = () => {
 
   $botonPrueba.addEventListener("click", logOutGoogle);
 
-  $linkContainer.append($botonPrueba);
+  const $menu = Menu();
 
-  const menu = Menu();
+  $timeline.append($header);
+  $timeline.append($postsContainer);
+  $timeline.append($botonPrueba);
+  $timeline.append(btn);
+  $timeline.append($menu);
 
-  $timelinePrueba.append(menu)
-
-  return $timelinePrueba;
+  return $timeline;
 };
