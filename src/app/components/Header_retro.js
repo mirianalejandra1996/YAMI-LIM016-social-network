@@ -6,6 +6,9 @@ export function HeaderRetro (){
     // background.classList.add("background-header")
 
     const iconBack = document.createElement("div")
+    iconBack.addEventListener("click", ()=>{
+        console.log("entra a back")
+        window.history.back()})
     iconBack.classList.add("header_icon")
     iconBack.classList.add("icon-arrow-back")
 

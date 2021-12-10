@@ -1,7 +1,7 @@
 export function ModalTerminos () {
 
     const $modalContenedor = document.createElement('div')
-    $modalContenedor.classList.add('modal-contenedor')
+    $modalContenedor.classList.add('modal__contenedor')
 
     const $modalCerrar = document.createElement('div')
     $modalCerrar.classList.add('modal', 'modal-cerrar')

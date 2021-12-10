@@ -1,11 +1,11 @@
-export function Menu(){
+export function Menu(toggleModalPlus, toggleModalPerfil){
 
     const d = document
     //Menu
     const $menu = d.createElement('nav')
     $menu.classList.add('menu')
 
-    //iconos del menu 
+    //iconos del menu
     //icono 1
     const itemHome = d.createElement('a')
     itemHome.classList.add('menu__link')
@@ -32,6 +32,7 @@ export function Menu(){
     $iconPlus.classList.add("icon-send");
 
     itemPlus.append($iconPlus)
+    itemPlus.addEventListener("click", ()=>toggleModalPlus())
     //icono 4
     const itemReseña = d.createElement('a')
     itemReseña.classList.add('menu__link')
@@ -56,5 +57,46 @@ export function Menu(){
  $menu.append(itemPerfil)
 
 return $menu
+
+}
+
+export function MenuList (){
+    const $modalContenedor = document.createElement('div')
+    $modalContenedor.classList.add('modal__contenedor','align-end','cerrar')
+
+    const $modalLista = document.createElement('div')
+    $modalLista.classList.add('modal__lista')
+
+    const $itemsPublicacion = document.createElement('button')
+    $itemsPublicacion.classList.add('modal__button')
+    $itemsPublicacion.textContent = 'Publicación'
+
+    $itemsPublicacion.addEventListener("click", () => {
+        window.location.hash = "#/formPost";
+    })
+
+    const $itemsReseña = document.createElement('button')
+    $itemsReseña.classList.add('modal__button')
+    $itemsReseña.textContent = 'Reseña'
+
+    const $itemsHistoria = document.createElement('button')
+    $itemsHistoria.classList.add('modal__button')
+    $itemsHistoria.textContent = 'Historia'
+
+    $modalLista.append($itemsPublicacion)
+    // $modalLista.append($itemsReseña)
+    // $modalLista.append($itemsHistoria)
+
+    $modalContenedor.append($modalLista)
+
+    const toggleModalPlus = () => {
+        $modalContenedor.classList.toggle('cerrar')
+
+    }
+
+    return {
+        menuModalPlus: $modalContenedor,
+        toggleModalPlus: toggleModalPlus
+    }
 
 }
