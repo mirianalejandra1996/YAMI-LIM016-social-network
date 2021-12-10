@@ -531,15 +531,15 @@ input[type="password"]:focus {
 
 /* todo: hay que arreglar la clase modal, hay dos repetidos. Uno debería tener los estilos y otros su modificadores según tipo de modal */
 
-.modal {
+.modal--post {
   background-color: #fff;
-  width: 30%;
-  height: 30%;
+  width: 90%;
+  /* height: 30%; */
   display: flex;
-  justify-content: center;
   align-items: center;
   padding: 1em;
   flex-direction: column;
+  border-radius: 10px;
 }
 
 .modal__header {
@@ -550,8 +550,12 @@ input[type="password"]:focus {
 }
 
 .modal__title {
-  font-size: 1rem;
+  font-size: 1.5rem;
   flex-grow: 1;
+}
+
+.modal__subtitle {
+  font-size: 1.2rem;
 }
 
 .modal__close {
@@ -566,6 +570,40 @@ input[type="password"]:focus {
   /* color: #000; */
 }
 
+.modal__sectionContainer {
+  width: 100%;
+  margin-top: 15px;
+}
+
+.modal__classification {
+  display: flex;
+  flex-direction: column;
+  /* background-color: #cbbdbd; */
+  width: 100%;
+}
+
+.modal__tags-container {
+  width: 100%;
+  margin-top: 15px;
+  display: flex;
+  background: red;
+  height: 170px;
+}
+
+.tag {
+  width: 110px;
+  background-color: #fff;
+  border: 2px solid #fa610c;
+  border-radius: 25px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 25px;
+}
+
+.tag--selected {
+  background-color: #fa610c;
+}
 /* ---------Para vista escritorio--------- */
 
 @media (min-width: 1200px) {
@@ -702,4 +740,8 @@ input[type="password"]:focus {
   white-space: nowrap;
   text-decoration: none;
   cursor: pointer;
+}
+
+.tag__text {
+  font-size: 14px;
 }
