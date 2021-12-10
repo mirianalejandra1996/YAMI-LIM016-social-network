@@ -575,14 +575,14 @@ input[type="password"]:focus {
 }
 /*Header simple*/
 
-.header-timeline{
+.header-timeline {
   width: 100%;
   background-image: url("./Header-background.svg");
   display: flex;
   min-height: 80px;
 }
-.logo-timeline{
-  content:url("./logo.svg");
+.logo-timeline {
+  content: url("./logo.svg");
   height: 50px;
   align-self: center;
   position: relative;
@@ -591,28 +591,28 @@ input[type="password"]:focus {
 
 /*Header retroceso*/
 
-.header_icon{
+.header_icon {
   transform: rotate(180deg);
   position: absolute;
   padding: 15px;
-  color:slategrey;
+  color: slategrey;
   font-size: 22px;
 }
 
 /*Formulario posts*/
-.formPost{
+.formPost {
   height: 100%;
   display: flex;
   justify-content: center;
   flex-direction: column;
 }
-.formPost_h2{
+.formPost_h2 {
   padding-left: 17px;
   padding-top: 20px;
   font-size: 15px;
-  padding-bottom: 25px
+  padding-bottom: 25px;
 }
-.formPost_inputs{
+.formPost_inputs {
   /* text-align: center; */
   display: flex;
   flex-direction: column;
@@ -620,19 +620,20 @@ input[type="password"]:focus {
   width: 100%;
   align-items: center;
 }
-.formPost_input-long{
+.formPost_input-long {
   width: 80%;
   height: 228px;
   margin-bottom: 15px;
   border: 1px solid #ffb800;
   border-radius: 10px;
   padding: 12px;
-  font-family: "Lato", sans-serif;;
+  font-family: "Lato", sans-serif;
+  resize: none;
 }
 .formPost_input-long::placeholder {
   color: #cbbdbd;
 }
-.formPost_input-short{
+.formPost_input-short {
   width: 80%;
   margin-bottom: 15px;
   height: 40px;
@@ -643,51 +644,47 @@ input[type="password"]:focus {
 .formPost_input-short::placeholder {
   color: #cbbdbd;
 }
-.formPost_btns{
+.formPost_btns {
   display: flex;
   justify-content: space-around;
   margin-top: 25px;
 }
-.formPost_button{
-  width: 102px;
-  padding: 8px 0px;
+
+.formPost_button {
+  width: 100px;
   border-radius: 7px;
-  font-size: 14px;
-  /* text-indent: 20px; */
-  background-color:#FA610C;
-  border: transparent;
+  background-color: #fa610c;
+  border: none;
   color: #ffff;
+  height: 2.5rem;
 }
-.btnIconsTag{
-  /* left: 55px;
-  top: 530px; */
+
+.btnContent {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.btnIconsTag {
   font-size: small;
   margin-left: 12px;
 }
-.btnIconsPost{
-  position: absolute;
-  font-size: large;
+
+.btnIconsPost {
+  font-size: 1.5rem;
   transform: rotate(90deg);
-  margin-top: 1px;
-  left: 10px
 }
-.btnContent{
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  position: relative;
+
+.postTextSpan {
+  margin-left: 0.5em;
+  font-size: 0.9rem;
 }
-.postTextSpan{
-  position: absolute;
-  margin-left: 37px;
-}
-.tagTextSpan{
-  position: absolute;
+.tagTextSpan {
   margin-left: 31px;
 }
 
 /* Estilos Menu */
-.menu{
+.menu {
   position: fixed;
   bottom: 0;
   width: 100%;
@@ -697,14 +694,12 @@ input[type="password"]:focus {
   justify-content: space-evenly;
   align-items: center;
   font-size: 30px;
-  background: linear-gradient(45deg, #FA610C,#FFBD00)
- 
+  background: linear-gradient(45deg, #fa610c, #ffbd00);
 }
-.menu__link{
+.menu__link {
   color: white;
   overflow: hidden;
   white-space: nowrap;
   text-decoration: none;
   cursor: pointer;
 }
-
