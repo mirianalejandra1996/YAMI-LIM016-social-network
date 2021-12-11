@@ -7,11 +7,13 @@ import {
   GoogleAuthProvider,
   getRedirectResult,
   signInWithRedirect,
+  signInWithPopup,
   signOut,
   sendPasswordResetEmail,
   onAuthStateChanged,
 } from "https://www.gstatic.com/firebasejs/9.5.0/firebase-auth.js";
 
+import { addUser } from "./firebase-data.js";
 export const auth = getAuth(app);
 
 const provider = new GoogleAuthProvider(app);
@@ -72,7 +74,15 @@ console.log("este es el user actual", user);
 console.log("esto es auth", auth);
 
 export const loginGoogle = () => {
-  signInWithRedirect(auth, provider);
+  // signInWithRedirect(auth, provider);
+  signInWithPopup(auth, provider)
+    .then((response) => {
+      const user = response.user;
+      console.log("sign in pop exitoso", user);
+
+      addUser(user);
+    })
+    .catch((err) => console.log(err));
 };
 
 /***************************Cerrar sesión***************************/
@@ -157,8 +167,10 @@ export function enviarRegistro() {
 
         //Añadimos a este usuario en nuestra base de datos
 
+        addUser(user,name);
+
         //quien hizo esto ?
-        const database_ref = database.ref();
+        // const database_ref = database.ref();
 
         // Creamos la data del usuario
 
@@ -171,7 +183,7 @@ export function enviarRegistro() {
 
         // Lo añadimos a nuestra base de datos de firebase
         //--! esta base de datos es muy antigua
-        database_ref.child("user/" + user.uid).set(user_data);
+        // database_ref.child("user/" + user.uid).set(user_data);
 
         console.log("usuario creado");
       })
