@@ -81,6 +81,7 @@ export const loginGoogle = () => {
       console.log("sign in pop exitoso", user);
 
       addUser(user);
+      window.location.hash = "#/timeline";
     })
     .catch((err) => console.log(err));
 };

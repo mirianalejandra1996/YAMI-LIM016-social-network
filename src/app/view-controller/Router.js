@@ -2,7 +2,6 @@ import { auth } from "../firebase/firebase-auth.js";
 import { components } from "../view-controller/index.js";
 import { onAuthStateChanged } from "https://www.gstatic.com/firebasejs/9.5.0/firebase-auth.js";
 
-
 //se ejecuta una sola vez
 export const Router = () => {
   console.log("entró a función router");
@@ -10,81 +9,86 @@ export const Router = () => {
   const $root = document.getElementById("root");
   $root.textContent = "";
 
-  const loader = document.createElement('div')
-  loader.classList.add('spinnerContainer')
-  const loaderSpinner = document.createElement('img')
-  loaderSpinner.classList.add('spinner')
-  loaderSpinner.src = '../src/app/assets/Spinner.svg'
-  loader.append(loaderSpinner)
-  $root.appendChild(loader)
-
+  const loader = document.createElement("div");
+  loader.classList.add("spinnerContainer");
+  const loaderSpinner = document.createElement("img");
+  loaderSpinner.classList.add("spinner");
+  loaderSpinner.src = "../src/app/assets/Spinner.svg";
+  loader.append(loaderSpinner);
+  $root.appendChild(loader);
 
   function render() {
     const route = window.location.hash;
     $root.textContent = "";
-    
+
     switch (route) {
+      case "#": {
+        if (auth.currentUser) {
+          return (window.location.hash = "#/timeline");
+        }
+        return $root.appendChild(components.login());
+      }
       case "#/": {
-          if(auth.currentUser) {
-            return window.location.hash = "#/timeline"
-          }
-          return $root.appendChild(components.login());
+        if (auth.currentUser) {
+          return (window.location.hash = "#/timeline");
+        }
+        return $root.appendChild(components.login());
       }
-      case "#/register":{
+      case "#/register": {
+        if (auth.currentUser) return (window.location.hash = "#/timeline");
+        else {
           return $root.appendChild(components.registro());
+        }
       }
-      case "#/perfil":{
-        if(auth.currentUser) {
+      case "#/perfil": {
+        if (auth.currentUser) {
           return $root.appendChild(components.perfil());
         } else {
-          return window.location.hash = "#/"
+          return (window.location.hash = "#/");
         }
       }
       case "#/timeline": {
-        if(auth.currentUser) {
+        if (auth.currentUser) {
           return $root.appendChild(components.timeline());
         } else {
-          return window.location.hash = "#/"
+          return (window.location.hash = "#/");
         }
       }
       case "#/formPost": {
-        if(auth.currentUser) {
+        if (auth.currentUser) {
           return $root.appendChild(components.formPost());
-        } else{
-          return window.location.hash = "#/"
+        } else {
+          return (window.location.hash = "#/");
         }
       }
       default:
         return $root.appendChild(components.login());
-        break;
+      // break;
     }
   }
 
   // para asegurar que se ejecute una sola vez
-  let hasRouterStarted = false
+  let hasRouterStarted = false;
 
   // se ejecuta una sola vez
   function start() {
-    render()
+    render();
     window.addEventListener("hashchange", () => {
-  
-    render()
-  });
-  // ya me ejecute
-  hasRouterStarted = true
+      render();
+    });
+    // ya me ejecute
+    hasRouterStarted = true;
   }
 
-
-  console.log({auth})
+  console.log({ auth });
 
   onAuthStateChanged(auth, (user) => {
-
     if (user) {
       // window.location.hash = "#/timeline";
       // User is signed in, see docs for a list of available properties
       // https://firebase.google.com/docs/reference/js/firebase.User
       const uid = user.uid;
-  
+
       console.log("el usuario ya está logueado!");
       // ...
     } else {
@@ -95,9 +99,8 @@ export const Router = () => {
     }
 
     //ya se ejecuto el router?
-    if(!hasRouterStarted) start()
+    if (!hasRouterStarted) start();
   });
-  
 
   //   console.log(route);
 };

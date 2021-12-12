@@ -2,8 +2,9 @@ import { logOutGoogle } from "../firebase/firebase-auth.js";
 import { Post } from "./Post.js";
 import { HeaderRetro } from "./Header_retro.js";
 import { Menu, MenuList } from "./Menu.js";
+import { traerPost } from "../firebase/firebase-data.js";
 
-export const Timeline = () => {
+export const Timeline = async () => {
   const $timeline = document.createElement("div");
 
   // Importamos la cabecera
@@ -13,9 +14,20 @@ export const Timeline = () => {
   const $postsContainer = document.createElement("div");
   $postsContainer.classList.add("notification-grid");
 
-  const $post = Post();
+  // Aquí está la lista de TODOS los posts
 
-  $postsContainer.append($post);
+  const postsLista = await traerPost();
+  console.log("estos son los posts", postsLista);
+  // debugger;
+
+  postsLista.forEach((post) => {
+    const $post = Post(post);
+    $postsContainer.append($post);
+  });
+
+  // const $post = Post();
+
+  // $postsContainer.append($post);
 
   // const $timelinePrueba = document.createElement("div");
 
@@ -35,7 +47,7 @@ export const Timeline = () => {
   $botonPrueba.textContent = "Sign Out";
 
   $botonPrueba.addEventListener("click", logOutGoogle);
-  const {menuModalPlus, toggleModalPlus} = MenuList()
+  const { menuModalPlus, toggleModalPlus } = MenuList();
   const $menu = Menu(toggleModalPlus);
 
   $timeline.append($header);
@@ -44,6 +56,7 @@ export const Timeline = () => {
   $timeline.append(btn);
   $timeline.append(menuModalPlus);
   $timeline.append($menu);
+  console.log(traerPost());
 
   return $timeline;
 };
