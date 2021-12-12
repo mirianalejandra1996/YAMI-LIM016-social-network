@@ -6,36 +6,9 @@ import {
 import { Logo } from "./Logo.js";
 import { Eslogan } from "./Eslogan.js";
 
-import { app } from "./../firebase/firebase-initializer.js";
-
-// import {
-//   getAuth,
-//   GoogleAuthProvider,
-//   getRedirectResult,
-// } from "https://www.gstatic.com/firebasejs/9.5.0/firebase-auth.js";
-
 export const Login = () => {
-  // const auth = getAuth(app);
-  // const user = auth.currentUser;
-  // console.log("este es el user actual", user);
-  // console.log("esto es auth", auth);
-  // const provider = new GoogleAuthProvider(app);
-
-  // getRedirectResult(auth)
-  //   .then((result) => {
-  //     console.log("check result getRedirectresult", result);
-  //     // window.location.hash = "#/timeline";
-  //     result ? (window.location.hash = "#/timeline") : false;
-  //   })
-  //   .catch((error) => {
-  //     console.log("error en getredirectresult", error);
-  //   });
-
-  // console.log("checking");
-
-  // todas las variables que hacen referencia a elementos del dom le anteponemos el símbolo del dolar
-  const root= document.getElementById("root")
-  root.classList.add("main-container")
+  const root = document.getElementById("root");
+  root.classList.add("main-container");
 
   const $login = document.createElement("div");
   $login.classList.add("login");
@@ -105,7 +78,10 @@ export const Login = () => {
   const $btn = document.createElement("div");
   $btn.classList.add("btn");
   $btn.id = "submit-register";
-  $btn.addEventListener("click", enviarIngreso);
+  $btn.addEventListener("click", () => {
+    enviarIngreso();
+  });
+
   $btn.href = "/#timeline";
   const $ingresar = document.createElement("span");
   $ingresar.classList.add("btn__text");
@@ -142,7 +118,9 @@ export const Login = () => {
 
   const $google = document.createElement("span");
   $google.textContent = `Continuar con Google`;
-  $google.addEventListener("click", loginGoogle);
+  $google.addEventListener("click", () => {
+    loginGoogle();
+  });
 
   $btnG.append($googleIcon);
   $btnG.append($google);

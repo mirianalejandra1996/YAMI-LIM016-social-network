@@ -1,5 +1,5 @@
 import { HeaderRetro } from "./Header_retro.js";
-
+import { addPost } from "../firebase/firebase-data.js";
 export const Form_Post = () => {
   const root = document.getElementById("root");
   root.classList.remove("main-container");
@@ -24,6 +24,7 @@ export const Form_Post = () => {
   formPost.append(inputsContainer);
 
   const post = document.createElement("textarea");
+  post.id = "msgPostForm";
   post.classList.add("formPost_input-long");
   post.placeholder = `¿Qué estas pensando?`;
   inputsContainer.append(post);
@@ -69,8 +70,17 @@ export const Form_Post = () => {
   ///////////////////////////////////////////
 
   const postBtn = document.createElement("button");
+  postBtn.id = "sendPost";
   postBtn.classList.add("formPost_button");
   btnsContainer.append(postBtn);
+
+  // todo: debería lanzar un error si el input está vacio
+  postBtn.addEventListener("click", () => {
+    const formPostMsg = document.getElementById("msgPostForm").value;
+    console.log("enviando post!!", formPostMsg);
+
+    addPost(formPostMsg);
+  });
 
   const postBtnDiv = document.createElement("div");
   postBtnDiv.classList.add("btnContent");
