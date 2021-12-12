@@ -25,6 +25,9 @@ export const Router = () => {
     
     switch (route) {
       case "#/": {
+          if(auth.currentUser) {
+            return window.location.hash = "#/timeline"
+          }
           return $root.appendChild(components.login());
       }
       case "#/register":{
@@ -75,8 +78,9 @@ export const Router = () => {
   console.log({auth})
 
   onAuthStateChanged(auth, (user) => {
+
     if (user) {
-      window.location.hash = "#/timeline";
+      // window.location.hash = "#/timeline";
       // User is signed in, see docs for a list of available properties
       // https://firebase.google.com/docs/reference/js/firebase.User
       const uid = user.uid;
