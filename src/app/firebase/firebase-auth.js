@@ -40,7 +40,6 @@ export function enviarIngreso() {
       console.log({ user });
       window.location.hash = "#/timeline";
     })
-
     .catch((error) => {
       const errorCode = error.code;
 
@@ -167,29 +166,23 @@ export function enviarRegistro() {
 
         //Añadimos a este usuario en nuestra base de datos
 
-        addUser(user,name);
-
-        //quien hizo esto ?
-        // const database_ref = database.ref();
-
-        // Creamos la data del usuario
-
-        // const user_data = {
-        //   email: email,
-        //   full_name: full_name,
-        //   // date
-        //   //
-        // };
-
-        // Lo añadimos a nuestra base de datos de firebase
-        //--! esta base de datos es muy antigua
-        // database_ref.child("user/" + user.uid).set(user_data);
+        addUser(user, name);
 
         console.log("usuario creado");
       })
       .catch((error) => {
         const errorCode = error.code;
-        const errorMessage = error.message;
+
+        switch (errorCode) {
+          case "auth/email-already-in-use":
+            document.getElementById("errorLogin").textContent =
+              "El correo ingresado ya está en uso";
+            break;
+          default:
+        }
+        // const errorMessage = error.message;
+        // console.log("oh no, ", errorCode);
+        // console.log("erroooor, ", errorMessage);
       });
   }
 }
