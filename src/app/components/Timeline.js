@@ -2,8 +2,9 @@ import { logOutGoogle } from "../firebase/firebase-auth.js";
 import { Post } from "./Post.js";
 import { HeaderRetro } from "./Header_retro.js";
 import { Menu, MenuList } from "./Menu.js";
+import { traerPost } from "../firebase/firebase-data.js";
 
-export const Timeline = () => {
+export function Timeline() {
   const $timeline = document.createElement("div");
 
   // Importamos la cabecera
@@ -13,9 +14,9 @@ export const Timeline = () => {
   const $postsContainer = document.createElement("div");
   $postsContainer.classList.add("notification-grid");
 
-  const $post = Post();
+  // const $post = Post();
 
-  $postsContainer.append($post);
+  // $postsContainer.append($post);
 
   // const $timelinePrueba = document.createElement("div");
 
@@ -35,7 +36,7 @@ export const Timeline = () => {
   $botonPrueba.textContent = "Sign Out";
 
   $botonPrueba.addEventListener("click", logOutGoogle);
-  const {menuModalPlus, toggleModalPlus} = MenuList()
+  const { menuModalPlus, toggleModalPlus } = MenuList();
   const $menu = Menu(toggleModalPlus);
 
   $timeline.append($header);
@@ -45,5 +46,32 @@ export const Timeline = () => {
   $timeline.append(menuModalPlus);
   $timeline.append($menu);
 
+  // cosas que pasan asincronamente
+
+  //mientras cargan post, al $postsContainer le hago append de un loader
+  $postsContainer.textContent = "cargando posts...";
+
+  traerPost()
+    .then((postsLista) => {
+      // una vez que tengo la lista le quito el loader
+      $postsContainer.textContent = "";
+
+      console.log("estos son los posts", postsLista);
+
+      //lleno el $postContainer con los nodos de post
+      postsLista.forEach((post) => {
+        const $post = Post(post);
+        $postsContainer.append($post);
+      });
+    })
+    .catch((error) => {
+      // mostrar mensaje de que no se pudo cargar los posts
+    });
+
   return $timeline;
-};
+}
+
+//en vez de devolver $timeline, devuelve Promise que en el then devuelve $timeline
+
+// Timeline() // cuando es async retorna es una promesa pendiente
+//Timeline().then(($timeline) => {})

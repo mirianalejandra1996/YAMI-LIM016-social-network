@@ -1,4 +1,4 @@
-export const Post = () => {
+export const Post = (post) => {
   const $card = document.createElement("div");
   $card.classList.add("card");
 
@@ -26,7 +26,7 @@ export const Post = () => {
 
   const $userName = document.createElement("h2");
   $userName.classList.add("card__avatar-fullname");
-  $userName.textContent = "Norelis Rodriguez";
+  $userName.textContent = `${post.user_name}`;
 
   const $hour = document.createElement("h3");
   $hour.classList.add("card__time");
@@ -61,8 +61,7 @@ export const Post = () => {
 
   const $textMsg = document.createElement("p");
   $textMsg.classList.add("card__text-msg");
-  $textMsg.textContent =
-    " Lorem ipsum, dolor sit amet consectetur adipisicing elit. Veritatis, ducimus.";
+  $textMsg.textContent = `${post.message}`;
 
   $msgContainer.append($textMsg);
 

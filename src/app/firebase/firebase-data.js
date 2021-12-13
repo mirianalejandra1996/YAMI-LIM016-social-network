@@ -2,10 +2,12 @@ import { initializeApp } from "https://www.gstatic.com/firebasejs/9.5.0/firebase
 import {
   getFirestore,
   collection,
-  getDocs,
   doc,
   addDoc,
   setDoc,
+  query,
+  where,
+  getDocs,
 } from "https://www.gstatic.com/firebasejs/9.5.0/firebase-firestore.js";
 import { db } from "./firebase-initializer.js";
 import { auth } from "./firebase-auth.js";
@@ -15,7 +17,7 @@ const colRef = collection(db, "posts");
 
 export function addPost(message) {
   const user = auth.currentUser;
-  // debugger;
+
   console.log(user);
   console.log("entramos a AddPost");
   addDoc(colRef, {
@@ -43,7 +45,10 @@ export function addUser(user, name) {
   console.log("entramos a AddUsers");
 
   const userdoc = doc(db, "users", user.uid); //Creamos un documento con el id de nuestro usuario
-  setDoc(userdoc, {
+
+  // setDoc lo usamos para especificar un id único que nosotros vamos a colocarle,
+  // El addDoc autogenera el id
+  return setDoc(userdoc, {
     user_id: user.uid,
     user_name: nuevoName,
     date_creation: Date.now(),
@@ -57,3 +62,36 @@ export function addUser(user, name) {
 
 // El addDoc no me importa el id que se genere,
 // en el usuario el id deberia ser igual que el del servicio de autentificación, por eso usamos doc (para que sea único)
+
+// ------------------------------
+// * OBTENEMOS LA COLECCIÓN
+
+export async function traerPost() {
+  // const q = query(
+  //   collection(db, "posts"),
+  //   where("id", "==", auth.currentUser.uid)
+  // );
+
+  // const querySnapshot = await getDocs(collection(db, "cities"));
+
+  // const querySnapshotPosts = await getDocs(collection(db, "posts"));
+  const posts = []
+
+  const querySnapshotPosts = await getDocs(collection(db, "posts"));
+
+  querySnapshotPosts.forEach((doc) => {
+    // doc.data() is never undefined for query doc snapshots
+    posts.push(doc.data())
+    // console.log(doc.id, " => ", doc.data());
+  });
+
+  console.log(posts)
+
+  return posts
+}
+
+// console.log(traerPost()) // Promise<Pending>
+
+// console.log(await traerPost()) // posts
+
+// console.log(traerPost().then((posts))) //posts

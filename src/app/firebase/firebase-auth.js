@@ -11,6 +11,7 @@ import {
   signOut,
   sendPasswordResetEmail,
   onAuthStateChanged,
+  updateProfile,
 } from "https://www.gstatic.com/firebasejs/9.5.0/firebase-auth.js";
 
 import { addUser } from "./firebase-data.js";
@@ -40,7 +41,6 @@ export function enviarIngreso() {
       console.log({ user });
       window.location.hash = "#/timeline";
     })
-
     .catch((error) => {
       const errorCode = error.code;
 
@@ -81,6 +81,7 @@ export const loginGoogle = () => {
       console.log("sign in pop exitoso", user);
 
       addUser(user);
+      window.location.hash = "#/timeline";
     })
     .catch((err) => console.log(err));
 };
@@ -163,45 +164,53 @@ export function enviarRegistro() {
       .then((userCredential) => {
         // Signed in
         const user = userCredential.user;
-        const userCurrent = auth.currentUser;
+        // const userCurrent = auth.currentUser;
 
         //Añadimos a este usuario en nuestra base de datos
-
-        addUser(user,name);
-
-        //quien hizo esto ?
-        // const database_ref = database.ref();
-
-        // Creamos la data del usuario
-
-        // const user_data = {
-        //   email: email,
-        //   full_name: full_name,
-        //   // date
-        //   //
-        // };
-
-        // Lo añadimos a nuestra base de datos de firebase
-        //--! esta base de datos es muy antigua
-        // database_ref.child("user/" + user.uid).set(user_data);
-
         console.log("usuario creado");
+        return addUser(user, name);
+      })
+      .then(() => {
+        console.log(
+          "entramos al primer then de CreateUserWithEmailAndPassword"
+        );
+
+        return updateProfile(auth.currentUser, {
+          displayName: name,
+        })
+          .then(() => {
+            console.log(
+              "entramos al primer then anidado interno de updateProfile"
+            );
+            // Profile updated!
+            console.log("Ya se le modificó el nombre al usuario");
+            window.location.hash = "#/timeline";
+          })
+          .catch((error) => {
+            console.log(
+              "se presentó un problema al cambiar el displayName del usuario",
+              error
+            );
+            // An error occurred
+            // ...
+          });
       })
       .catch((error) => {
         const errorCode = error.code;
-        const errorMessage = error.message;
+
+        switch (errorCode) {
+          case "auth/email-already-in-use":
+            document.getElementById("errorLogin").textContent =
+              "El correo ingresado ya está en uso";
+            break;
+          default:
+        }
       });
   }
 }
 
+// todo: pendiente hacer funcionalidad de validación de nombre
 // nombre: /^[a-zA-ZÀ-ÿ\s]{1,40}$/, // Letras y espacios, pueden llevar acentos.
-
-// El correo debe ser válido, con formato de correo electrónico
-
-// ("Rellene todos los campos");
-// ("El correo no es válido");
-// ("");
-// ("La contraseña debe tener entre 8 y 16 carácteres, al menos una letra mayúscula, una letra minúscula y un número");
 
 // Funciones validadoras
 function validate_email(email) {
@@ -210,14 +219,7 @@ function validate_email(email) {
 }
 
 function validate_password(password) {
-  // La contraseña debe tener :
-  // Minimo 8 caracteres
-  // Maximo 15
-  // Al menos una letra mayúscula
-  // Al menos una letra minucula
-  // Al menos un dígito
-  // No espacios en blanco
-  // Al menos 1 caracter especial
+  // La contraseña debe tener entre 8 a 14 caracteres
 
   const expression = /^.{6,14}$/;
   return expression.test(password);
