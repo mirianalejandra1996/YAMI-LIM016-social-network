@@ -97,12 +97,12 @@ export async function traerPost() {
 
 // console.log(traerPost().then((posts))) //posts
 
-export function contadorLikes(user, post) {
-  
+export function contadorLikes(post) {
+  const user = auth.currentUser;
   const likesRef = collection(db, "likes");
 
   return addDoc(likesRef, {
-    user_id: user,
+    user_id: user.uid,
     postId: post,
     status: 1
   })

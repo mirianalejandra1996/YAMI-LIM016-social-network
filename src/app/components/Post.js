@@ -76,9 +76,8 @@ export const Post = (post) => {
 
   const $likeContainer = document.createElement("div");
   $likeContainer.classList.add("card__like-container");
-  $likeContainer.addEventListener('click', () => {contadorLikes(post.id_user, post.post_id)})
+  $likeContainer.addEventListener('click', () => {contadorLikes(post.post_id)})
   console.log(post)
-  console.log(post.id_user, "id user")
   console.log(post.post_id, "id post")
 
   const $iconLike = document.createElement("span");
