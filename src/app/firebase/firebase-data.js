@@ -21,10 +21,11 @@ export function addPost(message) {
   console.log(user);
   console.log("entramos a AddPost");
   addDoc(colRef, {
-    id: user.uid,
+    id_user: user.uid,
     user_name: user.displayName,
     message,
     date: Date.now(),
+    likes: 0,
   })
     .then(() => {
       console.log("post subido al firestore!");
@@ -67,27 +68,27 @@ export function addUser(user, name) {
 // * OBTENEMOS LA COLECCIÓN
 
 export async function traerPost() {
-  // const q = query(
-  //   collection(db, "posts"),
-  //   where("id", "==", auth.currentUser.uid)
-  // );
-
-  // const querySnapshot = await getDocs(collection(db, "cities"));
-
-  // const querySnapshotPosts = await getDocs(collection(db, "posts"));
-  const posts = []
-
+  
+  const postsData = []
   const querySnapshotPosts = await getDocs(collection(db, "posts"));
 
   querySnapshotPosts.forEach((doc) => {
     // doc.data() is never undefined for query doc snapshots
-    posts.push(doc.data())
+    
+    
+    const post = doc.data()
+    console.log(post)
+    post["post_id"]=doc.id
+
+    console.log(post)
+
+    postsData.push(post)
+    // console.log(postData)
     // console.log(doc.id, " => ", doc.data());
+
   });
 
-  console.log(posts)
-
-  return posts
+  return postsData
 }
 
 // console.log(traerPost()) // Promise<Pending>
@@ -95,3 +96,18 @@ export async function traerPost() {
 // console.log(await traerPost()) // posts
 
 // console.log(traerPost().then((posts))) //posts
+
+export function contadorLikes(post) {
+  const user = auth.currentUser;
+  const likesRef = collection(db, "likes");
+
+  return addDoc(likesRef, {
+    user_id: user.uid,
+    postId: post,
+    status: 1
+  })
+    .then(() => {
+      console.log("like creado!!");
+    })
+    .catch((err) => console.log(err));
+}
