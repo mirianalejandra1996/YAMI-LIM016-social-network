@@ -10,7 +10,7 @@ export function Menu(toggleModalPlus, toggleModalPerfil){
     const itemHome = d.createElement('a')
     itemHome.classList.add('menu__link')
     const $iconHome = document.createElement("i");
-    $iconHome.classList.add("icon-send");
+    $iconHome.classList.add("icon-home");
 
     itemHome.append($iconHome)
 
@@ -22,14 +22,14 @@ export function Menu(toggleModalPlus, toggleModalPerfil){
     const itemLupa = d.createElement('a')
     itemLupa.classList.add('menu__link')
     const $iconLupa = document.createElement("i");
-    $iconLupa.classList.add("icon-location");
+    $iconLupa.classList.add("icon-lupa");
 
     itemLupa.append($iconLupa)
     //icono 3
     const itemPlus = d.createElement('a')
     itemPlus.classList.add('menu__link')
     const $iconPlus = document.createElement("i");
-    $iconPlus.classList.add("icon-send");
+    $iconPlus.classList.add("icon-addPost");
 
     itemPlus.append($iconPlus)
     itemPlus.addEventListener("click", ()=>toggleModalPlus())
@@ -37,7 +37,7 @@ export function Menu(toggleModalPlus, toggleModalPerfil){
     const itemReseña = d.createElement('a')
     itemReseña.classList.add('menu__link')
     const $iconReseña = document.createElement("i");
-    $iconReseña.classList.add("icon-send");
+    $iconReseña.classList.add("icon-comment");
 
     itemReseña.append($iconReseña)
     //icono 5

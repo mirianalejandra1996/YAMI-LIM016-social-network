@@ -90,3 +90,8 @@ export async function traerPost() {
   return posts
 }
 
+// console.log(traerPost()) // Promise<Pending>
+
+// console.log(await traerPost()) // posts
+
+// console.log(traerPost().then((posts))) //posts

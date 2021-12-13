@@ -375,6 +375,7 @@ input[type="password"]:focus {
   max-width: 100%;
   padding: 1em;
   margin: 0 auto;
+  width: 100%;
 }
 
 .card__header {
