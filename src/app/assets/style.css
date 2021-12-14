@@ -20,7 +20,7 @@ body {
 }
 
 .main-container {
-  /* background-image: url("Login.svg"); */
+  background-image: url("Login.svg");
   height: 100%;
 }
 
@@ -628,10 +628,18 @@ input[type="password"]:focus {
 
 /*Header retroceso*/
 
+.header_div-icon{
+  position: absolute;
+  width: 70px;
+  height: 70px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+}
+
 .header_icon {
   transform: rotate(180deg);
-  position: absolute;
-  padding: 15px;
   color: slategrey;
   font-size: 22px;
 }
