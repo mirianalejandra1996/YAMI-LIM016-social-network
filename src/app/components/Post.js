@@ -76,9 +76,11 @@ export const Post = (post) => {
 
   const $likeContainer = document.createElement("div");
   $likeContainer.classList.add("card__like-container");
-  $likeContainer.addEventListener('click', () => {contadorLikes(post.post_id)})
-  console.log(post)
-  console.log(post.post_id, "id post")
+  $likeContainer.addEventListener("click", () => {
+    contadorLikes(post.post_id);
+  });
+  console.log(post);
+  console.log(post.post_id, "id post");
 
   const $iconLike = document.createElement("span");
   $iconLike.classList.add("icon-like");
@@ -86,7 +88,8 @@ export const Post = (post) => {
 
   const $counterLikes = document.createElement("span");
   $counterLikes.classList.add("card__counter");
-  $counterLikes.textContent = `${post.likes}`;
+  $counterLikes.id = "counterLikes";
+  $counterLikes.textContent = `${post.likes.length}`;
 
   $likeContainer.appendChild($iconLike);
   $likeContainer.appendChild($counterLikes);
