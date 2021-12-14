@@ -8,6 +8,10 @@ import {
   query,
   where,
   getDocs,
+  getDoc,
+  updateDoc,
+  arrayUnion,
+  arrayRemove,
 } from "https://www.gstatic.com/firebasejs/9.5.0/firebase-firestore.js";
 import { db } from "./firebase-initializer.js";
 import { auth } from "./firebase-auth.js";
@@ -25,7 +29,7 @@ export function addPost(message) {
     user_name: user.displayName,
     message,
     date: Date.now(),
-    likes: 0,
+    likes: [],
   })
     .then(() => {
       console.log("post subido al firestore!");
@@ -68,27 +72,24 @@ export function addUser(user, name) {
 // * OBTENEMOS LA COLECCIÓN
 
 export async function traerPost() {
-  
-  const postsData = []
+  const postsData = [];
   const querySnapshotPosts = await getDocs(collection(db, "posts"));
 
   querySnapshotPosts.forEach((doc) => {
     // doc.data() is never undefined for query doc snapshots
-    
-    
-    const post = doc.data()
-    console.log(post)
-    post["post_id"]=doc.id
 
-    console.log(post)
+    const post = doc.data();
+    console.log(post);
+    post["post_id"] = doc.id;
 
-    postsData.push(post)
+    console.log(post);
+
+    postsData.push(post);
     // console.log(postData)
     // console.log(doc.id, " => ", doc.data());
-
   });
 
-  return postsData
+  return postsData;
 }
 
 // console.log(traerPost()) // Promise<Pending>
@@ -97,17 +98,145 @@ export async function traerPost() {
 
 // console.log(traerPost().then((posts))) //posts
 
-export function contadorLikes(post) {
-  const user = auth.currentUser;
-  const likesRef = collection(db, "likes");
+// ------------------
 
-  return addDoc(likesRef, {
-    user_id: user.uid,
-    postId: post,
-    status: 1
-  })
-    .then(() => {
-      console.log("like creado!!");
-    })
-    .catch((err) => console.log(err));
+// * Función en prueba de la mañana
+// export function contadorLikes(post) {
+//   const user = auth.currentUser;
+//   const likesRef = collection(db, "likes");
+
+//   return addDoc(likesRef, {
+//     user_id: user.uid,
+//     postId: post,
+//     status: 1
+//   })
+//     .then(() => {
+//       console.log("like creado!!");
+//     })
+//     .catch((err) => console.log(err));
+// }
+
+// -----CONTADOR DE LIKES ----------
+
+// export async function contadorLikes(post_id) {
+//   // console.log(post.post_id);
+
+//   console.log(post_id);
+//   // en la colección posts, nos vamos a la propiedad "like" (campo) del documento
+//   const postRef = doc(db, "posts", post_id);
+
+//   console.log("este es postRef", postRef);
+//   const user = auth.currentUser.uid;
+//   console.log(user);
+
+//   // Atomically add a new region to the "regions" array field.
+
+//   // await updateDoc(postsRef, {
+//   //   likes: arrayUnion(user),
+//   // });
+
+//   // if (postsRef.exist) {
+//   //   if
+//   // }
+//   // // Atomically remove a region from the "regions" array field.
+//   // await updateDoc(washingtonRef, {
+//   //   regions: arrayRemove("east_coast"),
+//   // });
+
+//   // const docRef = doc(db, "posts", post_id);
+//   // const docSnap = await getDoc(docRef);
+//   // const q = query(postsRef, where("likes", "in", user));
+
+//   // console.log(q);
+
+//   const postsRef = collection(db, "post");
+//   const q1 = query(
+//     postsRef,
+//     where("posts", "==", post_id),
+//     where("likes", "==", user)
+//   );
+
+//   console.log("este es q1", q1);
+
+//   if (q1) {
+//     await updateDoc(postRef, {
+//       likes: arrayRemove(user),
+//     });
+//   } else {
+//     await updateDoc(postRef, {
+//       likes: arrayUnion(user),
+//     });
+//   }
+
+//   //   if(q) {
+
+//   //   }
+//   //   console.log("Document data:", docSnap.data());
+//   // } else {
+//   //   // doc.data() will be undefined in this case
+//   //   console.log("No such document!");
+//   // }
+// }
+
+
+
+
+export async function contadorLikes(post_id) {
+  // console.log(post.post_id);
+
+  console.log(post_id);
+  // en la colección posts, nos vamos a la propiedad "like" (campo) del documento
+  const postRef = doc(db, "posts", post_id);
+
+  console.log("este es postRef", postRef);
+  const user = auth.currentUser.uid;
+  console.log(user);
+
+  // Atomically add a new region to the "regions" array field.
+
+  // await updateDoc(postsRef, {
+  //   likes: arrayUnion(user),
+  // });
+
+  // if (postsRef.exist) {
+  //   if
+  // }
+  // // Atomically remove a region from the "regions" array field.
+  // await updateDoc(washingtonRef, {
+  //   regions: arrayRemove("east_coast"),
+  // });
+
+  // const docRef = doc(db, "posts", post_id);
+  // const docSnap = await getDoc(docRef);
+  // const q = query(postsRef, where("likes", "in", user));
+
+  // console.log(q);
+
+  const postsRef = collection(db, "post");
+  const q1 = query(
+    postsRef,
+    where("posts", "==", post_id),
+    where("likes", "==", user)
+  );
+
+  console.log("este es q1", q1);
+
+  if (q1) {
+    await updateDoc(postRef, {
+      likes: arrayRemove(user),
+    });
+  } else {
+    await updateDoc(postRef, {
+      likes: arrayUnion(user),
+    });
+  }
+
+  //   if(q) {
+
+  //   }
+  //   console.log("Document data:", docSnap.data());
+  // } else {
+  //   // doc.data() will be undefined in this case
+  //   console.log("No such document!");
+  // }
 }
