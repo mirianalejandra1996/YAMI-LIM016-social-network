@@ -178,9 +178,6 @@ export async function traerPost() {
 //   // }
 // }
 
-
-
-
 export async function contadorLikes(post_id) {
   // console.log(post.post_id);
 
@@ -192,51 +189,48 @@ export async function contadorLikes(post_id) {
   const user = auth.currentUser.uid;
   console.log(user);
 
-  // Atomically add a new region to the "regions" array field.
+  const querySnapshotPosts = await getDocs(collection(db, "posts"));
 
-  // await updateDoc(postsRef, {
-  //   likes: arrayUnion(user),
-  // });
+  const postsData = [];
+  querySnapshotPosts.forEach((doc) => {
+    // * HAGO ESTO PARA METER EN UN ARRAY LOS POST, Y LUEGO FILTRAR ESTE POST QUE TIENE EL MISMO ID DEL POST
 
-  // if (postsRef.exist) {
-  //   if
-  // }
-  // // Atomically remove a region from the "regions" array field.
-  // await updateDoc(washingtonRef, {
-  //   regions: arrayRemove("east_coast"),
-  // });
+    // doc.data() is never undefined for query doc snapshots
+    const post = doc.data();
+    // console.log(post);
+    post["post_id"] = doc.id;
 
-  // const docRef = doc(db, "posts", post_id);
-  // const docSnap = await getDoc(docRef);
-  // const q = query(postsRef, where("likes", "in", user));
+    // console.log(post);
 
-  // console.log(q);
+    postsData.push(post);
+    // console.log(postData)
+    console.log("alejandra", doc.id, " => ", doc.data());
+  });
 
-  const postsRef = collection(db, "post");
-  const q1 = query(
-    postsRef,
-    where("posts", "==", post_id),
-    where("likes", "==", user)
-  );
+  console.log("mirian", postsData);
 
-  console.log("este es q1", q1);
+  let postFiltered = postsData.filter((post) => post.post_id === post_id);
 
-  if (q1) {
+  console.log("quiero chequear igualdad", postFiltered[0].post_id === post_id);
+
+  // todo: AQUI ESTÁ!!
+
+  let postListo = postFiltered[0];
+  console.log("post filtrado", postListo.likes);
+  console.log(user);
+
+  if (postListo["likes"].includes(user)) {
+    // eliminamos like
+
+    console.log("se quitó like!!");
     await updateDoc(postRef, {
       likes: arrayRemove(user),
     });
   } else {
+    // añadimos like
+    console.log("se añadió like!!");
     await updateDoc(postRef, {
       likes: arrayUnion(user),
     });
   }
-
-  //   if(q) {
-
-  //   }
-  //   console.log("Document data:", docSnap.data());
-  // } else {
-  //   // doc.data() will be undefined in this case
-  //   console.log("No such document!");
-  // }
 }
