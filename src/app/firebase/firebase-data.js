@@ -17,7 +17,7 @@ onSnapshot,
 import { db } from "../firebase/firebase-initializer.js";
 import { auth } from "../firebase/firebase-auth.js";
 
-// get collection ref
+/******************Agrega un post a FS*********************/
 const colRef = collection(db, "posts");
 
 export function addPost(message) {
@@ -38,6 +38,8 @@ export function addPost(message) {
     .catch((err) => console.log(err));
 }
 
+
+/******************Agrega un usuario a FS*********************/
 const userRef = collection(db, "users");
 
 export function addUser(user, name) {
@@ -72,6 +74,8 @@ export function addUser(user, name) {
 // ------------------------------
 // * OBTENEMOS LA COLECCIÓN
 
+/******************Recopila todos los posts*********************/
+
 export async function traerPost() {
   const postsData = [];
   const querySnapshotPosts = await getDocs(collection(db, "posts"));
@@ -93,11 +97,7 @@ export async function traerPost() {
   return postsData;
 }
 
-// console.log(traerPost()) // Promise<Pending>
-
-// console.log(await traerPost()) // posts
-
-// console.log(traerPost().then((posts))) //posts
+/******************Agrega like al post en FS*********************/
 
 // ------------------
 

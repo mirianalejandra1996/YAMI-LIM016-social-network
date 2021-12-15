@@ -1,4 +1,4 @@
-export function Menu(toggleModalPlus, toggleModalPerfil){
+export function Menu(toggleModalPlus, toggleModalProfile){
 
     const d = document
     //Menu
@@ -18,7 +18,7 @@ export function Menu(toggleModalPlus, toggleModalPerfil){
     // itemHome.addEventListener('click', window.location.hash = "#/home")
 
 
-    //icono 2s
+    //icono 2
     const itemLupa = d.createElement('a')
     itemLupa.classList.add('menu__link')
     const $iconLupa = document.createElement("i");
@@ -47,6 +47,7 @@ export function Menu(toggleModalPlus, toggleModalPerfil){
     $iconPerfil.classList.add("icon-user");
 
     itemPerfil.append($iconPerfil)
+    itemPerfil.addEventListener("click", ()=>toggleModalProfile())
 
 
 
@@ -97,6 +98,38 @@ export function MenuList (){
     return {
         menuModalPlus: $modalContenedor,
         toggleModalPlus: toggleModalPlus
+    }
+
+}
+
+export function ProfileList (){
+    const $modalContenedor = document.createElement('div')
+    $modalContenedor.classList.add('modal__contenedor','align-end','cerrar')
+
+    const $modalLista = document.createElement('div')
+    $modalLista.classList.add('modal__lista')
+
+    const $itemsPerfil = document.createElement('button')
+    $itemsPerfil.classList.add('modal__button')
+    $itemsPerfil.textContent = 'Ver perfil'
+
+    const $itemsCerrarSesion = document.createElement('button')
+    $itemsCerrarSesion.classList.add('modal__button')
+    $itemsCerrarSesion.textContent = 'Cerrar sesión'
+
+    $modalLista.append($itemsPerfil)
+    $modalLista.append($itemsCerrarSesion)
+
+    $modalContenedor.append($modalLista)
+
+    const toggleModalProfile = () => {
+        $modalContenedor.classList.toggle('cerrar')
+
+    }
+
+    return {
+        menuModalProfile: $modalContenedor,
+        toggleModalProfile: toggleModalProfile
     }
 
 }
