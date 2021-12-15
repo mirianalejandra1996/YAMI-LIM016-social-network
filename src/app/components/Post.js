@@ -1,9 +1,9 @@
 import { toggleLikes, initListenerPost } from "../firebase/firebase-data.js";
 import { auth } from "../firebase/firebase-auth.js";
 
-export const Post = (post) => {
+export const Post = (post, toogleModalOptions) => {
   const user_id = auth.currentUser.uid;
-  console.log("currentuser",user_id)
+  console.log("currentuser", user_id);
   const $card = document.createElement("div");
   $card.classList.add("card");
 
@@ -47,6 +47,10 @@ export const Post = (post) => {
   const $optionsContainer = document.createElement("div");
   $optionsContainer.classList.add("card__options-container");
   $optionsContainer.id = `optionsPost_${post.post_id}`;
+  $optionsContainer.addEventListener("click", () => {
+    console.log("deberia salir la lista desplegable de opciones de post");
+    toogleModalOptions;
+  });
 
   const $iconOptions = document.createElement("span");
   $iconOptions.classList.add("icon-options");
@@ -83,7 +87,6 @@ export const Post = (post) => {
   $likeContainer.classList.add("card__icon-container");
   $likeContainer.addEventListener("click", () => {
     toggleLikes(post.post_id);
-
   });
 
   const $iconLike = document.createElement("span");
@@ -99,11 +102,11 @@ export const Post = (post) => {
   $likeContainer.appendChild($iconLike);
   $likeContainer.appendChild($counterLikes);
 
- /////CARD comentarios container
- const $comentContainer = document.createElement("div");
+  /////CARD comentarios container
+  const $comentContainer = document.createElement("div");
   $comentContainer.classList.add("card__icon-container");
   $comentContainer.addEventListener("click", () => {
-   // Abrir coments(post.post_id);
+    // Abrir coments(post.post_id);
   });
 
   const $iconComent = document.createElement("span");
@@ -118,8 +121,6 @@ export const Post = (post) => {
   $comentContainer.appendChild($iconComent);
   $comentContainer.appendChild($comentarioTitle);
 
-
-
   $footerContainer.append($likeContainer);
   $footerContainer.append($comentContainer);
   //   -----------------------------------------------------------
@@ -130,25 +131,21 @@ export const Post = (post) => {
 
   //   todo: HACER EVENTO a icono de like para actualizar datos
 
-
   initListenerPost(post.post_id, (postDoc) => {
     //se podria cambiar cualquier campo de post pero en este caso solo necesitamos los likes
-  
-    const likes = postDoc.data().likes
-   console.log("array de likes",likes)
-    if(likes.find((like)=> like === user_id)){
-      $likeContainer.classList.add('selected')
-      console.log("si se encuentra")
-    }
-    else{
-      $likeContainer.classList.remove('selected')
-      console.log("no se encuentra")
+
+    const likes = postDoc.data().likes;
+    console.log("array de likes", likes);
+    if (likes.find((like) => like === user_id)) {
+      $likeContainer.classList.add("selected");
+      console.log("si se encuentra");
+    } else {
+      $likeContainer.classList.remove("selected");
+      console.log("no se encuentra");
     }
 
     $counterLikes.textContent = `${likes.length}`;
-
-  })
-
+  });
 
   return $card;
 };
