@@ -1,6 +1,7 @@
 import { contadorLikes } from "../firebase/firebase-data.js";
 
 export const Post = (post) => {
+  console.log("check post", post);
   const $card = document.createElement("div");
   $card.classList.add("card");
 
@@ -76,7 +77,9 @@ export const Post = (post) => {
 
   const $likeContainer = document.createElement("div");
   $likeContainer.classList.add("card__like-container");
-  $likeContainer.addEventListener("click", () => {
+
+  $likeContainer.addEventListener("click", (e) => {
+    console.log(e);
     contadorLikes(post.post_id);
   });
   console.log(post);
@@ -88,7 +91,8 @@ export const Post = (post) => {
 
   const $counterLikes = document.createElement("span");
   $counterLikes.classList.add("card__counter");
-  $counterLikes.id = "counterLikes";
+  // $counterLikes.id = "counterLikes";
+  $counterLikes.id = `counterLikes_${post.post_id}`;
   $counterLikes.textContent = `${post.likes.length}`;
 
   $likeContainer.appendChild($iconLike);
