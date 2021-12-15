@@ -1,4 +1,4 @@
-import { app } from "./firebase-initializer.js";
+import { app } from "../firebase/firebase-initializer.js";
 
 import {
   signInWithEmailAndPassword,
@@ -74,7 +74,6 @@ console.log("este es el user actual", user);
 console.log("esto es auth", auth);
 
 export const loginGoogle = () => {
-  // signInWithRedirect(auth, provider);
   signInWithPopup(auth, provider)
     .then((response) => {
       const user = response.user;
@@ -157,8 +156,6 @@ export function enviarRegistro() {
     $password.classList.add("success");
 
     // Validando los campos de la siguiente vista, si están vacios
-    // if ()
-    // console.log('Alguno de los campos es inválido')
 
     createUserWithEmailAndPassword(auth, email, password)
       .then((userCredential) => {

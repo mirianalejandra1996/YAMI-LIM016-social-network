@@ -1,12 +1,9 @@
-import { contadorLikes } from "../firebase/firebase-data.js";
-import { initializeApp } from "https://www.gstatic.com/firebasejs/9.5.0/firebase-app.js";
+import { toggleLikes, initListenerPost } from "../firebase/firebase-data.js";
 import { auth } from "../firebase/firebase-auth.js";
 
 export const Post = (post) => {
-  const user = auth.currentUser.uid;
-  console.log(user);
-
-  console.log("check post", post);
+  const user_id = auth.currentUser.uid;
+  console.log("currentuser",user_id)
   const $card = document.createElement("div");
   $card.classList.add("card");
 
@@ -76,24 +73,22 @@ export const Post = (post) => {
 
   //   -----------------------------------------------------------
 
-  //   Pie de post (para dar likes)
+  //   Pie de post (para dar likes y comentar)
 
   const $footerContainer = document.createElement("div");
   $footerContainer.classList.add("card__footer-container");
 
+  /////CARD likes container
   const $likeContainer = document.createElement("div");
-  $likeContainer.classList.add("card__like-container");
+  $likeContainer.classList.add("card__icon-container");
+  $likeContainer.addEventListener("click", () => {
+    toggleLikes(post.post_id);
 
-  $likeContainer.addEventListener("click", (e) => {
-    console.log(e);
-    contadorLikes(post.post_id);
   });
-  console.log(post);
-  console.log(post.post_id, "id post");
 
   const $iconLike = document.createElement("span");
   $iconLike.classList.add("icon-like");
-  $iconLike.classList.add("card__like");
+  $iconLike.classList.add("card__icon");
 
   const $counterLikes = document.createElement("span");
   $counterLikes.classList.add("card__counter");
@@ -104,8 +99,29 @@ export const Post = (post) => {
   $likeContainer.appendChild($iconLike);
   $likeContainer.appendChild($counterLikes);
 
-  $footerContainer.append($likeContainer);
+ /////CARD comentarios container
+ const $comentContainer = document.createElement("div");
+  $comentContainer.classList.add("card__icon-container");
+  $comentContainer.addEventListener("click", () => {
+   // Abrir coments(post.post_id);
+  });
 
+  const $iconComent = document.createElement("span");
+  $iconComent.classList.add("icon-comment");
+  $iconComent.classList.add("card__icon");
+
+  const $comentarioTitle = document.createElement("span");
+  $comentarioTitle.classList.add("card__counter");
+  $comentarioTitle.id = "comentario";
+  $comentarioTitle.textContent = "comentar";
+
+  $comentContainer.appendChild($iconComent);
+  $comentContainer.appendChild($comentarioTitle);
+
+
+
+  $footerContainer.append($likeContainer);
+  $footerContainer.append($comentContainer);
   //   -----------------------------------------------------------
 
   $card.append($headerContainer);
@@ -113,6 +129,26 @@ export const Post = (post) => {
   $card.append($footerContainer);
 
   //   todo: HACER EVENTO a icono de like para actualizar datos
+
+
+  initListenerPost(post.post_id, (postDoc) => {
+    //se podria cambiar cualquier campo de post pero en este caso solo necesitamos los likes
+  
+    const likes = postDoc.data().likes
+   console.log("array de likes",likes)
+    if(likes.find((like)=> like === user_id)){
+      $likeContainer.classList.add('selected')
+      console.log("si se encuentra")
+    }
+    else{
+      $likeContainer.classList.remove('selected')
+      console.log("no se encuentra")
+    }
+
+    $counterLikes.textContent = `${likes.length}`;
+
+  })
+
 
   return $card;
 };

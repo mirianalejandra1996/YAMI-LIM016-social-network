@@ -12,11 +12,12 @@ import {
   updateDoc,
   arrayUnion,
   arrayRemove,
+onSnapshot,
 } from "https://www.gstatic.com/firebasejs/9.5.0/firebase-firestore.js";
-import { db } from "./firebase-initializer.js";
-import { auth } from "./firebase-auth.js";
+import { db } from "../firebase/firebase-initializer.js";
+import { auth } from "../firebase/firebase-auth.js";
 
-// get collection ref
+/******************Agrega un post a FS*********************/
 const colRef = collection(db, "posts");
 
 export function addPost(message) {
@@ -37,6 +38,8 @@ export function addPost(message) {
     .catch((err) => console.log(err));
 }
 
+
+/******************Agrega un usuario a FS*********************/
 const userRef = collection(db, "users");
 
 export function addUser(user, name) {
@@ -71,6 +74,8 @@ export function addUser(user, name) {
 // ------------------------------
 // * OBTENEMOS LA COLECCIÓN
 
+/******************Recopila todos los posts*********************/
+
 export async function traerPost() {
   const postsData = [];
   const querySnapshotPosts = await getDocs(collection(db, "posts"));
@@ -92,11 +97,7 @@ export async function traerPost() {
   return postsData;
 }
 
-// console.log(traerPost()) // Promise<Pending>
-
-// console.log(await traerPost()) // posts
-
-// console.log(traerPost().then((posts))) //posts
+/******************Agrega like al post en FS*********************/
 
 // ------------------
 
@@ -178,59 +179,56 @@ export async function traerPost() {
 //   // }
 // }
 
-export async function contadorLikes(post_id) {
+
+
+
+export async function toggleLikes(post_id) {
   // console.log(post.post_id);
 
   console.log(post_id);
   // en la colección posts, nos vamos a la propiedad "like" (campo) del documento
-  const postRef = doc(db, "posts", post_id);
+  const postRef = doc(db, "posts", post_id); // documentRef  
 
   console.log("este es postRef", postRef);
-  const user = auth.currentUser.uid;
-  console.log(user);
+  const userId = auth.currentUser.uid;
+  console.log(userId);
 
-  const querySnapshotPosts = await getDocs(collection(db, "posts"));
 
-  const postsData = [];
-  querySnapshotPosts.forEach((doc) => {
-    // * HAGO ESTO PARA METER EN UN ARRAY LOS POST, Y LUEGO FILTRAR ESTE POST QUE TIENE EL MISMO ID DEL POST
+  const post = await getDoc(postRef)
+  const likes =  post.data().likes
+  const userLike = likes.find((like) => { //.find defines true o false hasta q las entencia se cumple
+    return like === userId
+  })
 
-    // doc.data() is never undefined for query doc snapshots
-    const post = doc.data();
-    // console.log(post);
-    post["post_id"] = doc.id;
-
-    // console.log(post);
-
-    postsData.push(post);
-    // console.log(postData)
-    console.log("alejandra", doc.id, " => ", doc.data());
-  });
-
-  console.log("mirian", postsData);
-
-  let postFiltered = postsData.filter((post) => post.post_id === post_id);
-
-  console.log("quiero chequear igualdad", postFiltered[0].post_id === post_id);
-
-  // todo: AQUI ESTÁ!!
-
-  let postListo = postFiltered[0];
-  console.log("post filtrado", postListo.likes);
-  console.log(user);
-
-  if (postListo["likes"].includes(user)) {
-    // eliminamos like
-
-    console.log("se quitó like!!");
+  if(userLike) {
     await updateDoc(postRef, {
-      likes: arrayRemove(user),
+      likes: arrayRemove(userId),
     });
-  } else {
-    // añadimos like
-    console.log("se añadió like!!");
+  }  else {
     await updateDoc(postRef, {
-      likes: arrayUnion(user),
+      likes: arrayUnion(userId),
     });
   }
+
+
+  // jalar posts de determinado usuario para armar muro perfil
+
+  // const q1 = query(
+  //       collection(db, "posts"),
+  //       where("id_user", "==", userId)
+  //     );
+
+  // const querySnapshotPosts = await getDocs(q1)
+
+
+  // const postsFiltradocs = querySnapshotPosts.docs // esto es un array SIEMPRE
+
+  // const likesDelPrimerPostFiltrado = postsFiltradocs[0].data().likes // []
+  // const idDelPrimerPostFiltrado = postsFiltradocs[0].id // 
+
+}
+
+
+export function initListenerPost (postId, actualizarPost) {
+ return onSnapshot(doc(db, 'posts', postId), actualizarPost)
 }

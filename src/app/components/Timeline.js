@@ -1,14 +1,14 @@
 import { logOutGoogle } from "../firebase/firebase-auth.js";
 import { Post } from "./Post.js";
-import { HeaderRetro } from "./Header_retro.js";
-import { Menu, MenuList, OptionListPost } from "./Menu.js";
+import { Menu, MenuList, ProfileList } from "./Menu.js";
+import { HeaderRetroceder } from "./Header_retro.js";
 import { traerPost } from "../firebase/firebase-data.js";
-
+import { HeaderSimple } from "./Header_simple.js";
 export function Timeline() {
   const $timeline = document.createElement("div");
 
   // Importamos la cabecera
-  const $header = HeaderRetro();
+  const $header = HeaderSimple();
 
   // Contenedor de las publicaciones
   const $postsContainer = document.createElement("div");
@@ -36,15 +36,22 @@ export function Timeline() {
   $botonPrueba.textContent = "Sign Out";
 
   $botonPrueba.addEventListener("click", logOutGoogle);
+
   const { menuModalPlus, toggleModalPlus } = MenuList();
+
   // const { menuModalPlus, toggleModalPlus } = OptionListPost();
-  const $menu = Menu(toggleModalPlus);
+  // const $menu = Menu(toggleModalPlus);
+
+  const { menuModalProfile, toggleModalProfile } = ProfileList();
+  const $menu = Menu(toggleModalPlus, toggleModalProfile);
+
 
   $timeline.append($header);
   $timeline.append($postsContainer);
   $timeline.append($botonPrueba);
   $timeline.append(btn);
   $timeline.append(menuModalPlus);
+  $timeline.append(menuModalProfile);
   $timeline.append($menu);
 
   // cosas que pasan asincronamente
