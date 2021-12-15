@@ -1,6 +1,8 @@
 import { contadorLikes } from "../firebase/firebase-data.js";
+import { auth } from "../firebase/firebase-auth.js"
 
 export const Post = (post) => {
+  const user = auth.currentUser.uid;
   const $card = document.createElement("div");
   $card.classList.add("card");
 

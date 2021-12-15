@@ -1,5 +1,7 @@
 export function ModalCerrarSesion () {
 
+    import { logOutGoogle } from "../firebase/firebase-auth.js";
+
     const $modalContenedor = document.createElement('div')
     $modalContenedor.classList.add('modal__contenedor')
 
@@ -47,6 +49,7 @@ export function ModalCerrarSesion () {
     }
 
     $cerrar.addEventListener('click', cerrarModal)
+    $contenedorMensaje.addEventListener('click', logOutGoogle)
 
    return {
        $modalContenedor,

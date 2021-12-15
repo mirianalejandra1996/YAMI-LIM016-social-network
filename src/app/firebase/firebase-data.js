@@ -14,7 +14,7 @@ import {
   arrayRemove,
 } from "https://www.gstatic.com/firebasejs/9.5.0/firebase-firestore.js";
 import { db } from "./firebase-initializer.js";
-import { auth } from "./firebase-auth.js";
+import { auth } from "../firebase/firebase-auth.js";
 
 /******************Agrega un post a FS*********************/
 const colRef = collection(db, "posts");

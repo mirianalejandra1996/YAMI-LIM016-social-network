@@ -1,4 +1,4 @@
-import { app } from "./firebase-initializer.js";
+import { app } from "../firebase/firebase-initializer.js";
 
 import {
   signInWithEmailAndPassword,
