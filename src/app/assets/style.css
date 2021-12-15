@@ -490,8 +490,13 @@ input[type="password"]:focus {
   align-items: center;
 }
 
-.card__icon-container:hover{
+.card__icon-container:hover {
   cursor: pointer;
+}
+
+.card__icon-container:hover .card__icon {
+  /* color: #ffb800; */
+  color: #ccc;
 }
 
 .card__icon {
@@ -505,7 +510,7 @@ input[type="password"]:focus {
   margin-left: 0.2em;
 }
 .card__icon-container.selected .card__icon,
-.card__icon-container.selected .card__counter{
+.card__icon-container.selected .card__counter {
   color: #ffb800;
 }
 /* Vista crear Post */
@@ -605,14 +610,19 @@ input[type="password"]:focus {
 .tag--selected {
   background-color: #fa610c;
 }
-.err-container.center{
-align-items: center;
+.err-container.center {
+  align-items: center;
 }
 /* ---------Para vista escritorio--------- */
 
 @media (min-width: 1200px) {
   .card {
     max-width: 60%;
+  }
+
+  .card__icon-container:hover .card__icon {
+    color: #ffb800;
+    /* color: #ccc */
   }
 }
 /*Header simple*/
@@ -633,7 +643,7 @@ align-items: center;
 
 /*Header retroceso*/
 
-.header_div-icon{
+.header_div-icon {
   position: absolute;
   width: 70px;
   height: 70px;
@@ -730,7 +740,6 @@ align-items: center;
   font-size: small;
 }
 
-
 /* Estilos Menu */
 .menu {
   position: fixed;
@@ -758,36 +767,35 @@ align-items: center;
 }
 
 /* Modal Lista */
-.modal__contenedor.align-end{
+.modal__contenedor.align-end {
   align-items: flex-end;
   opacity: 1;
-  transition: opacity .5s;
+  transition: opacity 0.5s;
 }
-.modal__lista{
-display: flex;
-flex-direction: column;
-margin-bottom: 60px;
-width: 100%;
-border-top-left-radius: 18px;
-border-top-right-radius: 18px;
-overflow: hidden;
-background-color: white;
-padding: 0 10px;
-transition: transform .5s ease-in-out;
-transform: translateY(0%);
-
+.modal__lista {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 60px;
+  width: 100%;
+  border-top-left-radius: 18px;
+  border-top-right-radius: 18px;
+  overflow: hidden;
+  background-color: white;
+  padding: 0 10px;
+  transition: transform 0.5s ease-in-out;
+  transform: translateY(0%);
 }
-.modal__button{
+.modal__button {
   padding: 15px 10px;
   border: none;
   background-color: white;
   font-size: 16px;
   text-align: left;
 }
-.modal__button + .modal__button{
+.modal__button + .modal__button {
   border-top: 1px solid #cbbdbd;
 }
-.modal__contenedor.cerrar{
+.modal__contenedor.cerrar {
   opacity: 0;
   z-index: -1;
   padding: 0;
@@ -804,11 +812,11 @@ transform: translateY(0%);
   cursor: pointer;
 }
 
-.modal__p-cerrarS{
+.modal__p-cerrarS {
   padding: 20px;
   border-top: 1px solid #efeff1;
   border-bottom: 1px solid #efeff1;
   text-align: center;
   cursor: pointer;
-  color:#FA610C;
+  color: #fa610c;
 }
