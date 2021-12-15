@@ -157,8 +157,6 @@ export function enviarRegistro() {
     $password.classList.add("success");
 
     // Validando los campos de la siguiente vista, si están vacios
-    // if ()
-    // console.log('Alguno de los campos es inválido')
 
     createUserWithEmailAndPassword(auth, email, password)
       .then((userCredential) => {

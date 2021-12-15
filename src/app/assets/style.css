@@ -793,3 +793,19 @@ transform: translateY(0%);
 .modal__contenedor.cerrar .modal__lista {
   transform: translateY(100%);
 }
+
+/*Modal Cerrar Sesion*/
+.modal__p-cancelar {
+  padding: 20px;
+  text-align: center;
+  cursor: pointer;
+}
+
+.modal__p-cerrarS{
+  padding: 20px;
+  border-top: 1px solid #efeff1;
+  border-bottom: 1px solid #efeff1;
+  text-align: center;
+  cursor: pointer;
+  color:#FA610C;
+}
