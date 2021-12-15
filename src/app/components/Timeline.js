@@ -1,14 +1,14 @@
 import { logOutGoogle } from "../firebase/firebase-auth.js";
 import { Post } from "./Post.js";
-import { HeaderRetro } from "./Header_retro.js";
 import { Menu, MenuList, ProfileList } from "./Menu.js";
+import { HeaderRetroceder } from "./Header_retro.js";
 import { traerPost } from "../firebase/firebase-data.js";
-
+import {HeaderSimple} from "./Header_simple.js"
 export function Timeline() {
   const $timeline = document.createElement("div");
 
   // Importamos la cabecera
-  const $header = HeaderRetro();
+  const $header = HeaderSimple();
 
   // Contenedor de las publicaciones
   const $postsContainer = document.createElement("div");

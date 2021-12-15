@@ -481,21 +481,20 @@ input[type="password"]:focus {
 .card__footer-container {
   display: flex;
   align-items: center;
+  justify-content: space-between;
   margin-top: 1em;
 }
 
-.card__like-container {
+.card__icon-container {
   display: flex;
   align-items: center;
 }
 
-.card__like-container:hover > .card__like,
-.card__like-container:hover > .card__counter {
-  color: #ffb800;
+.card__icon-container:hover{
   cursor: pointer;
 }
 
-.card__like {
+.card__icon {
   font-size: 1.8rem;
   color: #ccc;
 }
@@ -505,7 +504,10 @@ input[type="password"]:focus {
   font-size: 0.9rem;
   margin-left: 0.2em;
 }
-
+.card__icon-container.selected .card__icon,
+.card__icon-container.selected .card__counter{
+  color: #ffb800;
+}
 /* Vista crear Post */
 
 .modal-bg {
@@ -603,6 +605,9 @@ input[type="password"]:focus {
 .tag--selected {
   background-color: #fa610c;
 }
+.err-container.center{
+align-items: center;
+}
 /* ---------Para vista escritorio--------- */
 
 @media (min-width: 1200px) {
@@ -640,8 +645,10 @@ input[type="password"]:focus {
 
 .header_icon {
   transform: rotate(180deg);
-  color: slategrey;
-  font-size: 22px;
+  position: absolute;
+  padding: 25px;
+  color: #848484;
+  font-size: 24px;
 }
 
 /*Formulario posts*/
@@ -652,7 +659,7 @@ input[type="password"]:focus {
   flex-direction: column;
 }
 .formPost_h2 {
-  padding-left: 17px;
+  padding-left: 35px;
   padding-top: 20px;
   font-size: 15px;
   padding-bottom: 25px;
@@ -692,7 +699,6 @@ input[type="password"]:focus {
 .formPost_btns {
   display: flex;
   justify-content: space-around;
-  margin-top: 25px;
 }
 
 .formPost_button {
@@ -707,12 +713,12 @@ input[type="password"]:focus {
 .btnContent {
   display: flex;
   align-items: center;
-  justify-content: center;
+  justify-content: space-around;
+  padding: 5px;
 }
 
 .btnIconsTag {
-  font-size: small;
-  margin-left: 12px;
+  font-size: 1rem;
 }
 
 .btnIconsPost {
@@ -721,12 +727,9 @@ input[type="password"]:focus {
 }
 
 .postTextSpan {
-  margin-left: 0.5em;
-  font-size: 0.9rem;
+  font-size: small;
 }
-.tagTextSpan {
-  margin-left: 31px;
-}
+
 
 /* Estilos Menu */
 .menu {

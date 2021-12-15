@@ -74,7 +74,6 @@ console.log("este es el user actual", user);
 console.log("esto es auth", auth);
 
 export const loginGoogle = () => {
-  // signInWithRedirect(auth, provider);
   signInWithPopup(auth, provider)
     .then((response) => {
       const user = response.user;
