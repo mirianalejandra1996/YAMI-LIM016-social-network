@@ -12,6 +12,7 @@ import {
   updateDoc,
   arrayUnion,
   arrayRemove,
+onSnapshot,
 } from "https://www.gstatic.com/firebasejs/9.5.0/firebase-firestore.js";
 import { db } from "./firebase-initializer.js";
 import { auth } from "./firebase-auth.js";
@@ -181,62 +182,53 @@ export async function traerPost() {
 
 
 
-export async function contadorLikes(post_id) {
+export async function toggleLikes(post_id) {
   // console.log(post.post_id);
 
   console.log(post_id);
   // en la colección posts, nos vamos a la propiedad "like" (campo) del documento
-  const postRef = doc(db, "posts", post_id);
+  const postRef = doc(db, "posts", post_id); // documentRef  
 
   console.log("este es postRef", postRef);
-  const user = auth.currentUser.uid;
-  console.log(user);
+  const userId = auth.currentUser.uid;
+  console.log(userId);
 
-  // Atomically add a new region to the "regions" array field.
 
-  // await updateDoc(postsRef, {
-  //   likes: arrayUnion(user),
-  // });
+  const post = await getDoc(postRef)
+  const likes =  post.data().likes
+  const userLike = likes.find((like) => { //.find defines true o false hasta q las entencia se cumple
+    return like === userId
+  })
 
-  // if (postsRef.exist) {
-  //   if
-  // }
-  // // Atomically remove a region from the "regions" array field.
-  // await updateDoc(washingtonRef, {
-  //   regions: arrayRemove("east_coast"),
-  // });
-
-  // const docRef = doc(db, "posts", post_id);
-  // const docSnap = await getDoc(docRef);
-  // const q = query(postsRef, where("likes", "in", user));
-
-  // console.log(q);
-
-  const postsRef = collection(db, "post");
-  const q1 = query(
-    postsRef,
-    where("posts", "==", post_id),
-    where("likes", "==", user)
-  );
-
-  console.log("este es q1", q1);
-
-  if (q1) {
+  if(userLike) {
     await updateDoc(postRef, {
-      likes: arrayRemove(user),
+      likes: arrayRemove(userId),
     });
-  } else {
+  }  else {
     await updateDoc(postRef, {
-      likes: arrayUnion(user),
+      likes: arrayUnion(userId),
     });
   }
 
-  //   if(q) {
 
-  //   }
-  //   console.log("Document data:", docSnap.data());
-  // } else {
-  //   // doc.data() will be undefined in this case
-  //   console.log("No such document!");
-  // }
+  // jalar posts de determinado usuario para armar muro perfil
+
+  // const q1 = query(
+  //       collection(db, "posts"),
+  //       where("id_user", "==", userId)
+  //     );
+
+  // const querySnapshotPosts = await getDocs(q1)
+
+
+  // const postsFiltradocs = querySnapshotPosts.docs // esto es un array SIEMPRE
+
+  // const likesDelPrimerPostFiltrado = postsFiltradocs[0].data().likes // []
+  // const idDelPrimerPostFiltrado = postsFiltradocs[0].id // 
+
+}
+
+
+export function iniciarEscuchadorPost (postId, actualizarPost) {
+ return onSnapshot(doc(db, 'posts', postId), actualizarPost)
 }

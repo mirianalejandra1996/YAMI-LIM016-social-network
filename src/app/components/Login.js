@@ -91,7 +91,7 @@ export const Login = () => {
 
   const $btnG = document.createElement("div");
   $btnG.classList.add("btn-g");
-  $btn.href = "/#nada";
+  // $btn.href = "/#nada";
   const $googleIcon = document.createElement("span");
   $googleIcon.classList.add("icon-google");
   $googleIcon.classList.add("form__icon");

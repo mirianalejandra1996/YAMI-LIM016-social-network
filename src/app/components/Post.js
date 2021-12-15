@@ -1,4 +1,4 @@
-import { contadorLikes } from "../firebase/firebase-data.js";
+import { toggleLikes, iniciarEscuchadorPost } from "../firebase/firebase-data.js";
 
 export const Post = (post) => {
   const $card = document.createElement("div");
@@ -77,7 +77,7 @@ export const Post = (post) => {
   const $likeContainer = document.createElement("div");
   $likeContainer.classList.add("card__like-container");
   $likeContainer.addEventListener("click", () => {
-    contadorLikes(post.post_id);
+    toggleLikes(post.post_id);
   });
   console.log(post);
   console.log(post.post_id, "id post");
@@ -102,6 +102,30 @@ export const Post = (post) => {
   $card.append($footerContainer);
 
   //   todo: HACER EVENTO a icono de like para actualizar datos
+
+
+  iniciarEscuchadorPost(post.post_id, function (postDoc){
+    //se podria cambiar cualquier campo de post pero en este caso solo necesitamos los likes
+    const likes = postDoc.data().likes
+    $counterLikes.textContent = `${likes.length}`;
+  
+  })
+
+
+  // function onSnapshot(id, fn) {
+
+  //   esucharDocumento(id, () => {
+  //     const documentoActualizado = 
+
+  //     fn()
+  //   })
+
+
+  //   function cleaner() {
+  //     //limpiar X dejar de escuchar
+  //   }
+  //   return cleaner
+  // }
 
   return $card;
 };
