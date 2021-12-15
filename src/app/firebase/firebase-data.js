@@ -229,6 +229,6 @@ export async function toggleLikes(post_id) {
 }
 
 
-export function iniciarEscuchadorPost (postId, actualizarPost) {
+export function initListenerPost (postId, actualizarPost) {
  return onSnapshot(doc(db, 'posts', postId), actualizarPost)
 }

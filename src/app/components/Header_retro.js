@@ -1,4 +1,4 @@
-export function HeaderRetro (){
+export function HeaderRetroceder (){
     const headerContainer = document.createElement("div")
     headerContainer.classList.add("header-timeline")
 
@@ -6,19 +6,18 @@ export function HeaderRetro (){
     // background.classList.add("background-header")
 
     const iconBack = document.createElement("div")
-    iconBack.addEventListener("click", ()=>{
+    iconBack.addEventListener("click", () => {
         console.log("entra a back")
-        window.history.back()})
+        window.history.back()});
+
     iconBack.classList.add("header_icon")
     iconBack.classList.add("icon-arrow-back")
 
     const logoHeader = document.createElement("div")
     logoHeader.classList.add("logo-timeline")
 
-    // background.append(logoHeader)
-    // headerContainer.append(background)
-    headerContainer.append(iconBack)
     headerContainer.append(logoHeader)
+    headerContainer.append(iconBack)
 
     return headerContainer
 }

@@ -1,4 +1,4 @@
-import { HeaderRetro } from "./Header_retro.js";
+import { HeaderRetroceder } from "./Header_retro.js";
 import { addPost } from "../firebase/firebase-data.js";
 
 export const Form_Post = () => {
@@ -7,7 +7,7 @@ export const Form_Post = () => {
   const $formPost = document.createElement("div");
   $formPost.classList.add("formPost");
   //Header
-  const header = HeaderRetro();
+  const header = HeaderRetroceder();
   //Titulo
   const title = document.createElement("h2");
   title.classList.add("formPost_h2");
@@ -37,7 +37,7 @@ export const Form_Post = () => {
 
   // Contenedor del mensaje de Error
   const $errorContainer = document.createElement("div");
-  $errorContainer.classList.add("err-container");
+  $errorContainer.classList.add("err-container","center");
 
   const $msgError = document.createElement("small");
   $msgError.classList.add("error-msg");

@@ -1,4 +1,8 @@
-import { toggleLikes, iniciarEscuchadorPost } from "../firebase/firebase-data.js";
+import { toggleLikes, initListenerPost } from "../firebase/firebase-data.js";
+import { auth } from "../firebase/firebase-auth.js";
+
+const user_id = auth.currentUser
+console.log("currentuser",{user_id})
 
 export const Post = (post) => {
   const $card = document.createElement("div");
@@ -69,22 +73,22 @@ export const Post = (post) => {
 
   //   -----------------------------------------------------------
 
-  //   Pie de post (para dar likes)
+  //   Pie de post (para dar likes y comentar)
 
   const $footerContainer = document.createElement("div");
   $footerContainer.classList.add("card__footer-container");
 
+  /////CARD likes container
   const $likeContainer = document.createElement("div");
-  $likeContainer.classList.add("card__like-container");
+  $likeContainer.classList.add("card__icon-container");
   $likeContainer.addEventListener("click", () => {
     toggleLikes(post.post_id);
+
   });
-  console.log(post);
-  console.log(post.post_id, "id post");
 
   const $iconLike = document.createElement("span");
   $iconLike.classList.add("icon-like");
-  $iconLike.classList.add("card__like");
+  $iconLike.classList.add("card__icon");
 
   const $counterLikes = document.createElement("span");
   $counterLikes.classList.add("card__counter");
@@ -94,8 +98,29 @@ export const Post = (post) => {
   $likeContainer.appendChild($iconLike);
   $likeContainer.appendChild($counterLikes);
 
-  $footerContainer.append($likeContainer);
+ /////CARD comentarios container
+ const $comentContainer = document.createElement("div");
+  $comentContainer.classList.add("card__icon-container");
+  $comentContainer.addEventListener("click", () => {
+   // Abrir coments(post.post_id);
+  });
 
+  const $iconComent = document.createElement("span");
+  $iconComent.classList.add("icon-comment");
+  $iconComent.classList.add("card__icon");
+
+  const $comentarioTitle = document.createElement("span");
+  $comentarioTitle.classList.add("card__counter");
+  $comentarioTitle.id = "comentario";
+  $comentarioTitle.textContent = "comentar";
+
+  $comentContainer.appendChild($iconComent);
+  $comentContainer.appendChild($comentarioTitle);
+
+
+
+  $footerContainer.append($likeContainer);
+  $footerContainer.append($comentContainer);
   //   -----------------------------------------------------------
 
   $card.append($headerContainer);
@@ -105,28 +130,21 @@ export const Post = (post) => {
   //   todo: HACER EVENTO a icono de like para actualizar datos
 
 
-  iniciarEscuchadorPost(post.post_id, function (postDoc){
+  initListenerPost(post.post_id, function (postDoc){
     //se podria cambiar cualquier campo de post pero en este caso solo necesitamos los likes
     const likes = postDoc.data().likes
+   
+    if(likes.find((like)=> like === user_id)){
+      $counterLikes.classList.add('selected')
+    }
+    else{
+      $counterLikes.classList.remove('selected')
+    }
+
     $counterLikes.textContent = `${likes.length}`;
-  
+
   })
 
-
-  // function onSnapshot(id, fn) {
-
-  //   esucharDocumento(id, () => {
-  //     const documentoActualizado = 
-
-  //     fn()
-  //   })
-
-
-  //   function cleaner() {
-  //     //limpiar X dejar de escuchar
-  //   }
-  //   return cleaner
-  // }
 
   return $card;
 };
