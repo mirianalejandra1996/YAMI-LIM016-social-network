@@ -1,7 +1,7 @@
 import { logOutGoogle } from "../firebase/firebase-auth.js";
 import { Post } from "./Post.js";
 import { HeaderRetro } from "./Header_retro.js";
-import { Menu, MenuList } from "./Menu.js";
+import { Menu, MenuList, OptionListPost } from "./Menu.js";
 import { traerPost } from "../firebase/firebase-data.js";
 
 export function Timeline() {
@@ -37,6 +37,7 @@ export function Timeline() {
 
   $botonPrueba.addEventListener("click", logOutGoogle);
   const { menuModalPlus, toggleModalPlus } = MenuList();
+  // const { menuModalPlus, toggleModalPlus } = OptionListPost();
   const $menu = Menu(toggleModalPlus);
 
   $timeline.append($header);

@@ -1,6 +1,11 @@
 import { contadorLikes } from "../firebase/firebase-data.js";
+import { initializeApp } from "https://www.gstatic.com/firebasejs/9.5.0/firebase-app.js";
+import { auth } from "../firebase/firebase-auth.js";
 
 export const Post = (post) => {
+  const user = auth.currentUser.uid;
+  console.log(user);
+
   console.log("check post", post);
   const $card = document.createElement("div");
   $card.classList.add("card");
@@ -44,6 +49,7 @@ export const Post = (post) => {
 
   const $optionsContainer = document.createElement("div");
   $optionsContainer.classList.add("card__options-container");
+  $optionsContainer.id = `optionsPost_${post.post_id}`;
 
   const $iconOptions = document.createElement("span");
   $iconOptions.classList.add("icon-options");
