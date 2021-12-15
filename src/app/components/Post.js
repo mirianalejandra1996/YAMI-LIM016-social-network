@@ -88,6 +88,7 @@ export const Post = (post) => {
 
   const $counterLikes = document.createElement("span");
   $counterLikes.classList.add("card__counter");
+  $counterLikes.id = "counterLikes";
   $counterLikes.textContent = `${post.likes.length}`;
 
   $likeContainer.appendChild($iconLike);
