@@ -14,8 +14,8 @@ import {
   arrayRemove,
 onSnapshot,
 } from "https://www.gstatic.com/firebasejs/9.5.0/firebase-firestore.js";
-import { db } from "./firebase-initializer.js";
-import { auth } from "./firebase-auth.js";
+import { db } from "../firebase/firebase-initializer.js";
+import { auth } from "../firebase/firebase-auth.js";
 
 // get collection ref
 const colRef = collection(db, "posts");

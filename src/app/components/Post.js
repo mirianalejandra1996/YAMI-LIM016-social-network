@@ -1,10 +1,9 @@
 import { toggleLikes, initListenerPost } from "../firebase/firebase-data.js";
 import { auth } from "../firebase/firebase-auth.js";
 
-const user_id = auth.currentUser
-console.log("currentuser",{user_id})
-
 export const Post = (post) => {
+  const user_id = auth.currentUser.uid;
+  console.log("currentuser",user_id)
   const $card = document.createElement("div");
   $card.classList.add("card");
 
@@ -130,15 +129,18 @@ export const Post = (post) => {
   //   todo: HACER EVENTO a icono de like para actualizar datos
 
 
-  initListenerPost(post.post_id, function (postDoc){
+  initListenerPost(post.post_id, (postDoc) => {
     //se podria cambiar cualquier campo de post pero en este caso solo necesitamos los likes
+  
     const likes = postDoc.data().likes
-   
+   console.log("array de likes",likes)
     if(likes.find((like)=> like === user_id)){
-      $counterLikes.classList.add('selected')
+      $likeContainer.classList.add('selected')
+      console.log("si se encuentra")
     }
     else{
-      $counterLikes.classList.remove('selected')
+      $likeContainer.classList.remove('selected')
+      console.log("no se encuentra")
     }
 
     $counterLikes.textContent = `${likes.length}`;

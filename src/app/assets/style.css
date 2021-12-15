@@ -494,10 +494,6 @@ input[type="password"]:focus {
   cursor: pointer;
 }
 
-/* .selected{
-  color: #ffb800;
-} */
-
 .card__icon {
   font-size: 1.8rem;
   color: #ccc;
@@ -508,7 +504,10 @@ input[type="password"]:focus {
   font-size: 0.9rem;
   margin-left: 0.2em;
 }
-
+.card__icon-container.selected .card__icon,
+.card__icon-container.selected .card__counter{
+  color: #ffb800;
+}
 /* Vista crear Post */
 
 .modal-bg {
