@@ -774,6 +774,11 @@ input[type="password"]:focus {
   transition: opacity 0.5s;
 }
 .modal__lista {
+  /* nuevo */
+  /* bottom: 0; */
+  /* position: absolute; */
+
+  /* original */
   display: flex;
   flex-direction: column;
   margin-bottom: 60px;

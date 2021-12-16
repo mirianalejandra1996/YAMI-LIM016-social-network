@@ -37,17 +37,22 @@ export function Timeline() {
 
   $botonPrueba.addEventListener("click", logOutGoogle);
 
+  // Crea un post
   const { menuModalPlus, toggleModalPlus } = MenuList();
-
-  // const { menuModalPlus, toggleModalPlus } = OptionListPost();
   // const $menu = Menu(toggleModalPlus);
 
+  // Perfil usuario
   const { menuModalProfile, toggleModalProfile } = ProfileList();
-  const $menu = Menu(toggleModalPlus, toggleModalProfile);
 
-  // Lista desplegable de opciones de post
   const { menuModalOptions, toogleModalOptions } = OptionListPost();
 
+
+  const $menu = Menu(toggleModalPlus, toggleModalProfile);
+
+  // -----------------------------------------------------------------------------------
+  // Lista desplegable de opciones de post
+
+  // -----------------------------------------------------------------------------------
   $timeline.append($header);
   $timeline.append($postsContainer);
   $timeline.append($botonPrueba);
