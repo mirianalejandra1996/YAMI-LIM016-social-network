@@ -56,8 +56,8 @@ export const Post = (post) => {
   // probando este id
   // const $menu = document.getElementById("menu");
 
-  // const { menuModalOptionsPost, toggleModalOptionsPost } = OptionListPost();
-  // const $menuModalOptions = menuModalOptionsPost;
+  const { menuModalOptionsPost, toggleModalOptionsPost } = OptionListPost();
+  const $menuModalOptions = menuModalOptionsPost;
 
   // probando
   // $menu.append($menuModalOptions);
@@ -67,7 +67,7 @@ export const Post = (post) => {
   $optionsContainer.addEventListener("click", () => {
     // * CREO QUE AQUÍ DEBERÍA ENTRAR COMO PARÁMETRO EL ID DEL POST PARA DESPUÉS JALARLO DEL FIREBASE
     console.log("deberia salir la lista desplegable de opciones de post");
-
+    toggleModalOptionsPost()
     
   });
 
@@ -76,7 +76,7 @@ export const Post = (post) => {
   $iconOptions.classList.add("card__options-icon");
 
   $optionsContainer.append($iconOptions);
-  // $optionsContainer.append($menuModalOptions)
+  $optionsContainer.append($menuModalOptions)
   $headerContainer.append($avatarContainer);
   $headerContainer.append($dataContainer);
   $headerContainer.append($optionsContainer);
@@ -172,47 +172,42 @@ export const Post = (post) => {
 };
 
 // Lista desplegable para editar o eliminar post
-// export function OptionListPost() {
-//   // const $modalContenedor = document.createElement("div");
-//   // $modalContenedor.classList.add("modal__contenedor", "align-end", "cerrar");
+export function OptionListPost() {
 
-//   const $modalLista = document.createElement("div");
-//   $modalLista.classList.add("card__dropdown");
+  const $modalLista = document.createElement("div");
+  $modalLista.classList.add("card__dropdown","cerrar");
 
-//   const $itemEditPublication = document.createElement("button");
-//   $itemEditPublication.classList.add("modal__button");
-//   $itemEditPublication.textContent = "Editar";
+  const $itemEditPublication = document.createElement("button");
+  $itemEditPublication.classList.add("modal__button");
+  $itemEditPublication.textContent = "Editar";
 
-//   const $itemRemovePublication = document.createElement("button");
-//   $itemRemovePublication.classList.add("modal__button");
-//   $itemRemovePublication.textContent = "Remover";
+  const $itemRemovePublication = document.createElement("button");
+  $itemRemovePublication.classList.add("modal__button");
+  $itemRemovePublication.textContent = "Remover";
 
-//   $itemEditPublication.addEventListener("click", (e) => {
-//     // console.log(e.target);
-//     // window.location.hash = "#/formPost";
-//     console.log("debería cambiar de vista para editar post");
-//   });
+  $itemEditPublication.addEventListener("click", (e) => {
+    window.location.hash = "#/formPost";
+  });
 
-//   $itemRemovePublication.addEventListener("click", (e) => {
-//     // console.log(e.target);
-//     // window.location.hash = "#/formPost";
-//     console.log(
-//       'debería cambiar de vista mostrando un modal "estás seguro de elimianr?"'
-//     );
-//   });
+  $itemRemovePublication.addEventListener("click", (e) => {
+    // console.log(e.target);
+    // window.location.hash = "#/formPost";
+    console.log(
+      'debería cambiar de vista mostrando un modal "estás seguro de elimianr?"'
+    );
+  });
 
-//   $modalLista.append($itemEditPublication);
-//   $modalLista.append($itemRemovePublication);
+  $modalLista.append($itemEditPublication);
+  $modalLista.append($itemRemovePublication);
 
   // !Este se puede arreglar Quizá llamando al id del menu y apendizarle la lista de Opciones de post
-//   $modalContenedor.append($modalLista);
 
-//   const toggleModalOptionsPost = () => {
-//     $modalContenedor.classList.toggle("cerrar");
-//   };
+  const toggleModalOptionsPost = () => {
+    $modalLista.classList.toggle("cerrar");
+  };
 
-//   return {
-//     menuModalOptionsPost: $modalContenedor,
-//     toggleModalOptionsPost: toggleModalOptionsPost,
-//   };
-// }
+  return {
+    menuModalOptionsPost: $modalLista,
+    toggleModalOptionsPost: toggleModalOptionsPost,
+  };
+}
