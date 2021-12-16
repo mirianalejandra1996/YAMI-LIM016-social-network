@@ -1,7 +1,8 @@
 import { toggleLikes, initListenerPost } from "../firebase/firebase-data.js";
 import { auth } from "../firebase/firebase-auth.js";
-
-export const Post = (post, toogleModalOptions) => {
+// import { Menu, OptionListPost } from "./Menu.js";
+import { OptionListPost } from "./Menu.js";
+export const Post = (post) => {
   const user_id = auth.currentUser.uid;
   console.log("currentuser", user_id);
   const $card = document.createElement("div");
@@ -47,9 +48,28 @@ export const Post = (post, toogleModalOptions) => {
   const $optionsContainer = document.createElement("div");
   $optionsContainer.classList.add("card__options-container");
   $optionsContainer.id = `optionsPost_${post.post_id}`;
+
+  // ! COMPONENTE DE LISTA DESPLEGABLE
+
+  // probando este id
+  // const $menu = document.getElementById("menu");
+
+  const { menuModalOptionsPost, toggleModalOptionsPost } = OptionListPost();
+  const $menuModalOptions = menuModalOptionsPost;
+
+  // probando
+  // $menu.append($menuModalOptions);
+
+  // const $menu = Menu(menuModalOptions, toogleModalOptions);
+
   $optionsContainer.addEventListener("click", () => {
-    console.log("deberia salir la lista desplegable de opciones de post");
-    toogleModalOptions;
+    // * CREO QUE AQUÍ DEBERÍA ENTRAR COMO PARÁMETRO EL ID DEL POST PARA DESPUÉS JALARLO DEL FIREBASE
+    // console.log("deberia salir la lista desplegable de opciones de post");
+
+    console.log("este es toogleModalOptions", toggleModalOptionsPost);
+    // toggleModalOptionsPost();
+    toggleModalOptionsPost();
+    // toggleModalOptionsPost;
   });
 
   const $iconOptions = document.createElement("span");
@@ -128,6 +148,8 @@ export const Post = (post, toogleModalOptions) => {
   $card.append($headerContainer);
   $card.append($msgContainer);
   $card.append($footerContainer);
+  // ! Esto es nuevo
+  $card.append($menuModalOptions);
 
   //   todo: HACER EVENTO a icono de like para actualizar datos
 

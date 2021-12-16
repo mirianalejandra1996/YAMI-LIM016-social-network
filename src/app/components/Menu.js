@@ -5,6 +5,7 @@ export function Menu(toggleModalPlus, toggleModalProfile) {
   //Menu
   const $menu = d.createElement("nav");
   $menu.classList.add("menu");
+  $menu.id = "menu";
 
   //iconos del menu
   //icono 1
@@ -57,6 +58,8 @@ export function Menu(toggleModalPlus, toggleModalProfile) {
 
   return $menu;
 }
+
+// LISTAS DESPLEGABLES
 
 export function MenuList() {
   const $modalContenedor = document.createElement("div");
@@ -130,6 +133,7 @@ export function OptionListPost() {
   $modalLista.append($itemEditPublication);
   $modalLista.append($itemRemovePublication);
 
+  // !Este se puede arreglar Quizá llamando al id del menu y apendizarle la lista de Opciones de post
   $modalContenedor.append($modalLista);
 
   const toggleModalOptionsPost = () => {
