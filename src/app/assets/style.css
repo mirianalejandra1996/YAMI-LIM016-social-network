@@ -458,10 +458,22 @@ input[type="password"]:focus {
   transition: 0.3s ease;
 }
 
+.card__options-container--relative{
+  position: relative;
+}
+
 .card__options-container:hover,
 .modal__close-container:hover {
   background-color: #ccc;
   cursor: pointer;
+}
+
+.card__dropdown{
+  width:100px;
+  height: 50%;
+  position: absolute;
+  right: 0px;
+  top:50px;
 }
 
 .card__options-icon {

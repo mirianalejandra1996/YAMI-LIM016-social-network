@@ -1,7 +1,6 @@
 import { logOutGoogle } from "../firebase/firebase-auth.js";
 import { Post } from "./Post.js";
-import { Menu, MenuList, ProfileList, OptionListPost } from "./Menu.js";
-// import { HeaderRetroceder } from "./Header_retro.js";
+import { Menu, MenuList, ProfileList } from "./Menu.js";
 import { traerPost } from "../firebase/firebase-data.js";
 import { HeaderSimple } from "./Header_simple.js";
 // import { ModalCerrarSesion } from "./Modal_cerrar.js";
@@ -16,28 +15,6 @@ export function Timeline() {
   const $postsContainer = document.createElement("div");
   $postsContainer.classList.add("notification-grid");
 
-  // const $post = Post();
-
-  // $postsContainer.append($post);
-
-  // const $timelinePrueba = document.createElement("div");
-
-  // const header = HeaderSimple()
-  // $timelinePrueba.append(header)
-
-  // const btn = document.createElement("button");
-  // btn.textContent = `Postear`;
-  // btn.addEventListener("click", () => {
-  //   window.location.hash = "#/formPost";
-  // });
-
-  // --------------------------------------------------
-
-  // const $botonPrueba = document.createElement("span");
-  // $botonPrueba.classList.add("link");
-  // $botonPrueba.textContent = "Sign Out";
-
-  // $botonPrueba.addEventListener("click", logOutGoogle);
 
   // Crea un post
   const { menuModalPlus, toggleModalPlus } = MenuList();
@@ -46,7 +23,7 @@ export function Timeline() {
   // Perfil usuario
   const { menuModalProfile, toggleModalProfile } = ProfileList();
 
-  const { menuModalOptions, toogleModalOptions } = OptionListPost();
+  // const { menuModalOptions, toogleModalOptions } = OptionListPost();
 
 
   const $menu = Menu(toggleModalPlus, toggleModalProfile);
@@ -57,11 +34,9 @@ export function Timeline() {
   // -----------------------------------------------------------------------------------
   $timeline.append($header);
   $timeline.append($postsContainer);
-  $timeline.append($botonPrueba);
-  $timeline.append(btn);
   $timeline.append(menuModalPlus);
   $timeline.append(menuModalProfile);
-  $timeline.append(menuModalOptions);
+  // $timeline.append(menuModalOptions);
   $timeline.append($menu);
   // $timeline.append(ModalCerrarSesion())
 
@@ -79,7 +54,7 @@ export function Timeline() {
 
       //lleno el $postContainer con los nodos de post
       postsLista.forEach((post) => {
-        const $post = Post(post, toogleModalOptions);
+        const $post = Post(post);
         $postsContainer.append($post);
       });
     })
