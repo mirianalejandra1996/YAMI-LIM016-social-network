@@ -120,7 +120,7 @@ body {
   background-origin: border-box;
   background-clip: content-box, border-box;
   text-indent: 45px;
-  font-family: lato;
+  font-family: "Lato", sans-serif;
 }
 
 .form__input:-internal-autofill-selected {
@@ -472,11 +472,48 @@ input[type="password"]:focus {
   transition: 0.3s ease;
 }
 
+.card__options-container--relative{
+  position: relative;
+}
+
 .card__options-container:hover,
 .modal__close-container:hover {
   background-color: #ccc;
   cursor: pointer;
 }
+
+.card__dropdown{
+  width:100px;
+  position: absolute;
+  right: 0px;
+  top:50px;
+  box-shadow: 4px 4px 17px #878787;
+  z-index: 1;
+  background: white;
+  border-radius: 10px;
+  overflow: hidden;
+  padding: 5px
+}
+.card__dropdown.cerrar{
+  opacity: 0;
+  padding: 0;
+  z-index: -1;
+}
+/* .card__dropdown::after{
+  content:'';
+  /* background-color: #f51616; */
+  /* width: 5px;
+  height: 5px;
+  top: -40px;
+  position: absolute;
+  display: block;
+  right: 8px;
+  border-left: 20px solid transparent;
+  border-right: 20px solid transparent;
+  border-bottom: 20px solid white;
+  border-top: 20px solid transparent; */
+  /* box-shadow: 4px 4px 0px 4px #878787; 
+}*/
 
 .card__options-icon {
   color: #848484;
@@ -839,4 +876,12 @@ input[type="password"]:focus {
   text-align: center;
   cursor: pointer;
   color: #fa610c;
+}
+
+.modalCerrarSesion {
+  width: 90%;
+  background-color: #fff;
+  transition: transform 1s;
+  transform: translateY(0%);
+  border-radius: 10px;
 }

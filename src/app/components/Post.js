@@ -1,5 +1,9 @@
-import { toggleLikes, initListenerPost } from "../firebase/firebase-data.js";
+import { toggleLikes, initListenerPost, getPost } from "../firebase/firebase-data.js";
 import { auth } from "../firebase/firebase-auth.js";
+import { Edit_Post } from "./Edit_post.js";
+// import { Menu, OptionListPost } from "./Menu.js";
+
+
 export const Post = (post) => {
   const user_id = auth.currentUser.uid;
   console.log("currentuser", user_id);
@@ -45,6 +49,7 @@ export const Post = (post) => {
 
   const $optionsContainer = document.createElement("div");
   $optionsContainer.classList.add("card__options-container");
+  // $optionsContainer.classList.add("card__options-container--relative");
   $optionsContainer.id = `optionsPost_${post.post_id}`;
 
   // ! COMPONENTE DE LISTA DESPLEGABLE
@@ -52,7 +57,7 @@ export const Post = (post) => {
   // probando este id
   // const $menu = document.getElementById("menu");
 
-  const { menuModalOptionsPost, toggleModalOptionsPost } = OptionListPost();
+  const { menuModalOptionsPost, toggleModalOptionsPost } = OptionListPost(post.post_id);
   const $menuModalOptions = menuModalOptionsPost;
 
   // probando
@@ -62,12 +67,9 @@ export const Post = (post) => {
 
   $optionsContainer.addEventListener("click", () => {
     // * CREO QUE AQUÍ DEBERÍA ENTRAR COMO PARÁMETRO EL ID DEL POST PARA DESPUÉS JALARLO DEL FIREBASE
-    // console.log("deberia salir la lista desplegable de opciones de post");
-
-    console.log("este es toogleModalOptions", toggleModalOptionsPost);
-    // toggleModalOptionsPost();
-    toggleModalOptionsPost();
-    // toggleModalOptionsPost;
+    console.log("deberia salir la lista desplegable de opciones de post");
+    toggleModalOptionsPost()
+    
   });
 
   const $iconOptions = document.createElement("span");
@@ -75,7 +77,7 @@ export const Post = (post) => {
   $iconOptions.classList.add("card__options-icon");
 
   $optionsContainer.append($iconOptions);
-
+  $optionsContainer.append($menuModalOptions)
   $headerContainer.append($avatarContainer);
   $headerContainer.append($dataContainer);
   $headerContainer.append($optionsContainer);
@@ -147,7 +149,7 @@ export const Post = (post) => {
   $card.append($msgContainer);
   $card.append($footerContainer);
   // ! Esto es nuevo
-  $card.append($menuModalOptions);
+  // $card.append($menuModalOptions);
 
   //   todo: HACER EVENTO a icono de like para actualizar datos
 
@@ -171,25 +173,27 @@ export const Post = (post) => {
 };
 
 // Lista desplegable para editar o eliminar post
-export function OptionListPost() {
-  const $modalContenedor = document.createElement("div");
-  $modalContenedor.classList.add("modal__contenedor", "align-end", "cerrar");
+export function OptionListPost(post_id) {
 
   const $modalLista = document.createElement("div");
-  $modalLista.classList.add("modal__lista");
+  $modalLista.classList.add("card__dropdown","cerrar");
 
   const $itemEditPublication = document.createElement("button");
   $itemEditPublication.classList.add("modal__button");
   $itemEditPublication.textContent = "Editar";
+  // $itemEditPublication.id=`edit_${post_id}`
 
   const $itemRemovePublication = document.createElement("button");
   $itemRemovePublication.classList.add("modal__button");
   $itemRemovePublication.textContent = "Remover";
 
-  $itemEditPublication.addEventListener("click", (e) => {
-    // console.log(e.target);
-    // window.location.hash = "#/formPost";
-    console.log("debería cambiar de vista para editar post");
+  $itemEditPublication.addEventListener("click", () => {
+    console.log("esto es editar", post_id)
+    window.location.hash = "#/editPost";
+    getPost(post_id).then((post_data)=>{
+      console.log("entramos a getpost")
+      Edit_Post(post_data)
+    })
   });
 
   $itemRemovePublication.addEventListener("click", (e) => {
@@ -204,14 +208,13 @@ export function OptionListPost() {
   $modalLista.append($itemRemovePublication);
 
   // !Este se puede arreglar Quizá llamando al id del menu y apendizarle la lista de Opciones de post
-  $modalContenedor.append($modalLista);
 
   const toggleModalOptionsPost = () => {
-    $modalContenedor.classList.toggle("cerrar");
+    $modalLista.classList.toggle("cerrar");
   };
 
   return {
-    menuModalOptionsPost: $modalContenedor,
+    menuModalOptionsPost: $modalLista,
     toggleModalOptionsPost: toggleModalOptionsPost,
   };
 }

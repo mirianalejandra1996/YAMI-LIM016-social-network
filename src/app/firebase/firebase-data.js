@@ -232,3 +232,11 @@ export async function toggleLikes(post_id) {
 export function initListenerPost (postId, actualizarPost) {
  return onSnapshot(doc(db, 'posts', postId), actualizarPost)
 }
+
+export async function getPost(post_id){
+  const postRef = doc(db, "posts", post_id);
+  const post = await getDoc(postRef);
+  const data =post.data()
+  data.post_id=post_id
+  return data
+}

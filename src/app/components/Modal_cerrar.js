@@ -1,12 +1,12 @@
-export function ModalCerrarSesion () {
+import { logOutGoogle } from "../firebase/firebase-auth.js";
 
-    import { logOutGoogle } from "../firebase/firebase-auth.js";
+export function ModalCerrarSesion () {
 
     const $modalContenedor = document.createElement('div')
     $modalContenedor.classList.add('modal__contenedor')
 
     const $modalCerrar = document.createElement('div')
-    $modalCerrar.classList.add('modal', 'modal-cerrar')
+    $modalCerrar.classList.add('modalCerrarSesion', 'modal-cerrar')
 
     const $modaltexto = document.createElement('div')
     $modaltexto.classList.add('modal-textos')
@@ -41,7 +41,7 @@ export function ModalCerrarSesion () {
     }
 
     const cerrarModal = ()  => {
-         $modalCerrar.classList.toggle('modal-cerrar') 
+         $modalCerrar.classList.toggle('modal-cerrar')
          setTimeout(function () {
             $modalContenedor.style.opacity = "0"
             $modalContenedor.style.visibility = "hidden"
@@ -56,4 +56,18 @@ export function ModalCerrarSesion () {
        abrirModal,
        cerrarModal
    }
+}
+
+export const abrirModal  = ()  => {
+    $modalContenedor.style.opacity = "1"
+    $modalContenedor.style.visibility = "visible"
+    $modalCerrar.classList.toggle('modal-cerrar')
+}
+
+export const cerrarModal = ()  => {
+     $modalCerrar.classList.toggle('modal-cerrar')
+     setTimeout(function () {
+        $modalContenedor.style.opacity = "0"
+        $modalContenedor.style.visibility = "hidden"
+    }, 900)
 }
