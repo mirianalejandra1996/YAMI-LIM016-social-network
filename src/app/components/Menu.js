@@ -1,135 +1,185 @@
-export function Menu(toggleModalPlus, toggleModalProfile){
+import { ModalCerrarSesion } from './Modal_cerrar.js'
 
-    const d = document
-    //Menu
-    const $menu = d.createElement('nav')
-    $menu.classList.add('menu')
+export function Menu(toggleModalPlus, toggleModalProfile) {
+  const d = document;
+  //Menu
+  const $menu = d.createElement("nav");
+  $menu.classList.add("menu");
+  $menu.id = "menu";
 
-    //iconos del menu
-    //icono 1
-    const itemHome = d.createElement('a')
-    itemHome.classList.add('menu__link')
-    const $iconHome = document.createElement("i");
-    $iconHome.classList.add("icon-home");
+  //iconos del menu
+  //icono 1
+  const itemHome = d.createElement("a");
+  itemHome.classList.add("menu__link");
+  const $iconHome = document.createElement("i");
+  $iconHome.classList.add("icon-home");
 
-    itemHome.append($iconHome)
+  itemHome.append($iconHome);
 
-    //evento del ancla
-    // itemHome.addEventListener('click', window.location.hash = "#/home")
+  //evento del ancla
+  // itemHome.addEventListener('click', window.location.hash = "#/home")
 
+  //icono 2
+  const itemLupa = d.createElement("a");
+  itemLupa.classList.add("menu__link");
+  const $iconLupa = document.createElement("i");
+  $iconLupa.classList.add("icon-lupa");
 
-    //icono 2
-    const itemLupa = d.createElement('a')
-    itemLupa.classList.add('menu__link')
-    const $iconLupa = document.createElement("i");
-    $iconLupa.classList.add("icon-lupa");
+  itemLupa.append($iconLupa);
+  //icono 3
+  const itemPlus = d.createElement("a");
+  itemPlus.classList.add("menu__link");
+  const $iconPlus = document.createElement("i");
+  $iconPlus.classList.add("icon-addPost");
 
-    itemLupa.append($iconLupa)
-    //icono 3
-    const itemPlus = d.createElement('a')
-    itemPlus.classList.add('menu__link')
-    const $iconPlus = document.createElement("i");
-    $iconPlus.classList.add("icon-addPost");
+  itemPlus.append($iconPlus);
+  itemPlus.addEventListener("click", () => toggleModalPlus());
+  //icono 4
+  const itemReseña = d.createElement("a");
+  itemReseña.classList.add("menu__link");
+  const $iconReseña = document.createElement("i");
+  $iconReseña.classList.add("icon-comment");
 
-    itemPlus.append($iconPlus)
-    itemPlus.addEventListener("click", ()=>toggleModalPlus())
-    //icono 4
-    const itemReseña = d.createElement('a')
-    itemReseña.classList.add('menu__link')
-    const $iconReseña = document.createElement("i");
-    $iconReseña.classList.add("icon-comment");
+  itemReseña.append($iconReseña);
+  //icono 5
+  const itemPerfil = d.createElement("a");
+  itemPerfil.classList.add("menu__link");
+  const $iconPerfil = document.createElement("i");
+  $iconPerfil.classList.add("icon-user");
 
-    itemReseña.append($iconReseña)
-    //icono 5
-    const itemPerfil = d.createElement('a')
-    itemPerfil.classList.add('menu__link')
-    const $iconPerfil= document.createElement("i");
-    $iconPerfil.classList.add("icon-user");
+  itemPerfil.append($iconPerfil);
+  itemPerfil.addEventListener("click", () => toggleModalProfile());
 
-    itemPerfil.append($iconPerfil)
-    itemPerfil.addEventListener("click", ()=>toggleModalProfile())
+  $menu.append(itemHome);
+  $menu.append(itemLupa);
+  $menu.append(itemPlus);
+  $menu.append(itemReseña);
+  $menu.append(itemPerfil);
 
-
-
- $menu.append(itemHome)
- $menu.append(itemLupa)
- $menu.append(itemPlus)
- $menu.append(itemReseña)
- $menu.append(itemPerfil)
-
-return $menu
-
+  return $menu;
 }
 
-export function MenuList (){
-    const $modalContenedor = document.createElement('div')
-    $modalContenedor.classList.add('modal__contenedor','align-end','cerrar')
+// LISTAS DESPLEGABLES
 
-    const $modalLista = document.createElement('div')
-    $modalLista.classList.add('modal__lista')
+export function MenuList() {
+  const $modalContenedor = document.createElement("div");
+  $modalContenedor.classList.add("modal__contenedor", "align-end", "cerrar");
 
-    const $itemsPublicacion = document.createElement('button')
-    $itemsPublicacion.classList.add('modal__button')
-    $itemsPublicacion.textContent = 'Publicación'
+  const $modalLista = document.createElement("div");
+  $modalLista.classList.add("modal__lista");
 
-    $itemsPublicacion.addEventListener("click", () => {
-        window.location.hash = "#/formPost";
-    })
+  const $itemsPublicacion = document.createElement("button");
+  $itemsPublicacion.classList.add("modal__button");
+  $itemsPublicacion.textContent = "Publicación";
 
-    const $itemsReseña = document.createElement('button')
-    $itemsReseña.classList.add('modal__button')
-    $itemsReseña.textContent = 'Reseña'
+  $itemsPublicacion.addEventListener("click", () => {
+    window.location.hash = "#/formPost";
+  });
 
-    const $itemsHistoria = document.createElement('button')
-    $itemsHistoria.classList.add('modal__button')
-    $itemsHistoria.textContent = 'Historia'
+  const $itemsReseña = document.createElement("button");
+  $itemsReseña.classList.add("modal__button");
+  $itemsReseña.textContent = "Reseña";
 
-    $modalLista.append($itemsPublicacion)
-    // $modalLista.append($itemsReseña)
-    // $modalLista.append($itemsHistoria)
+  const $itemsHistoria = document.createElement("button");
+  $itemsHistoria.classList.add("modal__button");
+  $itemsHistoria.textContent = "Historia";
 
-    $modalContenedor.append($modalLista)
+  $modalLista.append($itemsPublicacion);
+  // $modalLista.append($itemsReseña)
+  // $modalLista.append($itemsHistoria)
 
-    const toggleModalPlus = () => {
-        $modalContenedor.classList.toggle('cerrar')
+  $modalContenedor.append($modalLista);
 
-    }
+  const toggleModalPlus = () => {
+    $modalContenedor.classList.toggle("cerrar");
+  };
 
-    return {
-        menuModalPlus: $modalContenedor,
-        toggleModalPlus: toggleModalPlus
-    }
-
+  return {
+    menuModalPlus: $modalContenedor,
+    toggleModalPlus: toggleModalPlus,
+  };
 }
 
-export function ProfileList (){
-    const $modalContenedor = document.createElement('div')
-    $modalContenedor.classList.add('modal__contenedor','align-end','cerrar')
+// // Lista desplegable para editar o eliminar post
+// export function OptionListPost() {
+//   const $modalContenedor = document.createElement("div");
+//   $modalContenedor.classList.add("modal__contenedor", "align-end", "cerrar");
 
-    const $modalLista = document.createElement('div')
-    $modalLista.classList.add('modal__lista')
+//   const $modalLista = document.createElement("div");
+//   $modalLista.classList.add("modal__lista");
 
-    const $itemsPerfil = document.createElement('button')
-    $itemsPerfil.classList.add('modal__button')
-    $itemsPerfil.textContent = 'Ver perfil'
+//   const $itemEditPublication = document.createElement("button");
+//   $itemEditPublication.classList.add("modal__button");
+//   $itemEditPublication.textContent = "Editar";
 
-    const $itemsCerrarSesion = document.createElement('button')
-    $itemsCerrarSesion.classList.add('modal__button')
-    $itemsCerrarSesion.textContent = 'Cerrar sesión'
+//   const $itemRemovePublication = document.createElement("button");
+//   $itemRemovePublication.classList.add("modal__button");
+//   $itemRemovePublication.textContent = "Remover";
 
-    $modalLista.append($itemsPerfil)
-    $modalLista.append($itemsCerrarSesion)
+//   $itemEditPublication.addEventListener("click", (e) => {
+//     // console.log(e.target);
+//     // window.location.hash = "#/formPost";
+//     console.log("debería cambiar de vista para editar post");
+//   });
 
-    $modalContenedor.append($modalLista)
+//   $itemRemovePublication.addEventListener("click", (e) => {
+//     // console.log(e.target);
+//     // window.location.hash = "#/formPost";
+//     console.log(
+//       'debería cambiar de vista mostrando un modal "estás seguro de elimianr?"'
+//     );
+//   });
 
-    const toggleModalProfile = () => {
-        $modalContenedor.classList.toggle('cerrar')
+//   $modalLista.append($itemEditPublication);
+//   $modalLista.append($itemRemovePublication);
 
-    }
+//   // !Este se puede arreglar Quizá llamando al id del menu y apendizarle la lista de Opciones de post
+//   $modalContenedor.append($modalLista);
 
-    return {
-        menuModalProfile: $modalContenedor,
-        toggleModalProfile: toggleModalProfile
-    }
+//   const toggleModalOptionsPost = () => {
+//     $modalContenedor.classList.toggle("cerrar");
+//   };
 
+//   return {
+//     menuModalOptionsPost: $modalContenedor,
+//     toggleModalOptionsPost: toggleModalOptionsPost,
+//   };
+// }
+
+export function ProfileList() {
+  const $modalContenedorPerfil = document.createElement("div");
+  $modalContenedorPerfil.classList.add("modal__contenedor", "align-end", "cerrar");
+
+  const $modalLista = document.createElement("div");
+  $modalLista.classList.add("modal__lista");
+
+  const $itemsPerfil = document.createElement("button");
+  $itemsPerfil.classList.add("modal__button");
+  $itemsPerfil.textContent = "Ver perfil";
+
+  const $itemsCerrarSesion = document.createElement("button");
+  $itemsCerrarSesion.classList.add("modal__button");
+  $itemsCerrarSesion.textContent = "Cerrar sesión";
+
+/********************************************/
+  const { $modalContenedor, abrirModal } = ModalCerrarSesion();
+  $modalContenedorPerfil.append($modalContenedor);
+  $itemsCerrarSesion.addEventListener('click', (e)=>{
+    e.preventDefault();
+    abrirModal();
+  })
+/****************************************/
+  $modalLista.append($itemsPerfil);
+  $modalLista.append($itemsCerrarSesion);
+
+  $modalContenedorPerfil.append($modalLista);
+
+  const toggleModalProfile = () => {
+    $modalContenedorPerfil.classList.toggle("cerrar");
+  };
+
+  return {
+    menuModalProfile: $modalContenedorPerfil,
+    toggleModalProfile: toggleModalProfile,
+  };
 }

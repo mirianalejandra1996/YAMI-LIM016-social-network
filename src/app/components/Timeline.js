@@ -1,9 +1,10 @@
 import { logOutGoogle } from "../firebase/firebase-auth.js";
 import { Post } from "./Post.js";
 import { Menu, MenuList, ProfileList } from "./Menu.js";
-import { HeaderRetroceder } from "./Header_retro.js";
 import { traerPost } from "../firebase/firebase-data.js";
-import {HeaderSimple} from "./Header_simple.js"
+import { HeaderSimple } from "./Header_simple.js";
+// import { ModalCerrarSesion } from "./Modal_cerrar.js";
+
 export function Timeline() {
   const $timeline = document.createElement("div");
 
@@ -14,41 +15,30 @@ export function Timeline() {
   const $postsContainer = document.createElement("div");
   $postsContainer.classList.add("notification-grid");
 
-  // const $post = Post();
 
-  // $postsContainer.append($post);
-
-  // const $timelinePrueba = document.createElement("div");
-
-  // const header = HeaderSimple()
-  // $timelinePrueba.append(header)
-
-  const btn = document.createElement("button");
-  btn.textContent = `Postear`;
-  btn.addEventListener("click", () => {
-    window.location.hash = "#/formPost";
-  });
-
-  // --------------------------------------------------
-
-  const $botonPrueba = document.createElement("span");
-  $botonPrueba.classList.add("link");
-  $botonPrueba.textContent = "Sign Out";
-
-  $botonPrueba.addEventListener("click", logOutGoogle);
-
-
+  // Crea un post
   const { menuModalPlus, toggleModalPlus } = MenuList();
+  // const $menu = Menu(toggleModalPlus);
+
+  // Perfil usuario
   const { menuModalProfile, toggleModalProfile } = ProfileList();
+
+  // const { menuModalOptions, toogleModalOptions } = OptionListPost();
+
+
   const $menu = Menu(toggleModalPlus, toggleModalProfile);
 
+  // -----------------------------------------------------------------------------------
+  // Lista desplegable de opciones de post
+
+  // -----------------------------------------------------------------------------------
   $timeline.append($header);
   $timeline.append($postsContainer);
-  $timeline.append($botonPrueba);
-  $timeline.append(btn);
   $timeline.append(menuModalPlus);
   $timeline.append(menuModalProfile);
+  // $timeline.append(menuModalOptions);
   $timeline.append($menu);
+  // $timeline.append(ModalCerrarSesion())
 
   // cosas que pasan asincronamente
 
@@ -74,6 +64,64 @@ export function Timeline() {
 
   return $timeline;
 }
+
+// export function ModalCerrarSesion () {
+
+//   const $modalContenedor = document.createElement('div')
+//   $modalContenedor.classList.add('modal__contenedor')
+
+//   const $modalCerrar = document.createElement('div')
+//   $modalCerrar.classList.add('modal', 'modal-cerrar')
+
+//   const $modaltexto = document.createElement('div')
+//   $modaltexto.classList.add('modal-textos')
+
+//   const $Titulo = document.createElement('h2')
+//   $Titulo.classList.add('modal-titulo')
+//   $Titulo.textContent='¿Salir de Yami?'
+
+//   const $contenedorMensaje = document.createElement('div')
+//   $contenedorMensaje.classList.add('modal__p-cerrarS')
+//   const $mensaje = document.createElement('p')
+//   $mensaje.textContent = 'Salir'
+
+//   const $cerrar = document.createElement('p')
+//   $cerrar.classList.add('modal__p-cancelar')
+//   $cerrar.textContent = 'Cancelar'
+ 
+//   $modalContenedor.append($modalCerrar)
+//   $modalCerrar.append($modaltexto)
+//   $modaltexto.append($Titulo)
+//   $contenedorMensaje.append($mensaje)
+//   $modaltexto.append($contenedorMensaje)
+//   $modaltexto.append($cerrar)
+
+//   $modalContenedor.style.opacity = "0"
+//   $modalContenedor.style.visibility = "hidden"
+
+//   const abrirModal  = ()  => {
+//       $modalContenedor.style.opacity = "1"
+//       $modalContenedor.style.visibility = "visible"
+//       $modalCerrar.classList.toggle('modal-cerrar')
+//   }
+
+//   const cerrarModal = ()  => {
+//        $modalCerrar.classList.toggle('modal-cerrar')
+//        setTimeout(function () {
+//           $modalContenedor.style.opacity = "0"
+//           $modalContenedor.style.visibility = "hidden"
+//       }, 900)
+//   }
+
+//   $cerrar.addEventListener('click', cerrarModal)
+//   $contenedorMensaje.addEventListener('click', logOutGoogle)
+
+//  return {
+//      $modalContenedor,
+//      abrirModal,
+//      cerrarModal
+//  }
+// }
 
 //en vez de devolver $timeline, devuelve Promise que en el then devuelve $timeline
 

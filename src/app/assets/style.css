@@ -120,7 +120,7 @@ body {
   background-origin: border-box;
   background-clip: content-box, border-box;
   text-indent: 45px;
-  font-family: lato;
+  font-family: "Lato", sans-serif;
 }
 
 .form__input:-internal-autofill-selected {
@@ -347,7 +347,8 @@ input[type="password"]:focus {
   display: flex;
   justify-content: center;
   align-items: center;
-  height: 100%;
+  /* height: 100%; */
+  height: 100vh;
 }
 .spinner {
   width: 80px;
@@ -457,11 +458,48 @@ input[type="password"]:focus {
   transition: 0.3s ease;
 }
 
+.card__options-container--relative{
+  position: relative;
+}
+
 .card__options-container:hover,
 .modal__close-container:hover {
   background-color: #ccc;
   cursor: pointer;
 }
+
+.card__dropdown{
+  width:100px;
+  position: absolute;
+  right: 0px;
+  top:50px;
+  box-shadow: 4px 4px 17px #878787;
+  z-index: 1;
+  background: white;
+  border-radius: 10px;
+  overflow: hidden;
+  padding: 5px
+}
+.card__dropdown.cerrar{
+  opacity: 0;
+  padding: 0;
+  z-index: -1;
+}
+/* .card__dropdown::after{
+  content:'';
+  /* background-color: #f51616; */
+  /* width: 5px;
+  height: 5px;
+  top: -40px;
+  position: absolute;
+  display: block;
+  right: 8px;
+  border-left: 20px solid transparent;
+  border-right: 20px solid transparent;
+  border-bottom: 20px solid white;
+  border-top: 20px solid transparent; */
+  /* box-shadow: 4px 4px 0px 4px #878787; 
+}*/
 
 .card__options-icon {
   color: #848484;
@@ -490,8 +528,13 @@ input[type="password"]:focus {
   align-items: center;
 }
 
-.card__icon-container:hover{
+.card__icon-container:hover {
   cursor: pointer;
+}
+
+.card__icon-container:hover .card__icon {
+  /* color: #ffb800; */
+  color: #ccc;
 }
 
 .card__icon {
@@ -505,7 +548,7 @@ input[type="password"]:focus {
   margin-left: 0.2em;
 }
 .card__icon-container.selected .card__icon,
-.card__icon-container.selected .card__counter{
+.card__icon-container.selected .card__counter {
   color: #ffb800;
 }
 /* Vista crear Post */
@@ -605,14 +648,19 @@ input[type="password"]:focus {
 .tag--selected {
   background-color: #fa610c;
 }
-.err-container.center{
-align-items: center;
+.err-container.center {
+  align-items: center;
 }
 /* ---------Para vista escritorio--------- */
 
 @media (min-width: 1200px) {
   .card {
     max-width: 60%;
+  }
+
+  .card__icon-container:hover .card__icon {
+    color: #ffb800;
+    /* color: #ccc */
   }
 }
 /*Header simple*/
@@ -633,7 +681,7 @@ align-items: center;
 
 /*Header retroceso*/
 
-.header_div-icon{
+.header_div-icon {
   position: absolute;
   width: 70px;
   height: 70px;
@@ -730,7 +778,6 @@ align-items: center;
   font-size: small;
 }
 
-
 /* Estilos Menu */
 .menu {
   position: fixed;
@@ -758,36 +805,40 @@ align-items: center;
 }
 
 /* Modal Lista */
-.modal__contenedor.align-end{
+.modal__contenedor.align-end {
   align-items: flex-end;
   opacity: 1;
-  transition: opacity .5s;
+  transition: opacity 0.5s;
 }
-.modal__lista{
-display: flex;
-flex-direction: column;
-margin-bottom: 60px;
-width: 100%;
-border-top-left-radius: 18px;
-border-top-right-radius: 18px;
-overflow: hidden;
-background-color: white;
-padding: 0 10px;
-transition: transform .5s ease-in-out;
-transform: translateY(0%);
+.modal__lista {
+  /* nuevo */
+  /* bottom: 0; */
+  /* position: absolute; */
 
+  /* original */
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 60px;
+  width: 100%;
+  border-top-left-radius: 18px;
+  border-top-right-radius: 18px;
+  overflow: hidden;
+  background-color: white;
+  padding: 0 10px;
+  transition: transform 0.5s ease-in-out;
+  transform: translateY(0%);
 }
-.modal__button{
+.modal__button {
   padding: 15px 10px;
   border: none;
   background-color: white;
   font-size: 16px;
   text-align: left;
 }
-.modal__button + .modal__button{
+.modal__button + .modal__button {
   border-top: 1px solid #cbbdbd;
 }
-.modal__contenedor.cerrar{
+.modal__contenedor.cerrar {
   opacity: 0;
   z-index: -1;
   padding: 0;
@@ -804,11 +855,19 @@ transform: translateY(0%);
   cursor: pointer;
 }
 
-.modal__p-cerrarS{
+.modal__p-cerrarS {
   padding: 20px;
   border-top: 1px solid #efeff1;
   border-bottom: 1px solid #efeff1;
   text-align: center;
   cursor: pointer;
-  color:#FA610C;
+  color: #fa610c;
+}
+
+.modalCerrarSesion {
+  width: 90%;
+  background-color: #fff;
+  transition: transform 1s;
+  transform: translateY(0%);
+  border-radius: 10px;
 }

@@ -62,7 +62,14 @@ export const Router = () => {
         }
       }
       default:
-        return $root.appendChild(components.login());
+        // todo: Deberíamos crear una vista en caso que el usuario coloque una url no existente
+        if (auth.currentUser) {
+          // return $root.appendChild(components.login());
+          return $root.appendChild(components.timeline());
+        } else {
+          return $root.appendChild(components.login());
+          // return (window.location.hash = "#/");
+        }
       // break;
     }
   }
