@@ -1,6 +1,6 @@
 import { logOutGoogle } from "../firebase/firebase-auth.js";
 import { Post } from "./Post.js";
-import { Menu, MenuList, ProfileList, OptionListPost } from "./Menu.js";
+import { Menu, MenuList, ProfileList } from "./Menu.js";
 import { HeaderRetroceder } from "./Header_retro.js";
 import { traerPost } from "../firebase/firebase-data.js";
 import { HeaderSimple } from "./Header_simple.js";
@@ -44,8 +44,7 @@ export function Timeline() {
   // Perfil usuario
   const { menuModalProfile, toggleModalProfile } = ProfileList();
 
-  const { menuModalOptions, toogleModalOptions } = OptionListPost();
-
+  // const { menuModalOptions, toogleModalOptions } = OptionListPost();
 
   const $menu = Menu(toggleModalPlus, toggleModalProfile);
 
@@ -59,7 +58,7 @@ export function Timeline() {
   $timeline.append(btn);
   $timeline.append(menuModalPlus);
   $timeline.append(menuModalProfile);
-  $timeline.append(menuModalOptions);
+  // $timeline.append(menuModalOptions);
   $timeline.append($menu);
 
   // cosas que pasan asincronamente
@@ -76,7 +75,7 @@ export function Timeline() {
 
       //lleno el $postContainer con los nodos de post
       postsLista.forEach((post) => {
-        const $post = Post(post, toogleModalOptions);
+        const $post = Post(post);
         $postsContainer.append($post);
       });
     })

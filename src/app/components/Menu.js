@@ -98,51 +98,51 @@ export function MenuList() {
   };
 }
 
-// Lista desplegable para editar o eliminar post
-export function OptionListPost() {
-  const $modalContenedor = document.createElement("div");
-  $modalContenedor.classList.add("modal__contenedor", "align-end", "cerrar");
+// // Lista desplegable para editar o eliminar post
+// export function OptionListPost() {
+//   const $modalContenedor = document.createElement("div");
+//   $modalContenedor.classList.add("modal__contenedor", "align-end", "cerrar");
 
-  const $modalLista = document.createElement("div");
-  $modalLista.classList.add("modal__lista");
+//   const $modalLista = document.createElement("div");
+//   $modalLista.classList.add("modal__lista");
 
-  const $itemEditPublication = document.createElement("button");
-  $itemEditPublication.classList.add("modal__button");
-  $itemEditPublication.textContent = "Editar";
+//   const $itemEditPublication = document.createElement("button");
+//   $itemEditPublication.classList.add("modal__button");
+//   $itemEditPublication.textContent = "Editar";
 
-  const $itemRemovePublication = document.createElement("button");
-  $itemRemovePublication.classList.add("modal__button");
-  $itemRemovePublication.textContent = "Remover";
+//   const $itemRemovePublication = document.createElement("button");
+//   $itemRemovePublication.classList.add("modal__button");
+//   $itemRemovePublication.textContent = "Remover";
 
-  $itemEditPublication.addEventListener("click", (e) => {
-    // console.log(e.target);
-    // window.location.hash = "#/formPost";
-    console.log("debería cambiar de vista para editar post");
-  });
+//   $itemEditPublication.addEventListener("click", (e) => {
+//     // console.log(e.target);
+//     // window.location.hash = "#/formPost";
+//     console.log("debería cambiar de vista para editar post");
+//   });
 
-  $itemRemovePublication.addEventListener("click", (e) => {
-    // console.log(e.target);
-    // window.location.hash = "#/formPost";
-    console.log(
-      'debería cambiar de vista mostrando un modal "estás seguro de elimianr?"'
-    );
-  });
+//   $itemRemovePublication.addEventListener("click", (e) => {
+//     // console.log(e.target);
+//     // window.location.hash = "#/formPost";
+//     console.log(
+//       'debería cambiar de vista mostrando un modal "estás seguro de elimianr?"'
+//     );
+//   });
 
-  $modalLista.append($itemEditPublication);
-  $modalLista.append($itemRemovePublication);
+//   $modalLista.append($itemEditPublication);
+//   $modalLista.append($itemRemovePublication);
 
-  // !Este se puede arreglar Quizá llamando al id del menu y apendizarle la lista de Opciones de post
-  $modalContenedor.append($modalLista);
+//   // !Este se puede arreglar Quizá llamando al id del menu y apendizarle la lista de Opciones de post
+//   $modalContenedor.append($modalLista);
 
-  const toggleModalOptionsPost = () => {
-    $modalContenedor.classList.toggle("cerrar");
-  };
+//   const toggleModalOptionsPost = () => {
+//     $modalContenedor.classList.toggle("cerrar");
+//   };
 
-  return {
-    menuModalOptionsPost: $modalContenedor,
-    toggleModalOptionsPost: toggleModalOptionsPost,
-  };
-}
+//   return {
+//     menuModalOptionsPost: $modalContenedor,
+//     toggleModalOptionsPost: toggleModalOptionsPost,
+//   };
+// }
 
 export function ProfileList() {
   const $modalContenedor = document.createElement("div");

@@ -1,7 +1,5 @@
 import { toggleLikes, initListenerPost } from "../firebase/firebase-data.js";
 import { auth } from "../firebase/firebase-auth.js";
-// import { Menu, OptionListPost } from "./Menu.js";
-import { OptionListPost } from "./Menu.js";
 export const Post = (post) => {
   const user_id = auth.currentUser.uid;
   console.log("currentuser", user_id);
@@ -171,3 +169,49 @@ export const Post = (post) => {
 
   return $card;
 };
+
+// Lista desplegable para editar o eliminar post
+export function OptionListPost() {
+  const $modalContenedor = document.createElement("div");
+  $modalContenedor.classList.add("modal__contenedor", "align-end", "cerrar");
+
+  const $modalLista = document.createElement("div");
+  $modalLista.classList.add("modal__lista");
+
+  const $itemEditPublication = document.createElement("button");
+  $itemEditPublication.classList.add("modal__button");
+  $itemEditPublication.textContent = "Editar";
+
+  const $itemRemovePublication = document.createElement("button");
+  $itemRemovePublication.classList.add("modal__button");
+  $itemRemovePublication.textContent = "Remover";
+
+  $itemEditPublication.addEventListener("click", (e) => {
+    // console.log(e.target);
+    // window.location.hash = "#/formPost";
+    console.log("debería cambiar de vista para editar post");
+  });
+
+  $itemRemovePublication.addEventListener("click", (e) => {
+    // console.log(e.target);
+    // window.location.hash = "#/formPost";
+    console.log(
+      'debería cambiar de vista mostrando un modal "estás seguro de elimianr?"'
+    );
+  });
+
+  $modalLista.append($itemEditPublication);
+  $modalLista.append($itemRemovePublication);
+
+  // !Este se puede arreglar Quizá llamando al id del menu y apendizarle la lista de Opciones de post
+  $modalContenedor.append($modalLista);
+
+  const toggleModalOptionsPost = () => {
+    $modalContenedor.classList.toggle("cerrar");
+  };
+
+  return {
+    menuModalOptionsPost: $modalContenedor,
+    toggleModalOptionsPost: toggleModalOptionsPost,
+  };
+}
