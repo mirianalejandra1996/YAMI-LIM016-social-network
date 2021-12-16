@@ -1,17 +1,20 @@
-import { HeaderRetro } from "./Header_retro.js";
+import { HeaderRetroceder } from "./Header_retro.js";
 import { addPost } from "../firebase/firebase-data.js";
 
-export const Edit_Post = (post_id) => {
+export const Edit_Post = (post_data) => {
   const root = document.getElementById("root");
   root.classList.remove("main-container");
 
   // ------NUEVO
   const createPostContainer = document.createElement("div");
+  const algo = post_data
+  console.log(algo.message)
+
 
   const formPost = document.createElement("div");
   formPost.classList.add("formPost");
 
-  const header = HeaderRetro();
+  const header = HeaderRetroceder();
   formPost.append(header);
 
   const title = document.createElement("h2");
@@ -27,6 +30,7 @@ export const Edit_Post = (post_id) => {
   post.id = "msgPostForm";
   post.classList.add("formPost_input-long");
   post.placeholder = `¿Qué estas pensando?`;
+  // post.value = `${post_data.message}`
   inputsContainer.append(post);
 
   const tags = document.createElement("input");

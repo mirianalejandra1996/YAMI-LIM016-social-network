@@ -61,6 +61,13 @@ export const Router = () => {
           return (window.location.hash = "#/");
         }
       }
+      case "#/editPost": {
+        if (auth.currentUser) {
+          return $root.appendChild(components.editPost());
+        } else {
+          return (window.location.hash = "#/");
+        }
+      }
       default:
         // todo: Deberíamos crear una vista en caso que el usuario coloque una url no existente
         if (auth.currentUser) {

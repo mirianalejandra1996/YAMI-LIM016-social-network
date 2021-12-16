@@ -1,5 +1,6 @@
-import { toggleLikes, initListenerPost } from "../firebase/firebase-data.js";
+import { toggleLikes, initListenerPost, getPost } from "../firebase/firebase-data.js";
 import { auth } from "../firebase/firebase-auth.js";
+import { Edit_Post } from "./Edit_post.js";
 // import { Menu, OptionListPost } from "./Menu.js";
 
 
@@ -56,7 +57,7 @@ export const Post = (post) => {
   // probando este id
   // const $menu = document.getElementById("menu");
 
-  const { menuModalOptionsPost, toggleModalOptionsPost } = OptionListPost();
+  const { menuModalOptionsPost, toggleModalOptionsPost } = OptionListPost(post.post_id);
   const $menuModalOptions = menuModalOptionsPost;
 
   // probando
@@ -172,7 +173,7 @@ export const Post = (post) => {
 };
 
 // Lista desplegable para editar o eliminar post
-export function OptionListPost() {
+export function OptionListPost(post_id) {
 
   const $modalLista = document.createElement("div");
   $modalLista.classList.add("card__dropdown","cerrar");
@@ -180,13 +181,19 @@ export function OptionListPost() {
   const $itemEditPublication = document.createElement("button");
   $itemEditPublication.classList.add("modal__button");
   $itemEditPublication.textContent = "Editar";
+  // $itemEditPublication.id=`edit_${post_id}`
 
   const $itemRemovePublication = document.createElement("button");
   $itemRemovePublication.classList.add("modal__button");
   $itemRemovePublication.textContent = "Remover";
 
-  $itemEditPublication.addEventListener("click", (e) => {
-    window.location.hash = "#/formPost";
+  $itemEditPublication.addEventListener("click", () => {
+    console.log("esto es editar", post_id)
+    window.location.hash = "#/editPost";
+    getPost(post_id).then((post_data)=>{
+      console.log("entramos a getpost")
+      Edit_Post(post_data)
+    })
   });
 
   $itemRemovePublication.addEventListener("click", (e) => {
