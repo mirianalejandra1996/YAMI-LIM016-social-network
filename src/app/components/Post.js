@@ -1,6 +1,6 @@
 import { toggleLikes, initListenerPost, getPost } from "../firebase/firebase-data.js";
 import { auth } from "../firebase/firebase-auth.js";
-import { Edit_Post } from "./Edit_post.js";
+import { ModalEditPost } from './Edit_post.js'
 // import { Menu, OptionListPost } from "./Menu.js";
 
 
@@ -49,24 +49,13 @@ export const Post = (post) => {
 
   const $optionsContainer = document.createElement("div");
   $optionsContainer.classList.add("card__options-container");
-  // $optionsContainer.classList.add("card__options-container--relative");
-  $optionsContainer.id = `optionsPost_${post.post_id}`;
+  // $optionsContainer.id = `optionsPost_${post.post_id}`;
 
-  // ! COMPONENTE DE LISTA DESPLEGABLE
-
-  // probando este id
-  // const $menu = document.getElementById("menu");
-
-  const { menuModalOptionsPost, toggleModalOptionsPost } = OptionListPost(post.post_id);
+  const { menuModalOptionsPost, toggleModalOptionsPost, menuModalEdit } = OptionListPost(post.post_id);
   const $menuModalOptions = menuModalOptionsPost;
 
-  // probando
-  // $menu.append($menuModalOptions);
-
-  // const $menu = Menu(menuModalOptions, toogleModalOptions);
-
+// EVENTO 3 PUNTITOS OPCIONES
   $optionsContainer.addEventListener("click", () => {
-    // * CREO QUE AQUÍ DEBERÍA ENTRAR COMO PARÁMETRO EL ID DEL POST PARA DESPUÉS JALARLO DEL FIREBASE
     console.log("deberia salir la lista desplegable de opciones de post");
     toggleModalOptionsPost()
     
@@ -148,6 +137,7 @@ export const Post = (post) => {
   $card.append($headerContainer);
   $card.append($msgContainer);
   $card.append($footerContainer);
+  $card.append(menuModalEdit)
   // ! Esto es nuevo
   // $card.append($menuModalOptions);
 
@@ -187,16 +177,29 @@ export function OptionListPost(post_id) {
   $itemRemovePublication.classList.add("modal__button");
   $itemRemovePublication.textContent = "Remover";
 
-  $itemEditPublication.addEventListener("click", () => {
-    console.log("esto es editar", post_id)
-    window.location.hash = "#/editPost";
-    getPost(post_id).then((post_data)=>{
-      console.log("entramos a getpost")
-      Edit_Post(post_data)
-    })
+  
+  // $modalLista.append($modalEditPost)
+  $modalLista.append($itemEditPublication);
+  $modalLista.append($itemRemovePublication);
+
+  const {$modalContenedor, abrirModal} = ModalEditPost()
+  // $modalLista.append($modalContenedor)
+
+  $itemEditPublication.addEventListener("click", (e) => {
+    console.log('SADADADS')
+    e.preventDefault();
+    abrirModal();
+  // //   // console.log("esto es editar", post_id)
+  // //   // window.location.hash = "#/editPost";
+  //   getPost(post_id).then((post_data)=>{
+  //     
+  //     const modalEdit = ModalEditPost(abrirModal)
+  //     $modalLista.append($modalEditPost)
+  //   })
+  // //   .catch((err) => console.log(err));
   });
 
-  $itemRemovePublication.addEventListener("click", (e) => {
+  $itemRemovePublication.addEventListener("click", () => {
     // console.log(e.target);
     // window.location.hash = "#/formPost";
     console.log(
@@ -204,9 +207,8 @@ export function OptionListPost(post_id) {
     );
   });
 
-  $modalLista.append($itemEditPublication);
-  $modalLista.append($itemRemovePublication);
-
+  
+  // $modalLista.append($modalEditPost)
   // !Este se puede arreglar Quizá llamando al id del menu y apendizarle la lista de Opciones de post
 
   const toggleModalOptionsPost = () => {
@@ -216,5 +218,6 @@ export function OptionListPost(post_id) {
   return {
     menuModalOptionsPost: $modalLista,
     toggleModalOptionsPost: toggleModalOptionsPost,
-  };
+    menuModalEdit: $modalContenedor
+  }
 }

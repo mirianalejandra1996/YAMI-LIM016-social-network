@@ -885,3 +885,14 @@ input[type="password"]:focus {
   transform: translateY(0%);
   border-radius: 10px;
 }
+/*es muy tarde*/
+.formPost-edit{
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  width: 90%;
+  background: red;
+  height: 503px;
+  position: fixed;
+}
