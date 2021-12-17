@@ -472,7 +472,7 @@ input[type="password"]:focus {
   transition: 0.3s ease;
 }
 
-.card__options-container--relative{
+.card__options-container--relative {
   position: relative;
 }
 
@@ -482,19 +482,19 @@ input[type="password"]:focus {
   cursor: pointer;
 }
 
-.card__dropdown{
-  width:100px;
+.card__dropdown {
+  width: 100px;
   position: absolute;
   right: 0px;
-  top:50px;
+  top: 50px;
   box-shadow: 4px 4px 17px #878787;
   z-index: 1;
   background: white;
   border-radius: 10px;
   overflow: hidden;
-  padding: 5px
+  padding: 5px;
 }
-.card__dropdown.cerrar{
+.card__dropdown.cerrar {
   opacity: 0;
   padding: 0;
   z-index: -1;
@@ -502,7 +502,7 @@ input[type="password"]:focus {
 /* .card__dropdown::after{
   content:'';
   /* background-color: #f51616; */
-  /* width: 5px;
+/* width: 5px;
   height: 5px;
   top: -40px;
   position: absolute;
@@ -512,7 +512,7 @@ input[type="password"]:focus {
   border-right: 20px solid transparent;
   border-bottom: 20px solid white;
   border-top: 20px solid transparent; */
-  /* box-shadow: 4px 4px 0px 4px #878787; 
+/* box-shadow: 4px 4px 0px 4px #878787; 
 }*/
 
 .card__options-icon {
@@ -744,6 +744,11 @@ input[type="password"]:focus {
   font-family: "Lato", sans-serif;
   resize: none;
 }
+
+.formPost_input-long:focus {
+  border: 1px solid #ffb800;
+}
+
 .formPost_input-long::placeholder {
   color: #cbbdbd;
 }
@@ -886,13 +891,15 @@ input[type="password"]:focus {
   border-radius: 10px;
 }
 /*es muy tarde*/
-.formPost-edit{
+.formPost-edit {
   height: 100%;
   display: flex;
   justify-content: center;
   flex-direction: column;
   width: 90%;
-  background: red;
+  /* background: red; */
+  background-color: #fff;
   height: 503px;
   position: fixed;
+  border-radius: 10px;
 }

@@ -1,7 +1,7 @@
-export const ModalEditPost = (/*post_data*/) => {
-
-  const $modalContenedor = document.createElement('div')
-  $modalContenedor.classList.add('modal__contenedor')
+export const ModalEditPost = (message) => {
+  // console.log("prueba del dia", post_data);
+  const $modalContenedor = document.createElement("div");
+  $modalContenedor.classList.add("modal__contenedor");
 
   // const createPostContainer = document.createElement("div");
   // createPostContainer.classList.add('modalCerrarSesion', 'modal-cerrar')
@@ -28,7 +28,7 @@ export const ModalEditPost = (/*post_data*/) => {
   post.id = "msgPostForm";
   post.classList.add("formPost_input-long");
   post.placeholder = `¿Qué estas pensando?`;
-  // post.value = `${post_data.message}`
+  post.value = `${message}`;
   inputsContainer.append(post);
 
   const tags = document.createElement("input");
@@ -67,22 +67,22 @@ export const ModalEditPost = (/*post_data*/) => {
 
   $modalContenedor.append(formPost);
 
-  $modalContenedor.style.opacity = "0"
-  $modalContenedor.style.visibility = "hidden"
+  $modalContenedor.style.opacity = "0";
+  $modalContenedor.style.visibility = "hidden";
 
-    const abrirModal  = ()  => {
-      $modalContenedor.style.opacity = "1"
-      $modalContenedor.style.visibility = "visible"
-      $modalContenedor.classList.toggle('modal-cerrar')
-    }
+  const abrirModal = () => {
+    $modalContenedor.style.opacity = "1";
+    $modalContenedor.style.visibility = "visible";
+    $modalContenedor.classList.toggle("modal-cerrar");
+  };
 
-    const cerrarModal = ()  => {
-      createPostContainer.classList.toggle('modal-cerrar')
-         setTimeout(function () {
-          $modalContenedor.style.opacity = "0"
-          $modalContenedor.style.visibility = "hidden"
-        }, 900)
-    }
+  const cerrarModal = () => {
+    createPostContainer.classList.toggle("modal-cerrar");
+    setTimeout(function () {
+      $modalContenedor.style.opacity = "0";
+      $modalContenedor.style.visibility = "hidden";
+    }, 900);
+  };
 
-  return {$modalContenedor, abrirModal, cerrarModal};
+  return { $modalContenedor, abrirModal, cerrarModal };
 };

@@ -1,8 +1,11 @@
-import { toggleLikes, initListenerPost, getPost } from "../firebase/firebase-data.js";
+import {
+  toggleLikes,
+  initListenerPost,
+  getPost,
+} from "../firebase/firebase-data.js";
 import { auth } from "../firebase/firebase-auth.js";
-import { ModalEditPost } from './Edit_post.js'
+import { ModalEditPost } from "./Edit_post.js";
 // import { Menu, OptionListPost } from "./Menu.js";
-
 
 export const Post = (post) => {
   const user_id = auth.currentUser.uid;
@@ -51,14 +54,14 @@ export const Post = (post) => {
   $optionsContainer.classList.add("card__options-container");
   // $optionsContainer.id = `optionsPost_${post.post_id}`;
 
-  const { menuModalOptionsPost, toggleModalOptionsPost, menuModalEdit } = OptionListPost(post.post_id);
+  const { menuModalOptionsPost, toggleModalOptionsPost, menuModalEdit } =
+    OptionListPost(post.post_id, post.message);
   const $menuModalOptions = menuModalOptionsPost;
 
-// EVENTO 3 PUNTITOS OPCIONES
+  // EVENTO 3 PUNTITOS OPCIONES
   $optionsContainer.addEventListener("click", () => {
     console.log("deberia salir la lista desplegable de opciones de post");
-    toggleModalOptionsPost()
-    
+    toggleModalOptionsPost();
   });
 
   const $iconOptions = document.createElement("span");
@@ -66,7 +69,7 @@ export const Post = (post) => {
   $iconOptions.classList.add("card__options-icon");
 
   $optionsContainer.append($iconOptions);
-  $optionsContainer.append($menuModalOptions)
+  $optionsContainer.append($menuModalOptions);
   $headerContainer.append($avatarContainer);
   $headerContainer.append($dataContainer);
   $headerContainer.append($optionsContainer);
@@ -137,7 +140,7 @@ export const Post = (post) => {
   $card.append($headerContainer);
   $card.append($msgContainer);
   $card.append($footerContainer);
-  $card.append(menuModalEdit)
+  $card.append(menuModalEdit);
   // ! Esto es nuevo
   // $card.append($menuModalOptions);
 
@@ -163,10 +166,9 @@ export const Post = (post) => {
 };
 
 // Lista desplegable para editar o eliminar post
-export function OptionListPost(post_id) {
-
+export function OptionListPost(post_id, message) {
   const $modalLista = document.createElement("div");
-  $modalLista.classList.add("card__dropdown","cerrar");
+  $modalLista.classList.add("card__dropdown", "cerrar");
 
   const $itemEditPublication = document.createElement("button");
   $itemEditPublication.classList.add("modal__button");
@@ -177,26 +179,23 @@ export function OptionListPost(post_id) {
   $itemRemovePublication.classList.add("modal__button");
   $itemRemovePublication.textContent = "Remover";
 
-  
   // $modalLista.append($modalEditPost)
   $modalLista.append($itemEditPublication);
   $modalLista.append($itemRemovePublication);
 
-  const {$modalContenedor, abrirModal} = ModalEditPost()
   // $modalLista.append($modalContenedor)
+  const { $modalContenedor, abrirModal } = ModalEditPost(message);
 
   $itemEditPublication.addEventListener("click", (e) => {
-    console.log('SADADADS')
+    console.log("SADADADS");
     e.preventDefault();
     abrirModal();
-  // //   // console.log("esto es editar", post_id)
-  // //   // window.location.hash = "#/editPost";
-  //   getPost(post_id).then((post_data)=>{
-  //     
-  //     const modalEdit = ModalEditPost(abrirModal)
-  //     $modalLista.append($modalEditPost)
-  //   })
-  // //   .catch((err) => console.log(err));
+
+    // getPost(post_id)
+    //   .then((post_data) => {
+    //     ModalEditPost(post_data);
+    //   })
+    //   .catch((err) => console.log(err));
   });
 
   $itemRemovePublication.addEventListener("click", () => {
@@ -207,7 +206,6 @@ export function OptionListPost(post_id) {
     );
   });
 
-  
   // $modalLista.append($modalEditPost)
   // !Este se puede arreglar Quizá llamando al id del menu y apendizarle la lista de Opciones de post
 
@@ -218,6 +216,6 @@ export function OptionListPost(post_id) {
   return {
     menuModalOptionsPost: $modalLista,
     toggleModalOptionsPost: toggleModalOptionsPost,
-    menuModalEdit: $modalContenedor
-  }
+    menuModalEdit: $modalContenedor,
+  };
 }
