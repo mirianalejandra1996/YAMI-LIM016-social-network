@@ -96,7 +96,7 @@ export const ModalEditPost = (postData) => {
     console.log("entramos para actualizar");
     const nuevoMensaje = document.getElementById("msgPostForm").value;
     updatePost(postData.post_id, nuevoMensaje);
-    window.location.hash = "#/timeline"
+    window.location.hash = "#/";
   });
 
   return { $modalContenedor, abrirModal, cerrarModal };
