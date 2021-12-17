@@ -1,24 +1,31 @@
-export const ModalEditPost = (message) => {
-  // console.log("prueba del dia", post_data);
+import { updatePost } from "../firebase/firebase-data.js";
+
+export const ModalEditPost = (postData) => {
+  // * modalContenedor es el overlay
   const $modalContenedor = document.createElement("div");
   $modalContenedor.classList.add("modal__contenedor");
+  $modalContenedor.classList.add("modal-cerrar");
 
-  // const createPostContainer = document.createElement("div");
-  // createPostContainer.classList.add('modalCerrarSesion', 'modal-cerrar')
-  // $modalContenedor.append(createPostContainer)
-  // const algo = post_data
-  // console.log(algo)
-
+  //  * Contenedor de toda la información
   const formPost = document.createElement("div");
   formPost.classList.add("formPost-edit");
 
-  // const header = HeaderRetroceder();
-  // formPost.append(header);
+  // * Cabecera
+  const header = document.createElement("div");
+  header.classList.add("modal__cabecera");
 
   const title = document.createElement("h2");
   title.classList.add("formPost_h2");
   title.textContent = `Editar publicación`;
-  formPost.append(title);
+
+  const guardar = document.createElement("h1");
+  guardar.classList.add("formPost_h1");
+  guardar.textContent = "Guardar";
+
+  header.append(title);
+  header.append(guardar);
+
+  formPost.append(header);
 
   const inputsContainer = document.createElement("div");
   inputsContainer.classList.add("formPost_inputs");
@@ -28,7 +35,7 @@ export const ModalEditPost = (message) => {
   post.id = "msgPostForm";
   post.classList.add("formPost_input-long");
   post.placeholder = `¿Qué estas pensando?`;
-  post.value = `${message}`;
+  post.value = `${postData.message}`;
   inputsContainer.append(post);
 
   const tags = document.createElement("input");
@@ -83,6 +90,13 @@ export const ModalEditPost = (message) => {
       $modalContenedor.style.visibility = "hidden";
     }, 900);
   };
+
+  // Evento para guardar post (update en firebase)
+  guardar.addEventListener("click", () => {
+    console.log("entramos para actualizar");
+    const nuevoMensaje = document.getElementById("msgPostForm").value;
+    updatePost(postData.post_id, nuevoMensaje);
+  });
 
   return { $modalContenedor, abrirModal, cerrarModal };
 };

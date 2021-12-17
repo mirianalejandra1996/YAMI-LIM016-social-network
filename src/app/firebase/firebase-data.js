@@ -12,7 +12,7 @@ import {
   updateDoc,
   arrayUnion,
   arrayRemove,
-onSnapshot,
+  onSnapshot,
 } from "https://www.gstatic.com/firebasejs/9.5.0/firebase-firestore.js";
 import { db } from "../firebase/firebase-initializer.js";
 import { auth } from "../firebase/firebase-auth.js";
@@ -37,7 +37,6 @@ export function addPost(message) {
     })
     .catch((err) => console.log(err));
 }
-
 
 /******************Agrega un usuario a FS*********************/
 const userRef = collection(db, "users");
@@ -97,119 +96,33 @@ export async function traerPost() {
   return postsData;
 }
 
-/******************Agrega like al post en FS*********************/
-
-// ------------------
-
-// * Función en prueba de la mañana
-// export function contadorLikes(post) {
-//   const user = auth.currentUser;
-//   const likesRef = collection(db, "likes");
-
-//   return addDoc(likesRef, {
-//     user_id: user.uid,
-//     postId: post,
-//     status: 1
-//   })
-//     .then(() => {
-//       console.log("like creado!!");
-//     })
-//     .catch((err) => console.log(err));
-// }
-
-// -----CONTADOR DE LIKES ----------
-
-// export async function contadorLikes(post_id) {
-//   // console.log(post.post_id);
-
-//   console.log(post_id);
-//   // en la colección posts, nos vamos a la propiedad "like" (campo) del documento
-//   const postRef = doc(db, "posts", post_id);
-
-//   console.log("este es postRef", postRef);
-//   const user = auth.currentUser.uid;
-//   console.log(user);
-
-//   // Atomically add a new region to the "regions" array field.
-
-//   // await updateDoc(postsRef, {
-//   //   likes: arrayUnion(user),
-//   // });
-
-//   // if (postsRef.exist) {
-//   //   if
-//   // }
-//   // // Atomically remove a region from the "regions" array field.
-//   // await updateDoc(washingtonRef, {
-//   //   regions: arrayRemove("east_coast"),
-//   // });
-
-//   // const docRef = doc(db, "posts", post_id);
-//   // const docSnap = await getDoc(docRef);
-//   // const q = query(postsRef, where("likes", "in", user));
-
-//   // console.log(q);
-
-//   const postsRef = collection(db, "post");
-//   const q1 = query(
-//     postsRef,
-//     where("posts", "==", post_id),
-//     where("likes", "==", user)
-//   );
-
-//   console.log("este es q1", q1);
-
-//   if (q1) {
-//     await updateDoc(postRef, {
-//       likes: arrayRemove(user),
-//     });
-//   } else {
-//     await updateDoc(postRef, {
-//       likes: arrayUnion(user),
-//     });
-//   }
-
-//   //   if(q) {
-
-//   //   }
-//   //   console.log("Document data:", docSnap.data());
-//   // } else {
-//   //   // doc.data() will be undefined in this case
-//   //   console.log("No such document!");
-//   // }
-// }
-
-
-
-
 export async function toggleLikes(post_id) {
   // console.log(post.post_id);
 
   console.log(post_id);
   // en la colección posts, nos vamos a la propiedad "like" (campo) del documento
-  const postRef = doc(db, "posts", post_id); // documentRef  
+  const postRef = doc(db, "posts", post_id); // documentRef
 
   console.log("este es postRef", postRef);
   const userId = auth.currentUser.uid;
   console.log(userId);
 
+  const post = await getDoc(postRef);
+  const likes = post.data().likes;
+  const userLike = likes.find((like) => {
+    //.find defines true o false hasta q las entencia se cumple
+    return like === userId;
+  });
 
-  const post = await getDoc(postRef)
-  const likes =  post.data().likes
-  const userLike = likes.find((like) => { //.find defines true o false hasta q las entencia se cumple
-    return like === userId
-  })
-
-  if(userLike) {
+  if (userLike) {
     await updateDoc(postRef, {
       likes: arrayRemove(userId),
     });
-  }  else {
+  } else {
     await updateDoc(postRef, {
       likes: arrayUnion(userId),
     });
   }
-
 
   // jalar posts de determinado usuario para armar muro perfil
 
@@ -220,23 +133,20 @@ export async function toggleLikes(post_id) {
 
   // const querySnapshotPosts = await getDocs(q1)
 
-
   // const postsFiltradocs = querySnapshotPosts.docs // esto es un array SIEMPRE
 
   // const likesDelPrimerPostFiltrado = postsFiltradocs[0].data().likes // []
-  // const idDelPrimerPostFiltrado = postsFiltradocs[0].id // 
-
+  // const idDelPrimerPostFiltrado = postsFiltradocs[0].id //
 }
 
-
-export function initListenerPost (postId, actualizarPost) {
- return onSnapshot(doc(db, 'posts', postId), actualizarPost)
+export function initListenerPost(postId, actualizarPost) {
+  return onSnapshot(doc(db, "posts", postId), actualizarPost);
 }
 
-export async function getPost(post_id){
+export async function updatePost(post_id, newMessage) {
   const postRef = doc(db, "posts", post_id);
-  const post = await getDoc(postRef);
-  const data =post.data()
-  data.post_id=post_id
-  return data
+
+  return await updateDoc(postRef, {
+    message: newMessage,
+  });
 }

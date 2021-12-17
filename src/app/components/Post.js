@@ -1,10 +1,7 @@
-import {
-  toggleLikes,
-  initListenerPost,
-  getPost,
-} from "../firebase/firebase-data.js";
+import { toggleLikes, initListenerPost } from "../firebase/firebase-data.js";
 import { auth } from "../firebase/firebase-auth.js";
 import { ModalEditPost } from "./Edit_post.js";
+import { ModalEliminarPost } from "./Modal_eliminarPost.js";
 // import { Menu, OptionListPost } from "./Menu.js";
 
 export const Post = (post) => {
@@ -54,13 +51,18 @@ export const Post = (post) => {
   $optionsContainer.classList.add("card__options-container");
   // $optionsContainer.id = `optionsPost_${post.post_id}`;
 
-  const { menuModalOptionsPost, toggleModalOptionsPost, menuModalEdit } =
-    OptionListPost(post.post_id, post.message);
+  const {
+    menuModalOptionsPost,
+    toggleModalOptionsPost,
+    menuModalEdit,
+    menuModalDelete,
+  } = OptionListPost(post);
   const $menuModalOptions = menuModalOptionsPost;
 
   // EVENTO 3 PUNTITOS OPCIONES
   $optionsContainer.addEventListener("click", () => {
     console.log("deberia salir la lista desplegable de opciones de post");
+    // debugger;
     toggleModalOptionsPost();
   });
 
@@ -141,6 +143,7 @@ export const Post = (post) => {
   $card.append($msgContainer);
   $card.append($footerContainer);
   $card.append(menuModalEdit);
+  $card.append(menuModalDelete);
   // ! Esto es nuevo
   // $card.append($menuModalOptions);
 
@@ -166,7 +169,7 @@ export const Post = (post) => {
 };
 
 // Lista desplegable para editar o eliminar post
-export function OptionListPost(post_id, message) {
+export function OptionListPost(post) {
   const $modalLista = document.createElement("div");
   $modalLista.classList.add("card__dropdown", "cerrar");
 
@@ -184,26 +187,21 @@ export function OptionListPost(post_id, message) {
   $modalLista.append($itemRemovePublication);
 
   // $modalLista.append($modalContenedor)
-  const { $modalContenedor, abrirModal } = ModalEditPost(message);
+  const { $modalContenedor, abrirModal } = ModalEditPost(post);
 
-  $itemEditPublication.addEventListener("click", (e) => {
+  $itemEditPublication.addEventListener("click", () => {
     console.log("SADADADS");
-    e.preventDefault();
+    // e.preventDefault();
     abrirModal();
-
-    // getPost(post_id)
-    //   .then((post_data) => {
-    //     ModalEditPost(post_data);
-    //   })
-    //   .catch((err) => console.log(err));
   });
 
+  const { modalEliminarPost, abrirModalEliminar } = ModalEliminarPost();
+
   $itemRemovePublication.addEventListener("click", () => {
-    // console.log(e.target);
-    // window.location.hash = "#/formPost";
     console.log(
       'debería cambiar de vista mostrando un modal "estás seguro de elimianr?"'
     );
+    abrirModalEliminar();
   });
 
   // $modalLista.append($modalEditPost)
@@ -217,5 +215,6 @@ export function OptionListPost(post_id, message) {
     menuModalOptionsPost: $modalLista,
     toggleModalOptionsPost: toggleModalOptionsPost,
     menuModalEdit: $modalContenedor,
+    menuModalDelete: modalEliminarPost,
   };
 }

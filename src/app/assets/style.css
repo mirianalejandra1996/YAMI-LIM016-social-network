@@ -726,6 +726,18 @@ input[type="password"]:focus {
   font-size: 15px;
   padding-bottom: 25px;
 }
+
+.formPost_h1 {
+  padding-left: 35px;
+  padding-top: 20px;
+  font-size: 12px;
+  padding-bottom: 25px;
+}
+
+.modal__cabecera {
+  display: flex;
+  justify-content: space-between;
+}
 .formPost_inputs {
   /* text-align: center; */
   display: flex;
