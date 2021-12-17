@@ -13,6 +13,7 @@ import {
   arrayUnion,
   arrayRemove,
   onSnapshot,
+  deleteDoc,
 } from "https://www.gstatic.com/firebasejs/9.5.0/firebase-firestore.js";
 import { db } from "../firebase/firebase-initializer.js";
 import { auth } from "../firebase/firebase-auth.js";
@@ -143,10 +144,21 @@ export function initListenerPost(postId, actualizarPost) {
   return onSnapshot(doc(db, "posts", postId), actualizarPost);
 }
 
+// ---------------Funciones del post -------------------------------
+
+// Actualizar post
 export async function updatePost(post_id, newMessage) {
   const postRef = doc(db, "posts", post_id);
 
   return await updateDoc(postRef, {
     message: newMessage,
   });
+}
+
+// Eliminar post
+
+export async function deletePost(post_id) {
+  const postRef = doc(db, "posts", post_id);
+
+  return await deleteDoc(postRef);
 }

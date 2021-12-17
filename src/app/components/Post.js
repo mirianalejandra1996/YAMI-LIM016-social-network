@@ -152,6 +152,7 @@ export const Post = (post) => {
   initListenerPost(post.post_id, (postDoc) => {
     //se podria cambiar cualquier campo de post pero en este caso solo necesitamos los likes
 
+    
     const likes = postDoc.data().likes;
     console.log("array de likes", likes);
     if (likes.find((like) => like === user_id)) {
@@ -195,7 +196,7 @@ export function OptionListPost(post) {
     abrirModal();
   });
 
-  const { modalEliminarPost, abrirModalEliminar } = ModalEliminarPost();
+  const { modalEliminarPost, abrirModalEliminar } = ModalEliminarPost(post);
 
   $itemRemovePublication.addEventListener("click", () => {
     console.log(

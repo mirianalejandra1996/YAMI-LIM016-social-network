@@ -1,9 +1,8 @@
+import { deletePost } from "../firebase/firebase-data.js";
 
-
-export function ModalEliminarPost() {
+export function ModalEliminarPost(postData) {
   const $modalContenedor = document.createElement("div");
   $modalContenedor.classList.add("modal__contenedor");
-
 
   const $modalCerrar = document.createElement("div");
   $modalCerrar.classList.add("modalCerrarSesion", "modal-cerrar");
@@ -19,10 +18,6 @@ export function ModalEliminarPost() {
   $botonAceptar.classList.add("modal__p-cerrarS");
   const $mensaje = document.createElement("p");
   $mensaje.textContent = "Aceptar";
-
-  // botonAceptar.addEventListener('click', () => {
-
-  // })
 
   const $cerrar = document.createElement("p");
   $cerrar.classList.add("modal__p-cancelar");
@@ -53,6 +48,11 @@ export function ModalEliminarPost() {
   };
 
   $cerrar.addEventListener("click", cerrarModal);
+
+  $botonAceptar.addEventListener("click", () => {
+    deletePost(postData.post_id);
+    cerrarModal();
+  });
 
   return {
     modalEliminarPost: $modalContenedor,
