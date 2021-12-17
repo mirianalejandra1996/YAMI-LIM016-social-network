@@ -51,7 +51,8 @@ export function ModalEliminarPost(postData) {
 
   $botonAceptar.addEventListener("click", () => {
     deletePost(postData.post_id);
-    cerrarModal();
+    // cerrarModal();
+    window.location.hash = "#/timeline";
   });
 
   return {
