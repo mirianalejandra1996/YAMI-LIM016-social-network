@@ -2,15 +2,13 @@ import { HeaderRetroceder } from "../components/Header_retro.js";
 import { auth } from "../firebase/firebase-auth.js";
 import { getUserData } from "../firebase/firebase-data.js";
 
-export const Profile = (user) => {
-  const user_id = auth.currentUser.uid;
+export const Profile = () => {
+  //   const user_id = auth.currentUser.uid;
+  const user = auth.currentUser;
   //   console.log("esta soy yo", user_id);
+  //   console.log("esta soy yo", user.displayName);
+  console.log("esta soy yo", user);
 
-  getUserData(user_id).then((user) => {
-    // console.log("soy yo", user);
-    userData = user;
-    return user;
-  });
   //   console.log("soy yo", userData);
 
   //    Contenedor principal
@@ -37,14 +35,16 @@ export const Profile = (user) => {
 
   const photoAvatar = document.createElement("img");
   photoAvatar.classList.add("photo__avatar-img");
-  photoAvatar.src = "../src/app/assets/brooke-cagle-k9XZPpPHDho-unsplash.jpg";
+  //   photoAvatar.src = "photoURL";
+  photoAvatar.src = `${user.photoURL}`;
+  //   photoAvatar.src = "../src/app/assets/brooke-cagle-k9XZPpPHDho-unsplash.jpg";
   photoAvatar.alt = "imgAvatar";
 
   imgAvatarContainer.append(photoAvatar);
 
   // Icono para editar imagen del usuario
   const iconPhotoContainer = document.createElement("div");
-  iconPhotoContainer.classList.add("photo__edit-img");
+  iconPhotoContainer.classList.add("photo__edit-img", "hidden");
   const iconPhoto = document.createElement("span");
   iconPhoto.classList.add("icon-pencil", "pencil");
 
@@ -70,7 +70,7 @@ export const Profile = (user) => {
   inputName.id = "name";
   inputName.classList.add("formProfile__input");
   // inputName.placeholder = "Ingresa un nombre"
-  inputName.value = "Maria Fernández";
+  inputName.value = `${user.displayName}`;
   inputName.disabled = true;
 
   //   Label de nombre
@@ -81,7 +81,7 @@ export const Profile = (user) => {
 
   //  Nombre Obligatorio
   const requiredName = document.createElement("span");
-  requiredName.classList.add("formProfile__required");
+  requiredName.classList.add("formProfile__required", "hidden");
   requiredName.textContent = "*";
 
   groupName.append(inputName);
@@ -124,7 +124,7 @@ export const Profile = (user) => {
   inputEmail.id = "email";
   inputEmail.classList.add("formProfile__input");
   // inputName.placeholder = "Ingresa un nombre"
-  inputEmail.value = "maria_fernandez@gmail.com";
+  inputEmail.value = `${user.email}`;
   inputEmail.disabled = true;
 
   //   Label de email
@@ -135,7 +135,7 @@ export const Profile = (user) => {
 
   //  Email Obligatorio
   const requiredEmail = document.createElement("span");
-  requiredEmail.classList.add("formProfile__required");
+  requiredEmail.classList.add("formProfile__required", "hidden");
   requiredEmail.textContent = "*";
 
   groupEmail.append(inputEmail);
@@ -154,8 +154,10 @@ export const Profile = (user) => {
   inputPwd.id = "password";
   inputPwd.classList.add("formProfile__input");
   // inputPwd.placeholder = "Ingresa un nombre"
-  inputPwd.value = "laboratoria";
+  //   inputPwd.value = "";
   inputPwd.disabled = true;
+
+  //   --------
 
   //   Label de email
   const labelPwd = document.createElement("label");
@@ -165,11 +167,20 @@ export const Profile = (user) => {
 
   //  Email Obligatorio
   const requiredPwd = document.createElement("span");
-  requiredPwd.classList.add("formProfile__required");
+  requiredPwd.classList.add("formProfile__required", "hidden");
   requiredPwd.textContent = "*";
 
   const iconPwd = document.createElement("span");
   iconPwd.classList.add("formProfile__icon", "icon-open-eye");
+
+  let passwordMsg;
+
+  if (user.providerData[0].providerId === "google.com") {
+    inputPwd.type = "text";
+    passwordMsg = "Usted está logeado con Google";
+    inputPwd.value = passwordMsg;
+    iconPwd.classList.add("hidden");
+  }
 
   groupPwd.append(inputPwd);
   groupPwd.append(labelPwd);
@@ -183,7 +194,7 @@ export const Profile = (user) => {
 
   const msgErr = document.createElement("span");
   msgErr.classList.add("error-msg");
-  msgErr.textContent = "Campos obligatorios *";
+  //   msgErr.textContent = "Campos obligatorios *";
 
   errContainer.append(msgErr);
   // -----------------------------

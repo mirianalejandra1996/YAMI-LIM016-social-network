@@ -1024,7 +1024,6 @@ input[type="password"]:focus {
 
 .formProfile__label {
   position: absolute;
-  cursor: pointer;
   top: -17px;
   left: 5px;
   font-size: 0.9rem;
@@ -1071,4 +1070,8 @@ input[type="password"]:focus {
 
 .pencil {
   font-size: 0.8rem;
+}
+
+.hidden {
+  display: none;
 }
