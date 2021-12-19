@@ -101,12 +101,20 @@ export const Profile = () => {
   groupDate.classList.add("formProfile__group");
 
   //   Input Fecha
+
   const inputDate = document.createElement("input");
   inputDate.type = "date";
   inputDate.id = "date";
   inputDate.classList.add("formProfile__input");
   // inputName.placeholder = "Ingresa un nombre"
-  inputDate.value = "1996-08-27";
+
+  let dateUser = user.dateBirth;
+  if (!dateUser) {
+    //   dateUser = '0000-00-00'
+    dateUser = "";
+  }
+
+  inputDate.value = dateUser;
   inputDate.disabled = true;
 
   //   Label de nombre
