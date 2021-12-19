@@ -1048,6 +1048,7 @@ input[type="password"]:focus {
   font-size: 0.85rem;
   /* margin-top: 1rem; */
   margin-top: -0.5rem;
+  cursor: pointer;
 }
 
 /* icono del input date */
@@ -1066,4 +1067,8 @@ input[type="password"]:focus {
 .errContainer {
   /* background-color: red; */
   height: 20px;
+}
+
+.pencil {
+  font-size: 0.8rem;
 }
