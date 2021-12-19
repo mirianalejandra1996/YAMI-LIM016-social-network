@@ -171,7 +171,7 @@ export function ProfileList() {
 
   $itemsPerfil.addEventListener("click", () => {
     console.log("cambiando de vista a profile!");
-    window.location.hash = "#/profile"
+    window.location.hash = "#/muro"
   });
 
   $itemsCerrarSesion.addEventListener("click", (e) => {

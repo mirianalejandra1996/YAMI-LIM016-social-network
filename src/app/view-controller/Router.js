@@ -68,6 +68,13 @@ export const Router = () => {
           return (window.location.hash = "#/");
         }
       }
+      case "#/muro": {
+        if (auth.currentUser) {
+          return $root.appendChild(components.muro());
+        } else {
+          return (window.location.hash = "#/");
+        }
+      }
       case "#/profile": {
         if (auth.currentUser) {
           return $root.appendChild(components.profile());
