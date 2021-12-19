@@ -162,3 +162,16 @@ export async function deletePost(post_id) {
 
   return await deleteDoc(postRef);
 }
+
+export async function getUserData(user_id) {
+  const userRef = doc(db, "users", user_id);
+  const docSnap = await getDoc(userRef);
+
+  if (docSnap.exists()) {
+    console.log("Document data:", docSnap.data());
+    return await docSnap.data();
+  } else {
+    // doc.data() will be undefined in this case
+    console.log("No such document!");
+  }
+}

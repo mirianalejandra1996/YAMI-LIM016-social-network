@@ -1,6 +1,18 @@
 import { HeaderRetroceder } from "../components/Header_retro.js";
+import { auth } from "../firebase/firebase-auth.js";
+import { getUserData } from "../firebase/firebase-data.js";
 
-export const Profile = () => {
+export const Profile = (user) => {
+  const user_id = auth.currentUser.uid;
+  //   console.log("esta soy yo", user_id);
+
+  getUserData(user_id).then((user) => {
+    // console.log("soy yo", user);
+    userData = user;
+    return user;
+  });
+  //   console.log("soy yo", userData);
+
   //    Contenedor principal
   const profileComponent = document.createElement("div");
   profileComponent.classList.add("allView");
@@ -34,7 +46,7 @@ export const Profile = () => {
   const iconPhotoContainer = document.createElement("div");
   iconPhotoContainer.classList.add("photo__edit-img");
   const iconPhoto = document.createElement("span");
-  iconPhoto.classList.add('icon-pencil','pencil')
+  iconPhoto.classList.add("icon-pencil", "pencil");
 
   iconPhotoContainer.append(iconPhoto);
   imgAvatarContainer.append(iconPhotoContainer);
