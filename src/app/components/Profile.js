@@ -1,32 +1,131 @@
-export const Profile = () => {
-  const profileContainer = document.createElement("div");
-  profileContainer.innerHTML = ` <!-- Cabecera -->
-  <div class="header-timeline"><div class="logo-timeline"></div></div>
+import { HeaderRetroceder } from "../components/Header_retro.js";
 
+export const Profile = () => {
+  //    Contenedor principal
+  const profileComponent = document.createElement("div");
+  profileComponent.classList.add("allView");
+
+  const headerBack = HeaderRetroceder();
+
+  //   Contenedor Base de la vista
+  const mainContainer = document.createElement("div");
+  mainContainer.classList.add("main-container__profile");
+
+  //  ! En este contenedor estarán dentro la imagen y el formulario (perfecto para el modal)
+  const profileContainer = document.createElement("div");
+  profileContainer.classList.add("profile-container");
+
+  //   Contenedor Base de foto del usuario
+  const photoContainer = document.createElement("div");
+  photoContainer.classList.add("photo__container");
+
+  //   Imagen del usuario Contenedor
+  const imgAvatarContainer = document.createElement("div");
+  imgAvatarContainer.classList.add("photo__avatar-container");
+
+  const photoAvatar = document.createElement("img");
+  photoAvatar.classList.add("photo__avatar-img");
+  photoAvatar.src = "../src/app/assets/brooke-cagle-k9XZPpPHDho-unsplash.jpg";
+  photoAvatar.alt = "imgAvatar";
+
+  imgAvatarContainer.append(photoAvatar);
+
+  // Icono para editar imagen del usuario
+  const iconPhotoContainer = document.createElement("div");
+  iconPhotoContainer.classList.add("photo__edit-img");
+  // TODO: Modificar este iconPhoto, en vez de innerHTML hay que hacer un append del icono del lapiz
+  const iconPhoto = document.createElement("span");
+  iconPhoto.innerHTML = "o";
+  //todo: iconPhoto.classList.add('')
+
+  iconPhotoContainer.append(iconPhoto);
+  imgAvatarContainer.append(iconPhotoContainer);
+
+  photoContainer.append(imgAvatarContainer);
+
+  // -------------
+  // Datos del usuario Formulario
+
+  // Contenedor Base del formulario
+  const formContainer = document.createElement("div");
+  formContainer.classList.add("formProfile__container");
+
+  // * Grupo: Nombre del usuario
+  const groupName = document.createElement("div");
+  groupName.classList.add("formProfile__group");
+
+  //   Input nombre
+  const inputName = document.createElement("input");
+  inputName.type = "text";
+  inputName.id = "name";
+  inputName.classList.add("formProfile__input");
+  // inputName.placeholder = "Ingresa un nombre"
+  inputName.value = "Maria Fernández";
+  inputName.disabled = true;
+
+  //   Label de nombre
+  const labelName = document.createElement("label");
+  labelName.for = "name";
+  labelName.classList.add("formProfile__label");
+  labelName.textContent = "Nombre";
+
+  //  Nombre Obligatorio
+  const requiredName = document.createElement("span");
+  requiredName.classList.add("formProfile__required");
+  requiredName.textContent = "*";
+
+  groupName.append(inputName);
+  groupName.append(labelName);
+  groupName.append(requiredName);
+
+  // -----------------------------
+
+  // * Grupo: Fecha de Nacimiento del usuario
+  const groupDate = document.createElement("div");
+  groupDate.classList.add("formProfile__group");
+
+  //   Input Fecha
+  const inputDate = document.createElement("input");
+  inputDate.type = "date";
+  inputDate.id = "date";
+  inputDate.classList.add("formProfile__input");
+  // inputName.placeholder = "Ingresa un nombre"
+  inputDate.value = "1996-08-27";
+  inputDate.disabled = true;
+
+  //   Label de nombre
+  const labelDate = document.createElement("label");
+  labelDate.for = "date";
+  labelDate.classList.add("formProfile__label");
+  labelDate.textContent = "Fecha de Nacimiento";
+
+  groupDate.append(inputDate);
+  groupDate.append(labelDate);
+
+  // -----------------------------
+
+  // -----------------------------
+
+  formContainer.append(groupName);
+  formContainer.append(groupDate);
+  mainContainer.append(profileContainer);
+
+  profileContainer.append(photoContainer);
+  profileContainer.append(formContainer);
+
+  // -----------------------------
+
+  profileComponent.append(headerBack);
+  profileComponent.append(mainContainer);
+
+  const prueba = ` 
   <div class="main-container__profile">
-    <div class="profile-container">
-      <!-- Imagen del usuario -->
-      <div class="photo__container">
-        <div class="photo__avatar-container">
-          <img
-            class="photo__avatar-img"
-            src="../src/app/assets/brooke-cagle-k9XZPpPHDho-unsplash.jpg"
-            alt=""
-          />
-        </div>
-        <!-- <div class="photo__edit-img">°</div> -->
-      </div>
 
       <!-- Datos del usuario -->
       <form class="formProfile__container">
         <!-- input -->
         <div class="formProfile__group">
-          <input
-            type="text"
-            id="name"
-            class="formProfile__input"
-            placeholder=" "
-          />
+         
           <label for="name" class="formProfile__label">Nombre</label>
           <span class="formProfile__required">*</span>
         </div>
@@ -77,7 +176,8 @@ export const Profile = () => {
     </div>
   </div>`;
 
-  return profileContainer;
+  return profileComponent;
+  //   return mainContainer;
 };
 
 // <!-- Cabecera -->

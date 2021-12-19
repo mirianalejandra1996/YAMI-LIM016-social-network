@@ -25,6 +25,9 @@ body {
   height: 100%;
 }
 
+.allView {
+  height: 100%;
+}
 /* Imagen del fondo */
 .login {
   height: 100%;
@@ -933,6 +936,7 @@ input[type="password"]:focus {
   justify-content: center;
   width: 100%;
   align-items: center;
+  /* background-color: red; */
 }
 
 .profile-container {
