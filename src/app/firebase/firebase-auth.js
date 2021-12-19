@@ -157,11 +157,10 @@ export function enviarRegistro() {
 
     // Validando los campos de la siguiente vista, si están vacios
 
-    createUserWithEmailAndPassword(auth, email)
+    createUserWithEmailAndPassword(auth, email, password)
       .then((userCredential) => {
         // Signed in
         const user = userCredential.user;
-        console.log("me habré creado con contraseña?", user);
         // const userCurrent = auth.currentUser;
 
         //Añadimos a este usuario en nuestra base de datos
@@ -175,13 +174,11 @@ export function enviarRegistro() {
 
         return updateProfile(auth.currentUser, {
           displayName: name,
-          // password: password,
         })
           .then(() => {
             console.log(
               "entramos al primer then anidado interno de updateProfile"
             );
-            console.log(auth.currentUser);
             // Profile updated!
             console.log("Ya se le modificó el nombre al usuario");
             window.location.hash = "#/timeline";
