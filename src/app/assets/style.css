@@ -11,7 +11,7 @@ html {
   box-sizing: inherit;
   margin: 0;
   padding: 0;
-  font-family: "Lato", sans-serif;
+  /* font-family: "Lato", sans-serif; */
 }
 
 body {
@@ -1006,12 +1006,14 @@ input[type="password"]:focus {
 .formProfile__input {
   width: 100%;
   background: none;
-  color: #706c6c;
+  /* color: #706c6c; */
+  color: #0f0f0f;
   font-size: 1rem;
   padding: 0.6em 0.3em;
   border: none;
   outline: none;
   border-bottom: 1px solid #5757577e;
+  font-family: lato;
 }
 
 .formProfile__label {
@@ -1020,13 +1022,14 @@ input[type="password"]:focus {
   top: -17px;
   left: 5px;
   font-size: 0.9rem;
+  font-family: lato;
 }
 
 .formProfile__required {
   position: absolute;
   top: -12px;
   right: 0px;
-  color: #f51616;
+  /* color: #f51616; */
 }
 
 .formProfile__submit {
@@ -1037,10 +1040,24 @@ input[type="password"]:focus {
   color: #ffff;
   height: 2.5rem;
   font-size: 0.85rem;
+  /* margin-top: 1rem; */
+  margin-top: -0.5rem;
 }
 
 /* icono del input date */
 
 ::-webkit-calendar-picker-indicator {
   filter: invert(70%);
+  cursor: pointer;
+}
+
+.formProfile__icon {
+  position: absolute;
+  right: 10px;
+  bottom: 10px;
+}
+
+.errContainer {
+  /* background-color: red; */
+  height: 20px;
 }
