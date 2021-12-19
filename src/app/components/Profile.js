@@ -36,8 +36,14 @@ export const Profile = () => {
   const photoAvatar = document.createElement("img");
   photoAvatar.classList.add("photo__avatar-img");
   //   photoAvatar.src = "photoURL";
-  photoAvatar.src = `${user.photoURL}`;
-  //   photoAvatar.src = "../src/app/assets/brooke-cagle-k9XZPpPHDho-unsplash.jpg";
+
+  let userImg = user.photoURL;
+  if (!user.photoURL) {
+    userImg = "../src/app/assets/user-img.jpg";
+  }
+
+  photoAvatar.src = `${userImg}`;
+
   photoAvatar.alt = "imgAvatar";
 
   imgAvatarContainer.append(photoAvatar);
