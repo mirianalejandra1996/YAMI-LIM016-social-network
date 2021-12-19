@@ -76,6 +76,8 @@ export const Profile = () => {
       </div>
     </div>
   </div>`;
+
+  return profileContainer;
 };
 
 // <!-- Cabecera -->

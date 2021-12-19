@@ -168,6 +168,12 @@ export function ProfileList() {
   /********************************************/
   const { $modalContenedor, abrirModal } = ModalCerrarSesion();
   $modalContenedorPerfil.append($modalContenedor);
+
+  $itemsPerfil.addEventListener("click", () => {
+    console.log("cambiando de vista a profile!");
+    window.location.hash = "#/profile"
+  });
+
   $itemsCerrarSesion.addEventListener("click", (e) => {
     e.preventDefault();
     abrirModal();

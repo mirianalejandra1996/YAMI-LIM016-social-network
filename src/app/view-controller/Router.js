@@ -68,6 +68,13 @@ export const Router = () => {
           return (window.location.hash = "#/");
         }
       }
+      case "#/profile": {
+        if (auth.currentUser) {
+          return $root.appendChild(components.profile());
+        } else {
+          return (window.location.hash = "#/");
+        }
+      }
       default:
         // todo: Deberíamos crear una vista en caso que el usuario coloque una url no existente
         if (auth.currentUser) {

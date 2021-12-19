@@ -943,6 +943,7 @@ input[type="password"]:focus {
   /* background-color: blue; */
   justify-content: space-between;
   align-items: center;
+  margin-top: 35px;
 }
 
 .photo__container {
@@ -996,6 +997,7 @@ input[type="password"]:focus {
   display: grid;
   gap: 1.5em;
   width: 100%;
+  /* margin-top: 30px; */
 }
 
 .formProfile__group {
