@@ -181,13 +181,6 @@ export const Profile = () => {
 
   let passwordMsg;
 
-  if (user.providerData[0].providerId === "google.com") {
-    inputPwd.type = "text";
-    passwordMsg = "Usted está logeado con Google";
-    inputPwd.value = passwordMsg;
-    iconPwd.classList.add("hidden");
-  }
-
   groupPwd.append(inputPwd);
   groupPwd.append(labelPwd);
   groupPwd.append(requiredPwd);
@@ -206,6 +199,7 @@ export const Profile = () => {
   // -----------------------------
 
   const btnEdit = document.createElement("input");
+  btnEdit.id = "submit";
   btnEdit.type = "submit";
   btnEdit.classList.add("formProfile__submit");
   btnEdit.value = "Editar";
@@ -231,6 +225,16 @@ export const Profile = () => {
 
   profileContainer.append(photoContainer);
   profileContainer.append(formContainer);
+
+  if (user.providerData[0].providerId === "google.com") {
+    msgErr.textContent = "Usted está logeado con Google";
+    msgErr.style.color = "#0f0f0f";
+    inputPwd.value = passwordMsg;
+    groupDate.classList.add("hidden");
+    groupPwd.classList.add("hidden");
+    iconPwd.classList.add("hidden");
+    // btnEdit.classList.add("hidden");
+  }
 
   return profileComponent;
 };

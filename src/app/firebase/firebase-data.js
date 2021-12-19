@@ -61,6 +61,7 @@ export function addUser(user, name) {
     user_name: nuevoName,
     date_creation: Date.now(),
     user_email: user.email,
+    // user_password: user.password
   })
     .then(() => {
       console.log("usuario subido al firestore!");

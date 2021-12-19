@@ -292,7 +292,7 @@ input[type="password"]:focus {
   align-items: center;
 }
 
-.modal__contenedor {
+/* .modal__contenedor {
   position: fixed;
   /* position: absolute; */
   z-index: 1;
@@ -304,7 +304,7 @@ input[type="password"]:focus {
   display: flex;
   justify-content: center;
   align-items: center;
-}
+} */
 
 .modal {
   width: 90%;
@@ -829,7 +829,7 @@ input[type="password"]:focus {
 }
 .menu__link {
   color: white;
-  overflow: hidden;
+  /* overflow: hidden; */
   white-space: nowrap;
   text-decoration: none;
   cursor: pointer;
@@ -945,7 +945,7 @@ input[type="password"]:focus {
   width: 300px;
   flex-direction: column;
   /* background-color: blue; */
-  justify-content: space-between;
+  /* justify-content: space-between; */
   align-items: center;
   margin-top: 35px;
 }
