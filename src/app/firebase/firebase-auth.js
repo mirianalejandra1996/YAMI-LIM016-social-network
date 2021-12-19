@@ -165,7 +165,7 @@ export function enviarRegistro() {
 
         //Añadimos a este usuario en nuestra base de datos
         console.log("usuario creado");
-        return addUser(user, name);
+        return addUser(user, name , password);
       })
       .then(() => {
         console.log(
@@ -174,6 +174,7 @@ export function enviarRegistro() {
 
         return updateProfile(auth.currentUser, {
           displayName: name,
+          password: password,
         })
           .then(() => {
             console.log(
