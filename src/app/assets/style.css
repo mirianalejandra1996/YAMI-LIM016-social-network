@@ -559,6 +559,9 @@ input[type="password"]:focus {
   font-size: 1.8rem;
   color: #ccc;
 }
+.card__icon.close__icon {
+  font-size: 1rem;
+}
 
 .card__counter {
   color: #ccc;
@@ -725,20 +728,22 @@ input[type="password"]:focus {
   flex-direction: column;
 }
 .formPost_h2 {
-  padding-left: 35px;
   padding-top: 20px;
   font-size: 15px;
-  padding-bottom: 25px;
+  font-weight: normal;
 }
 
 .formPost_h1 {
-  padding-left: 35px;
-  padding-top: 20px;
-  font-size: 12px;
-  padding-bottom: 25px;
+  font-size: 14px;
+  font-weight: bold;
+  color: #FA610C;
 }
 
 .modal__cabecera {
+  margin: 10px;
+  padding: 10px 25px 0;
+}
+.modal__opcionesCabecera {
   display: flex;
   justify-content: space-between;
 }
@@ -785,6 +790,7 @@ input[type="password"]:focus {
 }
 
 .formPost_button {
+  margin-bottom: 5px;
   width: 100px;
   border-radius: 7px;
   background-color: #fa610c;
@@ -873,16 +879,24 @@ input[type="password"]:focus {
 .modal__button + .modal__button {
   border-top: 1px solid #cbbdbd;
 }
-.modal__contenedor.cerrar {
+.modal__contenedor.cerrado {
   opacity: 0;
   z-index: -1;
   padding: 0;
 }
-
-.modal__contenedor.cerrar .modal__lista {
+.modal__contenedor.cerrado .modal__lista {
   transform: translateY(100%);
 }
 
+/* Cerrar Modal Plus */
+.offModal{
+  opacity: 0;
+  z-index: -1;
+  padding: 0;
+}
+.modal__contenedor.offModal .modal__lista {
+  transform: translateY(100%);
+}
 /*Modal Cerrar Sesion*/
 .modal__p-cancelar {
   padding: 20px;
@@ -915,7 +929,7 @@ input[type="password"]:focus {
   width: 90%;
   /* background: red; */
   background-color: #fff;
-  height: 503px;
+  height: auto;
   position: fixed;
   border-radius: 10px;
 }
@@ -952,12 +966,15 @@ input[type="password"]:focus {
 
 .photo__container {
   position: relative;
-  width: 90px;
-  height: 90px;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
 }
 .photo__avatar-container {
-  width: 100%;
-  height: 100%;
+  width: 90px;
+  margin: 10px;
   overflow: hidden;
   border-radius: 15%;
 }
@@ -1074,4 +1091,14 @@ input[type="password"]:focus {
 
 .hidden {
   display: none;
+}
+/* Muro */
+.opcionesMuro__container{
+  padding: 20px 10px;
+  margin: 20px 0;
+  display: flex;
+  justify-content: space-around;
+  align-content: center;
+  border-top: 1px solid #cbbdbd;
+  border-bottom: 1px solid #cbbdbd;
 }

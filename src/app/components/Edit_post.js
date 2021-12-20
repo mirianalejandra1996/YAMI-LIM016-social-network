@@ -13,23 +13,41 @@ export const ModalEditPost = (postData) => {
   // * Cabecera
   const header = document.createElement("div");
   header.classList.add("modal__cabecera");
-
-  const title = document.createElement("h2");
-  title.classList.add("formPost_h2");
-  title.textContent = `Editar publicación`;
-
+ //Opciones de Cabecera
+  const opcionesCabecera = document.createElement("div");
+  opcionesCabecera.classList.add("modal__opcionesCabecera");
+  //Opcion Cerrar
+  const cerrarContainer = document.createElement("div");
+  cerrarContainer.classList.add("card__icon-container");
+  cerrarContainer.addEventListener("click", () => {
+    cerrarModal();
+  });
+  const iconClose = document.createElement("span");
+  iconClose.classList.add("card__icon", "close__icon");
+  iconClose.classList.add("icon-icon-close");
+  cerrarContainer.appendChild(iconClose);
+  //opcion Guardar
   const guardar = document.createElement("h1");
   guardar.classList.add("formPost_h1");
   guardar.textContent = "Guardar";
 
-  header.append(title);
-  header.append(guardar);
+  opcionesCabecera.append(cerrarContainer);
+  opcionesCabecera.append(guardar);
 
-  formPost.append(header);
+ //Titulo del Modal
+  const title = document.createElement("h2");
+  title.classList.add("formPost_h2");
+  title.textContent = `Editar publicación`;
+
+
+  header.append(opcionesCabecera);
+  header.append(title);
+
+ 
 
   const inputsContainer = document.createElement("div");
   inputsContainer.classList.add("formPost_inputs");
-  formPost.append(inputsContainer);
+
 
   const post = document.createElement("textarea");
   post.id = "msgPostForm";
@@ -50,7 +68,8 @@ export const ModalEditPost = (postData) => {
 
   const btnsContainer = document.createElement("div");
   btnsContainer.classList.add("formPost_btns");
-  formPost.append(btnsContainer);
+
+ 
   ///////////////////////////////////////////////
 
   const tagBtn = document.createElement("button");
@@ -72,11 +91,16 @@ export const ModalEditPost = (postData) => {
   textTag.textContent = `Etiquetas`;
   tagBtnDiv.append(textTag);
 
+  formPost.append(header);
+  formPost.append(inputsContainer);
+  formPost.append(btnsContainer);
+
   $modalContenedor.append(formPost);
 
   $modalContenedor.style.opacity = "0";
   $modalContenedor.style.visibility = "hidden";
-
+  
+//Abri y Cerrar Modal
   const abrirModal = () => {
     $modalContenedor.style.opacity = "1";
     $modalContenedor.style.visibility = "visible";
@@ -84,7 +108,7 @@ export const ModalEditPost = (postData) => {
   };
 
   const cerrarModal = () => {
-    createPostContainer.classList.toggle("modal-cerrar");
+    $modalContenedor.classList.toggle("modal-cerrar");
     setTimeout(function () {
       $modalContenedor.style.opacity = "0";
       $modalContenedor.style.visibility = "hidden";
