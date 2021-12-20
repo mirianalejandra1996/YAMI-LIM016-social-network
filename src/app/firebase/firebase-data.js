@@ -64,7 +64,7 @@ export function addUser(user, name, password) {
     user_email: user.email,
     user_password: password,
     user_date: "",
-    user_createdAt : user.metadata.createdAt
+    user_createdAt: user.metadata.createdAt,
   })
     .then(() => {
       console.log("usuario subido al firestore!");
@@ -82,11 +82,21 @@ export function addUser(user, name, password) {
 
 export async function traerPost() {
   const postsData = [];
-  const querySnapshotPosts = await getDocs(collection(db, "posts"));
+
+  const postsRef = collection(db, "posts");
+
+  const querySnapshotPosts = await getDocs(postsRef);
+  // const querySnapshotPosts = await getDocs(postsRef).orderBy("date", "asc");
+
+  // const query = await db.collection("posts")
+  // .orderBy("name", "asc")
+  // .get();
+
+  // querySnapshotPosts.forEach((querySnapshot) =>
+  //   console.log(querySnapshot.data().name)
+  // );
 
   querySnapshotPosts.forEach((doc) => {
-    // doc.data() is never undefined for query doc snapshots
-
     const post = doc.data();
     console.log(post);
     post["post_id"] = doc.id;
