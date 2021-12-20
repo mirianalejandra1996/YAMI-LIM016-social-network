@@ -52,6 +52,8 @@ export const Post = (post) => {
   $optionsContainer.classList.add("card__options-container");
   // $optionsContainer.id = `optionsPost_${post.post_id}`;
 
+  // ! Si el usuario no es dueño del post, no debería salir la lista desplegable
+  if (user_id !== post.id_user) $optionsContainer.classList.add("hidden");
   const {
     menuModalOptionsPost,
     toggleModalOptionsPost,
@@ -145,8 +147,6 @@ export const Post = (post) => {
   $card.append($footerContainer);
   $card.append(menuModalEdit);
   $card.append(menuModalDelete);
-  // ! Esto es nuevo
-  // $card.append($menuModalOptions);
 
   //   todo: HACER EVENTO a icono de like para actualizar datos
 
@@ -204,9 +204,6 @@ export function OptionListPost(post) {
     );
     abrirModalEliminar();
   });
-
-  // $modalLista.append($modalEditPost)
-  // !Este se puede arreglar Quizá llamando al id del menu y apendizarle la lista de Opciones de post
 
   const toggleModalOptionsPost = () => {
     $modalLista.classList.toggle("cerrar");
