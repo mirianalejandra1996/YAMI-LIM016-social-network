@@ -98,10 +98,10 @@ export async function traerPost() {
 
   querySnapshotPosts.forEach((doc) => {
     const post = doc.data();
-    console.log(post);
+    // console.log(post);
     post["post_id"] = doc.id;
 
-    console.log(post);
+    // console.log(post);
 
     postsData.push(post);
     // console.log(postData)
@@ -178,25 +178,22 @@ export async function getUserData(user_id) {
 
 // Comentar un post
 
-export function addComment(/*message,*/ postData) {
-  console.log('funciona')
-  const user = auth.currentUser;
-  console.log(postData)
-  // const postId = postData.post_id
+export function addComment(current_user, idPost, comment) {
 
-  // const commentsRef = collection(db, "posts", postId, "comments");
+  const commentsRef = collection(db, "posts", idPost, "comments");
 
-  // addDoc(commentsRef, {
-  //   id_user: user.uid,
-  //   user_name: user.displayName,
-  //   message,
-  //   date: Date.now(),
-  // })
-  //   .then(() => {
-  //     console.log("comentario en firestore");
-  //   })
-  //   .catch((err) => console.log(err));
+  addDoc(commentsRef, {
+    id_user: current_user.uid,
+    user_name: current_user.displayName,
+    message: comment,
+    date: Date.now(),
+  })
+    .then(() => {
+      console.log("comentario en firestore");
+    })
+    .catch((err) => console.log(err));
 }
+
 export async function checkRegisteredUser(post_id) {
   const userRef = doc(db, "users", post_id);
   const docSnap = await getDoc(userRef);

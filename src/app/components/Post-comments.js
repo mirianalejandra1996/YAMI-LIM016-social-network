@@ -1,12 +1,19 @@
 import { addComment } from "../firebase/firebase-data.js"
+import { auth } from "../firebase/firebase-auth.js";
 
-export function PostComments(postData) {
+export function PostComments(idPost) {
+
+    const current_user = auth.currentUser;
+    console.log(idPost)
+    console.log("auth", auth);
+
     //Comments del post
 
     // const commentSection = document.createElement("div")
     // const oldComment = 
 
     //Input para ingresar un comentario
+    
     const newComment = document.createElement("div")
     newComment.classList.add("newComment")
 
@@ -18,7 +25,7 @@ export function PostComments(postData) {
     avatarContainer.append(avatarImage)
 
     const inputComment = document.createElement("textarea")
-    inputComment.id = "message"
+    inputComment.id = `comment_${idPost}`
     inputComment.placeholder = `Escribe un comentario...`
     inputComment.classList.add("postComment_input")
 
@@ -39,11 +46,9 @@ export function PostComments(postData) {
     // })
 
     commentBtn.addEventListener('click', () => {
-        console.log('click')
-        const comment=document.getElementById("message").value
+        const comment=document.getElementById(`comment_${idPost}`).value
         if (comment !== "") {
-            console.log('clack')
-            addComment(comment, postData)
+            addComment(current_user, idPost, comment)
         }
     })
 

@@ -114,9 +114,7 @@ export const ModalEditPost = (postData) => {
   guardar.addEventListener("click", () => {
     console.log("entramos para actualizar");
     // const nuevoMensaje = document.getElementById("msgPost").value;
-    const nuevoMensaje = document.getElementById(
-      `msgPost_${postData.post_id}`
-    ).value;
+    const nuevoMensaje = document.getElementById(`msgPost_${postData.post_id}`).value;
     console.log("este es el nuevo mensaje", nuevoMensaje);
 
     // const idPostSelecter = postData.post_id

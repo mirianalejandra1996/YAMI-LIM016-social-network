@@ -4,7 +4,7 @@ import { onAuthStateChanged } from "https://www.gstatic.com/firebasejs/9.5.0/fir
 
 //se ejecuta una sola vez
 export const Router = () => {
-  console.log("entró a función router");
+  // console.log("entró a función router");
 
   const $root = document.getElementById("root");
   $root.textContent = "";
@@ -108,7 +108,7 @@ export const Router = () => {
     hasRouterStarted = true;
   }
 
-  console.log({ auth });
+  // console.log({ auth });
 
   onAuthStateChanged(auth, (user) => {
     if (user) {

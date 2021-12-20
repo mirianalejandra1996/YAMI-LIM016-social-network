@@ -22,7 +22,6 @@ const provider = new GoogleAuthProvider(app);
 
 // ! Qué dará esto?
 auth.languageCode = "es";
-console.log(auth.languageCode);
 
 /*******************Inicio de sesion con correo***************************/
 export function enviarIngreso() {
@@ -71,7 +70,7 @@ export function enviarIngreso() {
 /************************Continuar con Google**********************************/
 
 const user = auth.currentUser;
-console.log("este es el user actual", user);
+// console.log("este es el user actual", user);
 console.log("esto es auth", auth);
 
 export const loginGoogle = () => {

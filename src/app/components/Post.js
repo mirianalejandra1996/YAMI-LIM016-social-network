@@ -137,7 +137,7 @@ export const Post = (post) => {
   $comentarioTitle.id = "comentario";
   $comentarioTitle.textContent = "comentar";
 
-  const $postComments = PostComments();
+  const $postComments = PostComments(post.post_id);
 
   $comentContainer.appendChild($iconComent);
   $comentContainer.appendChild($comentarioTitle);
@@ -159,13 +159,13 @@ export const Post = (post) => {
     //se podria cambiar cualquier campo de post pero en este caso solo necesitamos los likes
 
     const likes = postDoc.data().likes;
-    console.log("array de likes", likes);
+    // console.log("array de likes", likes);
     if (likes.find((like) => like === user_id)) {
       $likeContainer.classList.add("selected");
       console.log("si se encuentra");
     } else {
       $likeContainer.classList.remove("selected");
-      console.log("no se encuentra");
+      // console.log("no se encuentra");
     }
 
     $counterLikes.textContent = `${likes.length}`;
