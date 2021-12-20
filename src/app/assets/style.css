@@ -736,7 +736,7 @@ input[type="password"]:focus {
 .formPost_h1 {
   font-size: 14px;
   font-weight: bold;
-  color: #FA610C;
+  color: #fa610c;
 }
 
 .modal__cabecera {
@@ -889,7 +889,7 @@ input[type="password"]:focus {
 }
 
 /* Cerrar Modal Plus */
-.offModal{
+.offModal {
   opacity: 0;
   z-index: -1;
   padding: 0;
@@ -1093,7 +1093,7 @@ input[type="password"]:focus {
   display: none;
 }
 /* Muro */
-.opcionesMuro__container{
+.opcionesMuro__container {
   padding: 20px 10px;
   margin: 20px 0;
   display: flex;
@@ -1101,4 +1101,57 @@ input[type="password"]:focus {
   align-content: center;
   border-top: 1px solid #cbbdbd;
   border-bottom: 1px solid #cbbdbd;
+}
+
+/*Seccion Comentarios*/
+.newComment {
+  display: flex;
+  align-items: center;
+  position: relative;
+  border-top: 1px solid #efeff1;
+  margin-top: 5px;
+  padding-top: 10px;
+  /* margin-top: 1em; */
+}
+
+.avatarContainer {
+  width: 35px;
+  height: 35px;
+  overflow: hidden;
+  border-radius: 100%;
+  position: relative;
+}
+
+.avatarImage {
+  /* display: block; */
+  width: 100%;
+  /* transition: 0.3s ease; */
+  height: auto;
+}
+
+.postComment_input {
+  border-radius: 44px;
+  background-color: #efeff1;
+  border: transparent;
+  margin-left: 10px;
+  height: 35px;
+  resize: none;
+  width: 100%;
+  font-size: 15px;
+  overflow: hidden;
+  font-family: "Lato", sans-serif;
+  padding: 8px 15px;
+}
+.commentBtnDiv {
+  height: 35px;
+  /* width: 35px; */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  margin-left: 8px;
+  cursor: pointer;
+}
+.iconComment {
+  color: #ff3f15;
 }

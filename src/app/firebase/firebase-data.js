@@ -176,6 +176,27 @@ export async function getUserData(user_id) {
   }
 }
 
+// Comentar un post
+
+export function addComment(/*message,*/ postData) {
+  console.log('funciona')
+  const user = auth.currentUser;
+  console.log(postData)
+  // const postId = postData.post_id
+
+  // const commentsRef = collection(db, "posts", postId, "comments");
+
+  // addDoc(commentsRef, {
+  //   id_user: user.uid,
+  //   user_name: user.displayName,
+  //   message,
+  //   date: Date.now(),
+  // })
+  //   .then(() => {
+  //     console.log("comentario en firestore");
+  //   })
+  //   .catch((err) => console.log(err));
+}
 export async function checkRegisteredUser(post_id) {
   const userRef = doc(db, "users", post_id);
   const docSnap = await getDoc(userRef);

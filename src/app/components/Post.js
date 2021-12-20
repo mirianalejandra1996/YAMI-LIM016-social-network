@@ -2,6 +2,7 @@ import { toggleLikes, initListenerPost } from "../firebase/firebase-data.js";
 import { auth } from "../firebase/firebase-auth.js";
 import { ModalEditPost } from "./Edit_post.js";
 import { ModalEliminarPost } from "./Modal_eliminarPost.js";
+import { PostComments } from "./Post-comments.js"
 // import { Menu, OptionListPost } from "./Menu.js";
 
 export const Post = (post) => {
@@ -135,6 +136,8 @@ export const Post = (post) => {
   $comentarioTitle.id = "comentario";
   $comentarioTitle.textContent = "comentar";
 
+  const $postComments = PostComments()
+
   $comentContainer.appendChild($iconComent);
   $comentContainer.appendChild($comentarioTitle);
 
@@ -145,6 +148,7 @@ export const Post = (post) => {
   $card.append($headerContainer);
   $card.append($msgContainer);
   $card.append($footerContainer);
+  $card.append($postComments)
   $card.append(menuModalEdit);
   $card.append(menuModalDelete);
 
