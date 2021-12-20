@@ -1116,3 +1116,16 @@ input[type="password"]:focus {
   font-family: "Lato", sans-serif;
   padding: 8px 15px;
 }
+.commentBtnDiv{
+  height: 35px;
+  /* width: 35px; */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  margin-left: 8px;
+  cursor: pointer;
+}
+.iconComment{
+  color:#FF3F15;
+}
