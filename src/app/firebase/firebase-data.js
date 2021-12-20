@@ -14,6 +14,7 @@ import {
   arrayRemove,
   onSnapshot,
   deleteDoc,
+  orderBy,
 } from "https://www.gstatic.com/firebasejs/9.5.0/firebase-firestore.js";
 import { db } from "../firebase/firebase-initializer.js";
 import { auth } from "../firebase/firebase-auth.js";
@@ -85,16 +86,9 @@ export async function traerPost() {
 
   const postsRef = collection(db, "posts");
 
-  const querySnapshotPosts = await getDocs(postsRef);
-  // const querySnapshotPosts = await getDocs(postsRef).orderBy("date", "asc");
+  const q = query(postsRef, orderBy("date", "desc"));
 
-  // const query = await db.collection("posts")
-  // .orderBy("name", "asc")
-  // .get();
-
-  // querySnapshotPosts.forEach((querySnapshot) =>
-  //   console.log(querySnapshot.data().name)
-  // );
+  const querySnapshotPosts = await getDocs(q);
 
   querySnapshotPosts.forEach((doc) => {
     const post = doc.data();
@@ -179,9 +173,9 @@ export async function getUserData(user_id) {
 // Comentar un post
 
 export function addComment(/*message,*/ postData) {
-  console.log('funciona')
+  console.log("funciona");
   const user = auth.currentUser;
-  console.log(postData)
+  console.log(postData);
   // const postId = postData.post_id
 
   // const commentsRef = collection(db, "posts", postId, "comments");
@@ -212,16 +206,17 @@ export async function checkRegisteredUser(post_id) {
 /******************Recopila los posts del Usuario*********************/
 
 export async function traerMisPost(userId) {
- 
+  // -------------------
   const q1 = query(
-        collection(db, "posts"),
-        where("id_user", "==", userId)
-      );
+    collection(db, "posts"),
+    where("id_user", "==", userId),
+    orderBy("date", "desc")
+  );
 
-  const querySnapshotPosts = await getDocs(q1)
+  const querySnapshotPosts = await getDocs(q1);
 
-  const postsFiltradocs = querySnapshotPosts.docs  //Array
-  const postsData = []
+  const postsFiltradocs = querySnapshotPosts.docs; //Array
+  const postsData = [];
 
   postsFiltradocs.forEach((doc) => {
     // doc.data() is never undefined for query doc snapshots
@@ -235,7 +230,7 @@ export async function traerMisPost(userId) {
     postsData.push(post);
     // console.log(postData)
     // console.log(doc.id, " => ", doc.data());
-  });  
+  });
 
   return postsData;
 }
