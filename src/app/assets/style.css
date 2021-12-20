@@ -829,7 +829,7 @@ input[type="password"]:focus {
 }
 .menu__link {
   color: white;
-  overflow: hidden;
+  /* overflow: hidden; */
   white-space: nowrap;
   text-decoration: none;
   cursor: pointer;
@@ -1074,4 +1074,45 @@ input[type="password"]:focus {
 
 .hidden {
   display: none;
+}
+
+/*Seccion Comentarios*/
+
+.newComment{
+  display: flex;
+  align-items: center;
+  position: relative;
+  border-top: 1px solid #efeff1;
+  margin-top: 5px;
+  padding-top: 10px;
+  /* margin-top: 1em; */
+}
+
+.avatarContainer{
+  width: 35px;
+  height: 35px;
+  overflow: hidden;
+  border-radius: 100%;
+  position: relative;
+}
+
+.avatarImage{
+  /* display: block; */
+  width: 100%;
+  /* transition: 0.3s ease; */
+  height: auto;
+}
+
+.postComment_input{
+  border-radius: 44px;
+  background-color: #EFEFF1;
+  border: transparent;
+  margin-left: 10px;
+  height: 35px;
+  resize: none;
+  width: 100%;
+  font-size: 15px;
+  overflow: hidden;
+  font-family: "Lato", sans-serif;
+  padding: 8px 15px;
 }

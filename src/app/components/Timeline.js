@@ -50,7 +50,7 @@ export function Timeline() {
       // una vez que tengo la lista le quito el loader
       $postsContainer.textContent = "";
 
-      console.log("estos son los posts", postsLista);
+      // console.log("estos son los posts", postsLista);
 
       //lleno el $postContainer con los nodos de post
       postsLista.forEach((post) => {
