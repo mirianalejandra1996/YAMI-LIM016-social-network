@@ -13,7 +13,7 @@ export const ModalEditPost = (postData) => {
   // * Cabecera
   const header = document.createElement("div");
   header.classList.add("modal__cabecera");
- //Opciones de Cabecera
+  //Opciones de Cabecera
   const opcionesCabecera = document.createElement("div");
   opcionesCabecera.classList.add("modal__opcionesCabecera");
   //Opcion Cerrar
@@ -34,23 +34,19 @@ export const ModalEditPost = (postData) => {
   opcionesCabecera.append(cerrarContainer);
   opcionesCabecera.append(guardar);
 
- //Titulo del Modal
+  //Titulo del Modal
   const title = document.createElement("h2");
   title.classList.add("formPost_h2");
   title.textContent = `Editar publicación`;
 
-
   header.append(opcionesCabecera);
   header.append(title);
-
- 
 
   const inputsContainer = document.createElement("div");
   inputsContainer.classList.add("formPost_inputs");
 
-
   const post = document.createElement("textarea");
-  post.id = "msgPostForm";
+  post.id = `msgPost_${postData.post_id}`;
   post.classList.add("formPost_input-long");
   post.placeholder = `¿Qué estas pensando?`;
   post.value = `${postData.message}`;
@@ -69,7 +65,6 @@ export const ModalEditPost = (postData) => {
   const btnsContainer = document.createElement("div");
   btnsContainer.classList.add("formPost_btns");
 
- 
   ///////////////////////////////////////////////
 
   const tagBtn = document.createElement("button");
@@ -99,8 +94,8 @@ export const ModalEditPost = (postData) => {
 
   $modalContenedor.style.opacity = "0";
   $modalContenedor.style.visibility = "hidden";
-  
-//Abri y Cerrar Modal
+
+  //Abri y Cerrar Modal
   const abrirModal = () => {
     $modalContenedor.style.opacity = "1";
     $modalContenedor.style.visibility = "visible";
@@ -118,7 +113,14 @@ export const ModalEditPost = (postData) => {
   // Evento para guardar post (update en firebase)
   guardar.addEventListener("click", () => {
     console.log("entramos para actualizar");
-    const nuevoMensaje = document.getElementById("msgPostForm").value;
+    // const nuevoMensaje = document.getElementById("msgPost").value;
+    const nuevoMensaje = document.getElementById(
+      `msgPost_${postData.post_id}`
+    ).value;
+    console.log("este es el nuevo mensaje", nuevoMensaje);
+
+    // const idPostSelecter = postData.post_id
+
     updatePost(postData.post_id, nuevoMensaje);
     window.location.hash = "#/";
   });
