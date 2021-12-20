@@ -559,6 +559,9 @@ input[type="password"]:focus {
   font-size: 1.8rem;
   color: #ccc;
 }
+.card__icon.close__icon {
+  font-size: 1rem;
+}
 
 .card__counter {
   color: #ccc;
@@ -725,20 +728,22 @@ input[type="password"]:focus {
   flex-direction: column;
 }
 .formPost_h2 {
-  padding-left: 35px;
   padding-top: 20px;
   font-size: 15px;
-  padding-bottom: 25px;
+  font-weight: normal;
 }
 
 .formPost_h1 {
-  padding-left: 35px;
-  padding-top: 20px;
-  font-size: 12px;
-  padding-bottom: 25px;
+  font-size: 14px;
+  font-weight: bold;
+  color: #FA610C;
 }
 
 .modal__cabecera {
+  margin: 10px;
+  padding: 10px 25px 0;
+}
+.modal__opcionesCabecera {
   display: flex;
   justify-content: space-between;
 }
@@ -785,6 +790,7 @@ input[type="password"]:focus {
 }
 
 .formPost_button {
+  margin-bottom: 5px;
   width: 100px;
   border-radius: 7px;
   background-color: #fa610c;
@@ -923,7 +929,7 @@ input[type="password"]:focus {
   width: 90%;
   /* background: red; */
   background-color: #fff;
-  height: 503px;
+  height: auto;
   position: fixed;
   border-radius: 10px;
 }

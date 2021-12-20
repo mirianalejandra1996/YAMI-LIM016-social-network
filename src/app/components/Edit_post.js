@@ -14,16 +14,40 @@ export const ModalEditPost = (postData) => {
   const header = document.createElement("div");
   header.classList.add("modal__cabecera");
 
+const opcionesCabecera = document.createElement('div')
+opcionesCabecera.classList.add("modal__opcionesCabecera")
+
+
+
+
+
+
+/////CARD comentarios container
+const cerrarContainer = document.createElement("div");
+cerrarContainer .classList.add("card__icon-container");
+cerrarContainer .addEventListener("click", () => {
+  cerrarModal()
+});
+
+const iconClose = document.createElement("span");
+iconClose.classList.add("card__icon","close__icon");
+iconClose.classList.add("icon-icon-close");
+cerrarContainer.appendChild(iconClose);
+
+const guardar = document.createElement("h1");
+guardar.classList.add("formPost_h1");
+guardar.textContent = "Guardar";
+
+
   const title = document.createElement("h2");
   title.classList.add("formPost_h2");
   title.textContent = `Editar publicación`;
 
-  const guardar = document.createElement("h1");
-  guardar.classList.add("formPost_h1");
-  guardar.textContent = "Guardar";
+  opcionesCabecera.append(cerrarContainer)
+  opcionesCabecera.append(guardar)
 
+  header.append(opcionesCabecera);
   header.append(title);
-  header.append(guardar);
 
   formPost.append(header);
 
@@ -84,7 +108,7 @@ export const ModalEditPost = (postData) => {
   };
 
   const cerrarModal = () => {
-    createPostContainer.classList.toggle("modal-cerrar");
+    $modalContenedor.classList.toggle("modal-cerrar");
     setTimeout(function () {
       $modalContenedor.style.opacity = "0";
       $modalContenedor.style.visibility = "hidden";

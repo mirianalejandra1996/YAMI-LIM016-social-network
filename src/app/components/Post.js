@@ -191,8 +191,6 @@ export function OptionListPost(post) {
   const { $modalContenedor, abrirModal } = ModalEditPost(post);
 
   $itemEditPublication.addEventListener("click", () => {
-    console.log("SADADADS");
-    // e.preventDefault();
     abrirModal();
   });
 
