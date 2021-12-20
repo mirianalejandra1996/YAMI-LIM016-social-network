@@ -138,20 +138,6 @@ export async function toggleLikes(post_id) {
       likes: arrayUnion(userId),
     });
   }
-
-  // jalar posts de determinado usuario para armar muro perfil
-
-  // const q1 = query(
-  //       collection(db, "posts"),
-  //       where("id_user", "==", userId)
-  //     );
-
-  // const querySnapshotPosts = await getDocs(q1)
-
-  // const postsFiltradocs = querySnapshotPosts.docs // esto es un array SIEMPRE
-
-  // const likesDelPrimerPostFiltrado = postsFiltradocs[0].data().likes // []
-  // const idDelPrimerPostFiltrado = postsFiltradocs[0].id //
 }
 
 export function initListenerPost(postId, actualizarPost) {
@@ -222,4 +208,77 @@ export async function checkRegisteredUser(post_id) {
     // doc.data() will be undefined in this case
     console.log("No such document!");
   }
+}
+/******************Recopila los posts del Usuario*********************/
+
+export async function traerMisPost(userId) {
+ 
+  const q1 = query(
+        collection(db, "posts"),
+        where("id_user", "==", userId)
+      );
+
+  const querySnapshotPosts = await getDocs(q1)
+
+  const postsFiltradocs = querySnapshotPosts.docs  //Array
+  const postsData = []
+
+  postsFiltradocs.forEach((doc) => {
+    // doc.data() is never undefined for query doc snapshots
+
+    const post = doc.data();
+    console.log(post);
+    post["post_id"] = doc.id;
+
+    console.log(post);
+
+    postsData.push(post);
+    // console.log(postData)
+    // console.log(doc.id, " => ", doc.data());
+  });
+
+
+  //   const likesDelPrimerPostFiltrado = postsFiltradocs[0].data().likes // []
+  // const idDelPrimerPostFiltrado = postsFiltradocs[0].id //
+
+
+
+  // const postsData = [];
+ 
+
+
+  
+  // const querySnapshotPosts = await getDocs(collection(db, "posts"));
+
+  // querySnapshotPosts.forEach((doc) => {
+  //   // doc.data() is never undefined for query doc snapshots
+
+  //   const post = doc.data();
+  //   console.log(post);
+  //   post["post_id"] = doc.id;
+
+  //   console.log(post);
+
+  //   postsData.push(post);
+  //   // console.log(postData)
+  //   // console.log(doc.id, " => ", doc.data());
+  // });
+
+  return postsData;
+
+
+
+  // jalar posts de determinado usuario para armar muro perfil
+
+  // const q1 = query(
+  //       collection(db, "posts"),
+  //       where("id_user", "==", userId)
+  //     );
+
+  // const querySnapshotPosts = await getDocs(q1)
+
+  // const postsFiltradocs = querySnapshotPosts.docs // esto es un array SIEMPRE
+
+  // const likesDelPrimerPostFiltrado = postsFiltradocs[0].data().likes // []
+  // const idDelPrimerPostFiltrado = postsFiltradocs[0].id //
 }
