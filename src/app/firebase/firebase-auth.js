@@ -1,4 +1,5 @@
 import { app } from "../firebase/firebase-initializer.js";
+import { checkRegisteredUser } from "../firebase/firebase-data.js";
 
 import {
   signInWithEmailAndPassword,
@@ -74,11 +75,12 @@ console.log("este es el user actual", user);
 console.log("esto es auth", auth);
 
 export const loginGoogle = () => {
+  // ! Deberiamos chequear primero si esta cuenta ya se encuentra registrada en el firebase,
+  // ! en caso de estar en el firestore, pedirle que ingrese sus datos
   signInWithPopup(auth, provider)
     .then((response) => {
       const user = response.user;
       console.log("sign in pop exitoso", user);
-
       addUser(user);
       window.location.hash = "#/timeline";
     })
@@ -165,7 +167,7 @@ export function enviarRegistro() {
 
         //Añadimos a este usuario en nuestra base de datos
         console.log("usuario creado");
-        return addUser(user, name);
+        return addUser(user, name, password);
       })
       .then(() => {
         console.log(
@@ -174,6 +176,7 @@ export function enviarRegistro() {
 
         return updateProfile(auth.currentUser, {
           displayName: name,
+          password: password,
         })
           .then(() => {
             console.log(

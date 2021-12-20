@@ -41,7 +41,8 @@ export const Post = (post) => {
   $hour.classList.add("card__time");
 
   // todo: HACER FUNCION DE HORA
-  $hour.textContent = "hace 1 hora";
+  // $hour.textContent = 1 hora";
+  $hour.textContent = `${timeSince(post.date)}`;
 
   $dataContainer.append($userName);
   $dataContainer.append($hour);
@@ -52,6 +53,8 @@ export const Post = (post) => {
   $optionsContainer.classList.add("card__options-container");
   // $optionsContainer.id = `optionsPost_${post.post_id}`;
 
+  // ! Si el usuario no es dueño del post, no debería salir la lista desplegable
+  if (user_id !== post.id_user) $optionsContainer.classList.add("hidden");
   const {
     menuModalOptionsPost,
     toggleModalOptionsPost,
@@ -148,15 +151,12 @@ export const Post = (post) => {
   $card.append($postComments)
   $card.append(menuModalEdit);
   $card.append(menuModalDelete);
-  // ! Esto es nuevo
-  // $card.append($menuModalOptions);
 
   //   todo: HACER EVENTO a icono de like para actualizar datos
 
   initListenerPost(post.post_id, (postDoc) => {
     //se podria cambiar cualquier campo de post pero en este caso solo necesitamos los likes
 
-    
     const likes = postDoc.data().likes;
     console.log("array de likes", likes);
     if (likes.find((like) => like === user_id)) {
@@ -209,9 +209,6 @@ export function OptionListPost(post) {
     abrirModalEliminar();
   });
 
-  // $modalLista.append($modalEditPost)
-  // !Este se puede arreglar Quizá llamando al id del menu y apendizarle la lista de Opciones de post
-
   const toggleModalOptionsPost = () => {
     $modalLista.classList.toggle("cerrar");
   };
@@ -222,4 +219,49 @@ export function OptionListPost(post) {
     menuModalEdit: $modalContenedor,
     menuModalDelete: modalEliminarPost,
   };
+}
+
+function timeSince(date) {
+  var seconds = Math.floor((new Date() - date) / 1000);
+
+  // Intervalo de años
+  var interval = seconds / 31536000;
+  if (interval > 1) {
+    let years = Math.floor(interval);
+    if (years === 1) return `Hace ${years} mes`;
+    return `Hace ${years} años`;
+  }
+
+  // Intervalo de meses
+  interval = seconds / 2592000;
+  if (interval > 1) {
+    let months = Math.floor(interval);
+    if (months === 1) return `Hace ${months} mes`;
+    return `Hace ${months} meses`;
+  }
+
+  // Intervalo de días
+  interval = seconds / 86400;
+  if (interval > 1) {
+    let days = Math.floor(interval);
+    if (days === 1) return `Hace ${days} hora`;
+    return `Hace ${days} días`;
+  }
+
+  // Intervalo de horas
+  interval = seconds / 3600;
+  if (interval > 1) {
+    let hours = Math.floor(interval);
+    if (hours === 1) return `Hace ${hours} hora`;
+    return `Hace ${hours} horas`;
+  }
+
+  // Intervalo de minutos
+  interval = seconds / 60;
+  if (interval > 1) {
+    let minutes = Math.floor(interval);
+    if (minutes === 1) return `Hace ${minutes} minuto`;
+    return `Hace ${minutes} minutos`;
+  }
+  return `Hace segundos`;
 }

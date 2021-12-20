@@ -42,7 +42,7 @@ export function addPost(message) {
 /******************Agrega un usuario a FS*********************/
 const userRef = collection(db, "users");
 
-export function addUser(user, name) {
+export function addUser(user, name, password) {
   let nuevoName;
   if (!user.displayName) {
     nuevoName = name;
@@ -56,11 +56,15 @@ export function addUser(user, name) {
 
   // setDoc lo usamos para especificar un id único que nosotros vamos a colocarle,
   // El addDoc autogenera el id
+
   return setDoc(userdoc, {
     user_id: user.uid,
     user_name: nuevoName,
     date_creation: Date.now(),
     user_email: user.email,
+    user_password: password,
+    user_date: "",
+    user_createdAt: user.metadata.createdAt,
   })
     .then(() => {
       console.log("usuario subido al firestore!");
@@ -78,11 +82,21 @@ export function addUser(user, name) {
 
 export async function traerPost() {
   const postsData = [];
-  const querySnapshotPosts = await getDocs(collection(db, "posts"));
+
+  const postsRef = collection(db, "posts");
+
+  const querySnapshotPosts = await getDocs(postsRef);
+  // const querySnapshotPosts = await getDocs(postsRef).orderBy("date", "asc");
+
+  // const query = await db.collection("posts")
+  // .orderBy("name", "asc")
+  // .get();
+
+  // querySnapshotPosts.forEach((querySnapshot) =>
+  //   console.log(querySnapshot.data().name)
+  // );
 
   querySnapshotPosts.forEach((doc) => {
-    // doc.data() is never undefined for query doc snapshots
-
     const post = doc.data();
     console.log(post);
     post["post_id"] = doc.id;
@@ -196,4 +210,16 @@ export function addComment(/*message,*/ postData) {
   //     console.log("comentario en firestore");
   //   })
   //   .catch((err) => console.log(err));
+}
+export async function checkRegisteredUser(post_id) {
+  const userRef = doc(db, "users", post_id);
+  const docSnap = await getDoc(userRef);
+
+  if (docSnap.exists()) {
+    console.log("pues si existe este usuario en firestore!");
+    return await docSnap.data();
+  } else {
+    // doc.data() will be undefined in this case
+    console.log("No such document!");
+  }
 }

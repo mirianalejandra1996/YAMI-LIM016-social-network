@@ -8,8 +8,14 @@ export const Profile = () => {
   //   console.log("esta soy yo", user_id);
   //   console.log("esta soy yo", user.displayName);
   console.log("esta soy yo", user);
+  console.log("cuenta creada el ", user.metadata.createdAt);
+  console.log("foto ", user.photoURL);
+  console.log("foto ", user.emailVerified);
+  console.log("proveedor ", user.providerData);
+  console.log("proveedor ", user.providerData[0].providerId); //google
+  console.log("proveedor ", user.providerData[1].providerId); //password
 
-  //   console.log("soy yo", userData);
+  console.log("soy yo", user);
 
   //    Contenedor principal
   const profileComponent = document.createElement("div");
@@ -36,8 +42,14 @@ export const Profile = () => {
   const photoAvatar = document.createElement("img");
   photoAvatar.classList.add("photo__avatar-img");
   //   photoAvatar.src = "photoURL";
-  photoAvatar.src = `${user.photoURL}`;
-  //   photoAvatar.src = "../src/app/assets/brooke-cagle-k9XZPpPHDho-unsplash.jpg";
+
+  let userImg = user.photoURL;
+  if (!user.photoURL) {
+    userImg = "../src/app/assets/user-img.jpg";
+  }
+
+  photoAvatar.src = `${userImg}`;
+
   photoAvatar.alt = "imgAvatar";
 
   imgAvatarContainer.append(photoAvatar);
@@ -70,7 +82,7 @@ export const Profile = () => {
   inputName.id = "name";
   inputName.classList.add("formProfile__input");
   // inputName.placeholder = "Ingresa un nombre"
-  inputName.value = `${user.displayName}`;
+  //   inputName.value = `${user.displayName}`;
   inputName.disabled = true;
 
   //   Label de nombre
@@ -95,12 +107,20 @@ export const Profile = () => {
   groupDate.classList.add("formProfile__group");
 
   //   Input Fecha
+
   const inputDate = document.createElement("input");
-  inputDate.type = "date";
+
+  //   inputDate.type = "text";
   inputDate.id = "date";
   inputDate.classList.add("formProfile__input");
   // inputName.placeholder = "Ingresa un nombre"
-  inputDate.value = "1996-08-27";
+
+  //   if (!dateUser) {
+  //     //   dateUser = '0000-00-00'
+  //     dateUser = "";
+  //   }
+
+  //   inputDate.value = dateUser;
   inputDate.disabled = true;
 
   //   Label de nombre
@@ -124,7 +144,7 @@ export const Profile = () => {
   inputEmail.id = "email";
   inputEmail.classList.add("formProfile__input");
   // inputName.placeholder = "Ingresa un nombre"
-  inputEmail.value = `${user.email}`;
+  //   inputEmail.value = `${user.email}`;
   inputEmail.disabled = true;
 
   //   Label de email
@@ -150,11 +170,12 @@ export const Profile = () => {
 
   //   Input email
   const inputPwd = document.createElement("input");
-  inputPwd.type = "password";
+  //   inputPwd.type = "password";
+  inputPwd.type = "text";
   inputPwd.id = "password";
   inputPwd.classList.add("formProfile__input");
   // inputPwd.placeholder = "Ingresa un nombre"
-  //   inputPwd.value = "";
+  //   inputPwd.value = `${user.user_password}`;
   inputPwd.disabled = true;
 
   //   --------
@@ -175,13 +196,6 @@ export const Profile = () => {
 
   let passwordMsg;
 
-  if (user.providerData[0].providerId === "google.com") {
-    inputPwd.type = "text";
-    passwordMsg = "Usted está logeado con Google";
-    inputPwd.value = passwordMsg;
-    iconPwd.classList.add("hidden");
-  }
-
   groupPwd.append(inputPwd);
   groupPwd.append(labelPwd);
   groupPwd.append(requiredPwd);
@@ -200,6 +214,7 @@ export const Profile = () => {
   // -----------------------------
 
   const btnEdit = document.createElement("input");
+  btnEdit.id = "submit";
   btnEdit.type = "submit";
   btnEdit.classList.add("formProfile__submit");
   btnEdit.value = "Editar";
@@ -225,6 +240,32 @@ export const Profile = () => {
 
   profileContainer.append(photoContainer);
   profileContainer.append(formContainer);
+
+  if (user.providerData[0].providerId === "google.com") {
+    msgErr.textContent = "Usted está logeado con Google";
+    msgErr.style.color = "#0f0f0f";
+    // inputPwd.value = passwordMsg;
+    groupDate.classList.add("hidden");
+    groupPwd.classList.add("hidden");
+    iconPwd.classList.add("hidden");
+    // btnEdit.classList.add("hidden");
+  }
+
+  //   --------------
+
+  getUserData(user.uid)
+    .then((user) => {
+      inputDate.type = "date";
+      inputName.value = user.user_name;
+      inputDate.value = user.user_date;
+      inputPwd.value = user.user_password;
+      inputEmail.value = user.user_email;
+    })
+    .catch((err) => {
+      console.log(err);
+    });
+
+  //   --------------
 
   return profileComponent;
 };

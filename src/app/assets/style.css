@@ -292,9 +292,9 @@ input[type="password"]:focus {
   align-items: center;
 }
 
-.modal__contenedor {
+/* .modal__contenedor {
   position: fixed;
-  /* position: absolute; */
+  position: absolute;
   z-index: 1;
   width: 100%;
   height: 100vh;
@@ -304,7 +304,7 @@ input[type="password"]:focus {
   display: flex;
   justify-content: center;
   align-items: center;
-}
+} */
 
 .modal {
   width: 90%;
@@ -378,7 +378,7 @@ input[type="password"]:focus {
   display: grid;
   grid-template-columns: 1fr;
   row-gap: 1rem;
-  padding: 1rem;
+  padding: 1rem 1rem 92px;
 }
 
 /* Componente de post-card */
@@ -945,7 +945,7 @@ input[type="password"]:focus {
   width: 300px;
   flex-direction: column;
   /* background-color: blue; */
-  justify-content: space-between;
+  /* justify-content: space-between; */
   align-items: center;
   margin-top: 35px;
 }
