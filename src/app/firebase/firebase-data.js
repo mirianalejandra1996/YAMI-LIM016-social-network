@@ -175,3 +175,25 @@ export async function getUserData(user_id) {
     console.log("No such document!");
   }
 }
+
+// Comentar un post
+
+export function addComment(/*message,*/ postData) {
+  console.log('funciona')
+  const user = auth.currentUser;
+  console.log(postData)
+  // const postId = postData.post_id
+
+  // const commentsRef = collection(db, "posts", postId, "comments");
+
+  // addDoc(commentsRef, {
+  //   id_user: user.uid,
+  //   user_name: user.displayName,
+  //   message,
+  //   date: Date.now(),
+  // })
+  //   .then(() => {
+  //     console.log("comentario en firestore");
+  //   })
+  //   .catch((err) => console.log(err));
+}
