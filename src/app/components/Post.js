@@ -40,7 +40,7 @@ export const Post = (post) => {
   $hour.classList.add("card__time");
 
   // todo: HACER FUNCION DE HORA
-  // $hour.textContent = "hace 1 hora";
+  // $hour.textContent = 1 hora";
   $hour.textContent = `${timeSince(post.date)}`;
 
   $dataContainer.append($userName);
@@ -226,25 +226,47 @@ function timeSince(date) {
   var interval = seconds / 31536000;
 
   if (interval > 1) {
-    return Math.floor(interval) + " años";
+    let years = Math.floor(interval);
+    if (years === 1) {
+      return `Hace ${years} mes`;
+    }
+    return `Hace ${years} años`;
   }
   interval = seconds / 2592000;
   if (interval > 1) {
-    return Math.floor(interval) + " meses";
+    let months = Math.floor(interval);
+    if (months === 1) {
+      return `Hace ${months} mes`;
+    }
+    return `Hace ${months} meses`;
   }
+
   interval = seconds / 86400;
   if (interval > 1) {
-    return Math.floor(interval) + " días";
+    let days = Math.floor(interval);
+    if (days === 1) {
+      return `Hace ${days} hora`;
+    }
+    return `Hace ${days} días`;
   }
   interval = seconds / 3600;
   if (interval > 1) {
-    return Math.floor(interval) + " horas";
+    let hours = Math.floor(interval);
+    if (hours === 1) {
+      return `Hace ${hours} hora`;
+    }
+    return `Hace ${hours} horas`;
   }
   interval = seconds / 60;
+
   if (interval > 1) {
-    return Math.floor(interval) + " minutes";
+    let minutes = Math.floor(interval);
+    if (minutes === 1) {
+      return `Hace ${minutes} minuto`;
+    }
+    return `Hace ${minutes} minutos`;
   }
-  return Math.floor(seconds) + " seconds";
+  return `Hace segundos`;
 }
 
 // var aDay = 24*60*60*1000;
