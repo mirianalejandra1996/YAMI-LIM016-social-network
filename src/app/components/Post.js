@@ -223,122 +223,44 @@ export function OptionListPost(post) {
 function timeSince(date) {
   var seconds = Math.floor((new Date() - date) / 1000);
 
+  // Intervalo de años
   var interval = seconds / 31536000;
-
   if (interval > 1) {
     let years = Math.floor(interval);
-    if (years === 1) {
-      return `Hace ${years} mes`;
-    }
+    if (years === 1) return `Hace ${years} mes`;
     return `Hace ${years} años`;
   }
+
+  // Intervalo de meses
   interval = seconds / 2592000;
   if (interval > 1) {
     let months = Math.floor(interval);
-    if (months === 1) {
-      return `Hace ${months} mes`;
-    }
+    if (months === 1) return `Hace ${months} mes`;
     return `Hace ${months} meses`;
   }
 
+  // Intervalo de días
   interval = seconds / 86400;
   if (interval > 1) {
     let days = Math.floor(interval);
-    if (days === 1) {
-      return `Hace ${days} hora`;
-    }
+    if (days === 1) return `Hace ${days} hora`;
     return `Hace ${days} días`;
   }
+
+  // Intervalo de horas
   interval = seconds / 3600;
   if (interval > 1) {
     let hours = Math.floor(interval);
-    if (hours === 1) {
-      return `Hace ${hours} hora`;
-    }
+    if (hours === 1) return `Hace ${hours} hora`;
     return `Hace ${hours} horas`;
   }
-  interval = seconds / 60;
 
+  // Intervalo de minutos
+  interval = seconds / 60;
   if (interval > 1) {
     let minutes = Math.floor(interval);
-    if (minutes === 1) {
-      return `Hace ${minutes} minuto`;
-    }
+    if (minutes === 1) return `Hace ${minutes} minuto`;
     return `Hace ${minutes} minutos`;
   }
   return `Hace segundos`;
 }
-
-// var aDay = 24*60*60*1000;
-// console.log(timeSince(new Date(Date.now()-aDay)));
-// console.log(timeSince(new Date(Date.now()-aDay*2)));
-
-// -----------------------------
-// const DATE_UNITS = {
-//   day: 86400,
-//   hour: 3600,
-//   minute: 60,
-//   second: 1,
-// };
-
-// const getSecondDiff = (timestamp) => (Date.now() - timestamp) / 1000;
-
-// const getUnitAndValueDate = (secondsElapsed) => {
-//   for (const [unit, secondsInUnit] of Object.entries(DATE_UNITS)) {
-//     if (secondsElapsed >= secondsInUnit || unit === "seconds") {
-//       const value = Math.floor(secondsElapsed / secondsInUnit) * -1;
-//       return { value, unit };
-//     }
-//   }
-// };
-
-// const rtf = new Intl.RelativeTimeFormat(locale);
-
-// const timestamp = +new Date() - 3600000;
-
-// const secondsElapsed = getSecondDiff(timestamp);
-// const { value, unit } = getUnitAndValueDate(secondsElapsed);
-// rtf.format(value, unit);
-
-// ------------------------------------------------------------
-// const DATE_UNITS = {
-//   day: 86400,
-//   hour: 3600,
-//   minute: 60,
-//   second: 1,
-// };
-
-// const getSecondDiff = (timestamp) => (Date.now() - timestamp) / 1000;
-
-// const getUnitAndValueDate = (secondsElapsed) => {
-//   for (const [unit, secondsInUnit] of Object.entries(DATE_UNITS)) {
-//     if (secondsElapsed >= secondsInUnit || unit === "seconds") {
-//       const value = Math.floor(secondsElapsed / secondsInUnit) * -1;
-//       return { value, unit };
-//     }
-//   }
-// };
-
-// const getTimeAgo = (timestamp, locale) => {
-//   const rtf = new Intl.RelativeTimeFormat(locale);
-
-//   const secondsElapsed = getSecondDiff(timestamp);
-//   const { value, unit } = getUnitAndValueDate(secondsElapsed);
-//   return rtf.format(value, unit);
-// };
-
-// export default function useTimeAgo({ timestamp }) {
-//   const locale = "es";
-//   const timeago = getTimeAgo(timestamp, locale);
-
-//   const date = new Date(timestamp);
-//   const formattedDate = new Intl.DateTimeFormat(locale, {
-//     month: "long",
-//     day: "numeric",
-//   }).format(date);
-
-//   return {
-//     dateTime: formattedDate,
-//     timeago,
-//   };
-// }
