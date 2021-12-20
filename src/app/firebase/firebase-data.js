@@ -51,7 +51,7 @@ export function addUser(user, name, password) {
   }
 
   console.log("entramos a AddUsers");
-
+  
   const userdoc = doc(db, "users", user.uid); //Creamos un documento con el id de nuestro usuario
 
   // setDoc lo usamos para especificar un id único que nosotros vamos a colocarle,
