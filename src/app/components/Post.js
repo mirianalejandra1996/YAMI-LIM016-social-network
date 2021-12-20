@@ -40,7 +40,8 @@ export const Post = (post) => {
   $hour.classList.add("card__time");
 
   // todo: HACER FUNCION DE HORA
-  $hour.textContent = "hace 1 hora";
+  // $hour.textContent = "hace 1 hora";
+  $hour.textContent = `${timeSince(post.date)}`;
 
   $dataContainer.append($userName);
   $dataContainer.append($hour);
@@ -152,7 +153,6 @@ export const Post = (post) => {
   initListenerPost(post.post_id, (postDoc) => {
     //se podria cambiar cualquier campo de post pero en este caso solo necesitamos los likes
 
-    
     const likes = postDoc.data().likes;
     console.log("array de likes", likes);
     if (likes.find((like) => like === user_id)) {
@@ -219,3 +219,104 @@ export function OptionListPost(post) {
     menuModalDelete: modalEliminarPost,
   };
 }
+
+function timeSince(date) {
+  var seconds = Math.floor((new Date() - date) / 1000);
+
+  var interval = seconds / 31536000;
+
+  if (interval > 1) {
+    return Math.floor(interval) + " años";
+  }
+  interval = seconds / 2592000;
+  if (interval > 1) {
+    return Math.floor(interval) + " meses";
+  }
+  interval = seconds / 86400;
+  if (interval > 1) {
+    return Math.floor(interval) + " días";
+  }
+  interval = seconds / 3600;
+  if (interval > 1) {
+    return Math.floor(interval) + " horas";
+  }
+  interval = seconds / 60;
+  if (interval > 1) {
+    return Math.floor(interval) + " minutes";
+  }
+  return Math.floor(seconds) + " seconds";
+}
+
+// var aDay = 24*60*60*1000;
+// console.log(timeSince(new Date(Date.now()-aDay)));
+// console.log(timeSince(new Date(Date.now()-aDay*2)));
+
+// -----------------------------
+// const DATE_UNITS = {
+//   day: 86400,
+//   hour: 3600,
+//   minute: 60,
+//   second: 1,
+// };
+
+// const getSecondDiff = (timestamp) => (Date.now() - timestamp) / 1000;
+
+// const getUnitAndValueDate = (secondsElapsed) => {
+//   for (const [unit, secondsInUnit] of Object.entries(DATE_UNITS)) {
+//     if (secondsElapsed >= secondsInUnit || unit === "seconds") {
+//       const value = Math.floor(secondsElapsed / secondsInUnit) * -1;
+//       return { value, unit };
+//     }
+//   }
+// };
+
+// const rtf = new Intl.RelativeTimeFormat(locale);
+
+// const timestamp = +new Date() - 3600000;
+
+// const secondsElapsed = getSecondDiff(timestamp);
+// const { value, unit } = getUnitAndValueDate(secondsElapsed);
+// rtf.format(value, unit);
+
+// ------------------------------------------------------------
+// const DATE_UNITS = {
+//   day: 86400,
+//   hour: 3600,
+//   minute: 60,
+//   second: 1,
+// };
+
+// const getSecondDiff = (timestamp) => (Date.now() - timestamp) / 1000;
+
+// const getUnitAndValueDate = (secondsElapsed) => {
+//   for (const [unit, secondsInUnit] of Object.entries(DATE_UNITS)) {
+//     if (secondsElapsed >= secondsInUnit || unit === "seconds") {
+//       const value = Math.floor(secondsElapsed / secondsInUnit) * -1;
+//       return { value, unit };
+//     }
+//   }
+// };
+
+// const getTimeAgo = (timestamp, locale) => {
+//   const rtf = new Intl.RelativeTimeFormat(locale);
+
+//   const secondsElapsed = getSecondDiff(timestamp);
+//   const { value, unit } = getUnitAndValueDate(secondsElapsed);
+//   return rtf.format(value, unit);
+// };
+
+// export default function useTimeAgo({ timestamp }) {
+//   const locale = "es";
+//   const timeago = getTimeAgo(timestamp, locale);
+
+//   const date = new Date(timestamp);
+//   const formattedDate = new Intl.DateTimeFormat(locale, {
+//     month: "long",
+//     day: "numeric",
+//   }).format(date);
+
+//   return {
+//     dateTime: formattedDate,
+//     timeago,
+//   };
+// }
