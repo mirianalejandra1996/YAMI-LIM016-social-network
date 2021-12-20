@@ -13,47 +13,41 @@ export const ModalEditPost = (postData) => {
   // * Cabecera
   const header = document.createElement("div");
   header.classList.add("modal__cabecera");
+ //Opciones de Cabecera
+  const opcionesCabecera = document.createElement("div");
+  opcionesCabecera.classList.add("modal__opcionesCabecera");
+  //Opcion Cerrar
+  const cerrarContainer = document.createElement("div");
+  cerrarContainer.classList.add("card__icon-container");
+  cerrarContainer.addEventListener("click", () => {
+    cerrarModal();
+  });
+  const iconClose = document.createElement("span");
+  iconClose.classList.add("card__icon", "close__icon");
+  iconClose.classList.add("icon-icon-close");
+  cerrarContainer.appendChild(iconClose);
+  //opcion Guardar
+  const guardar = document.createElement("h1");
+  guardar.classList.add("formPost_h1");
+  guardar.textContent = "Guardar";
 
-const opcionesCabecera = document.createElement('div')
-opcionesCabecera.classList.add("modal__opcionesCabecera")
+  opcionesCabecera.append(cerrarContainer);
+  opcionesCabecera.append(guardar);
 
-
-
-
-
-
-/////CARD comentarios container
-const cerrarContainer = document.createElement("div");
-cerrarContainer .classList.add("card__icon-container");
-cerrarContainer .addEventListener("click", () => {
-  cerrarModal()
-});
-
-const iconClose = document.createElement("span");
-iconClose.classList.add("card__icon","close__icon");
-iconClose.classList.add("icon-icon-close");
-cerrarContainer.appendChild(iconClose);
-
-const guardar = document.createElement("h1");
-guardar.classList.add("formPost_h1");
-guardar.textContent = "Guardar";
-
-
+ //Titulo del Modal
   const title = document.createElement("h2");
   title.classList.add("formPost_h2");
   title.textContent = `Editar publicación`;
 
-  opcionesCabecera.append(cerrarContainer)
-  opcionesCabecera.append(guardar)
 
   header.append(opcionesCabecera);
   header.append(title);
 
-  formPost.append(header);
+ 
 
   const inputsContainer = document.createElement("div");
   inputsContainer.classList.add("formPost_inputs");
-  formPost.append(inputsContainer);
+
 
   const post = document.createElement("textarea");
   post.id = "msgPostForm";
@@ -74,7 +68,8 @@ guardar.textContent = "Guardar";
 
   const btnsContainer = document.createElement("div");
   btnsContainer.classList.add("formPost_btns");
-  formPost.append(btnsContainer);
+
+ 
   ///////////////////////////////////////////////
 
   const tagBtn = document.createElement("button");
@@ -96,11 +91,16 @@ guardar.textContent = "Guardar";
   textTag.textContent = `Etiquetas`;
   tagBtnDiv.append(textTag);
 
+  formPost.append(header);
+  formPost.append(inputsContainer);
+  formPost.append(btnsContainer);
+
   $modalContenedor.append(formPost);
 
   $modalContenedor.style.opacity = "0";
   $modalContenedor.style.visibility = "hidden";
-
+  
+//Abri y Cerrar Modal
   const abrirModal = () => {
     $modalContenedor.style.opacity = "1";
     $modalContenedor.style.visibility = "visible";
