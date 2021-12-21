@@ -1,11 +1,14 @@
 import { toggleLikes, initListenerPost } from "../firebase/firebase-data.js";
 import { auth } from "../firebase/firebase-auth.js";
+import { ModalEditPost } from "./Edit_post.js";
+import { ModalEliminarPost } from "./Modal_eliminarPost.js";
+import { NewComments } from "./Post-comments.js";
 // import { Menu, OptionListPost } from "./Menu.js";
 
+export const Post = (post, setDataModalEdit, abrirModalEdit, setDataModalRemove, abrirModalRemove) => {
 
-export const Post = (post) => {
   const user_id = auth.currentUser.uid;
-  console.log("currentuser", user_id);
+  // console.log("currentuser", user_id);
   const $card = document.createElement("div");
   $card.classList.add("card");
 
@@ -39,7 +42,8 @@ export const Post = (post) => {
   $hour.classList.add("card__time");
 
   // todo: HACER FUNCION DE HORA
-  $hour.textContent = "hace 1 hora";
+  // $hour.textContent = 1 hora";
+  $hour.textContent = `${timeSince(post.date)}`;
 
   $dataContainer.append($userName);
   $dataContainer.append($hour);
@@ -48,27 +52,35 @@ export const Post = (post) => {
 
   const $optionsContainer = document.createElement("div");
   $optionsContainer.classList.add("card__options-container");
-  // $optionsContainer.classList.add("card__options-container--relative");
-  $optionsContainer.id = `optionsPost_${post.post_id}`;
+  // $optionsContainer.id = `optionsPost_${post.post_id}`;
 
-  // ! COMPONENTE DE LISTA DESPLEGABLE
+  // ! Si el usuario no es dueño del post, no debería salir la lista desplegable
+  if (user_id !== post.id_user) $optionsContainer.classList.add("hidden");
 
-  // probando este id
-  // const $menu = document.getElementById("menu");
+ //
 
-  const { menuModalOptionsPost, toggleModalOptionsPost } = OptionListPost();
+  const handleClickEdit = () => {
+    setDataModalEdit(post)
+    abrirModalEdit()
+   }
+
+   const handleClickRemove = () => {
+     setDataModalRemove(post)
+     abrirModalRemove()
+   }
+
+  const {
+    menuModalOptionsPost,
+    toggleModalOptionsPost,
+  } = OptionListPost(handleClickRemove, handleClickEdit);
   const $menuModalOptions = menuModalOptionsPost;
 
-  // probando
-  // $menu.append($menuModalOptions);
-
-  // const $menu = Menu(menuModalOptions, toogleModalOptions);
-
+  // EVENTO 3 PUNTITOS OPCIONES
   $optionsContainer.addEventListener("click", () => {
-    // * CREO QUE AQUÍ DEBERÍA ENTRAR COMO PARÁMETRO EL ID DEL POST PARA DESPUÉS JALARLO DEL FIREBASE
     console.log("deberia salir la lista desplegable de opciones de post");
-    toggleModalOptionsPost()
-    
+    // debugger;
+    // console.log("este es el post id", post.post_id);
+    toggleModalOptionsPost();
   });
 
   const $iconOptions = document.createElement("span");
@@ -76,7 +88,7 @@ export const Post = (post) => {
   $iconOptions.classList.add("card__options-icon");
 
   $optionsContainer.append($iconOptions);
-  $optionsContainer.append($menuModalOptions)
+  $optionsContainer.append($menuModalOptions);
   $headerContainer.append($avatarContainer);
   $headerContainer.append($dataContainer);
   $headerContainer.append($optionsContainer);
@@ -137,70 +149,65 @@ export const Post = (post) => {
   $comentarioTitle.id = "comentario";
   $comentarioTitle.textContent = "comentar";
 
+  const $postComments = NewComments(post.post_id);
+
   $comentContainer.appendChild($iconComent);
   $comentContainer.appendChild($comentarioTitle);
 
   $footerContainer.append($likeContainer);
   $footerContainer.append($comentContainer);
-  //   -----------------------------------------------------------
-
-  $card.append($headerContainer);
-  $card.append($msgContainer);
-  $card.append($footerContainer);
-  // ! Esto es nuevo
-  // $card.append($menuModalOptions);
-
+  
   //   todo: HACER EVENTO a icono de like para actualizar datos
-
+  
   initListenerPost(post.post_id, (postDoc) => {
     //se podria cambiar cualquier campo de post pero en este caso solo necesitamos los likes
-
+    
     const likes = postDoc.data().likes;
-    console.log("array de likes", likes);
+    // console.log("array de likes", likes);
     if (likes.find((like) => like === user_id)) {
       $likeContainer.classList.add("selected");
       console.log("si se encuentra");
     } else {
       $likeContainer.classList.remove("selected");
-      console.log("no se encuentra");
+      // console.log("no se encuentra");
     }
-
+    
     $counterLikes.textContent = `${likes.length}`;
   });
+  //   -----------------------------------------------------------
+
+  $card.append($headerContainer);
+  $card.append($msgContainer);
+  $card.append($footerContainer);
+  $card.append($postComments);
+
 
   return $card;
 };
 
 // Lista desplegable para editar o eliminar post
-export function OptionListPost() {
-
+function OptionListPost(onClickRemove, onClickEdit) {
   const $modalLista = document.createElement("div");
-  $modalLista.classList.add("card__dropdown","cerrar");
+  $modalLista.classList.add("card__dropdown", "cerrar");
 
   const $itemEditPublication = document.createElement("button");
   $itemEditPublication.classList.add("modal__button");
   $itemEditPublication.textContent = "Editar";
+  // $itemEditPublication.id=`edit_${post_id}`
 
   const $itemRemovePublication = document.createElement("button");
   $itemRemovePublication.classList.add("modal__button");
   $itemRemovePublication.textContent = "Remover";
 
-  $itemEditPublication.addEventListener("click", (e) => {
-    window.location.hash = "#/formPost";
-  });
-
-  $itemRemovePublication.addEventListener("click", (e) => {
-    // console.log(e.target);
-    // window.location.hash = "#/formPost";
-    console.log(
-      'debería cambiar de vista mostrando un modal "estás seguro de elimianr?"'
-    );
-  });
-
+  // $modalLista.append($modalEditPost)
   $modalLista.append($itemEditPublication);
   $modalLista.append($itemRemovePublication);
 
-  // !Este se puede arreglar Quizá llamando al id del menu y apendizarle la lista de Opciones de post
+  // $modalLista.append($modalContenedor)
+  
+
+  $itemEditPublication.addEventListener("click", onClickEdit);
+  $itemRemovePublication.addEventListener("click", onClickRemove);
 
   const toggleModalOptionsPost = () => {
     $modalLista.classList.toggle("cerrar");
@@ -210,4 +217,53 @@ export function OptionListPost() {
     menuModalOptionsPost: $modalLista,
     toggleModalOptionsPost: toggleModalOptionsPost,
   };
+}
+
+
+
+
+
+function timeSince(date) {
+  var seconds = Math.floor((new Date() - date) / 1000);
+
+  // Intervalo de años
+  var interval = seconds / 31536000;
+  if (interval > 1) {
+    let years = Math.floor(interval);
+    if (years === 1) return `Hace ${years} mes`;
+    return `Hace ${years} años`;
+  }
+
+  // Intervalo de meses
+  interval = seconds / 2592000;
+  if (interval > 1) {
+    let months = Math.floor(interval);
+    if (months === 1) return `Hace ${months} mes`;
+    return `Hace ${months} meses`;
+  }
+
+  // Intervalo de días
+  interval = seconds / 86400;
+  if (interval > 1) {
+    let days = Math.floor(interval);
+    if (days === 1) return `Hace ${days} hora`;
+    return `Hace ${days} días`;
+  }
+
+  // Intervalo de horas
+  interval = seconds / 3600;
+  if (interval > 1) {
+    let hours = Math.floor(interval);
+    if (hours === 1) return `Hace ${hours} hora`;
+    return `Hace ${hours} horas`;
+  }
+
+  // Intervalo de minutos
+  interval = seconds / 60;
+  if (interval > 1) {
+    let minutes = Math.floor(interval);
+    if (minutes === 1) return `Hace ${minutes} minuto`;
+    return `Hace ${minutes} minutos`;
+  }
+  return `Hace segundos`;
 }

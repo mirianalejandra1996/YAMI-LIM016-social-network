@@ -12,10 +12,13 @@ import {
   updateDoc,
   arrayUnion,
   arrayRemove,
-onSnapshot,
+  onSnapshot,
+  deleteDoc,
+  orderBy,
 } from "https://www.gstatic.com/firebasejs/9.5.0/firebase-firestore.js";
 import { db } from "../firebase/firebase-initializer.js";
 import { auth } from "../firebase/firebase-auth.js";
+
 
 /******************Agrega un post a FS*********************/
 const colRef = collection(db, "posts");
@@ -42,14 +45,113 @@ export function addPost(message) {
 /******************Agrega un usuario a FS*********************/
 const userRef = collection(db, "users");
 
-export function addUser(user, name) {
-  let nuevoName;
-  if (!user.displayName) {
-    nuevoName = name;
+// export function addUser(user, name, password) {
+//   console.log("entramos a AddUsers");
+//   //   const user_id = auth.currentUser.uid;
+//   // const user = auth.currentUser;
+//   //   console.log("esta soy yo", user_id);
+//   //   console.log("esta soy yo", user.displayName);
+//   //  console.log("esta soy yo", user);
+//   //  console.log("cuenta creada el ", user.metadata.createdAt);
+//   //  console.log("foto ", user.photoURL);
+//   //  console.log("foto ", user.emailVerified);
+//   //  console.log("proveedor ", user.providerData);
+//   //  console.log("proveedor ", user.providerData[0].providerId); // "google.com"
+//   //  console.log("proveedor ", user.providerData[1].providerId); // "password"
+
+//   // Creación del nombre del usuario
+//   let newName;
+//   if (!user.displayName) {
+//     newName = name;
+//   } else {
+//     newName = user.displayName;
+//   }
+
+//   // Creación de la foto del usuario
+//   let newPhoto;
+//   if (!user.photoURL) {
+//     newPhoto = "../assets/user-img.jpg";
+//   }
+
+//   let logedBy;
+//   // if(user.providerData[0].providerId === )
+
+//   // Verificación del usuario (Si entró a Yami por Google o se registró)
+//   // let
+//   // let registeredByEmail;
+//   // let registeredByEmail;
+//   // if ()
+
+//   const userdoc = doc(db, "users", user.uid); //Creamos un documento con el id de nuestro usuario
+
+//   // setDoc lo usamos para especificar un id único que nosotros vamos a colocarle,
+//   // El addDoc autogenera el id
+
+//   return setDoc(userdoc, {
+//     user_id: user.uid,
+//     user_name: newName,
+//     user_photo: newPhoto,
+//     user_createdAt: Date.now(),
+//     user_email: user.email,
+//     user_password: password,
+//     // user_date: "",
+//     user_createdAt: parseInt(user.metadata.createdAt),
+//   })
+//     .then(() => {
+//       console.log("usuario subido al firestore!");
+//     })
+//     .catch((err) => console.log(err));
+// }
+
+// El addDoc no me importa el id que se genere,
+// en el usuario el id deberia ser igual que el del servicio de autentificación, por eso usamos doc (para que sea único)
+
+// console.log("este es el name", user.auth.currentUser.displayName);
+// console.log("este es el name", user.auth.currentUser);
+// console.log("este es el name", user.auth.currentUser.auth.);
+// console.log("este es el token", user.auth.currentUser);
+// console.log(
+
+//   user.auth.currentUser.providerData[0].providerId
+// );
+// console.log("mira el nombre", user.displayName);
+
+// ------------------------------
+
+export function addUser(user, name, password) {
+  console.log("este es el user que entra como parámetro", user);
+
+  const prueba = user;
+  console.log("esta es una prueba", prueba);
+  console.log("este es el proveedor", prueba.providerData[0].providerId);
+  let nameN, emailN, photoUrlN, logedByN, passwordN;
+
+  if (prueba.providerData[0].providerId === "google.com") {
+    // debugger;
+    console.log("estás logueado con google!!");
+    nameN = user.displayName;
+    // emailN = user.auth.currentUser.email;
+    emailN = user.email;
+    photoUrlN = user.photoURL;
+    logedByN = "google";
+    passwordN = "";
   } else {
-    nuevoName = user.displayName;
+    // Si está logueado con password
+    nameN = name;
+    emailN = user.email;
+    photoUrlN = "../assets/user-img.jpg";
+    logedByN = "password";
+    passwordN = password;
   }
 
+  let nuevoImg;
+  if (!user.photoURL) {
+    const photoURL= "https://firebasestorage.googleapis.com/v0/b/yami-cbaa4.appspot.com/o/default-profile.jpeg?alt=media&token=772a7498-d018-4994-9805-041ae047bdc6"
+    nuevoImg = photoURL;  
+       
+  } else {
+    nuevoImg = user.photoURL;
+  }
   console.log("entramos a AddUsers");
 
   const userdoc = doc(db, "users", user.uid); //Creamos un documento con el id de nuestro usuario
@@ -58,9 +160,15 @@ export function addUser(user, name) {
   // El addDoc autogenera el id
   return setDoc(userdoc, {
     user_id: user.uid,
-    user_name: nuevoName,
-    date_creation: Date.now(),
-    user_email: user.email,
+    user_name: nameN,
+    user_photo: photoUrlN,
+    user_createdAt: user.metadata.createdAt,
+    user_email: emailN,
+    user_password: passwordN,
+    user_logedBy: logedByN,
+    // -----------
+    // user_date: "",
+    // user_createdAt: parseInt(user.metadata.createdAt),
   })
     .then(() => {
       console.log("usuario subido al firestore!");
@@ -68,19 +176,165 @@ export function addUser(user, name) {
     .catch((err) => console.log(err));
 }
 
-// El addDoc no me importa el id que se genere,
-// en el usuario el id deberia ser igual que el del servicio de autentificación, por eso usamos doc (para que sea único)
-
 // ------------------------------
 // * OBTENEMOS LA COLECCIÓN
+
 
 /******************Recopila todos los posts*********************/
 
 export async function traerPost() {
   const postsData = [];
-  const querySnapshotPosts = await getDocs(collection(db, "posts"));
+
+  const postsRef = collection(db, "posts");
+
+  const q = query(postsRef, orderBy("date", "desc"));
+
+  const querySnapshotPosts = await getDocs(q);
 
   querySnapshotPosts.forEach((doc) => {
+    const post = doc.data();
+    // console.log(post);
+    post["post_id"] = doc.id;
+
+    // console.log(post);
+
+    postsData.push(post);
+    // console.log(postData)
+    // console.log(doc.id, " => ", doc.data());
+  });
+  // console.log(postsData)
+  return postsData;
+}
+
+
+/******************Toggle Likes*********************/
+
+export async function toggleLikes(post_id) {
+  // console.log(post.post_id);
+
+  console.log(post_id);
+  // en la colección posts, nos vamos a la propiedad "like" (campo) del documento
+  const postRef = doc(db, "posts", post_id); // documentRef
+
+  console.log("este es postRef", postRef);
+  const userId = auth.currentUser.uid;
+  console.log(userId);
+
+  const post = await getDoc(postRef);
+  const likes = post.data().likes;
+  const userLike = likes.find((like) => {
+    //.find defines true o false hasta q las entencia se cumple
+    return like === userId;
+  });
+
+  if (userLike) {
+    await updateDoc(postRef, {
+      likes: arrayRemove(userId),
+    });
+  } else {
+    await updateDoc(postRef, {
+      likes: arrayUnion(userId),
+    });
+  }
+}
+
+
+/******************Init Listener Post*********************/
+
+export function initListenerPost(postId, actualizarPost) {
+  return onSnapshot(doc(db, "posts", postId), actualizarPost);
+}
+
+// ---------------Funciones del post -------------------------------
+
+
+// Actualizar post
+
+export async function updatePost(post_id, newMessage) {
+  const postRef = doc(db, "posts", post_id);
+
+  return await updateDoc(postRef, {
+    message: newMessage,
+  });
+}
+
+
+// Eliminar post
+
+export async function deletePost(post_id) {
+  const postRef = doc(db, "posts", post_id);
+
+  return await deleteDoc(postRef);
+}
+
+
+// Get User Data
+
+export async function getUserData(user_id) {
+  const userRef = doc(db, "users", user_id);
+  const docSnap = await getDoc(userRef);
+
+  if (docSnap.exists()) {
+    console.log("Document data:", docSnap.data());
+    return await docSnap.data();
+  } else {
+    // doc.data() will be undefined in this case
+    console.log("No such document!");
+  }
+}
+
+
+// Comentar un post
+
+export function addComment(current_user, idPost, comment) {
+
+  const commentsRef = collection(db, "posts", idPost, "comments");
+
+  addDoc(commentsRef, {
+    id_user: current_user.uid,
+    user_name: current_user.displayName,
+    message: comment,
+    date: Date.now(),
+  })
+    .then(() => {
+      console.log("comentario en firestore");
+    })
+    .catch((err) => console.log(err));
+}
+
+
+// Check Registered User
+
+export async function checkRegisteredUser(post_id) {
+  const userRef = doc(db, "users", post_id);
+  const docSnap = await getDoc(userRef);
+
+  if (docSnap.exists()) {
+    console.log("pues si existe este usuario en firestore!");
+    return await docSnap.data();
+  } else {
+    // doc.data() will be undefined in this case
+    console.log("No such document!");
+  }
+}
+
+
+// Recopila los posts del Usuario
+
+export async function traerMisPost(userId) {
+  // -------------------
+  const q1 = query(
+    collection(db, "posts"),
+    where("id_user", "==", userId),
+    orderBy("date", "desc")
+  );
+
+  const querySnapshotPosts = await getDocs(q1);
+
+  const postsFiltradocs = querySnapshotPosts.docs; //Array
+  const postsData = [];
+
+  postsFiltradocs.forEach((doc) => {
     // doc.data() is never undefined for query doc snapshots
 
     const post = doc.data();
@@ -97,138 +351,24 @@ export async function traerPost() {
   return postsData;
 }
 
-/******************Agrega like al post en FS*********************/
 
-// ------------------
+// Traer los comentarios
 
-// * Función en prueba de la mañana
-// export function contadorLikes(post) {
-//   const user = auth.currentUser;
-//   const likesRef = collection(db, "likes");
+export async function traerComments(id_post) {
 
-//   return addDoc(likesRef, {
-//     user_id: user.uid,
-//     postId: post,
-//     status: 1
-//   })
-//     .then(() => {
-//       console.log("like creado!!");
-//     })
-//     .catch((err) => console.log(err));
-// }
+  const commentsData = [];
 
-// -----CONTADOR DE LIKES ----------
+  const commentsRef = collection(db, "posts", id_post, "comments");
 
-// export async function contadorLikes(post_id) {
-//   // console.log(post.post_id);
-
-//   console.log(post_id);
-//   // en la colección posts, nos vamos a la propiedad "like" (campo) del documento
-//   const postRef = doc(db, "posts", post_id);
-
-//   console.log("este es postRef", postRef);
-//   const user = auth.currentUser.uid;
-//   console.log(user);
-
-//   // Atomically add a new region to the "regions" array field.
-
-//   // await updateDoc(postsRef, {
-//   //   likes: arrayUnion(user),
-//   // });
-
-//   // if (postsRef.exist) {
-//   //   if
-//   // }
-//   // // Atomically remove a region from the "regions" array field.
-//   // await updateDoc(washingtonRef, {
-//   //   regions: arrayRemove("east_coast"),
-//   // });
-
-//   // const docRef = doc(db, "posts", post_id);
-//   // const docSnap = await getDoc(docRef);
-//   // const q = query(postsRef, where("likes", "in", user));
-
-//   // console.log(q);
-
-//   const postsRef = collection(db, "post");
-//   const q1 = query(
-//     postsRef,
-//     where("posts", "==", post_id),
-//     where("likes", "==", user)
-//   );
-
-//   console.log("este es q1", q1);
-
-//   if (q1) {
-//     await updateDoc(postRef, {
-//       likes: arrayRemove(user),
-//     });
-//   } else {
-//     await updateDoc(postRef, {
-//       likes: arrayUnion(user),
-//     });
-//   }
-
-//   //   if(q) {
-
-//   //   }
-//   //   console.log("Document data:", docSnap.data());
-//   // } else {
-//   //   // doc.data() will be undefined in this case
-//   //   console.log("No such document!");
-//   // }
-// }
-
-
-
-
-export async function toggleLikes(post_id) {
-  // console.log(post.post_id);
-
-  console.log(post_id);
-  // en la colección posts, nos vamos a la propiedad "like" (campo) del documento
-  const postRef = doc(db, "posts", post_id); // documentRef  
-
-  console.log("este es postRef", postRef);
-  const userId = auth.currentUser.uid;
-  console.log(userId);
-
-
-  const post = await getDoc(postRef)
-  const likes =  post.data().likes
-  const userLike = likes.find((like) => { //.find defines true o false hasta q las entencia se cumple
-    return like === userId
-  })
-
-  if(userLike) {
-    await updateDoc(postRef, {
-      likes: arrayRemove(userId),
-    });
-  }  else {
-    await updateDoc(postRef, {
-      likes: arrayUnion(userId),
-    });
-  }
-
-
-  // jalar posts de determinado usuario para armar muro perfil
-
-  // const q1 = query(
-  //       collection(db, "posts"),
-  //       where("id_user", "==", userId)
-  //     );
-
-  // const querySnapshotPosts = await getDocs(q1)
-
-
-  // const postsFiltradocs = querySnapshotPosts.docs // esto es un array SIEMPRE
-
-  // const likesDelPrimerPostFiltrado = postsFiltradocs[0].data().likes // []
-  // const idDelPrimerPostFiltrado = postsFiltradocs[0].id // 
-
-}
-
-
-export function initListenerPost (postId, actualizarPost) {
- return onSnapshot(doc(db, 'posts', postId), actualizarPost)
+  const querySnapshotComments = await getDocs(commentsRef);
+  
+  querySnapshotComments.forEach((doc) => {
+    const comment = doc.data();
+    // comment["post_id"] = doc.id;
+    commentsData.push(comment);
+    // console.log(postData)
+    // console.log(doc.id, " => ", doc.data());
+  });
+  console.log(commentsData)
+  return commentsData;
 }

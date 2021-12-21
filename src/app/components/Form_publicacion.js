@@ -2,7 +2,6 @@ import { HeaderRetroceder } from "./Header_retro.js";
 import { addPost } from "../firebase/firebase-data.js";
 
 export const Form_Post = () => {
-  
   //Contenedor de post
   const $formPost = document.createElement("div");
   $formPost.classList.add("formPost");
@@ -12,32 +11,31 @@ export const Form_Post = () => {
   const title = document.createElement("h2");
   title.classList.add("formPost_h2");
   title.textContent = `Crear publicación`;
- 
+
   //Input del Post
   const inputsContainer = document.createElement("div");
   inputsContainer.classList.add("formPost_inputs");
 
-    const post = document.createElement("textarea");
-    post.id = "msgPostForm";
-    post.classList.add("formPost_input-long");
-    post.placeholder = `¿Qué estas pensando?`;
+  const post = document.createElement("textarea");
+  post.id = "msgPostForm";
+  post.classList.add("formPost_input-long");
+  post.placeholder = `¿Qué estas pensando?`;
 
-    const tags = document.createElement("input");
-    tags.classList.add("formPost_input-short");
-    tags.placeholder = `Añadir etiquetas`;
-    
-    const picture = document.createElement("input");
-    picture.classList.add("formPost_input-short");
-    picture.placeholder = `Añadir imagen`;
+  const tags = document.createElement("input");
+  tags.classList.add("formPost_input-short");
+  tags.placeholder = `Añadir etiquetas`;
 
+  const picture = document.createElement("input");
+  picture.classList.add("formPost_input-short");
+  picture.placeholder = `Añadir imagen`;
 
-    inputsContainer.append(post);
-    inputsContainer.append(tags);
-    inputsContainer.append(picture);
+  inputsContainer.append(post);
+  inputsContainer.append(tags);
+  inputsContainer.append(picture);
 
   // Contenedor del mensaje de Error
   const $errorContainer = document.createElement("div");
-  $errorContainer.classList.add("err-container","center");
+  $errorContainer.classList.add("err-container", "center");
 
   const $msgError = document.createElement("small");
   $msgError.classList.add("error-msg");
@@ -45,10 +43,10 @@ export const Form_Post = () => {
   $msgError.textContent = "";
   $errorContainer.append($msgError);
 
- //Contenedor de Botones 
+  //Contenedor de Botones
   const btnsContainer = document.createElement("div");
   btnsContainer.classList.add("formPost_btns");
-  
+
   //////////////////////////////Boton de Tags
   const tagBtn = document.createElement("button");
   tagBtn.classList.add("formPost_button");
@@ -78,38 +76,36 @@ export const Form_Post = () => {
 
   // Anade funcionalidad al boton Publicar y valida campos vacios
   $postBtn.addEventListener("click", () => {
-    const mensajeError = document.getElementById("errorCrearPost")
+    const mensajeError = document.getElementById("errorCrearPost");
     const formPostMsg = document.getElementById("msgPostForm").value;
-    if(formPostMsg == "")
-    {
-      mensajeError.textContent= 'completar campos *';
-    }else{
+    if (formPostMsg == "") {
+      mensajeError.textContent = "completar campos *";
+    } else {
       console.log("creamos el nuevo post!!", formPostMsg);
       addPost(formPostMsg);
+      window.location.hash = "#/timeline";
     }
   });
 
-    const postBtnDiv = document.createElement("div");
-    postBtnDiv.classList.add("btnContent");
-    $postBtn.append(postBtnDiv);
+  const postBtnDiv = document.createElement("div");
+  postBtnDiv.classList.add("btnContent");
+  $postBtn.append(postBtnDiv);
 
-    const iconSend = document.createElement("span");
-    iconSend.classList.add("icon-send");
-    iconSend.classList.add("btnIconsPost");
-    postBtnDiv.append(iconSend);
+  const iconSend = document.createElement("span");
+  iconSend.classList.add("icon-send");
+  iconSend.classList.add("btnIconsPost");
+  postBtnDiv.append(iconSend);
 
-    const textPost = document.createElement("span");
-    textPost.classList.add("postTextSpan");
-    textPost.textContent = `Publicar`;
-    postBtnDiv.append(textPost);
+  const textPost = document.createElement("span");
+  textPost.classList.add("postTextSpan");
+  textPost.textContent = `Publicar`;
+  postBtnDiv.append(textPost);
 
- 
   $formPost.append(header);
   $formPost.append(title);
   $formPost.append(inputsContainer);
-  $formPost.append($errorContainer)
+  $formPost.append($errorContainer);
   $formPost.append(btnsContainer);
-
 
   return $formPost;
 };

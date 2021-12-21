@@ -11,6 +11,7 @@ html {
   box-sizing: inherit;
   margin: 0;
   padding: 0;
+  /* font-family: "Lato", sans-serif; */
 }
 
 body {
@@ -24,6 +25,9 @@ body {
   height: 100%;
 }
 
+.allView {
+  height: 100%;
+}
 /* Imagen del fondo */
 .login {
   height: 100%;
@@ -288,6 +292,20 @@ input[type="password"]:focus {
   align-items: center;
 }
 
+/* .modal__contenedor {
+  position: fixed;
+  position: absolute;
+  z-index: 1;
+  width: 100%;
+  height: 100vh;
+  top: 0;
+  left: 0;
+  background: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+} */
+
 .modal {
   width: 90%;
   background-color: #fff;
@@ -360,7 +378,7 @@ input[type="password"]:focus {
   display: grid;
   grid-template-columns: 1fr;
   row-gap: 1rem;
-  padding: 1rem;
+  padding: 1rem 1rem 92px;
 }
 
 /* Componente de post-card */
@@ -402,7 +420,7 @@ input[type="password"]:focus {
 }
 
 .card__avatar-img {
-  display: block;
+  /* display: block; */
   width: 100%;
   transition: 0.3s ease;
   height: auto;
@@ -458,7 +476,7 @@ input[type="password"]:focus {
   transition: 0.3s ease;
 }
 
-.card__options-container--relative{
+.card__options-container--relative {
   position: relative;
 }
 
@@ -468,19 +486,19 @@ input[type="password"]:focus {
   cursor: pointer;
 }
 
-.card__dropdown{
-  width:100px;
+.card__dropdown {
+  width: 100px;
   position: absolute;
   right: 0px;
-  top:50px;
+  top: 50px;
   box-shadow: 4px 4px 17px #878787;
   z-index: 1;
   background: white;
   border-radius: 10px;
   overflow: hidden;
-  padding: 5px
+  padding: 5px;
 }
-.card__dropdown.cerrar{
+.card__dropdown.cerrar {
   opacity: 0;
   padding: 0;
   z-index: -1;
@@ -488,7 +506,7 @@ input[type="password"]:focus {
 /* .card__dropdown::after{
   content:'';
   /* background-color: #f51616; */
-  /* width: 5px;
+/* width: 5px;
   height: 5px;
   top: -40px;
   position: absolute;
@@ -498,7 +516,7 @@ input[type="password"]:focus {
   border-right: 20px solid transparent;
   border-bottom: 20px solid white;
   border-top: 20px solid transparent; */
-  /* box-shadow: 4px 4px 0px 4px #878787; 
+/* box-shadow: 4px 4px 0px 4px #878787; 
 }*/
 
 .card__options-icon {
@@ -521,6 +539,7 @@ input[type="password"]:focus {
   align-items: center;
   justify-content: space-between;
   margin-top: 1em;
+  margin-bottom: 5px;
 }
 
 .card__icon-container {
@@ -540,6 +559,9 @@ input[type="password"]:focus {
 .card__icon {
   font-size: 1.8rem;
   color: #ccc;
+}
+.card__icon.close__icon {
+  font-size: 1rem;
 }
 
 .card__counter {
@@ -707,10 +729,24 @@ input[type="password"]:focus {
   flex-direction: column;
 }
 .formPost_h2 {
-  padding-left: 35px;
   padding-top: 20px;
   font-size: 15px;
-  padding-bottom: 25px;
+  font-weight: normal;
+}
+
+.formPost_h1 {
+  font-size: 14px;
+  font-weight: bold;
+  color: #fa610c;
+}
+
+.modal__cabecera {
+  margin: 10px;
+  padding: 10px 25px 0;
+}
+.modal__opcionesCabecera {
+  display: flex;
+  justify-content: space-between;
 }
 .formPost_inputs {
   /* text-align: center; */
@@ -730,6 +766,11 @@ input[type="password"]:focus {
   font-family: "Lato", sans-serif;
   resize: none;
 }
+
+.formPost_input-long:focus {
+  border: 1px solid #ffb800;
+}
+
 .formPost_input-long::placeholder {
   color: #cbbdbd;
 }
@@ -750,6 +791,7 @@ input[type="password"]:focus {
 }
 
 .formPost_button {
+  margin-bottom: 5px;
   width: 100px;
   border-radius: 7px;
   background-color: #fa610c;
@@ -794,7 +836,7 @@ input[type="password"]:focus {
 }
 .menu__link {
   color: white;
-  overflow: hidden;
+  /* overflow: hidden; */
   white-space: nowrap;
   text-decoration: none;
   cursor: pointer;
@@ -838,16 +880,24 @@ input[type="password"]:focus {
 .modal__button + .modal__button {
   border-top: 1px solid #cbbdbd;
 }
-.modal__contenedor.cerrar {
+.modal__contenedor.cerrado {
   opacity: 0;
   z-index: -1;
   padding: 0;
 }
-
-.modal__contenedor.cerrar .modal__lista {
+.modal__contenedor.cerrado .modal__lista {
   transform: translateY(100%);
 }
 
+/* Cerrar Modal Plus */
+.offModal {
+  opacity: 0;
+  z-index: -1;
+  padding: 0;
+}
+.modal__contenedor.offModal .modal__lista {
+  transform: translateY(100%);
+}
 /*Modal Cerrar Sesion*/
 .modal__p-cancelar {
   padding: 20px;
@@ -870,4 +920,289 @@ input[type="password"]:focus {
   transition: transform 1s;
   transform: translateY(0%);
   border-radius: 10px;
+}
+/*es muy tarde*/
+.formPost-edit {
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  width: 90%;
+  /* background: red; */
+  background-color: #fff;
+  height: auto;
+  position: fixed;
+  border-radius: 10px;
+}
+
+/* Profile container------------------------- */
+
+#root {
+  height: 100%;
+}
+
+#root {
+  height: 100%;
+}
+
+.main-container__profile {
+  height: calc(100% - 80px);
+  display: flex;
+  justify-content: center;
+  width: 100%;
+  align-items: center;
+  /* background-color: red; */
+}
+
+.profile-container {
+  height: calc(100% - 80px);
+  display: flex;
+  width: 300px;
+  flex-direction: column;
+  /* background-color: blue; */
+  /* justify-content: space-between; */
+  align-items: center;
+  margin-top: 35px;
+}
+
+.photo__container {
+  position: relative;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
+.photo__avatar-container {
+  width: 90px;
+  margin: 10px;
+  overflow: hidden;
+  border-radius: 15%;
+}
+
+.photo__avatar-img {
+  display: block;
+  width: 100%;
+  transition: 0.3s ease;
+  height: auto;
+}
+
+.photo__edit-img {
+  border-radius: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: absolute;
+  width: 25px;
+  height: 25px;
+  background-color: #fff;
+  border: 0.1px solid #f0f0f0;
+  right: -5px;
+  bottom: -5px;
+}
+
+.profile__text-content {
+  background-color: #2ecc71;
+  height: 100%;
+  width: 100%;
+  margin-top: 20px;
+}
+
+/* Formulario de Profile */
+
+.formProfile {
+  background-color: green;
+}
+
+.formProfile__container {
+  margin-top: 3em;
+  display: grid;
+  gap: 1.5em;
+  width: 100%;
+  /* margin-top: 30px; */
+}
+
+.formProfile__group {
+  position: relative;
+  color: #5757577e;
+}
+
+.formProfile__input {
+  width: 100%;
+  background: none;
+  /* color: #706c6c; */
+  color: #0f0f0f;
+  font-size: 1rem;
+  padding: 0.6em 0.3em;
+  border: none;
+  outline: none;
+  border-bottom: 1px solid #5757577e;
+  font-family: lato;
+}
+
+.formProfile__label {
+  position: absolute;
+  top: -17px;
+  left: 5px;
+  font-size: 0.9rem;
+  font-family: lato;
+}
+
+.formProfile__required {
+  position: absolute;
+  top: -12px;
+  right: 0px;
+  /* color: #f51616; */
+}
+
+.formProfile__submit {
+  width: 100%;
+  border-radius: 7px;
+  background-color: #fa610c;
+  border: none;
+  color: #ffff;
+  height: 2.5rem;
+  font-size: 0.85rem;
+  /* margin-top: 1rem; */
+  margin-top: -0.5rem;
+  cursor: pointer;
+}
+
+/* icono del input date */
+
+::-webkit-calendar-picker-indicator {
+  filter: invert(70%);
+  cursor: pointer;
+}
+
+.formProfile__icon {
+  position: absolute;
+  right: 10px;
+  bottom: 10px;
+}
+
+.errContainer {
+  /* background-color: red; */
+  height: 20px;
+}
+
+.pencil {
+  font-size: 0.8rem;
+}
+
+.hidden {
+  display: none;
+}
+/* Muro */
+.opcionesMuro__container {
+  padding: 20px 10px;
+  margin: 20px 0;
+  display: flex;
+  justify-content: space-around;
+  align-content: center;
+  border-top: 1px solid #cbbdbd;
+  border-bottom: 1px solid #cbbdbd;
+}
+
+/*Seccion Comentarios*/
+.newComment {
+  display: flex;
+  align-items: center;
+  position: relative;
+  /* border-top: 1px solid #efeff1; */
+  margin-top: 5px;
+  padding-top: 10px;
+  /* margin-top: 1em; */
+}
+
+.avatarContainer {
+  width: 32px;
+  height: 32px;
+  overflow: hidden;
+  border-radius: 100%;
+  position: relative;
+}
+
+.avatarImage {
+  /* display: block; */
+  width: 100%;
+  /* transition: 0.3s ease; */
+  height: auto;
+}
+
+.postComment_input {
+  border-radius: 44px;
+  background-color: #efeff1;
+  border: transparent;
+  margin-left: 10px;
+  height: 35px;
+  resize: none;
+  width: 100%;
+  font-size: 14px;
+  overflow: hidden;
+  font-family: "Lato", sans-serif;
+  padding: 8px 15px;
+}
+.commentBtnDiv {
+  height: 35px;
+  /* width: 35px; */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  margin-left: 8px;
+  cursor: pointer;
+}
+.iconComment{
+  color:#FF3F15;
+}
+.commentContainer{
+  display: flex;
+  flex-direction: row;
+  position: relative;
+}
+.commentAvatar{
+  width: 100%;
+  height: auto;
+}
+.commentAvatarCircle{
+  width: 32px;
+  height: 32px;
+  overflow: hidden;
+  border-radius: 100%;
+  position: relative;
+}
+.commentsOptionDiv{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 30px;
+  height: 30px;
+  border-radius: 100%;
+  transition: 0.3s ease;
+}
+.commentOptionIcon{
+  color: #848484;
+}
+.commentsContainer-border{
+  border-top: 1px solid #efeff1;
+  padding-top: 14px;
+}
+.avatarDiv{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.commentName{
+  font-weight: 600;
+  font-size: 14px;
+}
+.commentMessage{
+  font-size: 13px;
+}
+.commentInfo{
+  margin-left: 8px;
+}
+.commentDiv{
+  width: 100%;
 }

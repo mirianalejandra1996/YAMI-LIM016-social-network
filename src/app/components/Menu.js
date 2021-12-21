@@ -1,4 +1,4 @@
-import { ModalCerrarSesion } from './Modal_cerrar.js'
+import { ModalCerrarSesion } from "./Modal_cerrarSesion.js";
 
 export function Menu(toggleModalPlus, toggleModalProfile) {
   const d = document;
@@ -17,7 +17,10 @@ export function Menu(toggleModalPlus, toggleModalProfile) {
   itemHome.append($iconHome);
 
   //evento del ancla
-  // itemHome.addEventListener('click', window.location.hash = "#/home")
+  itemHome.addEventListener(
+    "click",
+    () => (window.location.hash = "#/timeline")
+  );
 
   //icono 2
   const itemLupa = d.createElement("a");
@@ -33,7 +36,13 @@ export function Menu(toggleModalPlus, toggleModalProfile) {
   $iconPlus.classList.add("icon-addPost");
 
   itemPlus.append($iconPlus);
-  itemPlus.addEventListener("click", () => toggleModalPlus());
+  itemPlus.addEventListener("click", () => {
+    const modalProfile = document.getElementById("modalProfile");
+    if (!modalProfile.classList.contains("cerrado")) {
+      toggleModalProfile();
+    }
+    toggleModalPlus();
+  });
   //icono 4
   const itemReseña = d.createElement("a");
   itemReseña.classList.add("menu__link");
@@ -48,7 +57,13 @@ export function Menu(toggleModalPlus, toggleModalProfile) {
   $iconPerfil.classList.add("icon-user");
 
   itemPerfil.append($iconPerfil);
-  itemPerfil.addEventListener("click", () => toggleModalProfile());
+  itemPerfil.addEventListener("click", () => {
+    const modalPlus = document.getElementById("modalPlus");
+    if (!modalPlus.classList.contains("cerrado")) {
+      toggleModalPlus();
+    }
+    toggleModalProfile();
+  });
 
   $menu.append(itemHome);
   $menu.append(itemLupa);
@@ -63,7 +78,8 @@ export function Menu(toggleModalPlus, toggleModalProfile) {
 
 export function MenuList() {
   const $modalContenedor = document.createElement("div");
-  $modalContenedor.classList.add("modal__contenedor", "align-end", "cerrar");
+  $modalContenedor.id = "modalPlus";
+  $modalContenedor.classList.add("modal__contenedor", "align-end", "cerrado");
 
   const $modalLista = document.createElement("div");
   $modalLista.classList.add("modal__lista");
@@ -85,18 +101,23 @@ export function MenuList() {
   $itemsHistoria.textContent = "Historia";
 
   $modalLista.append($itemsPublicacion);
-  // $modalLista.append($itemsReseña)
-  // $modalLista.append($itemsHistoria)
+  $modalLista.append($itemsReseña);
+  $modalLista.append($itemsHistoria);
 
   $modalContenedor.append($modalLista);
 
   const toggleModalPlus = () => {
-    $modalContenedor.classList.toggle("cerrar");
+    $modalContenedor.classList.toggle("cerrado");
+  };
+
+  const toggleCerrarModalPlus = () => {
+    $modalContenedor.classList.replace("abierto", "cerrado");
   };
 
   return {
     menuModalPlus: $modalContenedor,
     toggleModalPlus: toggleModalPlus,
+    toggleCerrarModalPlus: toggleCerrarModalPlus,
   };
 }
 
@@ -148,7 +169,12 @@ export function MenuList() {
 
 export function ProfileList() {
   const $modalContenedorPerfil = document.createElement("div");
-  $modalContenedorPerfil.classList.add("modal__contenedor", "align-end", "cerrar");
+  $modalContenedorPerfil.id = "modalProfile";
+  $modalContenedorPerfil.classList.add(
+    "modal__contenedor",
+    "align-end",
+    "cerrado"
+  );
 
   const $modalLista = document.createElement("div");
   $modalLista.classList.add("modal__lista");
@@ -161,21 +187,27 @@ export function ProfileList() {
   $itemsCerrarSesion.classList.add("modal__button");
   $itemsCerrarSesion.textContent = "Cerrar sesión";
 
-/********************************************/
+  /********************************************/
   const { $modalContenedor, abrirModal } = ModalCerrarSesion();
   $modalContenedorPerfil.append($modalContenedor);
-  $itemsCerrarSesion.addEventListener('click', (e)=>{
+
+  $itemsPerfil.addEventListener("click", () => {
+    console.log("cambiando de vista a profile!");
+    window.location.hash = "#/muro";
+  });
+
+  $itemsCerrarSesion.addEventListener("click", (e) => {
     e.preventDefault();
     abrirModal();
-  })
-/****************************************/
+  });
+  /****************************************/
   $modalLista.append($itemsPerfil);
   $modalLista.append($itemsCerrarSesion);
 
   $modalContenedorPerfil.append($modalLista);
 
   const toggleModalProfile = () => {
-    $modalContenedorPerfil.classList.toggle("cerrar");
+    $modalContenedorPerfil.classList.toggle("cerrado");
   };
 
   return {

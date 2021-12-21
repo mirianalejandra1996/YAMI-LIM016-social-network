@@ -1,4 +1,5 @@
 import { app } from "../firebase/firebase-initializer.js";
+import { checkRegisteredUser } from "../firebase/firebase-data.js";
 
 import {
   signInWithEmailAndPassword,
@@ -21,7 +22,6 @@ const provider = new GoogleAuthProvider(app);
 
 // ! Qué dará esto?
 auth.languageCode = "es";
-console.log(auth.languageCode);
 
 /*******************Inicio de sesion con correo***************************/
 export function enviarIngreso() {
@@ -70,16 +70,17 @@ export function enviarIngreso() {
 /************************Continuar con Google**********************************/
 
 const user = auth.currentUser;
-console.log("este es el user actual", user);
+// console.log("este es el user actual", user);
 console.log("esto es auth", auth);
 
 export const loginGoogle = () => {
+  // ! Deberiamos chequear primero si esta cuenta ya se encuentra registrada en el firebase,
+  // ! en caso de estar en el firestore, pedirle que ingrese sus datos
   signInWithPopup(auth, provider)
     .then((response) => {
       const user = response.user;
       console.log("sign in pop exitoso", user);
-
-      addUser(user);
+      addUser(user, "", "");
       window.location.hash = "#/timeline";
     })
     .catch((err) => console.log(err));
@@ -165,7 +166,7 @@ export function enviarRegistro() {
 
         //Añadimos a este usuario en nuestra base de datos
         console.log("usuario creado");
-        return addUser(user, name);
+        return addUser(user, name, password);
       })
       .then(() => {
         console.log(
@@ -174,6 +175,8 @@ export function enviarRegistro() {
 
         return updateProfile(auth.currentUser, {
           displayName: name,
+          password: password,
+          photoURL: "https://firebasestorage.googleapis.com/v0/b/yami-cbaa4.appspot.com/o/default-profile.jpeg?alt=media&token=772a7498-d018-4994-9805-041ae047bdc6"
         })
           .then(() => {
             console.log(

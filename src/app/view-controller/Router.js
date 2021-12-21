@@ -4,7 +4,7 @@ import { onAuthStateChanged } from "https://www.gstatic.com/firebasejs/9.5.0/fir
 
 //se ejecuta una sola vez
 export const Router = () => {
-  console.log("entró a función router");
+  // console.log("entró a función router");
 
   const $root = document.getElementById("root");
   $root.textContent = "";
@@ -61,6 +61,27 @@ export const Router = () => {
           return (window.location.hash = "#/");
         }
       }
+      case "#/editPost": {
+        if (auth.currentUser) {
+          return $root.appendChild(components.editPost());
+        } else {
+          return (window.location.hash = "#/");
+        }
+      }
+      case "#/muro": {
+        if (auth.currentUser) {
+          return $root.appendChild(components.muro());
+        } else {
+          return (window.location.hash = "#/");
+        }
+      }
+      case "#/profile": {
+        if (auth.currentUser) {
+          return $root.appendChild(components.profile());
+        } else {
+          return (window.location.hash = "#/");
+        }
+      }
       default:
         // todo: Deberíamos crear una vista en caso que el usuario coloque una url no existente
         if (auth.currentUser) {
@@ -87,7 +108,7 @@ export const Router = () => {
     hasRouterStarted = true;
   }
 
-  console.log({ auth });
+  // console.log({ auth });
 
   onAuthStateChanged(auth, (user) => {
     if (user) {
