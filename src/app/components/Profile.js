@@ -12,8 +12,8 @@ export const Profile = () => {
   console.log("foto ", user.photoURL);
   console.log("foto ", user.emailVerified);
   console.log("proveedor ", user.providerData);
-  console.log("proveedor ", user.providerData[0].providerId); //google
-  console.log("proveedor ", user.providerData[1].providerId); //password
+ // console.log("proveedor ", user.providerData[0].providerId); //google
+  //console.log("proveedor ", user.providerData[1].providerId); //password
 
   console.log("soy yo", user);
 

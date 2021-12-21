@@ -14,6 +14,7 @@ import {
   arrayRemove,
   onSnapshot,
   deleteDoc,
+  orderBy,
 } from "https://www.gstatic.com/firebasejs/9.5.0/firebase-firestore.js";
 import { db } from "../firebase/firebase-initializer.js";
 import { auth } from "../firebase/firebase-auth.js";
@@ -52,6 +53,14 @@ export function addUser(user, name, password) {
     nuevoName = user.displayName;
   }
 
+  let nuevoImg;
+  if (!user.displayName) {
+    const photoURL= "https://firebasestorage.googleapis.com/v0/b/yami-cbaa4.appspot.com/o/default-profile.jpeg?alt=media&token=772a7498-d018-4994-9805-041ae047bdc6"
+    nuevoImg = photoURL;  
+       
+  } else {
+    nuevoImg = user.photoURL;
+  }
   console.log("entramos a AddUsers");
 
   const userdoc = doc(db, "users", user.uid); //Creamos un documento con el id de nuestro usuario
@@ -67,6 +76,7 @@ export function addUser(user, name, password) {
     user_password: password,
     user_date: "",
     user_createdAt: user.metadata.createdAt,
+    user_img: nuevoImg,
   })
     .then(() => {
       console.log("usuario subido al firestore!");
@@ -88,16 +98,9 @@ export async function traerPost() {
 
   const postsRef = collection(db, "posts");
 
-  const querySnapshotPosts = await getDocs(postsRef);
-  // const querySnapshotPosts = await getDocs(postsRef).orderBy("date", "asc");
+  const q = query(postsRef, orderBy("date", "desc"));
 
-  // const query = await db.collection("posts")
-  // .orderBy("name", "asc")
-  // .get();
-
-  // querySnapshotPosts.forEach((querySnapshot) =>
-  //   console.log(querySnapshot.data().name)
-  // );
+  const querySnapshotPosts = await getDocs(q);
 
   querySnapshotPosts.forEach((doc) => {
     const post = doc.data();
@@ -230,16 +233,17 @@ export async function checkRegisteredUser(post_id) {
 // Recopila los posts del Usuario
 
 export async function traerMisPost(userId) {
- 
+  // -------------------
   const q1 = query(
-        collection(db, "posts"),
-        where("id_user", "==", userId)
-      );
+    collection(db, "posts"),
+    where("id_user", "==", userId),
+    orderBy("date", "desc")
+  );
 
-  const querySnapshotPosts = await getDocs(q1)
+  const querySnapshotPosts = await getDocs(q1);
 
-  const postsFiltradocs = querySnapshotPosts.docs  //Array
-  const postsData = []
+  const postsFiltradocs = querySnapshotPosts.docs; //Array
+  const postsData = [];
 
   postsFiltradocs.forEach((doc) => {
     // doc.data() is never undefined for query doc snapshots
@@ -253,7 +257,7 @@ export async function traerMisPost(userId) {
     postsData.push(post);
     // console.log(postData)
     // console.log(doc.id, " => ", doc.data());
-  });  
+  });
 
   return postsData;
 }

@@ -176,6 +176,7 @@ export function enviarRegistro() {
         return updateProfile(auth.currentUser, {
           displayName: name,
           password: password,
+          photoURL: "https://firebasestorage.googleapis.com/v0/b/yami-cbaa4.appspot.com/o/default-profile.jpeg?alt=media&token=772a7498-d018-4994-9805-041ae047bdc6"
         })
           .then(() => {
             console.log(
