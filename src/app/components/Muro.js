@@ -23,18 +23,18 @@ export function MiMuro() {
   //   photoAvatar.src = "../src/app/assets/brooke-cagle-k9XZPpPHDho-unsplash.jpg";
   photoAvatar.alt = "imgAvatar";
 
-  const $nombre = document.createElement('p')
-  $nombre.textContent= `${user.displayName}`; 
+  const $nombre = document.createElement("p");
+  $nombre.textContent = `${user.displayName}`;
 
   imgAvatarContainer.append(photoAvatar);
   $photoContainer.append(imgAvatarContainer);
-  $photoContainer.append($nombre)
+  $photoContainer.append($nombre);
 
- 
   const $opcionesMuro = document.createElement("div");
-  $opcionesMuro.classList.add('opcionesMuro__container')
+  $opcionesMuro.classList.add("opcionesMuro__container");
   const $publicaciones = document.createElement("a");
   $publicaciones.textContent = "Publicaciones";
+  $publicaciones.style.fontWeight = "700";
   const $reseñas = document.createElement("a");
   $reseñas.textContent = "Reseñas";
   const $editarPerfil = document.createElement("a");
@@ -48,13 +48,12 @@ export function MiMuro() {
   $opcionesMuro.append($editarPerfil);
 
   const $misPostsContainer = document.createElement("div");
-  $misPostsContainer.classList.add('shown')
+  $misPostsContainer.classList.add("shown");
   //mientras cargan post, al $postsContainer le hago append de un loader
   $misPostsContainer.textContent = "cargando posts...";
 
   traerMisPost(user.uid)
     .then((postsLista) => {
-
       // una vez que tengo la lista le quito el loader
       $misPostsContainer.textContent = "";
       //lleno el $postContainer con los nodos de post
@@ -64,21 +63,19 @@ export function MiMuro() {
       });
     })
     .catch((error) => {
-      console.error(error)
+      console.error(error);
       // mostrar mensaje de que no se pudo cargar los posts
     });
 
+  // Crea un post
+  const { menuModalPlus, toggleModalPlus } = MenuList();
+  // Perfil usuario
+  const { menuModalProfile, toggleModalProfile } = ProfileList();
 
-    // Crea un post
-    const { menuModalPlus, toggleModalPlus } = MenuList();
-    // Perfil usuario
-    const { menuModalProfile, toggleModalProfile } = ProfileList();
-    
-     // Abre y cierra Lista desplegable del Menu
-     const $menu = Menu(toggleModalPlus, toggleModalProfile);
+  // Abre y cierra Lista desplegable del Menu
+  const $menu = Menu(toggleModalPlus, toggleModalProfile);
 
-
- // -----------------------------------------------------------------------------------
+  // -----------------------------------------------------------------------------------
   $contenedorMuro.append($header);
   $contenedorMuro.append($photoContainer);
   $contenedorMuro.append($opcionesMuro);
