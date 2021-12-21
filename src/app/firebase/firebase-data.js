@@ -44,14 +44,41 @@ export function addPost(message) {
 const userRef = collection(db, "users");
 
 export function addUser(user, name, password) {
-  let nuevoName;
+  console.log("entramos a AddUsers");
+  //   const user_id = auth.currentUser.uid;
+  // const user = auth.currentUser;
+  //   console.log("esta soy yo", user_id);
+  //   console.log("esta soy yo", user.displayName);
+  //  console.log("esta soy yo", user);
+  //  console.log("cuenta creada el ", user.metadata.createdAt);
+  //  console.log("foto ", user.photoURL);
+  //  console.log("foto ", user.emailVerified);
+  //  console.log("proveedor ", user.providerData);
+  //  console.log("proveedor ", user.providerData[0].providerId); // "google.com"
+  //  console.log("proveedor ", user.providerData[1].providerId); // "password"
+
+  // Creación del nombre del usuario
+  let newName;
   if (!user.displayName) {
-    nuevoName = name;
+    newName = name;
   } else {
-    nuevoName = user.displayName;
+    newName = user.displayName;
   }
 
-  console.log("entramos a AddUsers");
+  // Creación de la foto del usuario
+  let newPhoto;
+  if (!user.photoURL) {
+    newPhoto = "../assets/user-img.jpg";
+  }
+
+  let logedBy;
+  // if(user.providerData[0].providerId === )
+
+  // Verificación del usuario (Si entró a Yami por Google o se registró)
+  // let
+  // let registeredByEmail;
+  // let registeredByEmail;
+  // if ()
 
   const userdoc = doc(db, "users", user.uid); //Creamos un documento con el id de nuestro usuario
 
@@ -60,12 +87,13 @@ export function addUser(user, name, password) {
 
   return setDoc(userdoc, {
     user_id: user.uid,
-    user_name: nuevoName,
-    date_creation: Date.now(),
+    user_name: newName,
+    user_photo: newPhoto,
+    user_createdAt: Date.now(),
     user_email: user.email,
     user_password: password,
-    user_date: "",
-    user_createdAt: user.metadata.createdAt,
+    // user_date: "",
+    user_createdAt: parseInt(user.metadata.createdAt),
   })
     .then(() => {
       console.log("usuario subido al firestore!");
