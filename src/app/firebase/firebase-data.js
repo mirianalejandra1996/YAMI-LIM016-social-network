@@ -121,13 +121,17 @@ export function addUser(user, name, password) {
 
   let nameN, emailN, photoUrlN, logedByN, passwordN;
 
-  if (user.auth.currentUser.providerData[0].providerId === "www.google.com") {
-    nameN = user.auth.currentUser.photoURL;
-    emailN = user.auth.currentUser.email;
-    photoUrlN = user.photoURL;
-    logedByN = "google";
-    passwordN = "";
+  // if (user.auth.currentUser.providerData[0].providerId === "www.google.com") {
+  if (auth.currentUser.providerData[0].providerId === "www.google.com") {
+    console.log("estás logueado con google!!");
+    // nameN = user.displayName;
+    // emailN = user.auth.currentUser.email;
+    // emailN = user.email;
+    // photoUrlN = user.photoURL;
+    // logedByN = "google";
+    // passwordN = "";
   } else {
+    // Si está logueado con password
     nameN = name;
     emailN = user.email;
     photoUrlN = "../assets/user-img.jpg";
@@ -145,8 +149,6 @@ export function addUser(user, name, password) {
     user_id: user.uid,
     user_name: nameN,
     user_photo: photoUrlN,
-    // date_creation: Date.now(),
-    // user_createdAt: parseInt(user.metadata.createdAt),
     user_createdAt: user.metadata.createdAt,
     user_email: emailN,
     user_password: passwordN,
