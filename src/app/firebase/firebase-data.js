@@ -119,17 +119,20 @@ const userRef = collection(db, "users");
 export function addUser(user, name, password) {
   console.log("este es el user que entra como parámetro", user);
 
+  const prueba = user;
+  console.log("esta es una prueba", prueba);
+  console.log("este es el proveedor", prueba.providerData[0].providerId);
   let nameN, emailN, photoUrlN, logedByN, passwordN;
 
-  // if (user.auth.currentUser.providerData[0].providerId === "www.google.com") {
-  if (auth.currentUser.providerData[0].providerId === "www.google.com") {
+  if (prueba.providerData[0].providerId === "google.com") {
+    // debugger;
     console.log("estás logueado con google!!");
-    // nameN = user.displayName;
+    nameN = user.displayName;
     // emailN = user.auth.currentUser.email;
-    // emailN = user.email;
-    // photoUrlN = user.photoURL;
-    // logedByN = "google";
-    // passwordN = "";
+    emailN = user.email;
+    photoUrlN = user.photoURL;
+    logedByN = "google";
+    passwordN = "";
   } else {
     // Si está logueado con password
     nameN = name;
