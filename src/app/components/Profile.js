@@ -7,15 +7,15 @@ export const Profile = () => {
   const user = auth.currentUser;
   //   console.log("esta soy yo", user_id);
   //   console.log("esta soy yo", user.displayName);
-  console.log("esta soy yo", user);
-  console.log("cuenta creada el ", user.metadata.createdAt);
-  console.log("foto ", user.photoURL);
-  console.log("foto ", user.emailVerified);
-  console.log("proveedor ", user.providerData);
-  console.log("proveedor ", user.providerData[0].providerId); //google
-  console.log("proveedor ", user.providerData[1].providerId); //password
+  // console.log("esta soy yo", user);
+  // console.log("cuenta creada el ", user.metadata.createdAt);
+  // console.log("foto ", user.photoURL);
+  // console.log("foto ", user.emailVerified);
+  // console.log("proveedor ", user.providerData);
+  // console.log("proveedor ", user.providerData[0].providerId); //google
+  // console.log("proveedor ", user.providerData[1].providerId); //password
 
-  console.log("soy yo", user);
+  // console.log("soy yo", user);
 
   //    Contenedor principal
   const profileComponent = document.createElement("div");
@@ -43,12 +43,12 @@ export const Profile = () => {
   photoAvatar.classList.add("photo__avatar-img");
   //   photoAvatar.src = "photoURL";
 
-  let userImg = user.photoURL;
-  if (!user.photoURL) {
-    userImg = "../src/app/assets/user-img.jpg";
-  }
+  // let userImg = user.photoURL;
+  // if (!user.photoURL) {
+  //   userImg = "../src/app/assets/user-img.jpg";
+  // }
 
-  photoAvatar.src = `${userImg}`;
+  // photoAvatar.src = `${userImg}`;
 
   photoAvatar.alt = "imgAvatar";
 
@@ -255,6 +255,7 @@ export const Profile = () => {
 
   getUserData(user.uid)
     .then((user) => {
+      photoAvatar.src = user.user_photo;
       inputDate.type = "date";
       inputName.value = user.user_name;
       inputDate.value = user.user_date;
@@ -264,6 +265,14 @@ export const Profile = () => {
     .catch((err) => {
       console.log(err);
     });
+
+  // user_id: user.uid,
+  // user_name: nameN,
+  // user_photo: photoUrlN,
+  // user_createdAt: user.metadata.createdAt,
+  // user_email: emailN,
+  // user_password: passwordN,
+  // user_logedBy: logedByN,
 
   //   --------------
 
