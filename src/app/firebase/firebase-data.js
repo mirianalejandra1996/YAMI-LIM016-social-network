@@ -18,6 +18,7 @@ import {
 import { db } from "../firebase/firebase-initializer.js";
 import { auth } from "../firebase/firebase-auth.js";
 
+
 /******************Agrega un post a FS*********************/
 const colRef = collection(db, "posts");
 
@@ -38,6 +39,7 @@ export function addPost(message) {
     })
     .catch((err) => console.log(err));
 }
+
 
 /******************Agrega un usuario a FS*********************/
 const userRef = collection(db, "users");
@@ -78,6 +80,7 @@ export function addUser(user, name, password) {
 // ------------------------------
 // * OBTENEMOS LA COLECCIÓN
 
+
 /******************Recopila todos los posts*********************/
 
 export async function traerPost() {
@@ -107,9 +110,12 @@ export async function traerPost() {
     // console.log(postData)
     // console.log(doc.id, " => ", doc.data());
   });
-
+  // console.log(postsData)
   return postsData;
 }
+
+
+/******************Toggle Likes*********************/
 
 export async function toggleLikes(post_id) {
   // console.log(post.post_id);
@@ -140,13 +146,18 @@ export async function toggleLikes(post_id) {
   }
 }
 
+
+/******************Init Listener Post*********************/
+
 export function initListenerPost(postId, actualizarPost) {
   return onSnapshot(doc(db, "posts", postId), actualizarPost);
 }
 
 // ---------------Funciones del post -------------------------------
 
+
 // Actualizar post
+
 export async function updatePost(post_id, newMessage) {
   const postRef = doc(db, "posts", post_id);
 
@@ -155,6 +166,7 @@ export async function updatePost(post_id, newMessage) {
   });
 }
 
+
 // Eliminar post
 
 export async function deletePost(post_id) {
@@ -162,6 +174,9 @@ export async function deletePost(post_id) {
 
   return await deleteDoc(postRef);
 }
+
+
+// Get User Data
 
 export async function getUserData(user_id) {
   const userRef = doc(db, "users", user_id);
@@ -175,6 +190,7 @@ export async function getUserData(user_id) {
     console.log("No such document!");
   }
 }
+
 
 // Comentar un post
 
@@ -194,6 +210,9 @@ export function addComment(current_user, idPost, comment) {
     .catch((err) => console.log(err));
 }
 
+
+// Check Registered User
+
 export async function checkRegisteredUser(post_id) {
   const userRef = doc(db, "users", post_id);
   const docSnap = await getDoc(userRef);
@@ -206,7 +225,9 @@ export async function checkRegisteredUser(post_id) {
     console.log("No such document!");
   }
 }
-/******************Recopila los posts del Usuario*********************/
+
+
+// Recopila los posts del Usuario
 
 export async function traerMisPost(userId) {
  
@@ -235,4 +256,26 @@ export async function traerMisPost(userId) {
   });  
 
   return postsData;
+}
+
+
+// Traer los comentarios
+
+export async function traerComments(id_post) {
+
+  const commentsData = [];
+
+  const commentsRef = collection(db, "posts", id_post, "comments");
+
+  const querySnapshotComments = await getDocs(commentsRef);
+  
+  querySnapshotComments.forEach((doc) => {
+    const comment = doc.data();
+    // comment["post_id"] = doc.id;
+    commentsData.push(comment);
+    // console.log(postData)
+    // console.log(doc.id, " => ", doc.data());
+  });
+  console.log(commentsData)
+  return commentsData;
 }

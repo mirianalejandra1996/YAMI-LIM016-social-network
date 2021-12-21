@@ -1,18 +1,17 @@
 import { addComment } from "../firebase/firebase-data.js"
 import { auth } from "../firebase/firebase-auth.js";
+import { traerComments } from "../firebase/firebase-data.js";
 
-export function PostComments(idPost) {
+export function NewComments(idPost) {
+
+    // traerComments()
+    // .then((idPost)=>{
+    //     console.log()
+    // })
 
     const current_user = auth.currentUser;
-    console.log(idPost)
-    console.log("auth", auth);
-
-    //Comments del post
-
-    // const commentSection = document.createElement("div")
-    // const oldComment = 
-
-    //Input para ingresar un comentario
+    // console.log(idPost)
+    // console.log("auth", auth);
     
     const newComment = document.createElement("div")
     newComment.classList.add("newComment")

@@ -2,12 +2,11 @@ import { toggleLikes, initListenerPost } from "../firebase/firebase-data.js";
 import { auth } from "../firebase/firebase-auth.js";
 import { ModalEditPost } from "./Edit_post.js";
 import { ModalEliminarPost } from "./Modal_eliminarPost.js";
-import { PostComments } from "./Post-comments.js";
-// import { Menu, OptionListPost } from "./Menu.js";
+import { NewComments } from "./Post-comments.js";
 
 export const Post = (post) => {
   const user_id = auth.currentUser.uid;
-  console.log("currentuser", user_id);
+  // console.log("currentuser", user_id);
   const $card = document.createElement("div");
   $card.classList.add("card");
 
@@ -137,7 +136,7 @@ export const Post = (post) => {
   $comentarioTitle.id = "comentario";
   $comentarioTitle.textContent = "comentar";
 
-  const $postComments = PostComments(post.post_id);
+  const $postComments = NewComments(post.post_id);
 
   $comentContainer.appendChild($iconComent);
   $comentContainer.appendChild($comentarioTitle);

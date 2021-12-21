@@ -1155,3 +1155,31 @@ input[type="password"]:focus {
 .iconComment{
   color:#FF3F15;
 }
+.commentContainer{
+  display: flex;
+  flex-direction: row;
+  position: relative;
+}
+.commentAvatar{
+  width: 100%;
+  height: auto;
+}
+.commentAvatarCircle{
+  width: 35px;
+  height: 35px;
+  overflow: hidden;
+  border-radius: 100%;
+  position: relative;
+}
+.commentsOptionDiv{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 30px;
+  height: 30px;
+  border-radius: 100%;
+  transition: 0.3s ease;
+}
+.commentOptionIcon{
+  color: #848484;
+}
