@@ -54,7 +54,7 @@ export function addUser(user, name, password) {
   }
 
   let nuevoImg;
-  if (!user.displayName) {
+  if (!user.photoURL) {
     const photoURL= "https://firebasestorage.googleapis.com/v0/b/yami-cbaa4.appspot.com/o/default-profile.jpeg?alt=media&token=772a7498-d018-4994-9805-041ae047bdc6"
     nuevoImg = photoURL;  
        
@@ -264,6 +264,27 @@ export async function traerMisPost(userId) {
 
 
 // Traer los comentarios
+
+export async function traerComments(id_post) {
+
+  const commentsData = [];
+
+  const commentsRef = collection(db, "posts", id_post, "comments");
+
+  const querySnapshotComments = await getDocs(commentsRef);
+  
+  querySnapshotComments.forEach((doc) => {
+    const comment = doc.data();
+    // comment["post_id"] = doc.id;
+    commentsData.push(comment);
+    // console.log(postData)
+    // console.log(doc.id, " => ", doc.data());
+  });
+  console.log(commentsData)
+  return commentsData;
+}
+
+// Traer usuario
 
 export async function traerComments(id_post) {
 
