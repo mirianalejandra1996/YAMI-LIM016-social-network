@@ -51,6 +51,14 @@ export function addUser(user, name, password) {
     nuevoName = user.displayName;
   }
 
+  let nuevoImg;
+  if (!user.displayName) {
+    const photoURL= "https://firebasestorage.googleapis.com/v0/b/yami-cbaa4.appspot.com/o/default-profile.jpeg?alt=media&token=772a7498-d018-4994-9805-041ae047bdc6"
+    nuevoImg = photoURL;  
+       
+  } else {
+    nuevoImg = user.photoURL;
+  }
   console.log("entramos a AddUsers");
 
   const userdoc = doc(db, "users", user.uid); //Creamos un documento con el id de nuestro usuario
@@ -66,6 +74,7 @@ export function addUser(user, name, password) {
     user_password: password,
     user_date: "",
     user_createdAt: user.metadata.createdAt,
+    user_img: nuevoImg,
   })
     .then(() => {
       console.log("usuario subido al firestore!");

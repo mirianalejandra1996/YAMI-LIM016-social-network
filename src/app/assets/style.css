@@ -420,7 +420,7 @@ input[type="password"]:focus {
 }
 
 .card__avatar-img {
-  display: block;
+  /* display: block; */
   width: 100%;
   transition: 0.3s ease;
   height: auto;

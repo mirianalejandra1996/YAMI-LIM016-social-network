@@ -1,11 +1,10 @@
 import { toggleLikes, initListenerPost } from "../firebase/firebase-data.js";
 import { auth } from "../firebase/firebase-auth.js";
-import { ModalEditPost } from "./Edit_post.js";
-import { ModalEliminarPost } from "./Modal_eliminarPost.js";
 import { PostComments } from "./Post-comments.js";
 // import { Menu, OptionListPost } from "./Menu.js";
 
-export const Post = (post) => {
+export const Post = (post, setDataModalEdit, abrirModalEdit, setDataModalRemove, abrirModalRemove) => {
+
   const user_id = auth.currentUser.uid;
   console.log("currentuser", user_id);
   const $card = document.createElement("div");
@@ -55,12 +54,23 @@ export const Post = (post) => {
 
   // ! Si el usuario no es dueño del post, no debería salir la lista desplegable
   if (user_id !== post.id_user) $optionsContainer.classList.add("hidden");
+
+ //
+
+  const handleClickEdit = () => {
+    setDataModalEdit(post)
+    abrirModalEdit()
+   }
+
+   const handleClickRemove = () => {
+     setDataModalRemove(post)
+     abrirModalRemove()
+   }
+
   const {
     menuModalOptionsPost,
     toggleModalOptionsPost,
-    menuModalEdit,
-    menuModalDelete,
-  } = OptionListPost(post);
+  } = OptionListPost(handleClickRemove, handleClickEdit);
   const $menuModalOptions = menuModalOptionsPost;
 
   // EVENTO 3 PUNTITOS OPCIONES
@@ -144,20 +154,12 @@ export const Post = (post) => {
 
   $footerContainer.append($likeContainer);
   $footerContainer.append($comentContainer);
-  //   -----------------------------------------------------------
-
-  $card.append($headerContainer);
-  $card.append($msgContainer);
-  $card.append($footerContainer);
-  $card.append($postComments);
-  $card.append(menuModalEdit);
-  $card.append(menuModalDelete);
-
+  
   //   todo: HACER EVENTO a icono de like para actualizar datos
-
+  
   initListenerPost(post.post_id, (postDoc) => {
     //se podria cambiar cualquier campo de post pero en este caso solo necesitamos los likes
-
+    
     const likes = postDoc.data().likes;
     console.log("array de likes", likes);
     if (likes.find((like) => like === user_id)) {
@@ -167,15 +169,22 @@ export const Post = (post) => {
       $likeContainer.classList.remove("selected");
       console.log("no se encuentra");
     }
-
+    
     $counterLikes.textContent = `${likes.length}`;
   });
+  //   -----------------------------------------------------------
+
+  $card.append($headerContainer);
+  $card.append($msgContainer);
+  $card.append($footerContainer);
+  $card.append($postComments);
+
 
   return $card;
 };
 
 // Lista desplegable para editar o eliminar post
-export function OptionListPost(post) {
+function OptionListPost(onClickRemove, onClickEdit) {
   const $modalLista = document.createElement("div");
   $modalLista.classList.add("card__dropdown", "cerrar");
 
@@ -193,20 +202,10 @@ export function OptionListPost(post) {
   $modalLista.append($itemRemovePublication);
 
   // $modalLista.append($modalContenedor)
-  const { $modalContenedor, abrirModal } = ModalEditPost(post);
+  
 
-  $itemEditPublication.addEventListener("click", () => {
-    abrirModal();
-  });
-
-  const { modalEliminarPost, abrirModalEliminar } = ModalEliminarPost(post);
-
-  $itemRemovePublication.addEventListener("click", () => {
-    console.log(
-      'debería cambiar de vista mostrando un modal "estás seguro de elimianr?"'
-    );
-    abrirModalEliminar();
-  });
+  $itemEditPublication.addEventListener("click", onClickEdit);
+  $itemRemovePublication.addEventListener("click", onClickRemove);
 
   const toggleModalOptionsPost = () => {
     $modalLista.classList.toggle("cerrar");
@@ -215,10 +214,12 @@ export function OptionListPost(post) {
   return {
     menuModalOptionsPost: $modalLista,
     toggleModalOptionsPost: toggleModalOptionsPost,
-    menuModalEdit: $modalContenedor,
-    menuModalDelete: modalEliminarPost,
   };
 }
+
+
+
+
 
 function timeSince(date) {
   var seconds = Math.floor((new Date() - date) / 1000);
