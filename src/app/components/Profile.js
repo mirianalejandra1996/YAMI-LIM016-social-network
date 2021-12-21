@@ -279,6 +279,8 @@ export const Profile = () => {
   return profileComponent;
 };
 
+
+// !todo: HACER MODAL CON ESTE CODIGO PARA EDITAR PERFIL
 // <!-- Cabecera -->
 // <div class="header-timeline"><div class="logo-timeline"></div></div>
 
