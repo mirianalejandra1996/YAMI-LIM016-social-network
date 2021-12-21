@@ -17,7 +17,10 @@ export function Menu(toggleModalPlus, toggleModalProfile) {
   itemHome.append($iconHome);
 
   //evento del ancla
-  // itemHome.addEventListener('click', window.location.hash = "#/home")
+  itemHome.addEventListener(
+    "click",
+    () => (window.location.hash = "#/timeline")
+  );
 
   //icono 2
   const itemLupa = d.createElement("a");
@@ -34,12 +37,12 @@ export function Menu(toggleModalPlus, toggleModalProfile) {
 
   itemPlus.append($iconPlus);
   itemPlus.addEventListener("click", () => {
-    const modalProfile = document.getElementById('modalProfile')
-    if (!(modalProfile.classList.contains("cerrado"))) {
-      toggleModalProfile()
+    const modalProfile = document.getElementById("modalProfile");
+    if (!modalProfile.classList.contains("cerrado")) {
+      toggleModalProfile();
     }
-    toggleModalPlus()
-  } );
+    toggleModalPlus();
+  });
   //icono 4
   const itemReseña = d.createElement("a");
   itemReseña.classList.add("menu__link");
@@ -55,11 +58,11 @@ export function Menu(toggleModalPlus, toggleModalProfile) {
 
   itemPerfil.append($iconPerfil);
   itemPerfil.addEventListener("click", () => {
- const modalPlus = document.getElementById('modalPlus')
- if (!(modalPlus.classList.contains("cerrado"))) {
-   toggleModalPlus()
-  }
-  toggleModalProfile()
+    const modalPlus = document.getElementById("modalPlus");
+    if (!modalPlus.classList.contains("cerrado")) {
+      toggleModalPlus();
+    }
+    toggleModalProfile();
   });
 
   $menu.append(itemHome);
@@ -75,7 +78,7 @@ export function Menu(toggleModalPlus, toggleModalProfile) {
 
 export function MenuList() {
   const $modalContenedor = document.createElement("div");
-  $modalContenedor.id='modalPlus'
+  $modalContenedor.id = "modalPlus";
   $modalContenedor.classList.add("modal__contenedor", "align-end", "cerrado");
 
   const $modalLista = document.createElement("div");
@@ -98,8 +101,8 @@ export function MenuList() {
   $itemsHistoria.textContent = "Historia";
 
   $modalLista.append($itemsPublicacion);
-  $modalLista.append($itemsReseña)
-  $modalLista.append($itemsHistoria)
+  $modalLista.append($itemsReseña);
+  $modalLista.append($itemsHistoria);
 
   $modalContenedor.append($modalLista);
 
@@ -108,13 +111,13 @@ export function MenuList() {
   };
 
   const toggleCerrarModalPlus = () => {
-    $modalContenedor.classList.replace("abierto","cerrado");
+    $modalContenedor.classList.replace("abierto", "cerrado");
   };
 
   return {
     menuModalPlus: $modalContenedor,
     toggleModalPlus: toggleModalPlus,
-    toggleCerrarModalPlus: toggleCerrarModalPlus
+    toggleCerrarModalPlus: toggleCerrarModalPlus,
   };
 }
 
@@ -166,7 +169,7 @@ export function MenuList() {
 
 export function ProfileList() {
   const $modalContenedorPerfil = document.createElement("div");
-  $modalContenedorPerfil.id='modalProfile'
+  $modalContenedorPerfil.id = "modalProfile";
   $modalContenedorPerfil.classList.add(
     "modal__contenedor",
     "align-end",
@@ -190,7 +193,7 @@ export function ProfileList() {
 
   $itemsPerfil.addEventListener("click", () => {
     console.log("cambiando de vista a profile!");
-    window.location.hash = "#/muro"
+    window.location.hash = "#/muro";
   });
 
   $itemsCerrarSesion.addEventListener("click", (e) => {
