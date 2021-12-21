@@ -1,20 +1,34 @@
 import { addComment } from "../firebase/firebase-data.js"
 import { auth } from "../firebase/firebase-auth.js";
 import { traerComments } from "../firebase/firebase-data.js";
+import { Comment } from "./Comment.js";
 
 export function NewComments(idPost) {
 
-    // traerComments()
-    // .then((idPost)=>{
-    //     console.log()
-    // })
+    const commentsDiv = document.createElement("div")
 
-    const current_user = auth.currentUser;
-    // console.log(idPost)
-    // console.log("auth", auth);
+    const commentsContainer = document.createElement("div")
+    commentsContainer.classList.add("commentsContainer-border")
+    
+    traerComments(idPost)
+
+    // $postsContainer.textContent = ""
+    .then((commentsList)=>{
+        commentsList.forEach((com)=>{
+            const comment = Comment(com)
+            commentsContainer.append(comment)
+            console.log("entra")
+        })
+    })
+    .catch((err) => console.log(err))
+
+    const current_user = auth.currentUser
     
     const newComment = document.createElement("div")
     newComment.classList.add("newComment")
+
+    const avatarDiv = document.createElement("div")
+    avatarDiv.classList.add("avatarDiv")
 
     const avatarContainer = document.createElement("div")
     avatarContainer.classList.add("avatarContainer")
@@ -22,6 +36,7 @@ export function NewComments(idPost) {
     avatarImage.classList.add("avatarImage")
     avatarImage.src = "./app/assets/user-img.jpg"
     avatarContainer.append(avatarImage)
+    avatarDiv.append(avatarContainer)
 
     const inputComment = document.createElement("textarea")
     inputComment.id = `comment_${idPost}`
@@ -36,14 +51,6 @@ export function NewComments(idPost) {
 
     commentBtn.append(commentIcon)
 
-    // inputComment.addEventListener("keyup", () => {
-    //     let key = window.event.keycode
-    //     if (key === 13/* && inputComment.value.length>0*/){
-    //         alert ("yay")
-    //         // funciondecomentar()
-    //     }
-    // })
-
     commentBtn.addEventListener('click', () => {
         const comment=document.getElementById(`comment_${idPost}`).value
         if (comment !== "") {
@@ -51,9 +58,12 @@ export function NewComments(idPost) {
         }
     })
 
-    newComment.append(avatarContainer)
+    newComment.append(avatarDiv)
     newComment.append(inputComment)
     newComment.append(commentBtn)
 
-    return newComment
+    commentsDiv.append(commentsContainer)
+    commentsDiv.append(newComment)
+
+    return commentsDiv
 }
