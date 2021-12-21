@@ -104,15 +104,35 @@ const userRef = collection(db, "users");
 // El addDoc no me importa el id que se genere,
 // en el usuario el id deberia ser igual que el del servicio de autentificación, por eso usamos doc (para que sea único)
 
-// ------------------------------
-// * OBTENEMOS LA COLECCIÓN
+// console.log("este es el name", user.auth.currentUser.displayName);
+// console.log("este es el name", user.auth.currentUser);
+// console.log("este es el name", user.auth.currentUser.auth.);
+// console.log("este es el token", user.auth.currentUser);
+// console.log(
 
-export function addUser(user, name) {
-  let nuevoName;
-  if (!user.displayName) {
-    nuevoName = name;
+//   user.auth.currentUser.providerData[0].providerId
+// );
+// console.log("mira el nombre", user.displayName);
+
+// ------------------------------
+
+export function addUser(user, name, password) {
+  console.log("este es el user que entra como parámetro", user);
+
+  let nameN, emailN, photoUrlN, logedByN, passwordN;
+
+  if (user.auth.currentUser.providerData[0].providerId === "www.google.com") {
+    nameN = user.auth.currentUser.photoURL;
+    emailN = user.auth.currentUser.email;
+    photoUrlN = user.photoURL;
+    logedByN = "google";
+    passwordN = "";
   } else {
-    nuevoName = user.displayName;
+    nameN = name;
+    emailN = user.email;
+    photoUrlN = "../assets/user-img.jpg";
+    logedByN = "password";
+    passwordN = password;
   }
 
   console.log("entramos a AddUsers");
@@ -123,15 +143,53 @@ export function addUser(user, name) {
   // El addDoc autogenera el id
   return setDoc(userdoc, {
     user_id: user.uid,
-    user_name: nuevoName,
-    date_creation: Date.now(),
-    user_email: user.email,
+    user_name: nameN,
+    user_photo: photoUrlN,
+    // date_creation: Date.now(),
+    // user_createdAt: parseInt(user.metadata.createdAt),
+    user_createdAt: user.metadata.createdAt,
+    user_email: emailN,
+    user_password: passwordN,
+    user_logedBy: logedByN,
+    // -----------
+    // user_date: "",
+    // user_createdAt: parseInt(user.metadata.createdAt),
   })
     .then(() => {
       console.log("usuario subido al firestore!");
     })
     .catch((err) => console.log(err));
 }
+
+// ------------------------------
+// * OBTENEMOS LA COLECCIÓN
+
+// ! VERSION BUENA
+// export function addUser(user, name) {
+//   let nuevoName;
+//   if (!user.displayName) {
+//     nuevoName = name;
+//   } else {
+//     nuevoName = user.displayName;
+//   }
+
+//   console.log("entramos a AddUsers");
+
+//   const userdoc = doc(db, "users", user.uid); //Creamos un documento con el id de nuestro usuario
+
+//   // setDoc lo usamos para especificar un id único que nosotros vamos a colocarle,
+//   // El addDoc autogenera el id
+//   return setDoc(userdoc, {
+//     user_id: user.uid,
+//     user_name: nuevoName,
+//     date_creation: Date.now(),
+//     user_email: user.email,
+//   })
+//     .then(() => {
+//       console.log("usuario subido al firestore!");
+//     })
+//     .catch((err) => console.log(err));
+// }
 
 /******************Recopila todos los posts*********************/
 
