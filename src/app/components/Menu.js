@@ -76,7 +76,7 @@ export function Menu(toggleModalPlus, toggleModalProfile) {
 
 // LISTAS DESPLEGABLES
 
-export function MenuList() {
+export function MenuList(abrirModalCreatePost) {
   const $modalContenedor = document.createElement("div");
   $modalContenedor.id = "modalPlus";
   $modalContenedor.classList.add("modal__contenedor", "align-end", "cerrado");
@@ -89,7 +89,7 @@ export function MenuList() {
   $itemsPublicacion.textContent = "Publicación";
 
   $itemsPublicacion.addEventListener("click", () => {
-    window.location.hash = "#/formPost";
+    abrirModalCreatePost()
   });
 
   const $itemsReseña = document.createElement("button");
@@ -192,7 +192,7 @@ export function ProfileList() {
   $modalContenedorPerfil.append($modalContenedor);
 
   $itemsPerfil.addEventListener("click", () => {
-    console.log("cambiando de vista a profile!");
+    console.log("cambiando de vista a Muro!");
     window.location.hash = "#/muro";
   });
 

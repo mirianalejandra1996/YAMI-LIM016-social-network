@@ -1,7 +1,7 @@
-import { logOutGoogle } from "../firebase/firebase-auth.js";
 import { Post } from "./Post.js";
-import {ModalEditPost} from "./Edit_post.js"
-import { ModalEliminarPost } from "./Modal_eliminarPost.js";
+import { ModalCreatePost } from "./ModalCreatePost.js";
+import {ModalEditPost} from "./ModalEditPost.js"
+import { ModalEliminarPost } from "./ModalDeletePost.js";
 import { Menu, MenuList, ProfileList } from "./Menu.js";
 import { traerPost } from "../firebase/firebase-data.js";
 import { HeaderSimple } from "./Header_simple.js";
@@ -17,13 +17,14 @@ export function Timeline() {
   const $postsContainer = document.createElement("div");
   $postsContainer.classList.add("notification-grid");
 
-
+  const {$modalCreatePost,abrirModalCreatePost} = ModalCreatePost();
   // Crea un Post
-  const { menuModalPlus, toggleModalPlus } = MenuList();
+  const { menuModalPlus, toggleModalPlus } = MenuList(abrirModalCreatePost);
   // Perfil usuario
   const { menuModalProfile, toggleModalProfile } = ProfileList();
   //Enviamos los eventos a Menu
   const $menu = Menu(toggleModalPlus, toggleModalProfile);
+
 
 
   // -----------------------------------------------------------------------------------
@@ -50,6 +51,7 @@ export function Timeline() {
   $timeline.append(menuModalPlus);
   $timeline.append(menuModalProfile);
   $timeline.append($menu);
+  $timeline.append($modalCreatePost);
   $timeline.append($modalEditPost)
   $timeline.append($modalRemovePost)
 

@@ -384,7 +384,7 @@ input[type="password"]:focus {
 /* Componente de post-card */
 .card {
   background-color: #fff;
-  box-shadow: 4px 4px 17px #efeff1;
+  box-shadow:  5px 5px 12px #aaa;
   border-radius: 17px;
   display: flex;
   flex-direction: column;
@@ -672,6 +672,7 @@ input[type="password"]:focus {
 }
 .err-container.center {
   align-items: center;
+  height: 1rem;
 }
 /* ---------Para vista escritorio--------- */
 
@@ -723,17 +724,25 @@ input[type="password"]:focus {
 
 /*Formulario posts*/
 .formPost {
-  height: 100%;
   display: flex;
   justify-content: center;
   flex-direction: column;
+  width: 90%;
+  background-color: #fff;
+  height: auto;
+  border-radius: 10px;
+
 }
 .formPost_h2 {
   padding-top: 20px;
   font-size: 15px;
   font-weight: normal;
 }
-
+.formPost_title{
+  padding: 20px 35px;
+  font-size: 15px;
+  font-weight: normal;
+}
 .formPost_h1 {
   font-size: 14px;
   font-weight: bold;
@@ -776,7 +785,6 @@ input[type="password"]:focus {
 }
 .formPost_input-short {
   width: 80%;
-  margin-bottom: 15px;
   height: 40px;
   border: 1px solid #ffb800;
   border-radius: 10px;
