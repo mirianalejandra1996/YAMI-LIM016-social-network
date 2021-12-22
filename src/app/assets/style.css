@@ -722,7 +722,7 @@ input[type="password"]:focus {
 
 /*Formulario posts*/
 .formPost {
-  height: 100%;
+  /* height: 100%; */
   display: flex;
   justify-content: center;
   flex-direction: column;
@@ -732,7 +732,11 @@ input[type="password"]:focus {
   font-size: 15px;
   font-weight: normal;
 }
-
+.formPost_title{
+  padding: 20px 35px;
+  font-size: 15px;
+  font-weight: normal;
+}
 .formPost_h1 {
   font-size: 14px;
   font-weight: bold;

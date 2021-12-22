@@ -9,7 +9,7 @@ export const Form_Post = () => {
   const header = HeaderRetroceder();
   //Titulo
   const title = document.createElement("h2");
-  title.classList.add("formPost_h2");
+  title.classList.add("formPost_title");
   title.textContent = `Crear publicación`;
 
   //Input del Post
@@ -25,12 +25,17 @@ export const Form_Post = () => {
   tags.classList.add("formPost_input-short");
   tags.placeholder = `Añadir etiquetas`;
 
+  
+
   const picture = document.createElement("input");
+  picture.type = 'file'
   picture.classList.add("formPost_input-short");
   picture.placeholder = `Añadir imagen`;
+  // picture.onchange = {pictureHandler}
+
 
   inputsContainer.append(post);
-  inputsContainer.append(tags);
+ // inputsContainer.append(tags);
   inputsContainer.append(picture);
 
   // Contenedor del mensaje de Error
