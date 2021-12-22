@@ -1259,3 +1259,6 @@ input[type="password"]:focus {
 .commentsDiv{
   overflow: auto;
 }
+.close {
+  display: none;
+}
