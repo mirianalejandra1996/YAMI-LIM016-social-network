@@ -89,8 +89,8 @@ export const ModalEditProfile = () => {
 
   //   inputDate.type = "text";
   inputDate.id = "date";
-  inputDate.classList.add("formProfile__input");
-  inputDate.disabled = true;
+  inputDate.classList.add("modal-profile__input");
+  // inputDate.disabled = true;
 
   //   Label de nombre
   const labelDate = document.createElement("label");
