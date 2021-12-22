@@ -384,7 +384,7 @@ input[type="password"]:focus {
 /* Componente de post-card */
 .card {
   background-color: #fff;
-  box-shadow: 4px 4px 17px #efeff1;
+  box-shadow:  5px 5px 12px #aaa;
   border-radius: 17px;
   display: flex;
   flex-direction: column;
