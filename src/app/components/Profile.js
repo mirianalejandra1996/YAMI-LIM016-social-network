@@ -163,8 +163,10 @@ export const Profile = () => {
 
   const iconPwd = document.createElement("span");
   iconPwd.classList.add("formProfile__icon", "icon-open-eye");
+  // iconPwd.classList.add("eye-hidden");
+  iconPwd.id = "eye";
 
-  let passwordMsg;
+  // let passwordMsg;
 
   groupPwd.append(inputPwd);
   groupPwd.append(labelPwd);
@@ -228,7 +230,7 @@ export const Profile = () => {
       photoAvatar.src = user.user_photo;
       inputDate.type = "date";
       inputName.value = user.user_name;
-      inputDate.value = user.user_date;
+      inputDate.value = user.user_birth;
       inputPwd.value = user.user_password;
       inputEmail.value = user.user_email;
 
@@ -253,6 +255,16 @@ export const Profile = () => {
   // user_password: passwordN,
   // user_logedBy: logedByN,
 
+  //   --------------
+  iconPwd.addEventListener("click", () => {
+    console.log("cambia de ojito");
+    iconPwd.classList.toggle("icon-open-eye");
+    iconPwd.classList.toggle("icon-eye-hidden");
+
+    iconPwd.classList.contains("icon-open-eye")
+      ? (inputPwd.type = "text")
+      : (inputPwd.type = "password");
+  });
   //   --------------
 
   return profileComponent;

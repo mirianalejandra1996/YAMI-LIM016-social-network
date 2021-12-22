@@ -51,7 +51,12 @@ export function addUser(user, name, password) {
   const prueba = user;
   console.log("esta es una prueba", prueba);
   console.log("este es el proveedor", prueba.providerData[0].providerId);
-  let nameN, emailN, photoUrlN, logedByN, passwordN;
+  let nameN,
+    emailN,
+    photoUrlN,
+    logedByN,
+    passwordN,
+    birthN = null;
 
   if (prueba.providerData[0].providerId === "google.com") {
     console.log("estás logueado con google!!");
@@ -60,7 +65,7 @@ export function addUser(user, name, password) {
     emailN = user.email;
     photoUrlN = user.photoURL;
     logedByN = "google";
-    passwordN = "";
+    passwordN = null;
   } else {
     // Si está logueado con password
     nameN = name;
@@ -86,6 +91,7 @@ export function addUser(user, name, password) {
     user_email: emailN,
     user_password: passwordN,
     user_logedBy: logedByN,
+    user_birth: birthN,
   })
     .then(() => {
       console.log("usuario subido al firestore!");
