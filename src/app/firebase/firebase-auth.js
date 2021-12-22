@@ -22,7 +22,6 @@ const provider = new GoogleAuthProvider(app);
 
 // ! Qué dará esto?
 auth.languageCode = "es";
-console.log(auth.languageCode);
 
 /*******************Inicio de sesion con correo***************************/
 export function enviarIngreso() {
@@ -71,7 +70,7 @@ export function enviarIngreso() {
 /************************Continuar con Google**********************************/
 
 const user = auth.currentUser;
-console.log("este es el user actual", user);
+// console.log("este es el user actual", user);
 console.log("esto es auth", auth);
 
 export const loginGoogle = () => {
@@ -177,6 +176,7 @@ export function enviarRegistro() {
         return updateProfile(auth.currentUser, {
           displayName: name,
           password: password,
+          photoURL: "https://firebasestorage.googleapis.com/v0/b/yami-cbaa4.appspot.com/o/default-profile.jpeg?alt=media&token=772a7498-d018-4994-9805-041ae047bdc6"
         })
           .then(() => {
             console.log(

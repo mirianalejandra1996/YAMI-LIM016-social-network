@@ -7,13 +7,13 @@ export const Profile = () => {
   const user = auth.currentUser;
   //   console.log("esta soy yo", user_id);
   //   console.log("esta soy yo", user.displayName);
-  // console.log("esta soy yo", user);
-  // console.log("cuenta creada el ", user.metadata.createdAt);
-  // console.log("foto ", user.photoURL);
-  // console.log("foto ", user.emailVerified);
-  // console.log("proveedor ", user.providerData);
-  // console.log("proveedor ", user.providerData[0].providerId); //google
-  // console.log("proveedor ", user.providerData[1].providerId); //password
+  console.log("esta soy yo", user);
+  console.log("cuenta creada el ", user.metadata.createdAt);
+  console.log("foto ", user.photoURL);
+  console.log("foto ", user.emailVerified);
+  console.log("proveedor ", user.providerData);
+ // console.log("proveedor ", user.providerData[0].providerId); //google
+  //console.log("proveedor ", user.providerData[1].providerId); //password
 
   // console.log("soy yo", user);
 

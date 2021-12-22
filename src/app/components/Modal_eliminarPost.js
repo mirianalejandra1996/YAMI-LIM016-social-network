@@ -1,6 +1,6 @@
 import { deletePost } from "../firebase/firebase-data.js";
 
-export function ModalEliminarPost(postData) {
+export function ModalEliminarPost() {
   const $modalContenedor = document.createElement("div");
   $modalContenedor.classList.add("modal__contenedor");
 
@@ -33,6 +33,8 @@ export function ModalEliminarPost(postData) {
   $modalContenedor.style.opacity = "0";
   $modalContenedor.style.visibility = "hidden";
 
+  let cerrarButtonClickListener
+
   const abrirModal = () => {
     $modalContenedor.style.opacity = "1";
     $modalContenedor.style.visibility = "visible";
@@ -41,23 +43,28 @@ export function ModalEliminarPost(postData) {
 
   const cerrarModal = () => {
     $modalCerrar.classList.toggle("modal-cerrar");
-    setTimeout(function () {
-      $modalContenedor.style.opacity = "0";
-      $modalContenedor.style.visibility = "hidden";
-    }, 900);
+     //eliminar event listeners a cualquier nodo o elemeno
+    $cerrar.removeEventListener('click', cerrarButtonClickListener)   
+    $modalContenedor.style.opacity = "0";
+    $modalContenedor.style.visibility = "hidden";
+  
   };
 
-  $cerrar.addEventListener("click", cerrarModal);
-
-  $botonAceptar.addEventListener("click", () => {
-    deletePost(postData.post_id);
-    // cerrarModal();
-    window.location.hash = "#/";
-  });
+  const setDataModalRemove = (postData) => {
+    $cerrar.addEventListener("click", cerrarModal);
+    cerrarButtonClickListener = () =>{
+      deletePost(postData.post_id).then(() => {
+        // cerrarModal();
+        window.location.hash = "#/";
+      });
+    }
+    $botonAceptar.addEventListener("click", cerrarButtonClickListener);
+  }
 
   return {
     modalEliminarPost: $modalContenedor,
     abrirModalEliminar: abrirModal,
     cerrarModalEliminar: cerrarModal,
+    setDataModalRemove: setDataModalRemove
   };
 }
