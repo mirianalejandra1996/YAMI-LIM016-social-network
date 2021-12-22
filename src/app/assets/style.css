@@ -890,7 +890,8 @@ input[type="password"]:focus {
 }
 .modal__contenedor.cerrado {
   opacity: 0;
-  z-index: -1;
+  /* z-index: -1; */
+  z-index: 0
   padding: 0;
 }
 .modal__contenedor.cerrado .modal__lista {
