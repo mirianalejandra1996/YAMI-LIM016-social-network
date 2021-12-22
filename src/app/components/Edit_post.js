@@ -105,6 +105,18 @@ export const ModalEditPost = () => {
 
   const cerrarModal = () => {
     $modalContenedor.classList.toggle("modal-cerrar");
+    setTimeout(function () {
+      $modalContenedor.style.opacity = "0";
+      $modalContenedor.style.visibility = "hidden";
+    }, 900);
+  };
+
+  // Evento para guardar post (update en firebase)
+    $guardar.addEventListener("click", () => {
+    console.log("entramos para actualizar");
+    // const nuevoMensaje = document.getElementById("msgPost").value;
+    const nuevoMensaje = document.getElementById(`msgPost_${postData.post_id}`).value;
+    console.log("este es el nuevo mensaje", nuevoMensaje);
     //limpiar modal antes de cerrar
     $post.value = "";
     //eliminar event listeners a cualquier nodo o elemeno
@@ -112,7 +124,7 @@ export const ModalEditPost = () => {
 
     $modalContenedor.style.opacity = "0";
     $modalContenedor.style.visibility = "hidden";
-  };
+  })
 
   const setPost = (postData) => {
     $post.value = `${postData.message}`;

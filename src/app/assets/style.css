@@ -539,6 +539,7 @@ input[type="password"]:focus {
   align-items: center;
   justify-content: space-between;
   margin-top: 1em;
+  margin-bottom: 5px;
 }
 
 .card__icon-container {
@@ -1112,15 +1113,15 @@ input[type="password"]:focus {
   display: flex;
   align-items: center;
   position: relative;
-  border-top: 1px solid #efeff1;
+  /* border-top: 1px solid #efeff1; */
   margin-top: 5px;
   padding-top: 10px;
   /* margin-top: 1em; */
 }
 
 .avatarContainer {
-  width: 35px;
-  height: 35px;
+  width: 32px;
+  height: 32px;
   overflow: hidden;
   border-radius: 100%;
   position: relative;
@@ -1141,7 +1142,7 @@ input[type="password"]:focus {
   height: 35px;
   resize: none;
   width: 100%;
-  font-size: 15px;
+  font-size: 14px;
   overflow: hidden;
   font-family: "Lato", sans-serif;
   padding: 8px 15px;
@@ -1156,6 +1157,56 @@ input[type="password"]:focus {
   margin-left: 8px;
   cursor: pointer;
 }
-.iconComment {
-  color: #ff3f15;
+.iconComment{
+  color:#FF3F15;
+}
+.commentContainer{
+  display: flex;
+  flex-direction: row;
+  position: relative;
+}
+.commentAvatar{
+  width: 100%;
+  height: auto;
+}
+.commentAvatarCircle{
+  width: 32px;
+  height: 32px;
+  overflow: hidden;
+  border-radius: 100%;
+  position: relative;
+}
+.commentsOptionDiv{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 30px;
+  height: 30px;
+  border-radius: 100%;
+  transition: 0.3s ease;
+}
+.commentOptionIcon{
+  color: #848484;
+}
+.commentsContainer-border{
+  border-top: 1px solid #efeff1;
+  padding-top: 14px;
+}
+.avatarDiv{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.commentName{
+  font-weight: 600;
+  font-size: 14px;
+}
+.commentMessage{
+  font-size: 13px;
+}
+.commentInfo{
+  margin-left: 8px;
+}
+.commentDiv{
+  width: 100%;
 }

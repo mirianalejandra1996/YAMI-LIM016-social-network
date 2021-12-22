@@ -13,7 +13,7 @@ export const components = {
   perfil: Perfil,
   formPost: Form_Post,
   profile: Profile,
-  muro: MiMuro,
+  muro: MiMuro
 };
 
 // const DATE_UNITS = {

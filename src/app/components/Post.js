@@ -1,12 +1,14 @@
 import { toggleLikes, initListenerPost } from "../firebase/firebase-data.js";
 import { auth } from "../firebase/firebase-auth.js";
-import { PostComments } from "./Post-comments.js";
+import { ModalEditPost } from "./Edit_post.js";
+import { ModalEliminarPost } from "./Modal_eliminarPost.js";
+import { NewComments } from "./Post-comments.js";
 // import { Menu, OptionListPost } from "./Menu.js";
 
 export const Post = (post, setDataModalEdit, abrirModalEdit, setDataModalRemove, abrirModalRemove) => {
 
   const user_id = auth.currentUser.uid;
-  console.log("currentuser", user_id);
+  // console.log("currentuser", user_id);
   const $card = document.createElement("div");
   $card.classList.add("card");
 
@@ -147,7 +149,7 @@ export const Post = (post, setDataModalEdit, abrirModalEdit, setDataModalRemove,
   $comentarioTitle.id = "comentario";
   $comentarioTitle.textContent = "comentar";
 
-  const $postComments = PostComments();
+  const $postComments = NewComments(post.post_id);
 
   $comentContainer.appendChild($iconComent);
   $comentContainer.appendChild($comentarioTitle);
@@ -161,13 +163,13 @@ export const Post = (post, setDataModalEdit, abrirModalEdit, setDataModalRemove,
     //se podria cambiar cualquier campo de post pero en este caso solo necesitamos los likes
     
     const likes = postDoc.data().likes;
-    console.log("array de likes", likes);
+    // console.log("array de likes", likes);
     if (likes.find((like) => like === user_id)) {
       $likeContainer.classList.add("selected");
       console.log("si se encuentra");
     } else {
       $likeContainer.classList.remove("selected");
-      console.log("no se encuentra");
+      // console.log("no se encuentra");
     }
     
     $counterLikes.textContent = `${likes.length}`;
