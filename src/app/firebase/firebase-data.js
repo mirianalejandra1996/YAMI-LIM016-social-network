@@ -31,6 +31,7 @@ export function addPost(message) {
   return addDoc(colRef, {
     id_user: user.uid,
     user_name: user.displayName,
+    user_photo:user.photoURL,
     message,
     date: Date.now(),
     likes: [],
