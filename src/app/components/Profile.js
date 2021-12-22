@@ -1,6 +1,7 @@
 import { HeaderRetroceder } from "../components/Header_retro.js";
 import { auth } from "../firebase/firebase-auth.js";
 import { getUserData } from "../firebase/firebase-data.js";
+import { ModalEditProfile } from "../components/ModalEditProfile.js";
 
 export const Profile = () => {
   const user = auth.currentUser;
@@ -59,8 +60,6 @@ export const Profile = () => {
   inputName.type = "text";
   inputName.id = "name";
   inputName.classList.add("formProfile__input");
-  // inputName.placeholder = "Ingresa un nombre"
-  //   inputName.value = `${user.displayName}`;
   inputName.disabled = true;
 
   //   Label de nombre
@@ -113,8 +112,6 @@ export const Profile = () => {
   inputEmail.type = "email";
   inputEmail.id = "email";
   inputEmail.classList.add("formProfile__input");
-  // inputName.placeholder = "Ingresa un nombre"
-  //   inputEmail.value = `${user.email}`;
   inputEmail.disabled = true;
 
   //   Label de email
@@ -144,8 +141,6 @@ export const Profile = () => {
   inputPwd.type = "password";
   inputPwd.id = "password";
   inputPwd.classList.add("formProfile__input");
-  // inputPwd.placeholder = "Ingresa un nombre"
-  //   inputPwd.value = `${user.user_password}`;
   inputPwd.disabled = true;
 
   //   --------
@@ -162,9 +157,7 @@ export const Profile = () => {
   requiredPwd.textContent = "*";
 
   const iconPwd = document.createElement("span");
-  // iconPwd.classList.add("formProfile__icon", "icon-open-eye");
   iconPwd.classList.add("formProfile__icon", "icon-eye-hidden");
-  // iconPwd.classList.add("eye-hidden");
   iconPwd.id = "eye";
 
   // let passwordMsg;
@@ -206,23 +199,24 @@ export const Profile = () => {
 
   // -----------------------------
 
+  const { $modalEditProfile, abrirModalEditProfile, cerrarModalEditProfile } =
+    ModalEditProfile();
+
+  btnEdit.addEventListener("click", () => {
+    abrirModalEditProfile();
+    console.log("editemos el perfil ");
+  });
+
+  // $modalEditProfile: $modalContenedor,
+  // abrirModalEditProfile: abrirModal,
+  // cerrarModalEditProfile: cerrarModal,
+
   profileComponent.append(headerBack);
   profileComponent.append(mainContainer);
-
   mainContainer.append(profileContainer);
-
   profileContainer.append(photoContainer);
   profileContainer.append(formContainer);
-
-  // if (user.providerData[0].providerId === "google.com") {
-  //   msgErr.textContent = "Usted está logeado con Google";
-  //   msgErr.style.color = "#0f0f0f";
-  //   // inputPwd.value = passwordMsg;
-  //   groupDate.classList.add("hidden");
-  //   groupPwd.classList.add("hidden");
-  //   iconPwd.classList.add("hidden");
-  //   // btnEdit.classList.add("hidden");
-  // }
+  profileComponent.append($modalEditProfile);
 
   //   --------------
 
