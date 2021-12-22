@@ -5,6 +5,7 @@ import { ModalEliminarPost } from "./ModalDeletePost.js";
 import { Menu, MenuList, ProfileList } from "./Menu.js";
 import { traerPost } from "../firebase/firebase-data.js";
 import { HeaderSimple } from "./Header_simple.js";
+import { ModalCerrarSesion } from "./Modal_cerrarSesion.js";
 // import { ModalEditPost } from './Edit_post.js'
 // import { ModalCerrarSesion } from "./Modal_cerrar.js";
 
@@ -17,15 +18,16 @@ export function Timeline() {
   const $postsContainer = document.createElement("div");
   $postsContainer.classList.add("notification-grid");
 
+  //Cerrar Sesion
+    const {  $modalCerrarSesion, abrilModalCerrarSesion } = ModalCerrarSesion();
   const {$modalCreatePost,abrirModalCreatePost} = ModalCreatePost();
   // Crea un Post
   const { menuModalPlus, toggleModalPlus } = MenuList(abrirModalCreatePost);
   // Perfil usuario
-  const { menuModalProfile, toggleModalProfile } = ProfileList();
+  const { menuModalProfile, toggleModalProfile } = ProfileList(abrilModalCerrarSesion);
   //Enviamos los eventos a Menu
   const $menu = Menu(toggleModalPlus, toggleModalProfile);
-
-
+ 
 
   // -----------------------------------------------------------------------------------
   // Lista desplegable de opciones de post EDITAR ELIMINAR POST
@@ -54,6 +56,7 @@ export function Timeline() {
   $timeline.append($modalCreatePost);
   $timeline.append($modalEditPost)
   $timeline.append($modalRemovePost)
+  $timeline.append($modalCerrarSesion)
 
   // cosas que pasan asincronamente
 
