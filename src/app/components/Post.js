@@ -7,6 +7,7 @@ import { traerComments } from "../firebase/firebase-data.js";
 
 export const Post = (post, setDataModalEdit, abrirModalEdit, setDataModalRemove, abrirModalRemove) => {
 
+ 
   const user_id = auth.currentUser.uid;
   // console.log("currentuser", user_id);
   const $card = document.createElement("div");
@@ -21,7 +22,7 @@ export const Post = (post, setDataModalEdit, abrirModalEdit, setDataModalRemove,
 
   const $avatarImg = document.createElement("img");
   $avatarImg.classList.add("card__avatar-img");
-  $avatarImg.src = "./app/assets/user-img.jpg";
+  $avatarImg.src = post.user_photo;
 
   const $avatarOverlay = document.createElement("div");
   $avatarOverlay.classList.add("card__avatar-overlay");
