@@ -265,7 +265,6 @@ export const Profile = () => {
       ? (inputPwd.type = "text")
       : (inputPwd.type = "password");
   });
-  //   --------------
 
   return profileComponent;
 };
