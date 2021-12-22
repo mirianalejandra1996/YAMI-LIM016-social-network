@@ -3,13 +3,9 @@ import { auth } from "../firebase/firebase-auth.js";
 import { NewComments } from "./Post-comments.js";
 // import { Menu, OptionListPost } from "./Menu.js";
 
-export const Post = (
-  post,
-  setDataModalEdit,
-  abrirModalEdit,
-  setDataModalRemove,
-  abrirModalRemove
-) => {
+export const Post = (post, setDataModalEdit, abrirModalEdit, setDataModalRemove, abrirModalRemove) => {
+
+ 
   const user_id = auth.currentUser.uid;
   // console.log("currentuser", user_id);
   const $card = document.createElement("div");
@@ -24,9 +20,7 @@ export const Post = (
 
   const $avatarImg = document.createElement("img");
   $avatarImg.classList.add("card__avatar-img");
-  // $avatarImg.src = "./app/assets/user-img.jpg";
-  $avatarImg.src =
-    "https://firebasestorage.googleapis.com/v0/b/yami-cbaa4.appspot.com/o/default-profile.jpeg?alt=media&token=772a7498-d018-4994-9805-041ae047bdc6";
+  $avatarImg.src = post.user_photo;
 
   const $avatarOverlay = document.createElement("div");
   $avatarOverlay.classList.add("card__avatar-overlay");

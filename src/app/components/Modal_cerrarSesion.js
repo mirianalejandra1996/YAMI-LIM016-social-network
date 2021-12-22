@@ -42,32 +42,16 @@ export function ModalCerrarSesion () {
 
     const cerrarModal = ()  => {
          $modalCerrar.classList.toggle('modal-cerrar')
-         setTimeout(function () {
-            $modalContenedor.style.opacity = "0"
-            $modalContenedor.style.visibility = "hidden"
-        }, 900)
+        $modalContenedor.style.opacity = "0"
+        $modalContenedor.style.visibility = "hidden"
+   
     }
 
     $cerrar.addEventListener('click', cerrarModal)
     $contenedorMensaje.addEventListener('click', logOutGoogle)
 
    return {
-       $modalContenedor,
-       abrirModal,
-       cerrarModal
+       $modalCerrarSesion: $modalContenedor,
+       abrilModalCerrarSesion:abrirModal,
    }
-}
-
-export const abrirModal  = ()  => {
-    $modalContenedor.style.opacity = "1"
-    $modalContenedor.style.visibility = "visible"
-    $modalCerrar.classList.toggle('modal-cerrar')
-}
-
-export const cerrarModal = ()  => {
-     $modalCerrar.classList.toggle('modal-cerrar')
-     setTimeout(function () {
-        $modalContenedor.style.opacity = "0"
-        $modalContenedor.style.visibility = "hidden"
-    }, 900)
 }

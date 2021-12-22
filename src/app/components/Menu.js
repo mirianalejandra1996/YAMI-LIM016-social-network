@@ -1,4 +1,4 @@
-import { ModalCerrarSesion } from "./Modal_cerrarSesion.js";
+
 
 export function Menu(toggleModalPlus, toggleModalProfile) {
   const d = document;
@@ -106,68 +106,21 @@ export function MenuList(abrirModalCreatePost) {
 
   $modalContenedor.append($modalLista);
 
+  $modalContenedor.addEventListener('click',() =>{
+    toggleModalPlus()
+  })
   const toggleModalPlus = () => {
     $modalContenedor.classList.toggle("cerrado");
-  };
-
-  const toggleCerrarModalPlus = () => {
-    $modalContenedor.classList.replace("abierto", "cerrado");
   };
 
   return {
     menuModalPlus: $modalContenedor,
     toggleModalPlus: toggleModalPlus,
-    toggleCerrarModalPlus: toggleCerrarModalPlus,
   };
 }
 
-// // Lista desplegable para editar o eliminar post
-// export function OptionListPost() {
-//   const $modalContenedor = document.createElement("div");
-//   $modalContenedor.classList.add("modal__contenedor", "align-end", "cerrar");
 
-//   const $modalLista = document.createElement("div");
-//   $modalLista.classList.add("modal__lista");
-
-//   const $itemEditPublication = document.createElement("button");
-//   $itemEditPublication.classList.add("modal__button");
-//   $itemEditPublication.textContent = "Editar";
-
-//   const $itemRemovePublication = document.createElement("button");
-//   $itemRemovePublication.classList.add("modal__button");
-//   $itemRemovePublication.textContent = "Remover";
-
-//   $itemEditPublication.addEventListener("click", (e) => {
-//     // console.log(e.target);
-//     // window.location.hash = "#/formPost";
-//     console.log("debería cambiar de vista para editar post");
-//   });
-
-//   $itemRemovePublication.addEventListener("click", (e) => {
-//     // console.log(e.target);
-//     // window.location.hash = "#/formPost";
-//     console.log(
-//       'debería cambiar de vista mostrando un modal "estás seguro de elimianr?"'
-//     );
-//   });
-
-//   $modalLista.append($itemEditPublication);
-//   $modalLista.append($itemRemovePublication);
-
-//   // !Este se puede arreglar Quizá llamando al id del menu y apendizarle la lista de Opciones de post
-//   $modalContenedor.append($modalLista);
-
-//   const toggleModalOptionsPost = () => {
-//     $modalContenedor.classList.toggle("cerrar");
-//   };
-
-//   return {
-//     menuModalOptionsPost: $modalContenedor,
-//     toggleModalOptionsPost: toggleModalOptionsPost,
-//   };
-// }
-
-export function ProfileList() {
+export function ProfileList(abrilModalCerrarSesion) {
   const $modalContenedorPerfil = document.createElement("div");
   $modalContenedorPerfil.id = "modalProfile";
   $modalContenedorPerfil.classList.add(
@@ -187,9 +140,11 @@ export function ProfileList() {
   $itemsCerrarSesion.classList.add("modal__button");
   $itemsCerrarSesion.textContent = "Cerrar sesión";
 
+  $itemsCerrarSesion.addEventListener("click",()=>{
+    abrilModalCerrarSesion()
+  })
   /********************************************/
-  const { $modalContenedor, abrirModal } = ModalCerrarSesion();
-  $modalContenedorPerfil.append($modalContenedor);
+
 
   $itemsPerfil.addEventListener("click", () => {
     console.log("cambiando de vista a Muro!");
@@ -206,6 +161,9 @@ export function ProfileList() {
 
   $modalContenedorPerfil.append($modalLista);
 
+  $modalContenedorPerfil.addEventListener('click',() =>{
+    toggleModalProfile()
+  })
   const toggleModalProfile = () => {
     $modalContenedorPerfil.classList.toggle("cerrado");
   };

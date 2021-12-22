@@ -3,6 +3,8 @@ import { HeaderRetroceder } from "../components/Header_retro.js";
 import { Post } from "./Post.js";
 import { traerMisPost } from "../firebase/firebase-data.js";
 import { Menu, MenuList, ProfileList } from "./Menu.js";
+import { ModalCerrarSesion } from "./Modal_cerrarSesion.js";
+import { ModalCreatePost } from "./ModalCreatePost.js";
 
 export function MiMuro() {
   const user = auth.currentUser;
@@ -74,22 +76,26 @@ export function MiMuro() {
       // mostrar mensaje de que no se pudo cargar los posts
     });
 
-  // Crea un post
-  const { menuModalPlus, toggleModalPlus } = MenuList();
+  //Cerrar Sesion
+  const {  $modalCerrarSesion, abrilModalCerrarSesion } = ModalCerrarSesion();
+  const {$modalCreatePost,abrirModalCreatePost} = ModalCreatePost();
+  // Crea un Post
+  const { menuModalPlus, toggleModalPlus } = MenuList(abrirModalCreatePost);
   // Perfil usuario
-  const { menuModalProfile, toggleModalProfile } = ProfileList();
-
-  // Abre y cierra Lista desplegable del Menu
+  const { menuModalProfile, toggleModalProfile } = ProfileList(abrilModalCerrarSesion);
+  //Enviamos los eventos a Menu
   const $menu = Menu(toggleModalPlus, toggleModalProfile);
 
   // -----------------------------------------------------------------------------------
-  $contenedorMuro.append($header);
-  $contenedorMuro.append($photoContainer);
-  $contenedorMuro.append($opcionesMuro);
-  $contenedorMuro.append($misPostsContainer);
-  $contenedorMuro.append(menuModalPlus);
-  $contenedorMuro.append(menuModalProfile);
-  $contenedorMuro.append($menu);
+  $contenedorMuro.append($header)
+  $contenedorMuro.append($photoContainer)
+  $contenedorMuro.append($opcionesMuro)
+  $contenedorMuro.append($misPostsContainer)
+  $contenedorMuro.append(menuModalPlus)
+  $contenedorMuro.append(menuModalProfile)
+  $contenedorMuro.append($menu)
+  $contenedorMuro.append($modalCreatePost)
+  $contenedorMuro.append($modalCerrarSesion)
 
   return $contenedorMuro;
 }
