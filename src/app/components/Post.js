@@ -1,7 +1,5 @@
 import { toggleLikes, initListenerPost } from "../firebase/firebase-data.js";
 import { auth } from "../firebase/firebase-auth.js";
-import { ModalEditPost } from "./Edit_post.js";
-import { ModalEliminarPost } from "./Modal_eliminarPost.js";
 import { NewComments } from "./Post-comments.js";
 // import { Menu, OptionListPost } from "./Menu.js";
 

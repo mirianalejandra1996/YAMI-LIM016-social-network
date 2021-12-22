@@ -672,6 +672,7 @@ input[type="password"]:focus {
 }
 .err-container.center {
   align-items: center;
+  height: 1rem;
 }
 /* ---------Para vista escritorio--------- */
 
@@ -723,10 +724,14 @@ input[type="password"]:focus {
 
 /*Formulario posts*/
 .formPost {
-  /* height: 100%; */
   display: flex;
   justify-content: center;
   flex-direction: column;
+  width: 90%;
+  background-color: #fff;
+  height: auto;
+  border-radius: 10px;
+
 }
 .formPost_h2 {
   padding-top: 20px;
@@ -780,7 +785,6 @@ input[type="password"]:focus {
 }
 .formPost_input-short {
   width: 80%;
-  margin-bottom: 15px;
   height: 40px;
   border: 1px solid #ffb800;
   border-radius: 10px;

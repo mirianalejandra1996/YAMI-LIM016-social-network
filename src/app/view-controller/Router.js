@@ -54,13 +54,6 @@ export const Router = () => {
           return (window.location.hash = "#/");
         }
       }
-      case "#/formPost": {
-        if (auth.currentUser) {
-          return $root.appendChild(components.formPost());
-        } else {
-          return (window.location.hash = "#/");
-        }
-      }
       case "#/editPost": {
         if (auth.currentUser) {
           return $root.appendChild(components.editPost());
