@@ -20,7 +20,7 @@ export function MiMuro() {
   photoAvatar.classList.add("photo__avatar-img");
   //   photoAvatar.src = "photoURL";
   photoAvatar.src = `${user.photoURL}`;
-  //   photoAvatar.src = "../src/app/assets/brooke-cagle-k9XZPpPHDho-unsplash.jpg";
+    // photoAvatar.src = "../src/app/assets/brooke-cagle-k9XZPpPHDho-unsplash.jpg";
   photoAvatar.alt = "imgAvatar";
 
   const $nombre = document.createElement("p");

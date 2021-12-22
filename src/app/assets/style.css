@@ -557,7 +557,7 @@ input[type="password"]:focus {
 }
 
 .card__icon {
-  font-size: 1.8rem;
+  font-size: 1.5rem;
   color: #ccc;
 }
 .card__icon.close__icon {
@@ -1132,7 +1132,7 @@ input[type="password"]:focus {
 
 .postComment_input {
   border-radius: 44px;
-  background-color: #efeff1;
+  background-color: #d4d4d4;
   border: transparent;
   margin-left: 10px;
   height: 35px;
@@ -1155,11 +1155,14 @@ input[type="password"]:focus {
 }
 .iconComment{
   color:#FF3F15;
+  transform: rotate(90deg);
+
 }
 .commentContainer{
   display: flex;
   flex-direction: row;
   position: relative;
+  margin-bottom: 20px;
 }
 .commentAvatar{
   width: 100%;
@@ -1183,6 +1186,7 @@ input[type="password"]:focus {
 }
 .commentOptionIcon{
   color: #848484;
+  font-size: 0.8rem;
 }
 .commentsContainer-border{
   border-top: 1px solid #efeff1;
@@ -1205,4 +1209,8 @@ input[type="password"]:focus {
 }
 .commentDiv{
   width: 100%;
+  border-radius: 30px;
+  background: #efeff1;
+  margin-left: 5px;
+  padding-left: 5px;
 }
