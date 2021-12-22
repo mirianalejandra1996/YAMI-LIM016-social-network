@@ -141,7 +141,7 @@ export const Profile = () => {
   //   Input email
   const inputPwd = document.createElement("input");
   //   inputPwd.type = "password";
-  inputPwd.type = "text";
+  inputPwd.type = "password";
   inputPwd.id = "password";
   inputPwd.classList.add("formProfile__input");
   // inputPwd.placeholder = "Ingresa un nombre"
@@ -162,7 +162,8 @@ export const Profile = () => {
   requiredPwd.textContent = "*";
 
   const iconPwd = document.createElement("span");
-  iconPwd.classList.add("formProfile__icon", "icon-open-eye");
+  // iconPwd.classList.add("formProfile__icon", "icon-open-eye");
+  iconPwd.classList.add("formProfile__icon", "icon-eye-hidden");
   // iconPwd.classList.add("eye-hidden");
   iconPwd.id = "eye";
 
@@ -257,7 +258,6 @@ export const Profile = () => {
 
   //   --------------
   iconPwd.addEventListener("click", () => {
-    console.log("cambia de ojito");
     iconPwd.classList.toggle("icon-open-eye");
     iconPwd.classList.toggle("icon-eye-hidden");
 
