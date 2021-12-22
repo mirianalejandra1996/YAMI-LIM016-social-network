@@ -145,13 +145,13 @@ export const Post = (post, setDataModalEdit, abrirModalEdit, setDataModalRemove,
   const $comentarioTitle = document.createElement("span");
   $comentarioTitle.classList.add("card__counter");
   $comentarioTitle.id = "comentario";
-  $comentarioTitle.textContent = "comentar";
+  $comentarioTitle.textContent = "X comentarios";
 
   const $postComments = NewComments(post.post_id);
 
-  $comentContainer.appendChild($iconComent);
   $comentContainer.appendChild($comentarioTitle);
-
+  $comentContainer.appendChild($iconComent);
+  
   $footerContainer.append($likeContainer);
   $footerContainer.append($comentContainer);
   

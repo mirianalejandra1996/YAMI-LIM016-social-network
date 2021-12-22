@@ -13,6 +13,18 @@ export const Comment = (com) => {
     avatarCircle.append(avatarImg)
     avatarDiv.append(avatarCircle)
 
+    const likesDiv = document.createElement("div")
+    likesDiv.classList.add("likesDiv")
+    const likesSpan = document.createElement("span")
+    likesSpan.classList.add("icon-like")
+    likesSpan.classList.add("likesIcon")
+    const likesCounter = document.createElement("span")
+    likesCounter.textContent = `X`
+    likesCounter.classList.add("likesCounter")
+
+    likesDiv.append(likesCounter)
+    likesDiv.append(likesSpan)
+
     const commentDiv = document.createElement("div")
     commentDiv.classList.add("commentDiv")
     const commentInfo = document.createElement("div")
@@ -23,10 +35,32 @@ export const Comment = (com) => {
     const commentMessage = document.createElement("p")
     commentMessage.classList.add("commentMessage")
     commentMessage.textContent = `${com.message}`
+    const commentBottom = document.createElement("div")
+    commentBottom.classList.add("commentBottom")
+    const commentTime = document.createElement("span")
+    commentTime.textContent = `X h`
+    commentTime.classList.add("commentTime")
+
+    commentBottom.append(commentTime)
+    commentBottom.append(likesDiv)
+    
 
     commentInfo.append(commentName)
     commentInfo.append(commentMessage)
+    commentInfo.append(commentBottom)
     commentDiv.append(commentInfo)
+
+    // const likesDiv = document.createElement("div")
+    // likesDiv.classList.add("likesDiv")
+    // const likesSpan = document.createElement("span")
+    // likesSpan.classList.add("icon-like")
+    // likesSpan.classList.add("likesIcon")
+    // const likesCounter = document.createElement("span")
+    // likesCounter.textContent = `X`
+    // likesCounter.classList.add("likesCounter")
+
+    // likesDiv.append(likesCounter)
+    // likesDiv.append(likesSpan)
 
     const optionsDiv = document.createElement("div")
     optionsDiv.classList.add("commentsOptionDiv")
@@ -38,6 +72,7 @@ export const Comment = (com) => {
 
     container.append(avatarDiv)
     container.append(commentDiv)
+    // container.append(likesDiv)
     container.append(optionsDiv)
 
     return container
