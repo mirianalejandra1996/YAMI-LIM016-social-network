@@ -56,7 +56,10 @@ export const ModalEditProfile = () => {
 
   // Contenedor Base del formulario
   const formContainer = document.createElement("div");
-  formContainer.classList.add("formProfile__container");
+  // todo: cambiar clase de modal
+
+  formContainer.classList.add("modal-profile__container");
+  // formContainer.classList.add("formProfile__container");
 
   // * Grupo: Nombre del usuario
   const groupName = document.createElement("div");
@@ -71,7 +74,7 @@ export const ModalEditProfile = () => {
 
   //  Nombre Obligatorio
   const requiredName = document.createElement("span");
-  requiredName.classList.add("formProfile__required");
+  requiredName.classList.add("modal-profile__required");
   requiredName.textContent = "*";
 
   groupName.append(inputName);
@@ -87,19 +90,11 @@ export const ModalEditProfile = () => {
 
   const inputDate = document.createElement("input");
 
-  //   inputDate.type = "text";
+  inputDate.type = "date";
   inputDate.id = "date";
   inputDate.classList.add("modal-profile__input");
-  // inputDate.disabled = true;
-
-  //   Label de nombre
-  const labelDate = document.createElement("label");
-  labelDate.for = "date";
-  labelDate.classList.add("formProfile__label");
-  labelDate.textContent = "Fecha de Nacimiento";
 
   groupDate.append(inputDate);
-  groupDate.append(labelDate);
 
   // -----------------------------
 
@@ -111,22 +106,15 @@ export const ModalEditProfile = () => {
   const inputEmail = document.createElement("input");
   inputEmail.type = "email";
   inputEmail.id = "email";
-  inputEmail.classList.add("formProfile__input");
-  inputEmail.disabled = true;
-
-  //   Label de email
-  const labelEmail = document.createElement("label");
-  labelEmail.for = "email";
-  labelEmail.classList.add("formProfile__label");
-  labelEmail.textContent = "Correo";
+  inputEmail.placeholder = "Correo electrónico";
+  inputEmail.classList.add("modal-profile__input");
 
   //  Email Obligatorio
   const requiredEmail = document.createElement("span");
-  requiredEmail.classList.add("formProfile__required", "hidden");
+  requiredEmail.classList.add("modal-profile__required");
   requiredEmail.textContent = "*";
 
   groupEmail.append(inputEmail);
-  groupEmail.append(labelEmail);
   groupEmail.append(requiredEmail);
 
   // -----------------------------
@@ -137,35 +125,20 @@ export const ModalEditProfile = () => {
 
   //   Input email
   const inputPwd = document.createElement("input");
-  //   inputPwd.type = "password";
-  inputPwd.type = "password";
+  inputPwd.type = "text";
   inputPwd.id = "password";
-  inputPwd.classList.add("formProfile__input");
-  inputPwd.disabled = true;
+  inputPwd.placeholder = "Contraseña";
+  inputPwd.classList.add("modal-profile__input");
 
   //   --------
 
-  //   Label de email
-  const labelPwd = document.createElement("label");
-  labelPwd.for = "password";
-  labelPwd.classList.add("formProfile__label");
-  labelPwd.textContent = "Contraseña";
-
   //  Email Obligatorio
   const requiredPwd = document.createElement("span");
-  requiredPwd.classList.add("formProfile__required", "hidden");
+  requiredPwd.classList.add("modal-profile__required");
   requiredPwd.textContent = "*";
 
-  const iconPwd = document.createElement("span");
-  iconPwd.classList.add("formProfile__icon", "icon-eye-hidden");
-  iconPwd.id = "eye";
-
-  // let passwordMsg;
-
   groupPwd.append(inputPwd);
-  groupPwd.append(labelPwd);
   groupPwd.append(requiredPwd);
-  groupPwd.append(iconPwd);
   // -----------------------------
 
   //   Contenedor de campos obligatorios
@@ -179,11 +152,23 @@ export const ModalEditProfile = () => {
   errContainer.append(msgErr);
   // -----------------------------
 
+  const btnsContainer = document.createElement("div");
+  btnsContainer.classList.add("modal-profile__btns-container");
+
+  const btnCancel = document.createElement("input");
+  btnCancel.id = "cancelChanges";
+  btnCancel.type = "submit";
+  btnCancel.classList.add("modal-profile__btn");
+  btnCancel.value = "Editar";
+
   const btnEdit = document.createElement("input");
-  btnEdit.id = "submit";
+  btnEdit.id = "saveChanges";
   btnEdit.type = "submit";
-  btnEdit.classList.add("formProfile__submit");
-  btnEdit.value = "Editar";
+  btnEdit.classList.add("modal-profile__btn");
+  btnEdit.value = "Guardar";
+
+  btnsContainer.append(btnCancel);
+  btnsContainer.append(btnEdit);
 
   // -----------------------------
 
@@ -195,7 +180,9 @@ export const ModalEditProfile = () => {
   //   Apendizamos el mensaje de error
   formContainer.append(errContainer);
   //  El botón de Editar
-  formContainer.append(btnEdit);
+  // formContainer.append(btnEdit);
+  // todo: en realidad hay que apendizar el div que tiene a editar o cancelar
+  formContainer.append(btnsContainer);
 
   // -----------------------------
 
@@ -252,14 +239,6 @@ export const ModalEditProfile = () => {
   // user_logedBy: logedByN,
 
   //   --------------
-  iconPwd.addEventListener("click", () => {
-    iconPwd.classList.toggle("icon-open-eye");
-    iconPwd.classList.toggle("icon-eye-hidden");
-
-    iconPwd.classList.contains("icon-open-eye")
-      ? (inputPwd.type = "text")
-      : (inputPwd.type = "password");
-  });
 
   // $modalContenedor.append($formPost);
   //Modal oculto

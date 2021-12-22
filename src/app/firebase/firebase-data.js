@@ -30,7 +30,7 @@ export function addPost(message) {
   return addDoc(colRef, {
     id_user: user.uid,
     user_name: user.displayName,
-    user_photo:user.photoURL,
+    user_photo: user.photoURL,
     message,
     date: Date.now(),
     likes: [],
@@ -69,7 +69,7 @@ export function addUser(user, name, password) {
     nameN = name;
     emailN = user.email;
     photoUrlN =
-      "https://firebasestorage.googleapis.com/v0/b/yami-cbaa4.appspot.com/o/default-profile.jpeg?alt=media&token=772a7498-d018-4994-9805-041ae047bdc6";
+      "https://firebasestorage.googleapis.com/v0/b/yami-cbaa4.appspot.com/o/user.png?alt=media&token=bfe80508-5817-4d84-83e1-6a074a16f198";
     logedByN = "password";
     passwordN = password;
   }

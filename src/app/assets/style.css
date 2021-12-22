@@ -1017,10 +1017,6 @@ input[type="password"]:focus {
 
 /* Formulario de Profile */
 
-.formProfile {
-  background-color: green;
-}
-
 .formProfile__container {
   margin-top: 3em;
   display: grid;
@@ -1055,15 +1051,29 @@ input[type="password"]:focus {
   font-family: lato;
 }
 
-.formProfile__required {
+.modal-profile__required {
   position: absolute;
   top: -12px;
   right: 0px;
   /* color: #f51616; */
 }
 
-.formProfile__submit {
+.modal-profile__container {
+  margin-top: 1em;
+  display: grid;
+  gap: 0.5em;
   width: 100%;
+  /* margin-top: 30px; */
+}
+
+.modal-profile__btns-container {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+}
+
+.modal-profile__btn {
+  width: 40%;
   border-radius: 7px;
   background-color: #fa610c;
   border: none;
@@ -1075,11 +1085,34 @@ input[type="password"]:focus {
   cursor: pointer;
 }
 
+.formProfile__submit {
+  width: 100%;
+  border-radius: 7px;
+  background-color: #fa610c;
+  border: none;
+  color: #ffff;
+  height: 2.5rem;
+  font-size: 0.85rem;
+  margin-top: 1rem;
+  margin-top: -0.5rem;
+  cursor: pointer;
+}
+
 /* icono del input date */
 
 ::-webkit-calendar-picker-indicator {
   filter: invert(70%);
   cursor: pointer;
+  position: absolute;
+  right: 8px;
+}
+
+:invalid::-webkit-datetime-edit {
+  color: #636c72;
+  position: absolute;
+  /* left: 0.3em; */
+  margin-left: -1em;
+  /* margin-left: -12px; */
 }
 
 .formProfile__icon {
@@ -1104,7 +1137,7 @@ input[type="password"]:focus {
 /* Modal de Edit Profile */
 
 .modal-profile {
-  height: calc(100% - 80px);
+  /* height: calc(100% - 80px); */
   display: flex;
   width: 300px;
   flex-direction: column;
@@ -1122,6 +1155,7 @@ input[type="password"]:focus {
   width: 100%;
   justify-content: space-between;
   align-items: center;
+  margin-bottom: 2em;
 }
 
 .modal-profile__close {
@@ -1144,8 +1178,12 @@ input[type="password"]:focus {
   border-radius: 10px;
   text-indent: 12px;
   margin-bottom: 10px;
+  font-family: lato;
 }
 
+.modal-profile__input::placeholder {
+  color: #636c72;
+}
 /* Muro */
 .opcionesMuro__container {
   padding: 20px 10px;
