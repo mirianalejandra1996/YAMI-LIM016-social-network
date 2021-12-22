@@ -3,20 +3,7 @@ import { auth } from "../firebase/firebase-auth.js";
 import { getUserData } from "../firebase/firebase-data.js";
 
 export const Profile = () => {
-  //   const user_id = auth.currentUser.uid;
   const user = auth.currentUser;
-  //   console.log("esta soy yo", user_id);
-  //   console.log("esta soy yo", user.displayName);
-  console.log("esta soy yo", user);
-  console.log("cuenta creada el ", user.metadata.createdAt);
-  console.log("foto ", user.photoURL);
-  console.log("foto ", user.emailVerified);
-  console.log("proveedor ", user.providerData);
- // console.log("proveedor ", user.providerData[0].providerId); //google
-  //console.log("proveedor ", user.providerData[1].providerId); //password
-
-  // console.log("soy yo", user);
-
   //    Contenedor principal
   const profileComponent = document.createElement("div");
   profileComponent.classList.add("allView");
@@ -41,15 +28,6 @@ export const Profile = () => {
 
   const photoAvatar = document.createElement("img");
   photoAvatar.classList.add("photo__avatar-img");
-  //   photoAvatar.src = "photoURL";
-
-  // let userImg = user.photoURL;
-  // if (!user.photoURL) {
-  //   userImg = "../src/app/assets/user-img.jpg";
-  // }
-
-  // photoAvatar.src = `${userImg}`;
-
   photoAvatar.alt = "imgAvatar";
 
   imgAvatarContainer.append(photoAvatar);
@@ -113,14 +91,6 @@ export const Profile = () => {
   //   inputDate.type = "text";
   inputDate.id = "date";
   inputDate.classList.add("formProfile__input");
-  // inputName.placeholder = "Ingresa un nombre"
-
-  //   if (!dateUser) {
-  //     //   dateUser = '0000-00-00'
-  //     dateUser = "";
-  //   }
-
-  //   inputDate.value = dateUser;
   inputDate.disabled = true;
 
   //   Label de nombre
@@ -241,15 +211,15 @@ export const Profile = () => {
   profileContainer.append(photoContainer);
   profileContainer.append(formContainer);
 
-  if (user.providerData[0].providerId === "google.com") {
-    msgErr.textContent = "Usted está logeado con Google";
-    msgErr.style.color = "#0f0f0f";
-    // inputPwd.value = passwordMsg;
-    groupDate.classList.add("hidden");
-    groupPwd.classList.add("hidden");
-    iconPwd.classList.add("hidden");
-    // btnEdit.classList.add("hidden");
-  }
+  // if (user.providerData[0].providerId === "google.com") {
+  //   msgErr.textContent = "Usted está logeado con Google";
+  //   msgErr.style.color = "#0f0f0f";
+  //   // inputPwd.value = passwordMsg;
+  //   groupDate.classList.add("hidden");
+  //   groupPwd.classList.add("hidden");
+  //   iconPwd.classList.add("hidden");
+  //   // btnEdit.classList.add("hidden");
+  // }
 
   //   --------------
 
@@ -261,6 +231,15 @@ export const Profile = () => {
       inputDate.value = user.user_date;
       inputPwd.value = user.user_password;
       inputEmail.value = user.user_email;
+
+      if (user.user_logedBy === "google") {
+        msgErr.textContent = "Usted está logeado con Google";
+        msgErr.style.color = "#0f0f0f";
+        groupDate.classList.add("hidden");
+        groupPwd.classList.add("hidden");
+        iconPwd.classList.add("hidden");
+        btnEdit.classList.add("hidden");
+      }
     })
     .catch((err) => {
       console.log(err);
@@ -278,7 +257,6 @@ export const Profile = () => {
 
   return profileComponent;
 };
-
 
 // !todo: HACER MODAL CON ESTE CODIGO PARA EDITAR PERFIL
 // <!-- Cabecera -->

@@ -19,7 +19,6 @@ import {
 import { db } from "../firebase/firebase-initializer.js";
 import { auth } from "../firebase/firebase-auth.js";
 
-
 /******************Agrega un post a FS*********************/
 const colRef = collection(db, "posts");
 
@@ -41,7 +40,6 @@ export function addPost(message) {
     .catch((err) => console.log(err));
 }
 
-
 /******************Agrega un usuario a FS*********************/
 const userRef = collection(db, "users");
 
@@ -56,7 +54,6 @@ export function addUser(user, name, password) {
   let nameN, emailN, photoUrlN, logedByN, passwordN;
 
   if (prueba.providerData[0].providerId === "google.com") {
-    // debugger;
     console.log("estás logueado con google!!");
     nameN = user.displayName;
     // emailN = user.auth.currentUser.email;
@@ -68,19 +65,13 @@ export function addUser(user, name, password) {
     // Si está logueado con password
     nameN = name;
     emailN = user.email;
-    photoUrlN = "../assets/user-img.jpg";
+    // photoUrlN = "../assets/user-img.jpg";
+    photoUrlN =
+      "https://firebasestorage.googleapis.com/v0/b/yami-cbaa4.appspot.com/o/default-profile.jpeg?alt=media&token=772a7498-d018-4994-9805-041ae047bdc6";
     logedByN = "password";
     passwordN = password;
   }
 
-  let nuevoImg;
-  if (!user.photoURL) {
-    const photoURL= "https://firebasestorage.googleapis.com/v0/b/yami-cbaa4.appspot.com/o/default-profile.jpeg?alt=media&token=772a7498-d018-4994-9805-041ae047bdc6"
-    nuevoImg = photoURL;  
-       
-  } else {
-    nuevoImg = user.photoURL;
-  }
   console.log("entramos a AddUsers");
 
   const userdoc = doc(db, "users", user.uid); //Creamos un documento con el id de nuestro usuario
@@ -128,7 +119,6 @@ export async function traerPost() {
   return postsData;
 }
 
-
 /******************Toggle Likes*********************/
 
 export async function toggleLikes(post_id) {
@@ -160,7 +150,6 @@ export async function toggleLikes(post_id) {
   }
 }
 
-
 /******************Init Listener Post*********************/
 
 export function initListenerPost(postId, actualizarPost) {
@@ -168,7 +157,6 @@ export function initListenerPost(postId, actualizarPost) {
 }
 
 // ---------------Funciones del post -------------------------------
-
 
 // Actualizar post
 
@@ -180,7 +168,6 @@ export async function updatePost(post_id, newMessage) {
   });
 }
 
-
 // Eliminar post
 
 export async function deletePost(post_id) {
@@ -188,7 +175,6 @@ export async function deletePost(post_id) {
 
   return await deleteDoc(postRef);
 }
-
 
 // Get User Data
 
@@ -205,11 +191,9 @@ export async function getUserData(user_id) {
   }
 }
 
-
 // Comentar un post
 
 export function addComment(current_user, idPost, comment) {
-
   const commentsRef = collection(db, "posts", idPost, "comments");
 
   addDoc(commentsRef, {
@@ -223,7 +207,6 @@ export function addComment(current_user, idPost, comment) {
     })
     .catch((err) => console.log(err));
 }
-
 
 // Check Registered User
 
@@ -239,7 +222,6 @@ export async function checkRegisteredUser(post_id) {
     console.log("No such document!");
   }
 }
-
 
 // Recopila los posts del Usuario
 
@@ -273,17 +255,15 @@ export async function traerMisPost(userId) {
   return postsData;
 }
 
-
 // Traer los comentarios
 
 export async function traerComments(id_post) {
-
   const commentsData = [];
 
   const commentsRef = collection(db, "posts", id_post, "comments");
 
   const querySnapshotComments = await getDocs(commentsRef);
-  
+
   querySnapshotComments.forEach((doc) => {
     const comment = doc.data();
     // comment["post_id"] = doc.id;
@@ -291,6 +271,6 @@ export async function traerComments(id_post) {
     // console.log(postData)
     // console.log(doc.id, " => ", doc.data());
   });
-  console.log(commentsData)
+  console.log(commentsData);
   return commentsData;
 }
