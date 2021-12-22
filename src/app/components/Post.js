@@ -1,6 +1,8 @@
 import { toggleLikes, initListenerPost } from "../firebase/firebase-data.js";
 import { auth } from "../firebase/firebase-auth.js";
 import { NewComments } from "./Post-comments.js";
+import { Comment } from "./Comment.js";
+import { traerComments } from "../firebase/firebase-data.js";
 // import { Menu, OptionListPost } from "./Menu.js";
 
 export const Post = (post, setDataModalEdit, abrirModalEdit, setDataModalRemove, abrirModalRemove) => {
@@ -147,6 +149,28 @@ export const Post = (post, setDataModalEdit, abrirModalEdit, setDataModalRemove,
   $comentarioTitle.id = "comentario";
   $comentarioTitle.textContent = "X comentarios";
 
+  /****************************/
+  const commentsDiv = document.createElement("div")
+  commentsDiv.classList.add("commentsDiv")
+  const commentsContainer = document.createElement("div")
+  commentsContainer.classList.add("commentsContainer")
+  
+  traerComments(post.post_id)
+
+  // $postsContainer.textContent = ""
+  .then((commentsList)=>{
+      commentsList.forEach((com)=>{
+          const comment = Comment(com)
+          commentsContainer.append(comment)
+          console.log("entra")
+      })
+  })
+  .catch((err) => console.log(err))
+
+  commentsDiv.append(commentsContainer)
+
+  /****************************/
+
   const $postComments = NewComments(post.post_id);
 
   $comentContainer.appendChild($comentarioTitle);
@@ -177,6 +201,7 @@ export const Post = (post, setDataModalEdit, abrirModalEdit, setDataModalRemove,
   $card.append($headerContainer);
   $card.append($msgContainer);
   $card.append($footerContainer);
+  $card.append(commentsDiv)
   $card.append($postComments);
 
 

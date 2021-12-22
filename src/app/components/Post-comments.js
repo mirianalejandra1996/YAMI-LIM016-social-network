@@ -7,20 +7,20 @@ export function NewComments(idPost) {
 
     const commentsDiv = document.createElement("div")
 
-    const commentsContainer = document.createElement("div")
-    commentsContainer.classList.add("commentsContainer-border")
+    // const commentsContainer = document.createElement("div")
+    // commentsContainer.classList.add("commentsContainer-border")
     
-    traerComments(idPost)
+    // traerComments(idPost)
 
-    // $postsContainer.textContent = ""
-    .then((commentsList)=>{
-        commentsList.forEach((com)=>{
-            const comment = Comment(com)
-            commentsContainer.append(comment)
-            console.log("entra")
-        })
-    })
-    .catch((err) => console.log(err))
+    // // $postsContainer.textContent = ""
+    // .then((commentsList)=>{
+    //     commentsList.forEach((com)=>{
+    //         const comment = Comment(com)
+    //         commentsContainer.append(comment)
+    //         console.log("entra")
+    //     })
+    // })
+    // .catch((err) => console.log(err))
 
     const current_user = auth.currentUser
     
@@ -62,7 +62,7 @@ export function NewComments(idPost) {
     newComment.append(inputComment)
     newComment.append(commentBtn)
 
-    commentsDiv.append(commentsContainer)
+    // commentsDiv.append(commentsContainer)
     commentsDiv.append(newComment)
 
     return commentsDiv

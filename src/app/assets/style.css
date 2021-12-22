@@ -395,6 +395,7 @@ input[type="password"]:focus {
   padding: 1em;
   margin: 0 auto;
   width: 100%;
+  overflow: hidden;
 }
 
 .card__header {
@@ -540,6 +541,7 @@ input[type="password"]:focus {
   justify-content: space-between;
   margin-top: 1em;
   margin-bottom: 5px;
+  border-bottom: 1px solid #efeff1;
 }
 
 .card__icon-container {
@@ -679,6 +681,7 @@ input[type="password"]:focus {
 @media (min-width: 1200px) {
   .card {
     max-width: 60%;
+    /* overflow: hidden; */
   }
 
   .card__icon-container:hover .card__icon {
@@ -1198,8 +1201,7 @@ input[type="password"]:focus {
   color: #848484;
   font-size: 0.8rem;
 }
-.commentsContainer-border{
-  border-top: 1px solid #efeff1;
+.commentsContainer{
   padding-top: 14px;
 }
 .avatarDiv{
@@ -1253,4 +1255,7 @@ input[type="password"]:focus {
   justify-content: space-between;
   flex-direction: row;
   align-items: end;
+}
+.commentsDiv{
+  overflow: auto;
 }
