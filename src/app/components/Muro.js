@@ -54,16 +54,23 @@ export function MiMuro() {
 
   traerMisPost(user.uid)
     .then((postsLista) => {
+     
       // una vez que tengo la lista le quito el loader
       $misPostsContainer.textContent = "";
       //lleno el $postContainer con los nodos de post
-      postsLista.forEach((post) => {
-        const $post = Post(post);
-        $misPostsContainer.append($post);
-      });
+      if(postsLista.length === 0){
+        $misPostsContainer.textContent = "No hay post creados";
+      }else{
+        postsLista.forEach((post) => {
+          const $post = Post(post);
+          $misPostsContainer.append($post);
+        });
+      }
     })
     .catch((error) => {
       console.error(error);
+      $misPostsContainer.textContent = "No hay post...";
+
       // mostrar mensaje de que no se pudo cargar los posts
     });
 

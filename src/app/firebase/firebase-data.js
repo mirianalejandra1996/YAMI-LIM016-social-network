@@ -27,7 +27,7 @@ export function addPost(message) {
 
   console.log(user);
   console.log("entramos a AddPost");
-  addDoc(colRef, {
+  return addDoc(colRef, {
     id_user: user.uid,
     user_name: user.displayName,
     message,
@@ -48,9 +48,6 @@ const userRef = collection(db, "users");
 export function addUser(user, name, password) {
   console.log("este es el user que entra como parámetro", user);
 
-  const prueba = user;
-  console.log("esta es una prueba", prueba);
-  console.log("este es el proveedor", prueba.providerData[0].providerId);
   let nameN,
     emailN,
     photoUrlN,
@@ -58,19 +55,18 @@ export function addUser(user, name, password) {
     passwordN,
     birthN = null;
 
-  if (prueba.providerData[0].providerId === "google.com") {
+  if (user.providerData[0].providerId === "google.com") {
     console.log("estás logueado con google!!");
     nameN = user.displayName;
-    // emailN = user.auth.currentUser.email;
     emailN = user.email;
     photoUrlN = user.photoURL;
     logedByN = "google";
     passwordN = null;
   } else {
     // Si está logueado con password
+
     nameN = name;
     emailN = user.email;
-    // photoUrlN = "../assets/user-img.jpg";
     photoUrlN =
       "https://firebasestorage.googleapis.com/v0/b/yami-cbaa4.appspot.com/o/default-profile.jpeg?alt=media&token=772a7498-d018-4994-9805-041ae047bdc6";
     logedByN = "password";
