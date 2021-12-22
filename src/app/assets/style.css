@@ -384,7 +384,7 @@ input[type="password"]:focus {
 /* Componente de post-card */
 .card {
   background-color: #fff;
-  box-shadow:  5px 5px 12px #aaa;
+  box-shadow: 5px 5px 12px #aaa;
   border-radius: 17px;
   display: flex;
   flex-direction: column;
@@ -731,14 +731,13 @@ input[type="password"]:focus {
   background-color: #fff;
   height: auto;
   border-radius: 10px;
-
 }
 .formPost_h2 {
   padding-top: 20px;
   font-size: 15px;
   font-weight: normal;
 }
-.formPost_title{
+.formPost_title {
   padding: 20px 35px;
   font-size: 15px;
   font-weight: normal;
@@ -789,6 +788,7 @@ input[type="password"]:focus {
   border: 1px solid #ffb800;
   border-radius: 10px;
   text-indent: 12px;
+  margin-bottom: 10px;
 }
 .formPost_input-short::placeholder {
   color: #cbbdbd;
@@ -967,8 +967,6 @@ input[type="password"]:focus {
   display: flex;
   width: 300px;
   flex-direction: column;
-  /* background-color: blue; */
-  /* justify-content: space-between; */
   align-items: center;
   margin-top: 35px;
 }
@@ -983,9 +981,10 @@ input[type="password"]:focus {
 }
 .photo__avatar-container {
   width: 90px;
+  height: 90px;
   margin: 10px;
   overflow: hidden;
-  border-radius: 15%;
+  border-radius: 100%;
 }
 
 .photo__avatar-img {
@@ -1101,6 +1100,22 @@ input[type="password"]:focus {
 .hidden {
   display: none;
 }
+
+/* Modal de Edit Profile */
+
+.modal-profile {
+  height: calc(100% - 80px);
+  display: flex;
+  width: 300px;
+  flex-direction: column;
+  /* background-color: blue; */
+  /* justify-content: space-between; */
+  align-items: center;
+  /* margin-top: 35px; */
+  background: #fff;
+  padding: 20px;
+}
+
 /* Muro */
 .opcionesMuro__container {
   padding: 20px 10px;
@@ -1161,26 +1176,26 @@ input[type="password"]:focus {
   margin-left: 8px;
   cursor: pointer;
 }
-.iconComment{
-  color:#FF3F15;
+.iconComment {
+  color: #ff3f15;
 }
-.commentContainer{
+.commentContainer {
   display: flex;
   flex-direction: row;
   position: relative;
 }
-.commentAvatar{
+.commentAvatar {
   width: 100%;
   height: auto;
 }
-.commentAvatarCircle{
+.commentAvatarCircle {
   width: 32px;
   height: 32px;
   overflow: hidden;
   border-radius: 100%;
   position: relative;
 }
-.commentsOptionDiv{
+.commentsOptionDiv {
   display: flex;
   justify-content: center;
   align-items: center;
@@ -1189,28 +1204,30 @@ input[type="password"]:focus {
   border-radius: 100%;
   transition: 0.3s ease;
 }
-.commentOptionIcon{
+.commentOptionIcon {
   color: #848484;
 }
-.commentsContainer-border{
+.commentsContainer-border {
   border-top: 1px solid #efeff1;
   padding-top: 14px;
 }
-.avatarDiv{
+.avatarDiv {
   display: flex;
   align-items: center;
   justify-content: center;
 }
-.commentName{
+.commentName {
   font-weight: 600;
   font-size: 14px;
 }
-.commentMessage{
+.commentMessage {
   font-size: 13px;
 }
-.commentInfo{
+.commentInfo {
   margin-left: 8px;
 }
-.commentDiv{
+.commentDiv {
   width: 100%;
 }
+
+/* ---------------------- */
