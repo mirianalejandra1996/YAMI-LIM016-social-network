@@ -19,7 +19,7 @@ export const Comment = (com) => {
     likesSpan.classList.add("icon-like")
     likesSpan.classList.add("likesIcon")
     const likesCounter = document.createElement("span")
-    likesCounter.textContent = `X`
+    likesCounter.textContent = `X`;
     likesCounter.classList.add("likesCounter")
 
     likesDiv.append(likesCounter)
@@ -38,7 +38,7 @@ export const Comment = (com) => {
     const commentBottom = document.createElement("div")
     commentBottom.classList.add("commentBottom")
     const commentTime = document.createElement("span")
-    commentTime.textContent = `X h`
+    commentTime.textContent = `${timeSince(com.date)}`
     commentTime.classList.add("commentTime")
 
     commentBottom.append(commentTime)
@@ -77,3 +77,49 @@ export const Comment = (com) => {
 
     return container
 }
+
+function timeSince(date) {
+    var seconds = Math.floor((new Date() - date) / 1000);
+  
+    // Intervalo de años
+    var interval = seconds / 31536000;
+    if (interval > 1) {
+      let years = Math.floor(interval);
+      if (years === 1) return `${years} mes`;
+      return `${years} años`;
+    }
+  
+    // Intervalo de meses
+    interval = seconds / 2592000;
+    if (interval > 1) {
+      let months = Math.floor(interval);
+      if (months === 1) return `${months} mes`;
+      return `${months} meses`;
+    }
+  
+    // Intervalo de días
+    interval = seconds / 86400;
+    if (interval > 1) {
+      let days = Math.floor(interval);
+      if (days === 1) return `${days} hora`;
+      return `${days} días`;
+    }
+  
+    // Intervalo de horas
+    interval = seconds / 3600;
+    if (interval > 1) {
+      let hours = Math.floor(interval);
+      if (hours === 1) return `${hours} hora`;
+      return `${hours} horas`;
+    }
+  
+    // Intervalo de minutos
+    interval = seconds / 60;
+    if (interval > 1) {
+      let minutes = Math.floor(interval);
+      if (minutes === 1) return `${minutes} minuto`;
+      return `${minutes} minutos`;
+    }
+    return `Hace segundos`;
+  }
+  
