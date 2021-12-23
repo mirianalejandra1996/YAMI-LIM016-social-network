@@ -176,7 +176,8 @@ export function enviarRegistro() {
         return updateProfile(auth.currentUser, {
           displayName: name,
           password: password,
-          photoURL: "https://firebasestorage.googleapis.com/v0/b/yami-cbaa4.appspot.com/o/user.png?alt=media&token=bfe80508-5817-4d84-83e1-6a074a16f198"
+          photoURL:
+            "https://firebasestorage.googleapis.com/v0/b/yami-cbaa4.appspot.com/o/user.png?alt=media&token=bfe80508-5817-4d84-83e1-6a074a16f198",
         })
           .then(() => {
             console.log(
@@ -211,21 +212,26 @@ export function enviarRegistro() {
 
 // todo: pendiente hacer funcionalidad de validación de nombre
 // nombre: /^[a-zA-ZÀ-ÿ\s]{1,40}$/, // Letras y espacios, pueden llevar acentos.
-
 // Funciones validadoras
-function validate_email(email) {
+export function validate_email(email) {
   const expression = /^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$/;
   return expression.test(email);
 }
 
-function validate_password(password) {
+export function validate_password(password) {
   // La contraseña debe tener entre 8 a 14 caracteres
 
   const expression = /^.{6,14}$/;
+
+  // si hace match
+  if (!expression.test(password)) {
+    console.log("contraseña fallida");
+    // console.log("contraseña buena");
+  }
   return expression.test(password);
 }
 
-function validate_field(field) {
+export function validate_field(field) {
   // const expression = /^[a-zA-ZÀ-ÿ\s]{1,40}$/;
 
   // if (!expression.test(field) == true){

@@ -1059,6 +1059,10 @@ input[type="password"]:focus {
   /* color: #f51616; */
 }
 
+.modal-profile__required--active {
+  color: #f51616;
+}
+
 .modal-profile__container {
   margin-top: 1em;
   display: grid;

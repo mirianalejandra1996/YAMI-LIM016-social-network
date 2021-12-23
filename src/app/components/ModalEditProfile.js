@@ -2,6 +2,11 @@
 import { getUserData } from "../firebase/firebase-data.js";
 import { auth } from "../firebase/firebase-auth.js";
 import { updateUser } from "../firebase/firebase-data.js";
+import {
+  validate_email,
+  validate_password,
+  validate_field,
+} from "../firebase/firebase-auth.js";
 
 export const ModalEditProfile = () => {
   const user = auth.currentUser;
@@ -152,6 +157,8 @@ export const ModalEditProfile = () => {
 
   const msgErr = document.createElement("span");
   msgErr.classList.add("error-msg");
+  msgErr.id = "error-msg";
+  // errorLogin
   //   msgErr.textContent = "Campos obligatorios *";
 
   errContainer.append(msgErr);
@@ -267,10 +274,46 @@ export const ModalEditProfile = () => {
       // todo: hay que modificar la foto del usuario
       // user_photo :
     };
-    updateUser(user.uid, newData).then(() => {
-      console.log("si se pudo!");
-      document.location.reload();
-    });
+
+    const requiredFields = document.getElementsByClassName(
+      "modal-profile__required"
+    );
+    for (let element of requiredFields) {
+      element.classList.remove("modal-profile__required--active");
+    }
+
+    if (
+      !validate_email(newData.user_name) ||
+      !validate_password(newData.user_password)
+    ) {
+      for (let element of requiredFields) {
+        element.classList.add("modal-profile__required--active");
+      }
+      document.getElementById("error-msg").textContent = "Datos inválidos";
+
+      console.log("todos estos son", requiredFields);
+    } else if (
+      !validate_field(newData.user_name) ||
+      !validate_field(newData.user_email) ||
+      !validate_field(newData.user_password)
+
+      // console.log('name', validate_field(newData.user_name))
+      // console.log('name', validate_field(newData.user_name))
+    ) {
+      const requiredFields = document.getElementsByClassName(
+        "modal-profile__required"
+      );
+      console.log("todos estos son", requiredFields);
+      document.getElementById("error-msg").textContent = "Datos obligatorios";
+    } else {
+      for (let element of requiredFields) {
+        element.classList.remove("modal-profile__required--active");
+      }
+      updateUser(user.uid, newData).then(() => {
+        console.log("si se pudo!");
+        document.location.reload();
+      });
+    }
   });
 
   return {
@@ -279,3 +322,27 @@ export const ModalEditProfile = () => {
     cerrarModalEditProfile: cerrarModal,
   };
 };
+
+// if (!validate_email(inputEmail.value) || !validate_password(inputPwd.value)) {
+//   document.getElementById("errorLogin").textContent = "Datos inválidos";
+// }
+
+// if (
+//   !validate_field(name) ||
+//   !validate_field(email) ||
+//   !validate_field(password)
+// ) {
+//   document.getElementById("errorLogin").textContent = "Datos obligatorios";
+// }
+
+// if (!validate_email(email) || !validate_password(password)) {
+//   document.getElementById("errorLogin").textContent = "Datos inválidos";
+// }
+
+// if (
+//   !validate_field(name) ||
+//   !validate_field(email) ||
+//   !validate_field(password)
+// ){
+
+// }
