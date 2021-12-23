@@ -134,7 +134,7 @@ body {
 }
 
 .form__input::placeholder {
-  color: #cbbdbd;
+  color: #ccc;
 }
 
 .form__input:focus {
@@ -770,13 +770,14 @@ input[type="password"]:focus {
 }
 .formPost_input-long {
   width: 80%;
-  height: 228px;
+  height: 128px;
   margin-bottom: 15px;
   border: 1px solid #ffb800;
   border-radius: 10px;
   padding: 12px;
   font-family: "Lato", sans-serif;
   resize: none;
+  font-size: 14px;
 }
 
 .formPost_input-long:focus {
@@ -784,7 +785,7 @@ input[type="password"]:focus {
 }
 
 .formPost_input-long::placeholder {
-  color: #cbbdbd;
+  color: #ccc;
 }
 .formPost_input-short {
   width: 80%;
@@ -1261,7 +1262,9 @@ input[type="password"]:focus {
 .commentsDiv{
   overflow: auto;
 }
-<<<<<<< HEAD
+.close {
+  display: none;
+}
 /* Agregar archivo imagen a post */
 input[type="file"]{
   width: 0.1px;
@@ -1271,21 +1274,19 @@ input[type="file"]{
   position: absolute;
   z-index: -1;
 }
-label[for=" nuestroinput"] {
+label[for="file"] {
+  padding: 0px 12px 0px 0px;
   font-size: 14px;
-  font-weight: 600;
-  color: #fff;
-  background-color: #106BA0;
-  display: inline-block;
-  transition: all .5s;
+  color: #ccc;
   cursor: pointer;
-  padding: 15px 40px !important;
-  text-transform: uppercase;
-  width: fit-content;
-  text-align: center;
-  }
-=======
-.close {
-  display: none;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
 }
->>>>>>> gaby
+.imagenFile {
+  width: 80%;
+  margin-top: 15px;
+  border-radius: 10px;
+  
+}

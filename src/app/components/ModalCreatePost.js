@@ -1,11 +1,10 @@
-import { HeaderRetroceder } from "./Header_retro.js";
 import { addPost } from "../firebase/firebase-data.js";
 
 export const ModalCreatePost = () => {
-   // * modalContenedor es el overlay
-   const $modalContenedor = document.createElement("div");
-   $modalContenedor.classList.add("modal__contenedor");
-   $modalContenedor.classList.add("modal-cerrar");
+  // * modalContenedor es el overlay
+  const $modalContenedor = document.createElement("div");
+  $modalContenedor.classList.add("modal__contenedor");
+  $modalContenedor.classList.add("modal-cerrar");
   //Contenedor de post
   const $formPost = document.createElement("div");
   $formPost.classList.add("formPost");
@@ -36,7 +35,6 @@ export const ModalCreatePost = () => {
   $header.append($opcionesCabecera);
   $header.append($title);
 
-
   //Input del Post
   const $inputsContainer = document.createElement("div");
   $inputsContainer.classList.add("formPost_inputs");
@@ -50,33 +48,50 @@ export const ModalCreatePost = () => {
   $tags.classList.add("formPost_input-short");
   $tags.placeholder = `Añadir etiquetas`;
 
-  
-  const $pictureContainer = document.createElement('div')
-  $pictureContainer.classList.add("formPost_input-short","iconImg_rigth")
-  $pictureContainer.placeholder = 'Añadir Imagen'
+  //Input de la Imagen
+  const $pictureContainer = document.createElement("div");
+  $pictureContainer.classList.add("formPost_input-short", "iconImg_rigth");
   const $picture = document.createElement("input");
-  $picture.id = 'file'
-  $picture.type = 'file'
-  const $pictureLabel = document.createElement('label')
-  $pictureLabel.for = 'file'
-  const $iconPictureContenedor = document.createElement('div')
-  $iconPictureContenedor.classList.add('PictureContenedor_icon')
+  $picture.id = "file";
+  $picture.type = "file";
+
+  const $imagenFile = document.createElement("img");
+  $imagenFile.classList.add("imagenFile");
+
+  // Escuchar cuando cambie
+  $picture.addEventListener("change", () => {
+    // Los archivos seleccionados, pueden ser muchos o uno
+    const archivos = $picture.files;
+    // Si no hay archivos salimos de la función y quitamos la imagen
+    if (!archivos || !archivos.length) {
+      $imagenFile.src = "";
+      return;
+    }
+    // Ahora tomamos el primer archivo, el cual vamos a previsualizar
+    const primerArchivo = archivos[0];
+    // Lo convertimos a un objeto de tipo objectURL
+    const objectURL = URL.createObjectURL(primerArchivo);
+    // Y a la fuente de la imagen le ponemos el objectURL
+    $imagenFile.src = objectURL;
+  });
+
+  const $pictureLabel = document.createElement("label");
+  $pictureLabel.setAttribute("for", "file");
+  $pictureLabel.textContent = "Añadir imagen";
+
   const $iconPicture = document.createElement("span");
   $iconPicture.classList.add("icon-addimg");
   $iconPicture.classList.add("card__icon");
-  $iconPictureContenedor.append($iconPicture)
 
- 
-  $pictureContainer.append($iconPictureContenedor)
-  $pictureContainer.append($picture)
-  
+  $pictureLabel.append($iconPicture);
 
-  // picture.onchange = {pictureHandler}
-
+  $pictureContainer.append($pictureLabel);
+  $pictureContainer.append($picture);
 
   $inputsContainer.append($post);
- // $inputsContainer.append(tags);
+  // $inputsContainer.append(tags);
   $inputsContainer.append($pictureContainer);
+  $inputsContainer.append($imagenFile);
 
   // Contenedor del mensaje de Error
   const $errorContainer = document.createElement("div");
@@ -95,28 +110,28 @@ export const ModalCreatePost = () => {
   //////////////////////////////Boton de Tags
   const $tagBtn = document.createElement("button");
   $tagBtn.classList.add("formPost_button");
-  
+
   const $tagBtnDiv = document.createElement("div");
   $tagBtnDiv.classList.add("btnContent");
   $tagBtn.append($tagBtnDiv);
-  
+
   const $iconTag = document.createElement("span");
   $iconTag.classList.add("icon-plus2");
-  
+
   $iconTag.classList.add("btnIconsTag");
   $tagBtnDiv.append($iconTag);
-  
+
   const $textTag = document.createElement("span");
   $textTag.classList.add("tagTextSpan");
   $textTag.textContent = `Etiquetas`;
   $tagBtnDiv.append($textTag);
-  
+
   //////////////////////////////////////Boton Publicacion
-  
+
   const $postBtn = document.createElement("button");
   $postBtn.id = "sendPost";
   $postBtn.classList.add("formPost_button");
-  
+
   //$btnsContainer.append($tagBtn);
   $btnsContainer.append($postBtn);
 
@@ -125,12 +140,12 @@ export const ModalCreatePost = () => {
     const $mensajeError = document.getElementById("errorCrearPost");
     const $formPostMsg = document.getElementById("msgPostForm").value;
     if ($formPostMsg == "") {
-    $mensajeError.textContent = "completar campos *";
+      $mensajeError.textContent = "completar campos *";
     } else {
       console.log("creamos el nuevo post!!", $formPostMsg);
       addPost($formPostMsg).then(() => {
-        console.log("modal cerrado")
-        cerrarModal()
+        console.log("modal cerrado");
+        cerrarModal();
       });
     }
   });
@@ -158,7 +173,6 @@ export const ModalCreatePost = () => {
   //Modal oculto
   $modalContenedor.style.opacity = "0";
   $modalContenedor.style.visibility = "hidden";
-
 
   const abrirModal = () => {
     $modalContenedor.style.opacity = "1";
