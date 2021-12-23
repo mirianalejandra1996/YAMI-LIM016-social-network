@@ -163,8 +163,12 @@ export const Post = (post, setDataModalEdit, abrirModalEdit, setDataModalRemove,
   traerComments(post.post_id)
 
   .then((commentsList)=>{
-    console.log(commentsList.length)
-    $comentarioTitle.textContent = commentsList.length+" comentarios";
+    if(commentsList.length>1 || commentsList.length===0){
+      $comentarioTitle.textContent = commentsList.length+" comentarios";
+    }else{
+      $comentarioTitle.textContent = commentsList.length+" comentario";
+    }
+  
       commentsList.forEach((com)=>{
           const comment = Comment(com)
           commentsContainer.append(comment)
