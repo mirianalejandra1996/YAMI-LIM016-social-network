@@ -277,3 +277,29 @@ export async function traerComments(id_post) {
   console.log(commentsData);
   return commentsData;
 }
+
+// Actualiza el usuario
+
+export async function updateUser(user_id, objNewData) {
+  console.log("función updateUser va a actualizar los datos");
+  const userDocRef = doc(db, "users", user_id);
+
+  return await updateDoc(userDocRef, {
+    // user_photo: objNewData.user_photo,
+    user_name: objNewData.user_name,
+    user_birth: objNewData.user_birth,
+    user_email: objNewData.user_email,
+    user_password: objNewData.user_password,
+  });
+}
+
+// const postRef = doc(db, "posts", post_id);
+
+// // user_id: user.uid,
+// user_name: nameN,
+// user_photo: photoUrlN,
+// user_createdAt: user.metadata.createdAt,
+// user_email: emailN,
+// user_password: passwordN,
+// user_logedBy: logedByN,
+// user_birth: birthN,

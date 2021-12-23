@@ -1,6 +1,11 @@
 // import { ModalEditProfile } from "../components/ModalEditProfile.js";
+import { getUserData } from "../firebase/firebase-data.js";
+import { auth } from "../firebase/firebase-auth.js";
+import { updateUser } from "../firebase/firebase-data.js";
 
 export const ModalEditProfile = () => {
+  const user = auth.currentUser;
+
   const $modalContenedor = document.createElement("div");
   $modalContenedor.classList.add("modal__contenedor");
   $modalContenedor.classList.add("modal-cerrar");
@@ -143,7 +148,7 @@ export const ModalEditProfile = () => {
 
   //   Contenedor de campos obligatorios
   const errContainer = document.createElement("div");
-  errContainer.classList.add("errContainer");
+  errContainer.classList.add("errContainer--modal");
 
   const msgErr = document.createElement("span");
   msgErr.classList.add("error-msg");
@@ -159,16 +164,16 @@ export const ModalEditProfile = () => {
   btnCancel.id = "cancelChanges";
   btnCancel.type = "submit";
   btnCancel.classList.add("modal-profile__btn");
-  btnCancel.value = "Editar";
+  btnCancel.value = "Cancelar";
 
-  const btnEdit = document.createElement("input");
-  btnEdit.id = "saveChanges";
-  btnEdit.type = "submit";
-  btnEdit.classList.add("modal-profile__btn");
-  btnEdit.value = "Guardar";
+  const btnSaveChanges = document.createElement("input");
+  btnSaveChanges.id = "saveChanges";
+  btnSaveChanges.type = "submit";
+  btnSaveChanges.classList.add("modal-profile__btn");
+  btnSaveChanges.value = "Guardar";
 
   btnsContainer.append(btnCancel);
-  btnsContainer.append(btnEdit);
+  btnsContainer.append(btnSaveChanges);
 
   // -----------------------------
 
@@ -179,8 +184,6 @@ export const ModalEditProfile = () => {
   formContainer.append(groupPwd);
   //   Apendizamos el mensaje de error
   formContainer.append(errContainer);
-  //  El botón de Editar
-  // formContainer.append(btnEdit);
   // todo: en realidad hay que apendizar el div que tiene a editar o cancelar
   formContainer.append(btnsContainer);
 
@@ -189,7 +192,7 @@ export const ModalEditProfile = () => {
   // const { $modalEditProfile, abrirModalEditProfile, cerrarModalEditProfile } =
   //   ModalEditProfile();
 
-  btnEdit.addEventListener("click", () => {
+  btnSaveChanges.addEventListener("click", () => {
     // abrirModalEditProfile();
     console.log("editemos el perfil ");
   });
@@ -208,27 +211,18 @@ export const ModalEditProfile = () => {
 
   //   --------------
 
-  // getUserData(user.uid)
-  //   .then((user) => {
-  //     photoAvatar.src = user.user_photo;
-  //     inputDate.type = "date";
-  //     inputName.value = user.user_name;
-  //     inputDate.value = user.user_birth;
-  //     inputPwd.value = user.user_password;
-  //     inputEmail.value = user.user_email;
-
-  //     if (user.user_logedBy === "google") {
-  //       msgErr.textContent = "Usted está logeado con Google";
-  //       msgErr.style.color = "#0f0f0f";
-  //       groupDate.classList.add("hidden");
-  //       groupPwd.classList.add("hidden");
-  //       iconPwd.classList.add("hidden");
-  //       btnEdit.classList.add("hidden");
-  //     }
-  //   })
-  //   .catch((err) => {
-  //     console.log(err);
-  //   });
+  getUserData(user.uid)
+    .then((user) => {
+      photoAvatar.src = user.user_photo;
+      // inputDate.type = "date";
+      inputName.value = user.user_name;
+      inputDate.value = user.user_birth;
+      inputPwd.value = user.user_password;
+      inputEmail.value = user.user_email;
+    })
+    .catch((err) => {
+      console.log(err);
+    });
 
   // user_id: user.uid,
   // user_name: nameN,
@@ -258,6 +252,25 @@ export const ModalEditProfile = () => {
 
   closeIcon.addEventListener("click", () => {
     cerrarModal();
+  });
+
+  btnCancel.addEventListener("click", () => {
+    cerrarModal();
+  });
+
+  btnSaveChanges.addEventListener("click", () => {
+    const newData = {
+      user_name: inputName.value,
+      user_birth: inputDate.value,
+      user_email: inputEmail.value,
+      user_password: inputPwd.value,
+      // todo: hay que modificar la foto del usuario
+      // user_photo :
+    };
+    updateUser(user.uid, newData).then(() => {
+      console.log("si se pudo!");
+      document.location.reload();
+    });
   });
 
   return {
