@@ -148,7 +148,7 @@ export const Post = (post, setDataModalEdit, abrirModalEdit, setDataModalRemove,
   const $comentarioTitle = document.createElement("span");
   $comentarioTitle.classList.add("card__counter");
   $comentarioTitle.id = "comentario";
-  $comentarioTitle.textContent = "X comentarios";
+  // $comentarioTitle.textContent = "X comentarios";
 
   /****************************/
 
@@ -162,8 +162,9 @@ export const Post = (post, setDataModalEdit, abrirModalEdit, setDataModalRemove,
 
   traerComments(post.post_id)
 
-  // $postsContainer.textContent = ""
   .then((commentsList)=>{
+    console.log(commentsList.length)
+    $comentarioTitle.textContent = commentsList.length+" comentarios";
       commentsList.forEach((com)=>{
           const comment = Comment(com)
           commentsContainer.append(comment)

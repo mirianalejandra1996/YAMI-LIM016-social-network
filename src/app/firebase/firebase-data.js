@@ -360,6 +360,13 @@ export async function traerComments(id_post) {
     // console.log(postData)
     // console.log(doc.id, " => ", doc.data());
   });
+
   console.log(commentsData)
   return commentsData;
 }
+
+//   const commentsLength = commentsData.length
+//   // console.log(commentsLength)
+
+//   return {commentsData, commentsLength}
+// }
