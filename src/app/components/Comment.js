@@ -7,13 +7,23 @@ export const Comment = (com) => {
   const avatarCircle = document.createElement("div");
   avatarCircle.classList.add("commentAvatarCircle");
   const avatarImg = document.createElement("img");
-  // avatarImg.src= "./app/assets/user-img.jpg"
-  avatarImg.src =
-    "https://firebasestorage.googleapis.com/v0/b/yami-cbaa4.appspot.com/o/default-profile.jpeg?alt=media&token=772a7498-d018-4994-9805-041ae047bdc6";
+  avatarImg.src = "./app/assets/user-img.jpg";
   avatarImg.classList.add("commentAvatar");
 
   avatarCircle.append(avatarImg);
   avatarDiv.append(avatarCircle);
+
+  const likesDiv = document.createElement("div");
+  likesDiv.classList.add("likesDiv");
+  const likesSpan = document.createElement("span");
+  likesSpan.classList.add("icon-like");
+  likesSpan.classList.add("likesIcon");
+  const likesCounter = document.createElement("span");
+  likesCounter.textContent = `X`;
+  likesCounter.classList.add("likesCounter");
+
+  likesDiv.append(likesCounter);
+  likesDiv.append(likesSpan);
 
   const commentDiv = document.createElement("div");
   commentDiv.classList.add("commentDiv");
@@ -25,10 +35,31 @@ export const Comment = (com) => {
   const commentMessage = document.createElement("p");
   commentMessage.classList.add("commentMessage");
   commentMessage.textContent = `${com.message}`;
+  const commentBottom = document.createElement("div");
+  commentBottom.classList.add("commentBottom");
+  const commentTime = document.createElement("span");
+  commentTime.textContent = `${timeSince(com.date)}`;
+  commentTime.classList.add("commentTime");
+
+  commentBottom.append(commentTime);
+  commentBottom.append(likesDiv);
 
   commentInfo.append(commentName);
   commentInfo.append(commentMessage);
+  commentInfo.append(commentBottom);
   commentDiv.append(commentInfo);
+
+  // const likesDiv = document.createElement("div")
+  // likesDiv.classList.add("likesDiv")
+  // const likesSpan = document.createElement("span")
+  // likesSpan.classList.add("icon-like")
+  // likesSpan.classList.add("likesIcon")
+  // const likesCounter = document.createElement("span")
+  // likesCounter.textContent = `X`
+  // likesCounter.classList.add("likesCounter")
+
+  // likesDiv.append(likesCounter)
+  // likesDiv.append(likesSpan)
 
   const optionsDiv = document.createElement("div");
   optionsDiv.classList.add("commentsOptionDiv");
@@ -40,7 +71,53 @@ export const Comment = (com) => {
 
   container.append(avatarDiv);
   container.append(commentDiv);
+  // container.append(likesDiv)
   container.append(optionsDiv);
 
   return container;
 };
+
+function timeSince(date) {
+  var seconds = Math.floor((new Date() - date) / 1000);
+
+  // Intervalo de años
+  var interval = seconds / 31536000;
+  if (interval > 1) {
+    let years = Math.floor(interval);
+    if (years === 1) return `${years} mes`;
+    return `${years} años`;
+  }
+
+  // Intervalo de meses
+  interval = seconds / 2592000;
+  if (interval > 1) {
+    let months = Math.floor(interval);
+    if (months === 1) return `${months} mes`;
+    return `${months} meses`;
+  }
+
+  // Intervalo de días
+  interval = seconds / 86400;
+  if (interval > 1) {
+    let days = Math.floor(interval);
+    if (days === 1) return `${days} hora`;
+    return `${days} días`;
+  }
+
+  // Intervalo de horas
+  interval = seconds / 3600;
+  if (interval > 1) {
+    let hours = Math.floor(interval);
+    if (hours === 1) return `${hours} hora`;
+    return `${hours} horas`;
+  }
+
+  // Intervalo de minutos
+  interval = seconds / 60;
+  if (interval > 1) {
+    let minutes = Math.floor(interval);
+    if (minutes === 1) return `${minutes} minuto`;
+    return `${minutes} minutos`;
+  }
+  return `Hace segundos`;
+}
