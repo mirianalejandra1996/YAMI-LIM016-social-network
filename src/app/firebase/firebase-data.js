@@ -124,7 +124,7 @@ export function addUser(user, name, password) {
 
   const prueba = user;
   let nameN, emailN, photoUrlN, logedByN, passwordN;
-debugger
+
   if (prueba.providerData[0].providerId === "google.com") {
     // debugger;
     console.log("estás logueado con google!!");

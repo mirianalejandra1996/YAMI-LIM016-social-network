@@ -5,9 +5,11 @@ import { traerMisPost } from "../firebase/firebase-data.js";
 import { Menu, MenuList, ProfileList } from "./Menu.js";
 import { ModalCerrarSesion } from "./Modal_cerrarSesion.js";
 import { ModalCreatePost } from "./ModalCreatePost.js";
+import { getUserData } from "../firebase/firebase-data.js";
 
 export function MiMuro() {
   const user = auth.currentUser;
+
   const $contenedorMuro = document.createElement("div");
 
   const $header = HeaderRetroceder();
@@ -21,12 +23,12 @@ export function MiMuro() {
   const photoAvatar = document.createElement("img");
   photoAvatar.classList.add("photo__avatar-img");
   //   photoAvatar.src = "photoURL";
-  photoAvatar.src = `${user.photoURL}`;
+
     // photoAvatar.src = "../src/app/assets/brooke-cagle-k9XZPpPHDho-unsplash.jpg";
   photoAvatar.alt = "imgAvatar";
 
   const $nombre = document.createElement("p");
-  $nombre.textContent = `${user.displayName}`;
+  
 
   imgAvatarContainer.append(photoAvatar);
   $photoContainer.append(imgAvatarContainer);
@@ -50,7 +52,7 @@ export function MiMuro() {
   $opcionesMuro.append($editarPerfil);
 
   const $misPostsContainer = document.createElement("div");
-  $misPostsContainer.classList.add("shown");
+  $misPostsContainer.classList.add("notification-grid")
   //mientras cargan post, al $postsContainer le hago append de un loader
   $misPostsContainer.textContent = "cargando posts...";
 
@@ -74,6 +76,15 @@ export function MiMuro() {
       $misPostsContainer.textContent = "No hay post...";
 
       // mostrar mensaje de que no se pudo cargar los posts
+    });
+
+    getUserData(user.uid)
+    .then((user) => {
+      photoAvatar.src = user.user_photo;
+      $nombre.textContent = `${user.user_name}`;
+    })
+    .catch((err) => {
+      console.log(err);
     });
 
   //Cerrar Sesion

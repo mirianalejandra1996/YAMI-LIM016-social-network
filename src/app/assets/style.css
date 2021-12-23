@@ -792,6 +792,8 @@ input[type="password"]:focus {
   border: 1px solid #ffb800;
   border-radius: 10px;
   text-indent: 12px;
+  display: flex;
+  align-items: center;
 }
 .formPost_input-short::placeholder {
   color: #cbbdbd;
@@ -1259,3 +1261,25 @@ input[type="password"]:focus {
 .commentsDiv{
   overflow: auto;
 }
+/* Agregar archivo imagen a post */
+input[type="file"]{
+  width: 0.1px;
+  height: 0.1px;
+  opacity: 0;
+  overflow: hidden;
+  position: absolute;
+  z-index: -1;
+}
+label[for=" nuestroinput"] {
+  font-size: 14px;
+  font-weight: 600;
+  color: #fff;
+  background-color: #106BA0;
+  display: inline-block;
+  transition: all .5s;
+  cursor: pointer;
+  padding: 15px 40px !important;
+  text-transform: uppercase;
+  width: fit-content;
+  text-align: center;
+  }

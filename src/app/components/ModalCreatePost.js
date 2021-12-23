@@ -51,17 +51,32 @@ export const ModalCreatePost = () => {
   $tags.placeholder = `Añadir etiquetas`;
 
   
-
+  const $pictureContainer = document.createElement('div')
+  $pictureContainer.classList.add("formPost_input-short","iconImg_rigth")
+  $pictureContainer.placeholder = 'Añadir Imagen'
   const $picture = document.createElement("input");
+  $picture.id = 'file'
   $picture.type = 'file'
-  $picture.classList.add("formPost_input-short");
-  $picture.placeholder = `Añadir imagen`;
+  const $pictureLabel = document.createElement('label')
+  $pictureLabel.for = 'file'
+  const $iconPictureContenedor = document.createElement('div')
+  $iconPictureContenedor.classList.add('PictureContenedor_icon')
+  const $iconPicture = document.createElement("span");
+  $iconPicture.classList.add("icon-addimg");
+  $iconPicture.classList.add("card__icon");
+  $iconPictureContenedor.append($iconPicture)
+
+ 
+  $pictureContainer.append($iconPictureContenedor)
+  $pictureContainer.append($picture)
+  
+
   // picture.onchange = {pictureHandler}
 
 
   $inputsContainer.append($post);
  // $inputsContainer.append(tags);
-  $inputsContainer.append($picture);
+  $inputsContainer.append($pictureContainer);
 
   // Contenedor del mensaje de Error
   const $errorContainer = document.createElement("div");
