@@ -1261,6 +1261,7 @@ input[type="password"]:focus {
 .commentsDiv{
   overflow: auto;
 }
+<<<<<<< HEAD
 /* Agregar archivo imagen a post */
 input[type="file"]{
   width: 0.1px;
@@ -1283,3 +1284,8 @@ label[for=" nuestroinput"] {
   width: fit-content;
   text-align: center;
   }
+=======
+.close {
+  display: none;
+}
+>>>>>>> gaby

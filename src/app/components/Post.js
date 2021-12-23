@@ -138,7 +138,7 @@ export const Post = (post, setDataModalEdit, abrirModalEdit, setDataModalRemove,
   const $comentContainer = document.createElement("div");
   $comentContainer.classList.add("card__icon-container");
   $comentContainer.addEventListener("click", () => {
-    // Abrir coments(post.post_id);
+    $commentsBlock.classList.toggle("close")
   });
 
   const $iconComent = document.createElement("span");
@@ -148,18 +148,27 @@ export const Post = (post, setDataModalEdit, abrirModalEdit, setDataModalRemove,
   const $comentarioTitle = document.createElement("span");
   $comentarioTitle.classList.add("card__counter");
   $comentarioTitle.id = "comentario";
-  $comentarioTitle.textContent = "X comentarios";
+  // $comentarioTitle.textContent = "X comentarios";
 
   /****************************/
+
+  const $commentsBlock = document.createElement("div")
+  $commentsBlock.classList.add("close")
+
   const commentsDiv = document.createElement("div")
   commentsDiv.classList.add("commentsDiv")
   const commentsContainer = document.createElement("div")
   commentsContainer.classList.add("commentsContainer")
-  
+
   traerComments(post.post_id)
 
-  // $postsContainer.textContent = ""
   .then((commentsList)=>{
+    if(commentsList.length>1 || commentsList.length===0){
+      $comentarioTitle.textContent = commentsList.length+" comentarios";
+    }else{
+      $comentarioTitle.textContent = commentsList.length+" comentario";
+    }
+  
       commentsList.forEach((com)=>{
           const comment = Comment(com)
           commentsContainer.append(comment)
@@ -170,9 +179,12 @@ export const Post = (post, setDataModalEdit, abrirModalEdit, setDataModalRemove,
 
   commentsDiv.append(commentsContainer)
 
-  /****************************/
-
   const $postComments = NewComments(post.post_id);
+
+  $commentsBlock.append(commentsDiv)
+  // $commentsBlock.append($postComments)
+
+  /****************************/
 
   $comentContainer.appendChild($comentarioTitle);
   $comentContainer.appendChild($iconComent);
@@ -202,7 +214,8 @@ export const Post = (post, setDataModalEdit, abrirModalEdit, setDataModalRemove,
   $card.append($headerContainer);
   $card.append($msgContainer);
   $card.append($footerContainer);
-  $card.append(commentsDiv)
+  $card.append($commentsBlock)
+  // $card.append(commentsDiv)
   $card.append($postComments);
 
 
@@ -242,10 +255,6 @@ function OptionListPost(onClickRemove, onClickEdit) {
     toggleModalOptionsPost: toggleModalOptionsPost,
   };
 }
-
-
-
-
 
 function timeSince(date) {
   var seconds = Math.floor((new Date() - date) / 1000);
