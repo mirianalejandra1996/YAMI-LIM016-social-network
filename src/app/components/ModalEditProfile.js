@@ -282,33 +282,37 @@ export const ModalEditProfile = () => {
       element.classList.remove("modal-profile__required--active");
     }
 
-    if (
-      !validate_email(newData.user_name) ||
-      !validate_password(newData.user_password)
-    ) {
-      for (let element of requiredFields) {
-        element.classList.add("modal-profile__required--active");
-      }
-      document.getElementById("error-msg").textContent = "Datos inválidos";
-
-      console.log("todos estos son", requiredFields);
+    document.getElementById("error-msg").textContent = "";
+    // Validamos el nombre
+    if (!validate_field(newData.user_name)) {
+      document.getElementById("error-msg").textContent =
+        "Ingrese un nombre válido";
+    }
+    // Validamos el correo
+    else if (!validate_email(newData.user_email)) {
+      document.getElementById("error-msg").textContent =
+        "Ingrese un correo válido";
+    }
+    // Validamos la contraseña
+    else if (!validate_password(newData.user_password)) {
+      document.getElementById("error-msg").textContent =
+        "La contraseña debe tener entre 8 a 14 carácteres";
     } else if (
-      !validate_field(newData.user_name) ||
+      !validate_field(nanewData.user_name) ||
       !validate_field(newData.user_email) ||
       !validate_field(newData.user_password)
-
-      // console.log('name', validate_field(newData.user_name))
-      // console.log('name', validate_field(newData.user_name))
     ) {
-      const requiredFields = document.getElementsByClassName(
-        "modal-profile__required"
-      );
-      console.log("todos estos son", requiredFields);
-      document.getElementById("error-msg").textContent = "Datos obligatorios";
-    } else {
+      document.getElementById("error-msg").textContent = "";
+
       for (let element of requiredFields) {
         element.classList.remove("modal-profile__required--active");
       }
+    } else {
+      // *Falta otro escenario importante
+      // todo: AÑADIR FUNCION PARA VERIFICAR SI ESTA CUENTA ESTÁ SIENDO UTILIZADA
+      // IF checkUserRegistered === true
+      // document.getElementById("error-msg").textContent = "Esta cuenta ya está siendo utilizada";
+
       updateUser(user.uid, newData).then(() => {
         console.log("si se pudo!");
         document.location.reload();
@@ -346,3 +350,34 @@ export const ModalEditProfile = () => {
 // ){
 
 // }
+
+// ------------------ RESPALDO ---------------
+
+// if (
+//   !validate_email(newData.user_name) ||
+//   !validate_password(newData.user_password)
+// ) {
+//   for (let element of requiredFields) {
+//     element.classList.add("modal-profile__required--active");
+//   }
+//   document.getElementById("error-msg").textContent = "Datos inválidos";
+
+//   console.log("todos estos son", requiredFields);
+// } else if (
+//   !validate_field(newData.user_name) ||
+//   !validate_field(newData.user_email) ||
+//   !validate_field(newData.user_password)
+// ) {
+//   const requiredFields = document.getElementsByClassName(
+//     "modal-profile__required"
+//   );
+//   console.log("todos estos son", requiredFields);
+//   document.getElementById("error-msg").textContent = "Datos obligatorios *";
+// } else {
+//   for (let element of requiredFields) {
+//     element.classList.remove("modal-profile__required--active");
+//   }
+//   updateUser(user.uid, newData).then(() => {
+//     console.log("si se pudo!");
+//     document.location.reload();
+//   });

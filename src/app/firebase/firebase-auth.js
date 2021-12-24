@@ -214,7 +214,8 @@ export function enviarRegistro() {
 // nombre: /^[a-zA-ZÀ-ÿ\s]{1,40}$/, // Letras y espacios, pueden llevar acentos.
 // Funciones validadoras
 export function validate_email(email) {
-  const expression = /^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$/;
+  const expression = /^([\.\_a-zA-Z0-9]+)@([a-zA-A]+)\.([a-zA-Z]){2,8}/;
+
   return expression.test(email);
 }
 
@@ -238,11 +239,8 @@ export function validate_field(field) {
   //   return false
   // }
 
-  if (field == null) {
-    return false;
-  }
-
-  if (field.length <= 0) {
+  if (field.length <= 0 || field == null) {
+    console.log("field", field, "malo");
     return false;
   } else {
     return true;
