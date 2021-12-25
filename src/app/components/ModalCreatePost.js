@@ -2,10 +2,10 @@ import { HeaderRetroceder } from "./Header_retro.js";
 import { addPost } from "../firebase/firebase-data.js";
 
 export const ModalCreatePost = () => {
-   // * modalContenedor es el overlay
-   const $modalContenedor = document.createElement("div");
-   $modalContenedor.classList.add("modal__contenedor");
-   $modalContenedor.classList.add("modal-cerrar");
+  // * modalContenedor es el overlay
+  const $modalContenedor = document.createElement("div");
+  $modalContenedor.classList.add("modal__contenedor");
+  $modalContenedor.classList.add("modal-cerrar");
   //Contenedor de post
   const $formPost = document.createElement("div");
   $formPost.classList.add("formPost");
@@ -36,7 +36,6 @@ export const ModalCreatePost = () => {
   $header.append($opcionesCabecera);
   $header.append($title);
 
-
   //Input del Post
   const $inputsContainer = document.createElement("div");
   $inputsContainer.classList.add("formPost_inputs");
@@ -50,17 +49,14 @@ export const ModalCreatePost = () => {
   $tags.classList.add("formPost_input-short");
   $tags.placeholder = `Añadir etiquetas`;
 
-  
-
   const $picture = document.createElement("input");
-  $picture.type = 'file'
+  $picture.type = "file";
   $picture.classList.add("formPost_input-short");
   $picture.placeholder = `Añadir imagen`;
   // picture.onchange = {pictureHandler}
 
-
   $inputsContainer.append($post);
- // $inputsContainer.append(tags);
+  // $inputsContainer.append(tags);
   $inputsContainer.append($picture);
 
   // Contenedor del mensaje de Error
@@ -80,28 +76,28 @@ export const ModalCreatePost = () => {
   //////////////////////////////Boton de Tags
   const $tagBtn = document.createElement("button");
   $tagBtn.classList.add("formPost_button");
-  
+
   const $tagBtnDiv = document.createElement("div");
   $tagBtnDiv.classList.add("btnContent");
   $tagBtn.append($tagBtnDiv);
-  
+
   const $iconTag = document.createElement("span");
   $iconTag.classList.add("icon-plus2");
-  
+
   $iconTag.classList.add("btnIconsTag");
   $tagBtnDiv.append($iconTag);
-  
+
   const $textTag = document.createElement("span");
   $textTag.classList.add("tagTextSpan");
   $textTag.textContent = `Etiquetas`;
   $tagBtnDiv.append($textTag);
-  
+
   //////////////////////////////////////Boton Publicacion
-  
+
   const $postBtn = document.createElement("button");
   $postBtn.id = "sendPost";
   $postBtn.classList.add("formPost_button");
-  
+
   //$btnsContainer.append($tagBtn);
   $btnsContainer.append($postBtn);
 
@@ -110,12 +106,12 @@ export const ModalCreatePost = () => {
     const $mensajeError = document.getElementById("errorCrearPost");
     const $formPostMsg = document.getElementById("msgPostForm").value;
     if ($formPostMsg == "") {
-    $mensajeError.textContent = "completar campos *";
+      $mensajeError.textContent = "completar campos *";
     } else {
       console.log("creamos el nuevo post!!", $formPostMsg);
       addPost($formPostMsg).then(() => {
-        console.log("modal cerrado")
-        cerrarModal()
+        console.log("modal cerrado");
+        cerrarModal();
       });
     }
   });
@@ -143,7 +139,6 @@ export const ModalCreatePost = () => {
   //Modal oculto
   $modalContenedor.style.opacity = "0";
   $modalContenedor.style.visibility = "hidden";
-
 
   const abrirModal = () => {
     $modalContenedor.style.opacity = "1";
