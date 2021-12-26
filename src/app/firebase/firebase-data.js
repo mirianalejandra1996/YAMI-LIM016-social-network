@@ -213,18 +213,86 @@ export function addComment(current_user, idPost, comment) {
 
 // Check Registered User
 
-export async function checkRegisteredUser(post_id) {
-  const userRef = doc(db, "users", post_id);
-  const docSnap = await getDoc(userRef);
+// export async function isExistingUser(email) {
+//   const q = query(collection(db, "users"), where("user_email", "==", email));
 
-  if (docSnap.exists()) {
-    console.log("pues si existe este usuario en firestore!");
-    return await docSnap.data();
-  } else {
-    // doc.data() will be undefined in this case
-    console.log("No such document!");
-  }
+//   const docSnap = await getDoc(q);
+
+//   if (docSnap.exists) {
+//     console.log("pues si existe este usuario en firestore!");
+//     return await docSnap.data();
+//   } else {
+//     // doc.data() will be undefined in this case
+//     console.log("No such document!");
+//   }
+// }
+
+export async function isExistingUser(email) {
+  const q = query(collection(db, "users"), where("user_email", "==", email));
+
+  const docSnap = await getDocs(q);
+
+  const userEmailMatch = [];
+
+  docSnap.forEach((doc) => {
+    console.log("creo que sirve?", doc.data());
+    userEmailMatch.push(doc.data());
+  });
+
+  // console.log("esperanza", result);
+  // return userEmailMatch;
+
+  if (userEmailMatch.length === 0) return false
+  return true
+
+  // if (docSnap.exists()) {
+  //   console.log("pues si existe este usuario en firestore!");
+  //   // return await docSnap.data();
+  //   return true;
+  // } else {
+  //   // doc.data() will be undefined in this case
+  //   console.log("No such document!");
+  //   return false;
+  // }
 }
+
+// -----------------
+// export async function traerMisPost(userId) {
+//   const querySnapshotPosts = await getDocs(q1);
+
+//   const postsFiltradocs = querySnapshotPosts.docs; //Array
+//   const postsData = [];
+
+//   postsFiltradocs.forEach((doc) => {
+//     // doc.data() is never undefined for query doc snapshots
+
+//     const post = doc.data();
+//     console.log(post);
+//     post["post_id"] = doc.id;
+
+//     console.log(post);
+
+//     postsData.push(post);
+//     // console.log(postData)
+//     // console.log(doc.id, " => ", doc.data());
+//   });
+
+//   return postsData;
+// }
+
+// -----------------
+// export async function isExistingUser(post_id) {
+//   const userRef = doc(db, "users", post_id);
+//   const docSnap = await getDoc(userRef);
+
+//   if (docSnap.exists()) {
+//     console.log("pues si existe este usuario en firestore!");
+//     return await docSnap.data();
+//   } else {
+//     // doc.data() will be undefined in this case
+//     console.log("No such document!");
+//   }
+// }
 
 // Recopila los posts del Usuario
 
@@ -293,6 +361,9 @@ export async function updateUser(user_id, objNewData) {
   });
 }
 
+// ----------------------------------------------------------
+
+// ----------------------------------------------------------
 // const postRef = doc(db, "posts", post_id);
 
 // // user_id: user.uid,

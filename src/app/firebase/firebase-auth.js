@@ -1,5 +1,5 @@
 import { app } from "../firebase/firebase-initializer.js";
-import { checkRegisteredUser } from "../firebase/firebase-data.js";
+// import { checkRegisteredUser } from "../firebase/firebase-data.js";
 
 import {
   signInWithEmailAndPassword,

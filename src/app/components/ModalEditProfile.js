@@ -1,8 +1,10 @@
-// import { ModalEditProfile } from "../components/ModalEditProfile.js";
-import { getUserData } from "../firebase/firebase-data.js";
-import { auth } from "../firebase/firebase-auth.js";
-import { updateUser } from "../firebase/firebase-data.js";
 import {
+  getUserData,
+  updateUser,
+  isExistingUser,
+} from "../firebase/firebase-data.js";
+import {
+  auth,
   validate_email,
   validate_password,
   validate_field,
@@ -275,11 +277,14 @@ export const ModalEditProfile = () => {
       // user_photo :
     };
 
+    // Limpiamos el modal
+    document.getElementById("error-msg").textContent = "";
     const requiredFields = document.getElementsByClassName(
       "modal-profile__required"
     );
     for (let element of requiredFields) {
       element.classList.remove("modal-profile__required--active");
+      console.log("tenemos", requiredFields.length, "inputs obligatorios");
     }
 
     document.getElementById("error-msg").textContent = "";
@@ -287,36 +292,48 @@ export const ModalEditProfile = () => {
     if (!validate_field(newData.user_name)) {
       document.getElementById("error-msg").textContent =
         "Ingrese un nombre válido";
+
+      // Activa campo como obligatorio
+      requiredName.classList.add("modal-profile__required--active");
     }
     // Validamos el correo
     else if (!validate_email(newData.user_email)) {
       document.getElementById("error-msg").textContent =
         "Ingrese un correo válido";
+      // Activa campo como obligatorio
+      requiredEmail.classList.add("modal-profile__required--active");
     }
     // Validamos la contraseña
     else if (!validate_password(newData.user_password)) {
       document.getElementById("error-msg").textContent =
         "La contraseña debe tener entre 8 a 14 carácteres";
-    } else if (
-      !validate_field(nanewData.user_name) ||
-      !validate_field(newData.user_email) ||
-      !validate_field(newData.user_password)
-    ) {
-      document.getElementById("error-msg").textContent = "";
-
+      requiredPwd.classList.add("modal-profile__required--active");
+    } else {
       for (let element of requiredFields) {
         element.classList.remove("modal-profile__required--active");
       }
-    } else {
-      // *Falta otro escenario importante
-      // todo: AÑADIR FUNCION PARA VERIFICAR SI ESTA CUENTA ESTÁ SIENDO UTILIZADA
-      // IF checkUserRegistered === true
-      // document.getElementById("error-msg").textContent = "Esta cuenta ya está siendo utilizada";
 
-      updateUser(user.uid, newData).then(() => {
-        console.log("si se pudo!");
-        document.location.reload();
-      });
+      // Verifica si la cuenta esta siendo utilizada por otro usuario
+      isExistingUser(newData.user_email)
+        .then((user) => {
+          console.log("entramos al then", user);
+
+          if (user) {
+            console.log("este correo está siendo utilizado");
+            document.getElementById("error-msg").textContent =
+              "Esta cuenta ya está siendo utilizada";
+          } else {
+            console.log("si puedes cambiar tu correo");
+            document.getElementById("error-msg").textContent = "";
+            // updateUser(user.uid, newData).then(() => {
+            //   console.log("si se pudo!");
+            //   document.location.reload();
+            // });
+          }
+        })
+        .catch((err) => {
+          console.log("entramos al catch", err);
+        });
     }
   });
 
