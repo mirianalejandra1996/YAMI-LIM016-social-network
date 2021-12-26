@@ -273,9 +273,34 @@ export const ModalEditProfile = () => {
       user_birth: inputDate.value,
       user_email: inputEmail.value,
       user_password: inputPwd.value,
+      user_exist: false,
       // todo: hay que modificar la foto del usuario
       // user_photo :
     };
+
+    // let userExist;
+    console.log("El usuario existe? => ", newData.user_exist);
+    // console.log("El usuario existe? => ", userExist);
+    // Verifica si la cuenta esta siendo utilizada por otro usuario
+    isExistingUser(newData.user_email)
+      .then((user) => {
+        console.log("entramos al then", user);
+
+        if (user) {
+          console.log("este correo está siendo utilizado");
+          document.getElementById("error-msg").textContent =
+            "Esta cuenta ya está siendo utilizada";
+          newData.user_exist = true;
+          // userExist = true;
+        } else {
+          console.log("si puedes cambiar tu correo");
+          newData.user_exist = false;
+          // userExist = false;
+        }
+      })
+      .catch((err) => {
+        console.log("entramos al catch", err);
+      });
 
     // Limpiamos el modal
     document.getElementById("error-msg").textContent = "";
@@ -303,6 +328,12 @@ export const ModalEditProfile = () => {
       // Activa campo como obligatorio
       requiredEmail.classList.add("modal-profile__required--active");
     }
+    // // Revisamos si la cuenta ya está siendo utilizada
+    // else if (newData.user_exist) {
+    //   document.getElementById("error-msg").textContent =
+    //     "Esta cuenta ya está siendo utilizada";
+    //   console.log("else if de newData.user_exist");
+    // }
     // Validamos la contraseña
     else if (!validate_password(newData.user_password)) {
       document.getElementById("error-msg").textContent =
@@ -313,27 +344,27 @@ export const ModalEditProfile = () => {
         element.classList.remove("modal-profile__required--active");
       }
 
-      // Verifica si la cuenta esta siendo utilizada por otro usuario
-      isExistingUser(newData.user_email)
-        .then((user) => {
-          console.log("entramos al then", user);
+      // // Verifica si la cuenta esta siendo utilizada por otro usuario
+      // isExistingUser(newData.user_email)
+      //   .then((user) => {
+      //     console.log("entramos al then", user);
 
-          if (user) {
-            console.log("este correo está siendo utilizado");
-            document.getElementById("error-msg").textContent =
-              "Esta cuenta ya está siendo utilizada";
-          } else {
-            console.log("si puedes cambiar tu correo");
-            document.getElementById("error-msg").textContent = "";
-            // updateUser(user.uid, newData).then(() => {
-            //   console.log("si se pudo!");
-            //   document.location.reload();
-            // });
-          }
-        })
-        .catch((err) => {
-          console.log("entramos al catch", err);
-        });
+      //     if (user) {
+      //       console.log("este correo está siendo utilizado");
+      //       document.getElementById("error-msg").textContent =
+      //         "Esta cuenta ya está siendo utilizada";
+      //     } else {
+      //       console.log("si puedes cambiar tu correo");
+      //       document.getElementById("error-msg").textContent = "";
+      //       // updateUser(user.uid, newData).then(() => {
+      //       //   console.log("si se pudo!");
+      //       //   document.location.reload();
+      //       // });
+      //     }
+      //   })
+      //   .catch((err) => {
+      //     console.log("entramos al catch", err);
+      //   });
     }
   });
 
