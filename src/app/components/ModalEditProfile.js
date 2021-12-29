@@ -1,6 +1,6 @@
 import {
   getUserData,
-  updateUser,
+  updateUserFirestore,
   isExistingUser,
 } from "../firebase/firebase-data.js";
 import {
@@ -8,6 +8,9 @@ import {
   validate_email,
   validate_password,
   validate_field,
+  updateEmailUserAuth,
+  // getAuth,
+  // updateEmail,
 } from "../firebase/firebase-auth.js";
 
 export const ModalEditProfile = () => {
@@ -48,7 +51,7 @@ export const ModalEditProfile = () => {
   const photoAvatar = document.createElement("img");
   photoAvatar.classList.add("photo__avatar-img");
   photoAvatar.alt = "imgAvatar";
-  photoAvatar.src = "../src/app/assets/brooke-cagle-k9XZPpPHDho-unsplash.jpg";
+  // photoAvatar.src = "../src/app/assets/brooke-cagle-k9XZPpPHDho-unsplash.jpg";
 
   imgAvatarContainer.append(photoAvatar);
 
@@ -267,7 +270,7 @@ export const ModalEditProfile = () => {
     cerrarModal();
   });
 
-  btnSaveChanges.addEventListener("click", () => {
+  btnSaveChanges.addEventListener("click", async () => {
     const newData = {
       user_name: inputName.value,
       user_birth: inputDate.value,
@@ -278,29 +281,9 @@ export const ModalEditProfile = () => {
       // user_photo :
     };
 
-    // let userExist;
-    console.log("El usuario existe? => ", newData.user_exist);
-    // console.log("El usuario existe? => ", userExist);
-    // Verifica si la cuenta esta siendo utilizada por otro usuario
-    isExistingUser(newData.user_email)
-      .then((user) => {
-        console.log("entramos al then", user);
+    let userExist = await isExistingUser(newData.user_email);
 
-        if (user) {
-          console.log("este correo está siendo utilizado");
-          document.getElementById("error-msg").textContent =
-            "Esta cuenta ya está siendo utilizada";
-          newData.user_exist = true;
-          // userExist = true;
-        } else {
-          console.log("si puedes cambiar tu correo");
-          newData.user_exist = false;
-          // userExist = false;
-        }
-      })
-      .catch((err) => {
-        console.log("entramos al catch", err);
-      });
+    console.log("El usuario existe? => ", userExist);
 
     // Limpiamos el modal
     document.getElementById("error-msg").textContent = "";
@@ -320,6 +303,7 @@ export const ModalEditProfile = () => {
 
       // Activa campo como obligatorio
       requiredName.classList.add("modal-profile__required--active");
+      return;
     }
     // Validamos el correo
     else if (!validate_email(newData.user_email)) {
@@ -327,105 +311,42 @@ export const ModalEditProfile = () => {
         "Ingrese un correo válido";
       // Activa campo como obligatorio
       requiredEmail.classList.add("modal-profile__required--active");
+      return;
+    } else if (userExist) {
+      document.getElementById("error-msg").textContent =
+        "Esta cuenta ya está siendo utilizada";
+      console.log("else if de newData.user_exist");
+      return;
     }
-    // // Revisamos si la cuenta ya está siendo utilizada
-    // else if (newData.user_exist) {
-    //   document.getElementById("error-msg").textContent =
-    //     "Esta cuenta ya está siendo utilizada";
-    //   console.log("else if de newData.user_exist");
-    // }
     // Validamos la contraseña
     else if (!validate_password(newData.user_password)) {
       document.getElementById("error-msg").textContent =
         "La contraseña debe tener entre 8 a 14 carácteres";
       requiredPwd.classList.add("modal-profile__required--active");
+      return;
     } else {
       for (let element of requiredFields) {
         element.classList.remove("modal-profile__required--active");
       }
 
-      // // Verifica si la cuenta esta siendo utilizada por otro usuario
-      // isExistingUser(newData.user_email)
-      //   .then((user) => {
-      //     console.log("entramos al then", user);
+      updateUserFirestore(user.uid, newData)
+        .then(() => {
+          updateEmailUserAuth(newData);
+          // console.log("si se pudo!");
+          document.location.reload();
+        })
+        .then(() => {
+          console.log("si se pudo!");
+          // document.location.reload();
+        });
 
-      //     if (user) {
-      //       console.log("este correo está siendo utilizado");
-      //       document.getElementById("error-msg").textContent =
-      //         "Esta cuenta ya está siendo utilizada";
-      //     } else {
-      //       console.log("si puedes cambiar tu correo");
-      //       document.getElementById("error-msg").textContent = "";
-      //       // updateUser(user.uid, newData).then(() => {
-      //       //   console.log("si se pudo!");
-      //       //   document.location.reload();
-      //       // });
-      //     }
-      //   })
-      //   .catch((err) => {
-      //     console.log("entramos al catch", err);
-      //   });
+      // updateEmailUserAuth(newData.user_email);
+      // updateEmailUserAuth(newData);
     }
   });
-
   return {
     $modalEditProfile: $modalContenedor,
     abrirModalEditProfile: abrirModal,
     cerrarModalEditProfile: cerrarModal,
   };
 };
-
-// if (!validate_email(inputEmail.value) || !validate_password(inputPwd.value)) {
-//   document.getElementById("errorLogin").textContent = "Datos inválidos";
-// }
-
-// if (
-//   !validate_field(name) ||
-//   !validate_field(email) ||
-//   !validate_field(password)
-// ) {
-//   document.getElementById("errorLogin").textContent = "Datos obligatorios";
-// }
-
-// if (!validate_email(email) || !validate_password(password)) {
-//   document.getElementById("errorLogin").textContent = "Datos inválidos";
-// }
-
-// if (
-//   !validate_field(name) ||
-//   !validate_field(email) ||
-//   !validate_field(password)
-// ){
-
-// }
-
-// ------------------ RESPALDO ---------------
-
-// if (
-//   !validate_email(newData.user_name) ||
-//   !validate_password(newData.user_password)
-// ) {
-//   for (let element of requiredFields) {
-//     element.classList.add("modal-profile__required--active");
-//   }
-//   document.getElementById("error-msg").textContent = "Datos inválidos";
-
-//   console.log("todos estos son", requiredFields);
-// } else if (
-//   !validate_field(newData.user_name) ||
-//   !validate_field(newData.user_email) ||
-//   !validate_field(newData.user_password)
-// ) {
-//   const requiredFields = document.getElementsByClassName(
-//     "modal-profile__required"
-//   );
-//   console.log("todos estos son", requiredFields);
-//   document.getElementById("error-msg").textContent = "Datos obligatorios *";
-// } else {
-//   for (let element of requiredFields) {
-//     element.classList.remove("modal-profile__required--active");
-//   }
-//   updateUser(user.uid, newData).then(() => {
-//     console.log("si se pudo!");
-//     document.location.reload();
-//   });

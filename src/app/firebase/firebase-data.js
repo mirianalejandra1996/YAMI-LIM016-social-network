@@ -348,7 +348,7 @@ export async function traerComments(id_post) {
 
 // Actualiza el usuario
 
-export async function updateUser(user_id, objNewData) {
+export async function updateUserFirestore(user_id, objNewData) {
   console.log("función updateUser va a actualizar los datos");
   const userDocRef = doc(db, "users", user_id);
 
@@ -360,6 +360,7 @@ export async function updateUser(user_id, objNewData) {
     user_password: objNewData.user_password,
   });
 }
+
 
 // ----------------------------------------------------------
 

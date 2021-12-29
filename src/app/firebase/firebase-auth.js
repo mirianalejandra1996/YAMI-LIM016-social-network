@@ -12,6 +12,7 @@ import {
   signOut,
   sendPasswordResetEmail,
   onAuthStateChanged,
+  updateEmail,
   updateProfile,
 } from "https://www.gstatic.com/firebasejs/9.5.0/firebase-auth.js";
 
@@ -275,3 +276,52 @@ export function olvideContrasena() {
       // ..
     });
 }
+
+/********************Actualiza datos del usuario autenticado (CORREO)**************************/
+
+// export function updateEmailUserAuth(email) {
+  // export function updateEmailUserAuth(email) {
+
+  // export const updateEmailUserAuth = (email) => {
+  export const updateEmailUserAuth = (objNewData) => {
+  const auth = getAuth();
+
+  updateEmail(auth.currentUser, objNewData.user_email)
+    .then(() => {
+      console.log("Email updated!");
+      // Email updated!
+      // ...
+    })
+    .catch((error) => {
+      // An error occurred
+      console.log("An error occurred", error);
+      // ...
+    });
+}
+
+// -------------------------------------------------------------------------------------
+// export async function updateEmailUserAuth(objNewData) {
+//   const auth = getAuth();
+
+//   console.log("probando ando", auth.currentUser);
+//   return await updateProfile(auth.currentUser, {
+//     displayName: objNewData.user_name,
+//     email: objNewData.user_email,
+//     // photoURL: objNewData.user_photo
+//     // photoURL: "https://example.com/jane-q-user/profile.jpg"
+//   });
+//   // .then(() => {
+//   //   // Profile updated!
+//   //   // ...
+//   // })
+//   // .catch((error) => {
+//   //   // An error occurred
+//   //   // ...
+//   // });
+// }
+
+// user_photo: objNewData.user_photo,
+//  user_name: objNewData.user_name,
+//  user_birth: objNewData.user_birth,
+//  user_email: objNewData.user_email,
+//  user_password: objNewData.user_password,
