@@ -15,6 +15,7 @@ import {
   updateEmail,
   updateProfile,
   reauthenticateWithCredential,
+  EmailAuthProvider,
 } from "https://www.gstatic.com/firebasejs/9.5.0/firebase-auth.js";
 
 import { addUser } from "./firebase-data.js";
@@ -280,42 +281,38 @@ export function olvideContrasena() {
 
 /********************Actualiza datos del usuario autenticado (CORREO)**************************/
 
-// export function updateEmailUserAuth(email) {
-// export function updateEmailUserAuth(email) {
+// export const updateEmailUserAuth = (objNewData) => {
+//   const auth = getAuth();
 
-// export const updateEmailUserAuth = (email) => {
-export const updateEmailUserAuth = (objNewData) => {
-  const auth = getAuth();
+//   console.log("este es el correo, ", objNewData.user_email);
+//   return updateEmail(auth.currentUser, objNewData.user_email)
+//     .then(() => {
+//       // console.log("Email updated!");
+//       console.log("Email updated! de updateEmail", error);
 
-  console.log("este es el correo, ", objNewData.user_email);
-  return updateEmail(auth.currentUser, objNewData.user_email)
-    .then(() => {
-      // console.log("Email updated!");
-      console.log("Email updated! de updateEmail", error);
-
-      // signInWithEmailAndPassword(
-      //   auth,
-      //   objNewData.user_email,
-      //   objNewData.user_password
-      // )
-      //   .then((userCredential) => {
-      //     console.log("volvemos a ingresar!");
-      //     const user = userCredential.user;
-      //     console.log({ user });
-      //   })
-      //   .catch((error) => {
-      //     // Email updated!
-      //     // ...
-      //     // return true;
-      //   });
-    })
-    .catch((error) => {
-      // An error occurred
-      console.log("error catch de updateEmail", error);
-      // ...
-      return false;
-    });
-};
+//       // signInWithEmailAndPassword(
+//       //   auth,
+//       //   objNewData.user_email,
+//       //   objNewData.user_password
+//       // )
+//       //   .then((userCredential) => {
+//       //     console.log("volvemos a ingresar!");
+//       //     const user = userCredential.user;
+//       //     console.log({ user });
+//       //   })
+//       //   .catch((error) => {
+//       //     // Email updated!
+//       //     // ...
+//       //     // return true;
+//       //   });
+//     })
+//     .catch((error) => {
+//       // An error occurred
+//       console.log("error catch de updateEmail", error);
+//       // ...
+//       return false;
+//     });
+// };
 
 // -------------------------------------------------------------------------------------
 export function updateBasicInfoUserAuth(objNewData) {
@@ -346,19 +343,71 @@ export function updateBasicInfoUserAuth(objNewData) {
 //  user_email: objNewData.user_email,
 //  user_password: objNewData.user_password,
 
-export const reauthenticate = () => {
-
+export const reauthenticate = (objNewData) => {
   const auth = getAuth();
   const user = auth.currentUser;
-  
-  // TODO(you): prompt the user to re-provide their sign-in credentials
-  const credential = promptForCredentials();
-  
-  reauthenticateWithCredential(user, credential).then(() => {
-    // User re-authenticated.
-  }).catch((error) => {
-    // An error ocurred
-    // ...
-  });
 
-}
+  // TODO(you): prompt the user to re-provide their sign-in credentials
+  // const credential = createCredential(user);
+  // const credential = auth.EmailAuthProvider.credential(
+  //   user.email,
+  //   userProvidedPassword
+  // );
+  // const credential = promptForCredentials();
+
+  const password = "labolabo";
+  const { currentUser } = auth;
+  const { email } = currentUser;
+  const credential = EmailAuthProvider.credential(email, password);
+  console.log("que es esta credencial? => ", credential);
+
+  reauthenticateWithCredential(user, credential)
+    .then(() => {
+      updateEmailUserAuth(objNewData);
+      // updateEmail(auth.currentUser, objNewData.user_email)
+      // user.updateEmail(newEmail);
+      console.log("User re-authenticated!");
+      // console.log('Email Updated!');
+      // User re-authenticated.
+    })
+    .catch((error) => {
+      console.log("catch de la funcion de autenticar");
+      // An error ocurred
+      // ...
+    });
+};
+
+export const updateEmailUserAuth = (objNewData) => {
+  const auth = getAuth();
+
+  console.log("este es el correo, ", objNewData.user_email);
+  return updateEmail(auth.currentUser, objNewData.user_email)
+    .then(() => {
+      console.log("Email updated! de updateEmailAuth");
+    })
+    .catch((error) => {
+      // An error occurred
+      console.log("error catch de updateEmail", error);
+      // ...
+      return false;
+    });
+};
+
+// ------------------------------------------------
+
+// export const reauthenticate = (objNewData) => {
+//   const auth = getAuth();
+//   const user = auth.currentUser;
+
+//   // TODO(you): prompt the user to re-provide their sign-in credentials
+//   const credential = promptForCredentials();
+
+//   reauthenticateWithCredential(user, credential)
+//     .then(() => {
+//       // User re-authenticated.
+//     })
+//     .catch((error) => {
+//       // An error ocurred
+//       // ...
+//     });
+// };
