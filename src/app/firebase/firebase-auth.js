@@ -364,8 +364,6 @@ export const reauthenticate = (objNewData) => {
   reauthenticateWithCredential(user, credential)
     .then(() => {
       updateEmailUserAuth(objNewData);
-      // updateEmail(auth.currentUser, objNewData.user_email)
-      // user.updateEmail(newEmail);
       console.log("User re-authenticated!");
       // console.log('Email Updated!');
       // User re-authenticated.
