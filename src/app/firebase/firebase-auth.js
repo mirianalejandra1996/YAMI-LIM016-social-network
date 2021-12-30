@@ -16,7 +16,6 @@ import {
   updateProfile,
   reauthenticateWithCredential,
   EmailAuthProvider,
-  updatePassword,
 } from "https://www.gstatic.com/firebasejs/9.5.0/firebase-auth.js";
 
 import { addUser } from "./firebase-data.js";
@@ -280,7 +279,40 @@ export function olvideContrasena() {
     });
 }
 
-// Actualiza el correo
+/********************Actualiza datos del usuario autenticado (CORREO)**************************/
+
+// export const updateEmailUserAuth = (objNewData) => {
+//   const auth = getAuth();
+
+//   console.log("este es el correo, ", objNewData.user_email);
+//   return updateEmail(auth.currentUser, objNewData.user_email)
+//     .then(() => {
+//       // console.log("Email updated!");
+//       console.log("Email updated! de updateEmail", error);
+
+//       // signInWithEmailAndPassword(
+//       //   auth,
+//       //   objNewData.user_email,
+//       //   objNewData.user_password
+//       // )
+//       //   .then((userCredential) => {
+//       //     console.log("volvemos a ingresar!");
+//       //     const user = userCredential.user;
+//       //     console.log({ user });
+//       //   })
+//       //   .catch((error) => {
+//       //     // Email updated!
+//       //     // ...
+//       //     // return true;
+//       //   });
+//     })
+//     .catch((error) => {
+//       // An error occurred
+//       console.log("error catch de updateEmail", error);
+//       // ...
+//       return false;
+//     });
+// };
 
 // -------------------------------------------------------------------------------------
 export function updateBasicInfoUserAuth(objNewData) {
@@ -312,20 +344,31 @@ export function updateBasicInfoUserAuth(objNewData) {
 //  user_password: objNewData.user_password,
 
 export const reauthenticate = (objNewData) => {
-  // const user = auth.currentUser;
-
-  // TODO: Debo arreglar esa contraseña para que sea dinamica
-  const password = "labolabo";
   const auth = getAuth();
+  const user = auth.currentUser;
+
+  // TODO(you): prompt the user to re-provide their sign-in credentials
+  // const credential = createCredential(user);
+  // const credential = auth.EmailAuthProvider.credential(
+  //   user.email,
+  //   userProvidedPassword
+  // );
+  // const credential = promptForCredentials();
+
+  const password = "labolabo";
   const { currentUser } = auth;
   const { email } = currentUser;
   const credential = EmailAuthProvider.credential(email, password);
+  console.log("que es esta credencial? => ", credential);
 
   reauthenticateWithCredential(user, credential)
     .then(() => {
-      changeEmail(objNewData);
-      // changePassword(objNewData);
-      // console.log("User re-authenticated!");
+      updateEmailUserAuth(objNewData);
+      // updateEmail(auth.currentUser, objNewData.user_email)
+      // user.updateEmail(newEmail);
+      console.log("User re-authenticated!");
+      // console.log('Email Updated!');
+      // User re-authenticated.
     })
     .catch((error) => {
       console.log("catch de la funcion de autenticar");
@@ -334,13 +377,11 @@ export const reauthenticate = (objNewData) => {
     });
 };
 
-export const changeEmail = (objNewData) => {
+export const updateEmailUserAuth = (objNewData) => {
   const auth = getAuth();
-  const user = auth.currentUser;
 
-  // console.log("este es el correo, ", objNewData.user_email);
-  // updateEmail(auth.currentUser, objNewData.user_email)
-  updateEmail(user, objNewData.user_email)
+  console.log("este es el correo, ", objNewData.user_email);
+  return updateEmail(auth.currentUser, objNewData.user_email)
     .then(() => {
       console.log("Email updated! de updateEmailAuth");
     })
@@ -348,25 +389,25 @@ export const changeEmail = (objNewData) => {
       // An error occurred
       console.log("error catch de updateEmail", error);
       // ...
+      return false;
     });
 };
 
-// export const changePassword = (objNewData) => {
+// ------------------------------------------------
+
+// export const reauthenticate = (objNewData) => {
 //   const auth = getAuth();
-
 //   const user = auth.currentUser;
-//   // const newPassword = getASecureRandomPassword();
-//   const newPassword = objNewData.user_password;
 
-//   // updatePassword(user, newPassword).then(() => {
-//   updatePassword(user, newPassword)
+//   // TODO(you): prompt the user to re-provide their sign-in credentials
+//   const credential = promptForCredentials();
+
+//   reauthenticateWithCredential(user, credential)
 //     .then(() => {
-//       console.log("se ha cambiado la contraseña efectivamente!");
-//       // Update successful.
+//       // User re-authenticated.
 //     })
 //     .catch((error) => {
 //       // An error ocurred
-//       console.log("Problemas THEN para cambiar la contraseña");
 //       // ...
 //     });
 // };
