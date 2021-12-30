@@ -291,12 +291,12 @@ export function updateBasicInfoUserAuth(objNewData) {
   })
     .then(() => {
       // Profile updated!
-      console.log("función updateBasicInfoUserAuth exitosa!");
+      // console.log("función updateBasicInfoUserAuth exitosa!");
       // ...
     })
     .catch((error) => {
       // An error occurred
-      console.log("función updateBasicInfoUserAuth fracasada!");
+      // console.log("función updateBasicInfoUserAuth fracasada!");
       // ...
     });
 }
@@ -307,38 +307,30 @@ export function updateBasicInfoUserAuth(objNewData) {
 //  user_email: objNewData.user_email,
 //  user_password: objNewData.user_password,
 
-export const reauthenticate = (objNewData) => {
-  const auth = getAuth();
-  const user = auth.currentUser;
-  const email = user.email;
 
-  // TODO: ARREGLAR LA CONTRASEÑA
+// Siempre me pedirán credencial para eliminar cuenta, cambiar contraseña o correo
+const createCredential = (user) => {
+  const email = user.email;
   const password = "labolabo";
   const credential = EmailAuthProvider.credential(email, password);
-  console.log("que es esta credencial? => ", credential);
+  return credential;
+};
+
+export const changeEmail = async (objNewData) => {
+  const auth = getAuth();
+  const user = auth.currentUser;
+  const credential = await createCredential(user);
 
   reauthenticateWithCredential(user, credential)
     .then(() => {
-      updateEmailUserAuth(objNewData);
-      console.log("User re-authenticated!");
+      console.log("si se reautenticó");
+      updateEmail(user, objNewData.user_email)
+        .then(() => console.log("Email updated!"))
+        .catch((error) => {
+          console.log("catch para updateEmail", error);
+        });
     })
     .catch((error) => {
-      console.log("catch de la funcion de autenticar");
-    });
-};
-
-export const updateEmailUserAuth = (objNewData) => {
-  const auth = getAuth();
-
-  console.log("este es el correo, ", objNewData.user_email);
-  return updateEmail(auth.currentUser, objNewData.user_email)
-    .then(() => {
-      console.log("Email updated! de updateEmailAuth");
-    })
-    .catch((error) => {
-      // An error occurred
-      console.log("error catch de updateEmail", error);
-      // ...
-      return false;
+      console.log("catch de la funcion de changeEmail", error);
     });
 };

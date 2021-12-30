@@ -8,9 +8,10 @@ import {
   validate_email,
   validate_password,
   validate_field,
-  updateEmailUserAuth,
+  // updateEmailUserAuth,
   updateBasicInfoUserAuth,
   // getAuth,
+  changeEmail,
   // updateEmail,
 } from "../firebase/firebase-auth.js";
 
@@ -331,8 +332,9 @@ export const ModalEditProfile = () => {
       }
 
       updateUserFirestore(user.uid, newData).then(() => {
-        updateEmailUserAuth(newData);
+        // updateEmailUserAuth(newData);
         updateBasicInfoUserAuth(newData);
+        changeEmail(newData);
         // console.log("si se pudo!");
         // document.location.reload();
       });
