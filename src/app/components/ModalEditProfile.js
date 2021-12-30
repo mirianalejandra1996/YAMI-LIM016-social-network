@@ -9,6 +9,7 @@ import {
   validate_password,
   validate_field,
   updateEmailUserAuth,
+  updateBasicInfoUserAuth,
   // getAuth,
   // updateEmail,
 } from "../firebase/firebase-auth.js";
@@ -329,16 +330,12 @@ export const ModalEditProfile = () => {
         element.classList.remove("modal-profile__required--active");
       }
 
-      updateUserFirestore(user.uid, newData)
-        .then(() => {
-          updateEmailUserAuth(newData);
-          // console.log("si se pudo!");
-          document.location.reload();
-        })
-        .then(() => {
-          console.log("si se pudo!");
-          // document.location.reload();
-        });
+      updateUserFirestore(user.uid, newData).then(() => {
+        updateEmailUserAuth(newData);
+        updateBasicInfoUserAuth(newData);
+        // console.log("si se pudo!");
+        // document.location.reload();
+      });
 
       // updateEmailUserAuth(newData.user_email);
       // updateEmailUserAuth(newData);
