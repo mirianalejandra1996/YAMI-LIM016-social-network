@@ -279,42 +279,6 @@ export function olvideContrasena() {
     });
 }
 
-/********************Actualiza datos del usuario autenticado (CORREO)**************************/
-
-// export const updateEmailUserAuth = (objNewData) => {
-//   const auth = getAuth();
-
-//   console.log("este es el correo, ", objNewData.user_email);
-//   return updateEmail(auth.currentUser, objNewData.user_email)
-//     .then(() => {
-//       // console.log("Email updated!");
-//       console.log("Email updated! de updateEmail", error);
-
-//       // signInWithEmailAndPassword(
-//       //   auth,
-//       //   objNewData.user_email,
-//       //   objNewData.user_password
-//       // )
-//       //   .then((userCredential) => {
-//       //     console.log("volvemos a ingresar!");
-//       //     const user = userCredential.user;
-//       //     console.log({ user });
-//       //   })
-//       //   .catch((error) => {
-//       //     // Email updated!
-//       //     // ...
-//       //     // return true;
-//       //   });
-//     })
-//     .catch((error) => {
-//       // An error occurred
-//       console.log("error catch de updateEmail", error);
-//       // ...
-//       return false;
-//     });
-// };
-
-// -------------------------------------------------------------------------------------
 export function updateBasicInfoUserAuth(objNewData) {
   const auth = getAuth();
 
@@ -346,18 +310,10 @@ export function updateBasicInfoUserAuth(objNewData) {
 export const reauthenticate = (objNewData) => {
   const auth = getAuth();
   const user = auth.currentUser;
+  const email = user.email;
 
-  // TODO(you): prompt the user to re-provide their sign-in credentials
-  // const credential = createCredential(user);
-  // const credential = auth.EmailAuthProvider.credential(
-  //   user.email,
-  //   userProvidedPassword
-  // );
-  // const credential = promptForCredentials();
-
+  // TODO: ARREGLAR LA CONTRASEÑA
   const password = "labolabo";
-  const { currentUser } = auth;
-  const { email } = currentUser;
   const credential = EmailAuthProvider.credential(email, password);
   console.log("que es esta credencial? => ", credential);
 
@@ -365,13 +321,9 @@ export const reauthenticate = (objNewData) => {
     .then(() => {
       updateEmailUserAuth(objNewData);
       console.log("User re-authenticated!");
-      // console.log('Email Updated!');
-      // User re-authenticated.
     })
     .catch((error) => {
       console.log("catch de la funcion de autenticar");
-      // An error ocurred
-      // ...
     });
 };
 
@@ -390,22 +342,3 @@ export const updateEmailUserAuth = (objNewData) => {
       return false;
     });
 };
-
-// ------------------------------------------------
-
-// export const reauthenticate = (objNewData) => {
-//   const auth = getAuth();
-//   const user = auth.currentUser;
-
-//   // TODO(you): prompt the user to re-provide their sign-in credentials
-//   const credential = promptForCredentials();
-
-//   reauthenticateWithCredential(user, credential)
-//     .then(() => {
-//       // User re-authenticated.
-//     })
-//     .catch((error) => {
-//       // An error ocurred
-//       // ...
-//     });
-// };
