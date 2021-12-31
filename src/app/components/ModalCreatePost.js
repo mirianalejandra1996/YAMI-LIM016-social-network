@@ -1,5 +1,6 @@
-import { addPost } from "../firebase/firebase-data.js";
-
+import { addPost, updatePost } from "../firebase/firebase-data.js";
+import {auth} from '../firebase/firebase-auth.js'
+import {uploadImage} from '../firebase/firebase-storage.js'
 export const ModalCreatePost = () => {
   // * modalContenedor es el overlay
   const $modalContenedor = document.createElement("div");
@@ -58,6 +59,8 @@ export const ModalCreatePost = () => {
   const $imagenFile = document.createElement("img");
   $imagenFile.classList.add("imagenFile");
 
+  let postImageFile
+
   // Escuchar cuando cambie
   $picture.addEventListener("change", () => {
     // Los archivos seleccionados, pueden ser muchos o uno
@@ -68,9 +71,9 @@ export const ModalCreatePost = () => {
       return;
     }
     // Ahora tomamos el primer archivo, el cual vamos a previsualizar
-    const primerArchivo = archivos[0];
+    postImageFile = archivos[0];
     // Lo convertimos a un objeto de tipo objectURL
-    const objectURL = URL.createObjectURL(primerArchivo);
+    const objectURL = URL.createObjectURL(postImageFile);
     // Y a la fuente de la imagen le ponemos el objectURL
     $imagenFile.src = objectURL;
   });
@@ -143,9 +146,19 @@ export const ModalCreatePost = () => {
       $mensajeError.textContent = "completar campos *";
     } else {
       console.log("creamos el nuevo post!!", $formPostMsg);
-      addPost($formPostMsg).then(() => {
-        console.log("modal cerrado");
-        cerrarModal();
+      //anadir loader mientras sube imagen
+      let newPostId
+      addPost($formPostMsg)
+      .then((postDocRef) => {
+        newPostId = postDocRef.id
+        const user = auth.currentUser;
+        return uploadImage(postImageFile, user.uid)  
+      })
+      .then((downloadURL) => {
+        return updatePost(newPostId, { message: $formPostMsg, imageUrl: downloadURL})
+      })
+      .then(() => {
+        cerrarModal()
       });
     }
   });

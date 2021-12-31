@@ -132,7 +132,7 @@ export const ModalEditPost = () => {
       // const nuevoMensaje = document.getElementById("msgPost").value;
       const nuevoMensaje = $post.value;
       //Actualiza el Post
-      updatePost(postData.post_id, nuevoMensaje).then(() => {
+      updatePost(postData.post_id, {message: nuevoMensaje}).then(() => {
         window.location.hash = "#/";
       });
     };

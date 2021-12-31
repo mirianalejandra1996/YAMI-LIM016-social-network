@@ -79,7 +79,6 @@ export const Post = (post, setDataModalEdit, abrirModalEdit, setDataModalRemove,
   // EVENTO 3 PUNTITOS OPCIONES
   $optionsContainer.addEventListener("click", () => {
     console.log("deberia salir la lista desplegable de opciones de post");
-    // debugger;
     // console.log("este es el post id", post.post_id);
     toggleModalOptionsPost();
   });
@@ -93,6 +92,7 @@ export const Post = (post, setDataModalEdit, abrirModalEdit, setDataModalRemove,
   $headerContainer.append($avatarContainer);
   $headerContainer.append($dataContainer);
   $headerContainer.append($optionsContainer);
+  
 
   //   -----------------------------------------------------------
 
@@ -106,8 +106,14 @@ export const Post = (post, setDataModalEdit, abrirModalEdit, setDataModalRemove,
   $textMsg.textContent = `${post.message}`;
 
   $msgContainer.append($textMsg);
-
+ 
   //   -----------------------------------------------------------
+  //   Contenido Imagen del POST del usuario
+  const $postImageContainer = document.createElement('div')
+  const $postImg = document.createElement("img");
+  $postImg.classList.add("imagenFile");
+  $postImg.src = post.imageUrl;
+  $postImageContainer.append($postImg)
 
   //   Pie de post (para dar likes y comentar)
 
@@ -213,6 +219,7 @@ export const Post = (post, setDataModalEdit, abrirModalEdit, setDataModalRemove,
 
   $card.append($headerContainer);
   $card.append($msgContainer);
+  $card.append($postImageContainer);
   $card.append($footerContainer);
   $card.append($commentsBlock)
   // $card.append(commentsDiv)

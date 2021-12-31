@@ -35,8 +35,9 @@ export function addPost(message) {
     date: Date.now(),
     likes: [],
   })
-    .then(() => {
+    .then((postDocRef) => {
       console.log("post subido al firestore!");
+      return postDocRef
     })
     .catch((err) => console.log(err));
 }
@@ -163,11 +164,12 @@ export function initListenerPost(postId, actualizarPost) {
 
 // Actualizar post
 
-export async function updatePost(post_id, newMessage) {
+export async function updatePost(post_id, {message, imageUrl=''}) {
   const postRef = doc(db, "posts", post_id);
 
   return await updateDoc(postRef, {
-    message: newMessage,
+    message,
+    imageUrl
   });
 }
 
