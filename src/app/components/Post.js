@@ -58,22 +58,22 @@ export const Post = (post, setDataModalEdit, abrirModalEdit, setDataModalRemove,
   // ! Si el usuario no es dueño del post, no debería salir la lista desplegable
   if (user_id !== post.id_user) $optionsContainer.classList.add("hidden");
 
- //
+  //
 
   const handleClickEdit = () => {
-    setDataModalEdit(post)
-    abrirModalEdit()
-   }
+    setDataModalEdit(post);
+    abrirModalEdit();
+  };
 
-   const handleClickRemove = () => {
-     setDataModalRemove(post)
-     abrirModalRemove()
-   }
+  const handleClickRemove = () => {
+    setDataModalRemove(post);
+    abrirModalRemove();
+  };
 
-  const {
-    menuModalOptionsPost,
-    toggleModalOptionsPost,
-  } = OptionListPost(handleClickRemove, handleClickEdit);
+  const { menuModalOptionsPost, toggleModalOptionsPost } = OptionListPost(
+    handleClickRemove,
+    handleClickEdit
+  );
   const $menuModalOptions = menuModalOptionsPost;
 
   // EVENTO 3 PUNTITOS OPCIONES
@@ -191,12 +191,12 @@ export const Post = (post, setDataModalEdit, abrirModalEdit, setDataModalRemove,
   
   $footerContainer.append($likeContainer);
   $footerContainer.append($comentContainer);
-  
+
   //   todo: HACER EVENTO a icono de like para actualizar datos
-  
+
   initListenerPost(post.post_id, (postDoc) => {
     //se podria cambiar cualquier campo de post pero en este caso solo necesitamos los likes
-    
+
     const likes = postDoc.data().likes;
     // console.log("array de likes", likes);
     if (likes.find((like) => like === user_id)) {
@@ -206,7 +206,7 @@ export const Post = (post, setDataModalEdit, abrirModalEdit, setDataModalRemove,
       $likeContainer.classList.remove("selected");
       // console.log("no se encuentra");
     }
-    
+
     $counterLikes.textContent = `${likes.length}`;
   });
   //   -----------------------------------------------------------
@@ -217,7 +217,6 @@ export const Post = (post, setDataModalEdit, abrirModalEdit, setDataModalRemove,
   $card.append($commentsBlock)
   // $card.append(commentsDiv)
   $card.append($postComments);
-
 
   return $card;
 };
@@ -241,7 +240,6 @@ function OptionListPost(onClickRemove, onClickEdit) {
   $modalLista.append($itemRemovePublication);
 
   // $modalLista.append($modalContenedor)
-  
 
   $itemEditPublication.addEventListener("click", onClickEdit);
   $itemRemovePublication.addEventListener("click", onClickRemove);

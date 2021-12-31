@@ -1,125 +1,123 @@
 export const Comment = (com) => {
-    const container = document.createElement("div")
-    container.classList.add("commentContainer")
+  const container = document.createElement("div");
+  container.classList.add("commentContainer");
 
-    const avatarDiv = document.createElement("div")
-    avatarDiv.classList.add("avatarDiv")
-    const avatarCircle = document.createElement("div")
-    avatarCircle.classList.add("commentAvatarCircle")
-    const avatarImg = document.createElement("img")
-    avatarImg.src= "./app/assets/user-img.jpg"
-    avatarImg.classList.add("commentAvatar")
+  const avatarDiv = document.createElement("div");
+  avatarDiv.classList.add("avatarDiv");
+  const avatarCircle = document.createElement("div");
+  avatarCircle.classList.add("commentAvatarCircle");
+  const avatarImg = document.createElement("img");
+  avatarImg.src = "./app/assets/user-img.jpg";
+  avatarImg.classList.add("commentAvatar");
 
-    avatarCircle.append(avatarImg)
-    avatarDiv.append(avatarCircle)
+  avatarCircle.append(avatarImg);
+  avatarDiv.append(avatarCircle);
 
-    const likesDiv = document.createElement("div")
-    likesDiv.classList.add("likesDiv")
-    const likesSpan = document.createElement("span")
-    likesSpan.classList.add("icon-like")
-    likesSpan.classList.add("likesIcon")
-    const likesCounter = document.createElement("span")
-    likesCounter.textContent = `X`;
-    likesCounter.classList.add("likesCounter")
+  const likesDiv = document.createElement("div");
+  likesDiv.classList.add("likesDiv");
+  const likesSpan = document.createElement("span");
+  likesSpan.classList.add("icon-like");
+  likesSpan.classList.add("likesIcon");
+  const likesCounter = document.createElement("span");
+  likesCounter.textContent = `X`;
+  likesCounter.classList.add("likesCounter");
 
-    likesDiv.append(likesCounter)
-    likesDiv.append(likesSpan)
+  likesDiv.append(likesCounter);
+  likesDiv.append(likesSpan);
 
-    const commentDiv = document.createElement("div")
-    commentDiv.classList.add("commentDiv")
-    const commentInfo = document.createElement("div")
-    commentInfo.classList.add("commentInfo")
-    const commentName = document.createElement("h4")
-    commentName.classList.add("commentName")
-    commentName.textContent = `${com.user_name}`
-    const commentMessage = document.createElement("p")
-    commentMessage.classList.add("commentMessage")
-    commentMessage.textContent = `${com.message}`
-    const commentBottom = document.createElement("div")
-    commentBottom.classList.add("commentBottom")
-    const commentTime = document.createElement("span")
-    commentTime.textContent = `${timeSince(com.date)}`
-    commentTime.classList.add("commentTime")
+  const commentDiv = document.createElement("div");
+  commentDiv.classList.add("commentDiv");
+  const commentInfo = document.createElement("div");
+  commentInfo.classList.add("commentInfo");
+  const commentName = document.createElement("h4");
+  commentName.classList.add("commentName");
+  commentName.textContent = `${com.user_name}`;
+  const commentMessage = document.createElement("p");
+  commentMessage.classList.add("commentMessage");
+  commentMessage.textContent = `${com.message}`;
+  const commentBottom = document.createElement("div");
+  commentBottom.classList.add("commentBottom");
+  const commentTime = document.createElement("span");
+  commentTime.textContent = `${timeSince(com.date)}`;
+  commentTime.classList.add("commentTime");
 
-    commentBottom.append(commentTime)
-    commentBottom.append(likesDiv)
-    
+  commentBottom.append(commentTime);
+  commentBottom.append(likesDiv);
 
-    commentInfo.append(commentName)
-    commentInfo.append(commentMessage)
-    commentInfo.append(commentBottom)
-    commentDiv.append(commentInfo)
+  commentInfo.append(commentName);
+  commentInfo.append(commentMessage);
+  commentInfo.append(commentBottom);
+  commentDiv.append(commentInfo);
 
-    // const likesDiv = document.createElement("div")
-    // likesDiv.classList.add("likesDiv")
-    // const likesSpan = document.createElement("span")
-    // likesSpan.classList.add("icon-like")
-    // likesSpan.classList.add("likesIcon")
-    // const likesCounter = document.createElement("span")
-    // likesCounter.textContent = `X`
-    // likesCounter.classList.add("likesCounter")
+  // const likesDiv = document.createElement("div")
+  // likesDiv.classList.add("likesDiv")
+  // const likesSpan = document.createElement("span")
+  // likesSpan.classList.add("icon-like")
+  // likesSpan.classList.add("likesIcon")
+  // const likesCounter = document.createElement("span")
+  // likesCounter.textContent = `X`
+  // likesCounter.classList.add("likesCounter")
 
-    // likesDiv.append(likesCounter)
-    // likesDiv.append(likesSpan)
+  // likesDiv.append(likesCounter)
+  // likesDiv.append(likesSpan)
 
-    const optionsDiv = document.createElement("div")
-    optionsDiv.classList.add("commentsOptionDiv")
-    const optionsSpan = document.createElement("span")
-    optionsSpan.classList.add("icon-options")
-    optionsSpan.classList.add("commentOptionIcon")
-    
-    optionsDiv.append(optionsSpan)
+  const optionsDiv = document.createElement("div");
+  optionsDiv.classList.add("commentsOptionDiv");
+  const optionsSpan = document.createElement("span");
+  optionsSpan.classList.add("icon-options");
+  optionsSpan.classList.add("commentOptionIcon");
 
-    container.append(avatarDiv)
-    container.append(commentDiv)
-    // container.append(likesDiv)
-    container.append(optionsDiv)
+  optionsDiv.append(optionsSpan);
 
-    return container
-}
+  container.append(avatarDiv);
+  container.append(commentDiv);
+  // container.append(likesDiv)
+  container.append(optionsDiv);
+
+  return container;
+};
 
 function timeSince(date) {
-    var seconds = Math.floor((new Date() - date) / 1000);
-  
-    // Intervalo de años
-    var interval = seconds / 31536000;
-    if (interval > 1) {
-      let years = Math.floor(interval);
-      if (years === 1) return `${years} mes`;
-      return `${years} años`;
-    }
-  
-    // Intervalo de meses
-    interval = seconds / 2592000;
-    if (interval > 1) {
-      let months = Math.floor(interval);
-      if (months === 1) return `${months} mes`;
-      return `${months} meses`;
-    }
-  
-    // Intervalo de días
-    interval = seconds / 86400;
-    if (interval > 1) {
-      let days = Math.floor(interval);
-      if (days === 1) return `${days} hora`;
-      return `${days} días`;
-    }
-  
-    // Intervalo de horas
-    interval = seconds / 3600;
-    if (interval > 1) {
-      let hours = Math.floor(interval);
-      if (hours === 1) return `${hours} hora`;
-      return `${hours} horas`;
-    }
-  
-    // Intervalo de minutos
-    interval = seconds / 60;
-    if (interval > 1) {
-      let minutes = Math.floor(interval);
-      if (minutes === 1) return `${minutes} minuto`;
-      return `${minutes} minutos`;
-    }
-    return `Hace segundos`;
+  var seconds = Math.floor((new Date() - date) / 1000);
+
+  // Intervalo de años
+  var interval = seconds / 31536000;
+  if (interval > 1) {
+    let years = Math.floor(interval);
+    if (years === 1) return `${years} mes`;
+    return `${years} años`;
   }
-  
+
+  // Intervalo de meses
+  interval = seconds / 2592000;
+  if (interval > 1) {
+    let months = Math.floor(interval);
+    if (months === 1) return `${months} mes`;
+    return `${months} meses`;
+  }
+
+  // Intervalo de días
+  interval = seconds / 86400;
+  if (interval > 1) {
+    let days = Math.floor(interval);
+    if (days === 1) return `${days} hora`;
+    return `${days} días`;
+  }
+
+  // Intervalo de horas
+  interval = seconds / 3600;
+  if (interval > 1) {
+    let hours = Math.floor(interval);
+    if (hours === 1) return `${hours} hora`;
+    return `${hours} horas`;
+  }
+
+  // Intervalo de minutos
+  interval = seconds / 60;
+  if (interval > 1) {
+    let minutes = Math.floor(interval);
+    if (minutes === 1) return `${minutes} minuto`;
+    return `${minutes} minutos`;
+  }
+  return `Hace segundos`;
+}

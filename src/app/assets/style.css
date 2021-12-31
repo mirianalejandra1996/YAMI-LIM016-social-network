@@ -384,7 +384,7 @@ input[type="password"]:focus {
 /* Componente de post-card */
 .card {
   background-color: #fff;
-  box-shadow:  5px 5px 12px #aaa;
+  box-shadow: 5px 5px 12px #aaa;
   border-radius: 17px;
   display: flex;
   flex-direction: column;
@@ -734,14 +734,13 @@ input[type="password"]:focus {
   background-color: #fff;
   height: auto;
   border-radius: 10px;
-
 }
 .formPost_h2 {
   padding-top: 20px;
   font-size: 15px;
   font-weight: normal;
 }
-.formPost_title{
+.formPost_title {
   padding: 20px 35px;
   font-size: 15px;
   font-weight: normal;
@@ -795,6 +794,7 @@ input[type="password"]:focus {
   text-indent: 12px;
   display: flex;
   align-items: center;
+  margin-bottom: 10px;
 }
 .formPost_input-short::placeholder {
   color: #cbbdbd;
@@ -897,6 +897,7 @@ input[type="password"]:focus {
 .modal__contenedor.cerrado {
   opacity: 0;
   z-index: -1;
+  /* z-index: 0; */
   padding: 0;
 }
 .modal__contenedor.cerrado .modal__lista {
@@ -973,8 +974,6 @@ input[type="password"]:focus {
   display: flex;
   width: 300px;
   flex-direction: column;
-  /* background-color: blue; */
-  /* justify-content: space-between; */
   align-items: center;
   margin-top: 35px;
 }
@@ -989,9 +988,10 @@ input[type="password"]:focus {
 }
 .photo__avatar-container {
   width: 90px;
+  height: 90px;
   margin: 10px;
   overflow: hidden;
-  border-radius: 15%;
+  border-radius: 100%;
 }
 
 .photo__avatar-img {
@@ -1023,10 +1023,6 @@ input[type="password"]:focus {
 }
 
 /* Formulario de Profile */
-
-.formProfile {
-  background-color: green;
-}
 
 .formProfile__container {
   margin-top: 3em;
@@ -1062,15 +1058,33 @@ input[type="password"]:focus {
   font-family: lato;
 }
 
-.formProfile__required {
+.modal-profile__required {
   position: absolute;
   top: -12px;
   right: 0px;
   /* color: #f51616; */
 }
 
-.formProfile__submit {
+.modal-profile__required--active {
+  color: #f51616;
+}
+
+.modal-profile__container {
+  margin-top: 1em;
+  display: grid;
+  gap: 0.5em;
   width: 100%;
+  /* margin-top: 30px; */
+}
+
+.modal-profile__btns-container {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+}
+
+.modal-profile__btn {
+  width: 40%;
   border-radius: 7px;
   background-color: #fa610c;
   border: none;
@@ -1082,12 +1096,35 @@ input[type="password"]:focus {
   cursor: pointer;
 }
 
+.formProfile__submit {
+  width: 100%;
+  border-radius: 7px;
+  background-color: #fa610c;
+  border: none;
+  color: #ffff;
+  height: 2.5rem;
+  font-size: 0.85rem;
+  margin-top: 1rem;
+  margin-top: -0.5rem;
+  cursor: pointer;
+}
+
 /* icono del input date */
 
 ::-webkit-calendar-picker-indicator {
   filter: invert(70%);
   cursor: pointer;
+  position: absolute;
+  right: 8px;
 }
+
+/* :invalid::-webkit-datetime-edit {
+  color: #636c72;
+  position: absolute;
+  left: 0.3em;
+  margin-left: -1em;
+  margin-left: -12px;
+} */
 
 .formProfile__icon {
   position: absolute;
@@ -1100,12 +1137,69 @@ input[type="password"]:focus {
   height: 20px;
 }
 
+.errContainer--modal {
+  /* background-color: red; */
+  margin-bottom: 1rem;
+  height: 40px;
+}
+
 .pencil {
   font-size: 0.8rem;
 }
 
 .hidden {
   display: none;
+}
+
+/* Modal de Edit Profile */
+
+.modal-profile {
+  /* height: calc(100% - 80px); */
+  display: flex;
+  width: 300px;
+  flex-direction: column;
+  /* background-color: blue; */
+  /* justify-content: space-between; */
+  align-items: center;
+  /* margin-top: 35px; */
+  background: #fff;
+  padding: 20px;
+  border-radius: 10px;
+}
+
+.modal-profile__header {
+  display: flex;
+  width: 100%;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 2em;
+}
+
+.modal-profile__close {
+  font-size: 1rem;
+  color: #ccc;
+}
+
+.modal-profile__title {
+  font-size: 1rem;
+}
+
+.modal-profile__closeIcon {
+  font-size: 0.8rem;
+}
+
+.modal-profile__input {
+  width: 100%;
+  height: 40px;
+  border: 1px solid #ffb800;
+  border-radius: 10px;
+  text-indent: 12px;
+  margin-bottom: 10px;
+  font-family: lato;
+}
+
+.modal-profile__input::placeholder {
+  color: #636c72;
 }
 /* Muro */
 .opcionesMuro__container {
@@ -1167,29 +1261,28 @@ input[type="password"]:focus {
   margin-left: 8px;
   cursor: pointer;
 }
-.iconComment{
-  color:#FF3F15;
+.iconComment {
+  color: #ff3f15;
   transform: rotate(90deg);
-
 }
-.commentContainer{
+.commentContainer {
   display: flex;
   flex-direction: row;
   position: relative;
   margin-bottom: 20px;
 }
-.commentAvatar{
+.commentAvatar {
   width: 100%;
   height: auto;
 }
-.commentAvatarCircle{
+.commentAvatarCircle {
   width: 32px;
   height: 32px;
   overflow: hidden;
   border-radius: 100%;
   position: relative;
 }
-.commentsOptionDiv{
+.commentsOptionDiv {
   display: flex;
   justify-content: center;
   align-items: center;
@@ -1200,37 +1293,37 @@ input[type="password"]:focus {
   margin-left: 8px;
   align-self: center;
 }
-.commentOptionIcon{
+.commentOptionIcon {
   color: #848484;
   font-size: 0.8rem;
 }
-.commentsContainer{
+.commentsContainer {
   padding-top: 14px;
 }
-.avatarDiv{
+.avatarDiv {
   display: flex;
   align-items: center;
   justify-content: center;
 }
-.commentName{
+.commentName {
   font-weight: 600;
   font-size: 14px;
   margin-bottom: 4px;
 }
-.commentMessage{
+.commentMessage {
   font-size: 13px;
 }
-.commentInfo{
+.commentInfo {
   margin-left: 8px;
   padding: 8px 13px 5px 10px;
 }
-.commentDiv{
+.commentDiv {
   width: 100%;
   border-radius: 30px;
   background: #efeff1;
   margin-left: 5px;
 }
-.likesDiv{
+.likesDiv {
   display: flex;
   justify-content: center;
   align-items: center;
@@ -1248,18 +1341,18 @@ input[type="password"]:focus {
   color: #ccc;
   font-size: 0.8rem;
 }
-.commentTime{
+.commentTime {
   font-size: 10px;
   font-weight: bold;
   color: #878787;
 }
-.commentBottom{
+.commentBottom {
   display: flex;
   justify-content: space-between;
   flex-direction: row;
   align-items: end;
 }
-.commentsDiv{
+.commentsDiv {
   overflow: auto;
 }
 .close {

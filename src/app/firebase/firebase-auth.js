@@ -1,5 +1,5 @@
 import { app } from "../firebase/firebase-initializer.js";
-import { checkRegisteredUser } from "../firebase/firebase-data.js";
+// import { checkRegisteredUser } from "../firebase/firebase-data.js";
 
 import {
   signInWithEmailAndPassword,
@@ -12,7 +12,10 @@ import {
   signOut,
   sendPasswordResetEmail,
   onAuthStateChanged,
+  updateEmail,
   updateProfile,
+  reauthenticateWithCredential,
+  EmailAuthProvider,
 } from "https://www.gstatic.com/firebasejs/9.5.0/firebase-auth.js";
 
 import { addUser } from "./firebase-data.js";
@@ -176,7 +179,8 @@ export function enviarRegistro() {
         return updateProfile(auth.currentUser, {
           displayName: name,
           password: password,
-          photoURL: "https://firebasestorage.googleapis.com/v0/b/yami-cbaa4.appspot.com/o/user.png?alt=media&token=bfe80508-5817-4d84-83e1-6a074a16f198"
+          photoURL:
+            "https://firebasestorage.googleapis.com/v0/b/yami-cbaa4.appspot.com/o/user.png?alt=media&token=bfe80508-5817-4d84-83e1-6a074a16f198",
         })
           .then(() => {
             console.log(
@@ -211,32 +215,35 @@ export function enviarRegistro() {
 
 // todo: pendiente hacer funcionalidad de validación de nombre
 // nombre: /^[a-zA-ZÀ-ÿ\s]{1,40}$/, // Letras y espacios, pueden llevar acentos.
-
 // Funciones validadoras
-function validate_email(email) {
-  const expression = /^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$/;
+export function validate_email(email) {
+  const expression = /^([\.\_a-zA-Z0-9]+)@([a-zA-A]+)\.([a-zA-Z]){2,8}/;
+
   return expression.test(email);
 }
 
-function validate_password(password) {
+export function validate_password(password) {
   // La contraseña debe tener entre 8 a 14 caracteres
 
   const expression = /^.{6,14}$/;
+
+  // si hace match
+  if (!expression.test(password)) {
+    console.log("contraseña fallida");
+    // console.log("contraseña buena");
+  }
   return expression.test(password);
 }
 
-function validate_field(field) {
+export function validate_field(field) {
   // const expression = /^[a-zA-ZÀ-ÿ\s]{1,40}$/;
 
   // if (!expression.test(field) == true){
   //   return false
   // }
 
-  if (field == null) {
-    return false;
-  }
-
-  if (field.length <= 0) {
+  if (field.length <= 0 || field == null) {
+    console.log("field", field, "malo");
     return false;
   } else {
     return true;
@@ -271,3 +278,59 @@ export function olvideContrasena() {
       // ..
     });
 }
+
+export function updateBasicInfoUserAuth(objNewData) {
+  const auth = getAuth();
+
+  // console.log("probando ando", auth.currentUser);
+  updateProfile(auth.currentUser, {
+    displayName: objNewData.user_name,
+    email: objNewData.user_email,
+    // photoURL: objNewData.user_photo
+    // photoURL: "https://example.com/jane-q-user/profile.jpg"
+  })
+    .then(() => {
+      // Profile updated!
+      // console.log("función updateBasicInfoUserAuth exitosa!");
+      // ...
+    })
+    .catch((error) => {
+      // An error occurred
+      // console.log("función updateBasicInfoUserAuth fracasada!");
+      // ...
+    });
+}
+
+// user_photo: objNewData.user_photo,
+//  user_name: objNewData.user_name,
+//  user_birth: objNewData.user_birth,
+//  user_email: objNewData.user_email,
+//  user_password: objNewData.user_password,
+
+
+// Siempre me pedirán credencial para eliminar cuenta, cambiar contraseña o correo
+const createCredential = (user) => {
+  const email = user.email;
+  const password = "labolabo";
+  const credential = EmailAuthProvider.credential(email, password);
+  return credential;
+};
+
+export const changeEmail = async (objNewData) => {
+  const auth = getAuth();
+  const user = auth.currentUser;
+  const credential = await createCredential(user);
+
+  reauthenticateWithCredential(user, credential)
+    .then(() => {
+      console.log("si se reautenticó");
+      updateEmail(user, objNewData.user_email)
+        .then(() => console.log("Email updated!"))
+        .catch((error) => {
+          console.log("catch para updateEmail", error);
+        });
+    })
+    .catch((error) => {
+      console.log("catch de la funcion de changeEmail", error);
+    });
+};

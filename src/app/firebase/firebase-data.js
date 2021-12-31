@@ -19,7 +19,6 @@ import {
 import { db } from "../firebase/firebase-initializer.js";
 import { auth } from "../firebase/firebase-auth.js";
 
-
 /******************Agrega un post a FS*********************/
 const colRef = collection(db, "posts");
 
@@ -31,7 +30,7 @@ export function addPost(message) {
   return addDoc(colRef, {
     id_user: user.uid,
     user_name: user.displayName,
-    user_photo:user.photoURL,
+    user_photo: user.photoURL,
     message,
     date: Date.now(),
     likes: [],
@@ -42,103 +41,35 @@ export function addPost(message) {
     .catch((err) => console.log(err));
 }
 
-
 /******************Agrega un usuario a FS*********************/
 const userRef = collection(db, "users");
-
-// export function addUser(user, name, password) {
-//   console.log("entramos a AddUsers");
-//   //   const user_id = auth.currentUser.uid;
-//   // const user = auth.currentUser;
-//   //   console.log("esta soy yo", user_id);
-//   //   console.log("esta soy yo", user.displayName);
-//   //  console.log("esta soy yo", user);
-//   //  console.log("cuenta creada el ", user.metadata.createdAt);
-//   //  console.log("foto ", user.photoURL);
-//   //  console.log("foto ", user.emailVerified);
-//   //  console.log("proveedor ", user.providerData);
-//   //  console.log("proveedor ", user.providerData[0].providerId); // "google.com"
-//   //  console.log("proveedor ", user.providerData[1].providerId); // "password"
-
-//   // Creación del nombre del usuario
-//   let newName;
-//   if (!user.displayName) {
-//     newName = name;
-//   } else {
-//     newName = user.displayName;
-//   }
-
-//   // Creación de la foto del usuario
-//   let newPhoto;
-//   if (!user.photoURL) {
-//     newPhoto = "../assets/user-img.jpg";
-//   }
-
-//   let logedBy;
-//   // if(user.providerData[0].providerId === )
-
-//   // Verificación del usuario (Si entró a Yami por Google o se registró)
-//   // let
-//   // let registeredByEmail;
-//   // let registeredByEmail;
-//   // if ()
-
-//   const userdoc = doc(db, "users", user.uid); //Creamos un documento con el id de nuestro usuario
-
-//   // setDoc lo usamos para especificar un id único que nosotros vamos a colocarle,
-//   // El addDoc autogenera el id
-
-//   return setDoc(userdoc, {
-//     user_id: user.uid,
-//     user_name: newName,
-//     user_photo: newPhoto,
-//     user_createdAt: Date.now(),
-//     user_email: user.email,
-//     user_password: password,
-//     // user_date: "",
-//     user_createdAt: parseInt(user.metadata.createdAt),
-//   })
-//     .then(() => {
-//       console.log("usuario subido al firestore!");
-//     })
-//     .catch((err) => console.log(err));
-// }
-
-// El addDoc no me importa el id que se genere,
-// en el usuario el id deberia ser igual que el del servicio de autentificación, por eso usamos doc (para que sea único)
-
-// console.log("este es el name", user.auth.currentUser.displayName);
-// console.log("este es el name", user.auth.currentUser);
-// console.log("este es el name", user.auth.currentUser.auth.);
-// console.log("este es el token", user.auth.currentUser);
-// console.log(
-
-//   user.auth.currentUser.providerData[0].providerId
-// );
-// console.log("mira el nombre", user.displayName);
 
 // ------------------------------
 
 export function addUser(user, name, password) {
   console.log("este es el user que entra como parámetro", user);
 
-  const prueba = user;
-  let nameN, emailN, photoUrlN, logedByN, passwordN;
+  let nameN,
+    emailN,
+    photoUrlN,
+    logedByN,
+    passwordN,
+    birthN = null;
 
-  if (prueba.providerData[0].providerId === "google.com") {
-    // debugger;
+  if (user.providerData[0].providerId === "google.com") {
     console.log("estás logueado con google!!");
     nameN = user.displayName;
     emailN = user.email;
     photoUrlN = user.photoURL;
     logedByN = "google";
-    passwordN = "";
+    passwordN = null;
   } else {
     // Si está logueado con password
-    
+
     nameN = name;
     emailN = user.email;
-    photoUrlN= "https://firebasestorage.googleapis.com/v0/b/yami-cbaa4.appspot.com/o/default-profile.jpeg?alt=media&token=772a7498-d018-4994-9805-041ae047bdc6"
+    photoUrlN =
+      "https://firebasestorage.googleapis.com/v0/b/yami-cbaa4.appspot.com/o/user.png?alt=media&token=bfe80508-5817-4d84-83e1-6a074a16f198";
     logedByN = "password";
     passwordN = password;
   }
@@ -157,19 +88,13 @@ export function addUser(user, name, password) {
     user_email: emailN,
     user_password: passwordN,
     user_logedBy: logedByN,
-    // -----------
-    // user_date: "",
-    // user_createdAt: parseInt(user.metadata.createdAt),
+    user_birth: birthN,
   })
     .then(() => {
       console.log("usuario subido al firestore!");
     })
     .catch((err) => console.log(err));
 }
-
-// ------------------------------
-// * OBTENEMOS LA COLECCIÓN
-
 
 /******************Recopila todos los posts*********************/
 
@@ -196,7 +121,6 @@ export async function traerPost() {
   // console.log(postsData)
   return postsData;
 }
-
 
 /******************Toggle Likes*********************/
 
@@ -229,7 +153,6 @@ export async function toggleLikes(post_id) {
   }
 }
 
-
 /******************Init Listener Post*********************/
 
 export function initListenerPost(postId, actualizarPost) {
@@ -237,7 +160,6 @@ export function initListenerPost(postId, actualizarPost) {
 }
 
 // ---------------Funciones del post -------------------------------
-
 
 // Actualizar post
 
@@ -249,7 +171,6 @@ export async function updatePost(post_id, newMessage) {
   });
 }
 
-
 // Eliminar post
 
 export async function deletePost(post_id) {
@@ -257,7 +178,6 @@ export async function deletePost(post_id) {
 
   return await deleteDoc(postRef);
 }
-
 
 // Get User Data
 
@@ -274,11 +194,9 @@ export async function getUserData(user_id) {
   }
 }
 
-
 // Comentar un post
 
 export function addComment(current_user, idPost, comment) {
-
   const commentsRef = collection(db, "posts", idPost, "comments");
 
   addDoc(commentsRef, {
@@ -293,22 +211,88 @@ export function addComment(current_user, idPost, comment) {
     .catch((err) => console.log(err));
 }
 
-
 // Check Registered User
 
-export async function checkRegisteredUser(post_id) {
-  const userRef = doc(db, "users", post_id);
-  const docSnap = await getDoc(userRef);
+// export async function isExistingUser(email) {
+//   const q = query(collection(db, "users"), where("user_email", "==", email));
 
-  if (docSnap.exists()) {
-    console.log("pues si existe este usuario en firestore!");
-    return await docSnap.data();
-  } else {
-    // doc.data() will be undefined in this case
-    console.log("No such document!");
-  }
+//   const docSnap = await getDoc(q);
+
+//   if (docSnap.exists) {
+//     console.log("pues si existe este usuario en firestore!");
+//     return await docSnap.data();
+//   } else {
+//     // doc.data() will be undefined in this case
+//     console.log("No such document!");
+//   }
+// }
+
+export async function isExistingUser(email) {
+  const q = query(collection(db, "users"), where("user_email", "==", email));
+
+  const docSnap = await getDocs(q);
+
+  const userEmailMatch = [];
+
+  docSnap.forEach((doc) => {
+    console.log("creo que sirve?", doc.data());
+    userEmailMatch.push(doc.data());
+  });
+
+  // console.log("esperanza", result);
+  // return userEmailMatch;
+
+  if (userEmailMatch.length === 0) return false
+  return true
+
+  // if (docSnap.exists()) {
+  //   console.log("pues si existe este usuario en firestore!");
+  //   // return await docSnap.data();
+  //   return true;
+  // } else {
+  //   // doc.data() will be undefined in this case
+  //   console.log("No such document!");
+  //   return false;
+  // }
 }
 
+// -----------------
+// export async function traerMisPost(userId) {
+//   const querySnapshotPosts = await getDocs(q1);
+
+//   const postsFiltradocs = querySnapshotPosts.docs; //Array
+//   const postsData = [];
+
+//   postsFiltradocs.forEach((doc) => {
+//     // doc.data() is never undefined for query doc snapshots
+
+//     const post = doc.data();
+//     console.log(post);
+//     post["post_id"] = doc.id;
+
+//     console.log(post);
+
+//     postsData.push(post);
+//     // console.log(postData)
+//     // console.log(doc.id, " => ", doc.data());
+//   });
+
+//   return postsData;
+// }
+
+// -----------------
+// export async function isExistingUser(post_id) {
+//   const userRef = doc(db, "users", post_id);
+//   const docSnap = await getDoc(userRef);
+
+//   if (docSnap.exists()) {
+//     console.log("pues si existe este usuario en firestore!");
+//     return await docSnap.data();
+//   } else {
+//     // doc.data() will be undefined in this case
+//     console.log("No such document!");
+//   }
+// }
 
 // Recopila los posts del Usuario
 
@@ -342,17 +326,15 @@ export async function traerMisPost(userId) {
   return postsData;
 }
 
-
 // Traer los comentarios
 
 export async function traerComments(id_post) {
-
   const commentsData = [];
 
   const commentsRef = collection(db, "posts", id_post, "comments");
 
   const querySnapshotComments = await getDocs(commentsRef);
-  
+
   querySnapshotComments.forEach((doc) => {
     const comment = doc.data();
     // comment["post_id"] = doc.id;
@@ -360,13 +342,36 @@ export async function traerComments(id_post) {
     // console.log(postData)
     // console.log(doc.id, " => ", doc.data());
   });
-
-  console.log(commentsData)
+  console.log(commentsData);
   return commentsData;
 }
 
-//   const commentsLength = commentsData.length
-//   // console.log(commentsLength)
+// Actualiza el usuario
 
-//   return {commentsData, commentsLength}
-// }
+export async function updateUserFirestore(user_id, objNewData) {
+  console.log("función updateUser va a actualizar los datos");
+  const userDocRef = doc(db, "users", user_id);
+
+  return await updateDoc(userDocRef, {
+    // user_photo: objNewData.user_photo,
+    user_name: objNewData.user_name,
+    user_birth: objNewData.user_birth,
+    user_email: objNewData.user_email,
+    user_password: objNewData.user_password,
+  });
+}
+
+
+// ----------------------------------------------------------
+
+// ----------------------------------------------------------
+// const postRef = doc(db, "posts", post_id);
+
+// // user_id: user.uid,
+// user_name: nameN,
+// user_photo: photoUrlN,
+// user_createdAt: user.metadata.createdAt,
+// user_email: emailN,
+// user_password: passwordN,
+// user_logedBy: logedByN,
+// user_birth: birthN,
