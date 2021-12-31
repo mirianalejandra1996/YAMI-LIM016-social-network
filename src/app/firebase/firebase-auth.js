@@ -13,6 +13,7 @@ import {
   sendPasswordResetEmail,
   onAuthStateChanged,
   updateEmail,
+  updatePassword,
   updateProfile,
   reauthenticateWithCredential,
   EmailAuthProvider,
@@ -307,19 +308,19 @@ export function updateBasicInfoUserAuth(objNewData) {
 //  user_email: objNewData.user_email,
 //  user_password: objNewData.user_password,
 
-
 // Siempre me pedirán credencial para eliminar cuenta, cambiar contraseña o correo
 const createCredential = (user) => {
   const email = user.email;
-  const password = "labolabo";
+  // const password = "labolabo";
+  const password = prompt("Please enter your current password:");
   const credential = EmailAuthProvider.credential(email, password);
   return credential;
 };
 
-export const changeEmail = async (objNewData) => {
+export const changeEmail = (objNewData) => {
   const auth = getAuth();
   const user = auth.currentUser;
-  const credential = await createCredential(user);
+  const credential = createCredential(user);
 
   reauthenticateWithCredential(user, credential)
     .then(() => {
@@ -334,3 +335,43 @@ export const changeEmail = async (objNewData) => {
       console.log("catch de la funcion de changeEmail", error);
     });
 };
+
+// const changePassword = (user, credential, newPassword) => {
+export const changePassword = (objNewData) => {
+  const user = auth.currentUser;
+  const newPassword = objNewData.user_password;
+  const credential = createCredential(user);
+
+  // const newPassword = prompt("Please enter your current password:");
+  reauthenticateWithCredential(user, credential)
+    .then(() => {
+      console.log("si se reautenticó");
+      updatePassword(user, newPassword)
+        .then(() => {
+          console.log("si cambió la contraseña");
+          // Update successful.
+        })
+        .catch((error) => {
+          // An error ocurred
+          console.log("problemas para cambiar la contraseña", error);
+          // ...
+        });
+    })
+    .catch((error) => {
+      console.log("catch de la funcion de changeEmail", error);
+    });
+};
+
+// const auth = getAuth();
+
+// const user = auth.currentUser;
+// const newPassword = getASecureRandomPassword();
+
+// updatePassword(user, newPassword)
+//   .then(() => {
+//     // Update successful.
+//   })
+//   .catch((error) => {
+//     // An error ocurred
+//     // ...
+//   });

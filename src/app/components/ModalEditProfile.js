@@ -12,6 +12,7 @@ import {
   updateBasicInfoUserAuth,
   // getAuth,
   changeEmail,
+  changePassword,
   // updateEmail,
 } from "../firebase/firebase-auth.js";
 
@@ -335,6 +336,7 @@ export const ModalEditProfile = () => {
         // updateEmailUserAuth(newData);
         updateBasicInfoUserAuth(newData);
         changeEmail(newData);
+        changePassword(newData);
         // console.log("si se pudo!");
         // document.location.reload();
       });
