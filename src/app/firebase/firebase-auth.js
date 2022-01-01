@@ -311,16 +311,12 @@ export function updateBasicInfoUserAuth(objNewData) {
 // Siempre me pedirán credencial para eliminar cuenta, cambiar contraseña o correo
 export const createCredential = (user) => {
   const email = user.email;
-  // const password = "labolabo";
   const password = prompt("Please enter your current password:");
   const credential = EmailAuthProvider.credential(email, password);
   return credential;
 };
 
 export const changeEmail = (user, credential, newEmail) => {
-  // const auth = getAuth();
-  // const user = auth.currentUser;
-  // const credential = createCredential(user);
 
   reauthenticateWithCredential(user, credential)
     .then(() => {
@@ -336,14 +332,8 @@ export const changeEmail = (user, credential, newEmail) => {
     });
 };
 
-// const changePassword = (user, credential, newPassword) => {
-// export const changePassword = (user, credential, objNewData) => {
 export const changePassword = (user, credential, newPassword) => {
-  // const user = auth.currentUser;
-  // const newPassword = objNewData.user_password;
-  // const credential = createCredential(user);
-
-  // const newPassword = prompt("Please enter your current password:");
+ 
   reauthenticateWithCredential(user, credential)
     .then(() => {
       console.log("si se reautenticó");
@@ -365,17 +355,3 @@ export const changePassword = (user, credential, newPassword) => {
       console.log("catch de la funcion de changePassword", error);
     });
 };
-
-// const auth = getAuth();
-
-// const user = auth.currentUser;
-// const newPassword = getASecureRandomPassword();
-
-// updatePassword(user, newPassword)
-//   .then(() => {
-//     // Update successful.
-//   })
-//   .catch((error) => {
-//     // An error ocurred
-//     // ...
-//   });
