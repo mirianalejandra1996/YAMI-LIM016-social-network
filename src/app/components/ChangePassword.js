@@ -1,7 +1,13 @@
 import { HeaderRetroceder } from "../components/Header_retro.js";
-import { auth } from "../firebase/firebase-auth.js";
 import { getUserData } from "../firebase/firebase-data.js";
-// import { ModalEditProfile } from "../components/ModalEditProfile.js";
+
+import {
+  auth,
+  validate_password,
+  // validate_field,
+  // changePassword,
+  // createCredential,
+} from "../firebase/firebase-auth.js";
 
 export const ChangePassword = () => {
   const user = auth.currentUser;
@@ -43,15 +49,6 @@ export const ChangePassword = () => {
 
   userNameContainer.append(userName);
 
-  // Icono para editar imagen del usuario
-  // const iconPhotoContainer = document.createElement("div");
-  // iconPhotoContainer.classList.add("photo__edit-img", "hidden");
-  // const iconPhoto = document.createElement("span");
-  // iconPhoto.classList.add("icon-pencil", "pencil");
-
-  // iconPhotoContainer.append(iconPhoto);
-  // imgAvatarContainer.append(iconPhotoContainer);
-
   photoContainer.append(imgAvatarContainer);
   photoContainer.append(userNameContainer);
 
@@ -62,31 +59,30 @@ export const ChangePassword = () => {
   const formContainer = document.createElement("div");
   formContainer.classList.add("formProfile__container");
 
-  // * Grupo: Nombre del usuario
-  const groupName = document.createElement("div");
-  groupName.classList.add("formProfile__group");
+  // * Grupo: Contraseña antigua
+  const groupOldPassword = document.createElement("div");
+  groupOldPassword.classList.add("formProfile__group");
 
-  //   Input nombre
-  const oldPassword = document.createElement("input");
-  oldPassword.type = "text";
-  oldPassword.id = "oldPassword";
-  oldPassword.classList.add("formProfile__input");
-  // oldPassword.disabled = true;
+  //   Input Contraseña antigua
+  const inputOldPassword = document.createElement("input");
+  inputOldPassword.type = "text";
+  inputOldPassword.id = "oldPassword";
+  inputOldPassword.classList.add("formProfile__input");
 
-  //   Label de nombre
+  //   Label de Contraseña antigua
   const labelOldPassword = document.createElement("label");
   labelOldPassword.htmlFor = "oldPassword";
   labelOldPassword.classList.add("formProfile__label");
   labelOldPassword.textContent = "Contraseña antigua";
 
-  //  Nombre Obligatorio
+  //  Contraseña antigua Obligatorio
   const requiredOldPassword = document.createElement("span");
   requiredOldPassword.classList.add("formProfile__required", "hidden");
   requiredOldPassword.textContent = "*";
 
-  groupName.append(oldPassword);
-  groupName.append(labelOldPassword);
-  groupName.append(requiredOldPassword);
+  groupOldPassword.append(inputOldPassword);
+  groupOldPassword.append(labelOldPassword);
+  groupOldPassword.append(requiredOldPassword);
 
   // -----------------------------
 
@@ -125,7 +121,6 @@ export const ChangePassword = () => {
   //   Input ConfirmPassword
   const inputConfirmPassword = document.createElement("input");
   inputConfirmPassword.type = "text";
-  // inputConfirmPassword.name = "confirmPassword";
   inputConfirmPassword.id = "confirmPassword";
   inputConfirmPassword.classList.add("formProfile__input");
 
@@ -137,30 +132,27 @@ export const ChangePassword = () => {
   const msgContainer = document.createElement("div");
   msgContainer.classList.add("msgContainer");
 
-  const msgLogedByGoogle = document.createElement("span");
-  msgLogedByGoogle.classList.add("google-msg");
-  msgLogedByGoogle.textContent = "Usted está logeado con Google";
+  const msgError = document.createElement("span");
+  msgError.classList.add("error-msg");
 
-  const changePwd = document.createElement("span");
-  changePwd.classList.add("google-msg");
-  changePwd.classList.add("redirect-text__link");
-  changePwd.textContent = "Cambiar contraseña";
+  msgContainer.append(msgError);
 
   // -----------------------------
 
-  const btnSave = document.createElement("input");
-  btnSave.id = "submit";
-  btnSave.type = "submit";
-  btnSave.classList.add("formProfile__submit");
-  btnSave.value = "Cambiar contraseña";
+  const btnSaveChanges = document.createElement("input");
+  btnSaveChanges.id = "submit";
+  btnSaveChanges.type = "submit";
+  btnSaveChanges.classList.add("formProfile__submit");
+  btnSaveChanges.value = "Cambiar contraseña";
 
   // -----------------------------
 
   // Aquí apendizamos todos los datos del usuario
-  formContainer.append(groupName);
+  formContainer.append(groupOldPassword);
   formContainer.append(groupNewPassword);
   formContainer.append(groupConfirmPassword);
-  formContainer.append(btnSave);
+  formContainer.append(msgContainer);
+  formContainer.append(btnSaveChanges);
   profileComponent.append(headerBack);
   profileComponent.append(mainContainer);
   mainContainer.append(profileContainer);
@@ -168,6 +160,54 @@ export const ChangePassword = () => {
   profileContainer.append(formContainer);
 
   //   --------------
+
+  btnSaveChanges.addEventListener("click", async () => {
+    const newData = {
+      inputOldPassword: inputOldPassword.value,
+      newPassword: inputNewPassword.value,
+      confirmPassword: inputConfirmPassword.value,
+    };
+
+    // let userExist = await isExistingUser(newData.user_email);
+
+    // console.log("El usuario existe? => ", userExist);
+
+    // Limpiamos el modal
+    document.getElementById("error-msg").textContent = "";
+    // const requiredFields = document.getElementsByClassName(
+    //   "modal-profile__required"
+    // );
+    // for (let element of requiredFields) {
+    //   element.classList.remove("modal-profile__required--active");
+    //   console.log("tenemos", requiredFields.length, "inputs obligatorios");
+    // }
+
+    document.getElementById("error-msg").textContent = "";
+
+    // Validamos la contraseña
+    if (!validate_password(newData.newPassword)) {
+      document.getElementById("error-msg").textContent =
+        "La contraseña debe tener entre 8 a 14 carácteres";
+      // requiredPwd.classList.add("modal-profile__required--active");
+      return;
+    } else {
+      // for (let element of requiredFields) {
+      //   // element.classList.remove("modal-profile__required--active");
+      // }
+      // const credential = await createCredential(user);
+      // console.log("prueba cred.", credential, " y el user: ", user.email);
+      // updateUserFirestore(user.uid, newData).then(() => {
+      //   // updateEmailUserAuth(newData);
+      //   updateBasicInfoUserAuth(newData);
+      //   // changeEmail(user, credential, newData.user_email);
+      //   changePassword(user, credential, newData.user_password);
+      //   // console.log("si se pudo!");
+      //   // document.location.reload();
+      // });
+      // updateEmailUserAuth(newData.user_email);
+      // updateEmailUserAuth(newData);
+    }
+  });
 
   getUserData(user.uid)
     .then((user) => {

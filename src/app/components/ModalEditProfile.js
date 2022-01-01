@@ -138,26 +138,26 @@ export const ModalEditProfile = () => {
 
   // -----------------------------
 
-  // * Grupo: Correo del usuario
-  const groupPwd = document.createElement("div");
-  groupPwd.classList.add("formProfile__group");
+  // // * Grupo: Correo del usuario
+  // const groupPwd = document.createElement("div");
+  // groupPwd.classList.add("formProfile__group");
 
-  //   Input email
-  const inputPwd = document.createElement("input");
-  inputPwd.type = "text";
-  inputPwd.id = "newPassword";
-  inputPwd.placeholder = "Contraseña";
-  inputPwd.classList.add("modal-profile__input");
+  // //   Input email
+  // const inputPwd = document.createElement("input");
+  // inputPwd.type = "text";
+  // inputPwd.id = "newPassword";
+  // inputPwd.placeholder = "Contraseña";
+  // inputPwd.classList.add("modal-profile__input");
 
-  //   --------
+  // //   --------
 
-  //  Email Obligatorio
-  const requiredPwd = document.createElement("span");
-  requiredPwd.classList.add("modal-profile__required");
-  requiredPwd.textContent = "*";
+  // //  Email Obligatorio
+  // const requiredPwd = document.createElement("span");
+  // requiredPwd.classList.add("modal-profile__required");
+  // requiredPwd.textContent = "*";
 
-  groupPwd.append(inputPwd);
-  groupPwd.append(requiredPwd);
+  // groupPwd.append(inputPwd);
+  // groupPwd.append(requiredPwd);
   // -----------------------------
 
   //   Contenedor de campos obligatorios
@@ -197,7 +197,7 @@ export const ModalEditProfile = () => {
   formContainer.append(groupName);
   formContainer.append(groupDate);
   formContainer.append(groupEmail);
-  formContainer.append(groupPwd);
+  // formContainer.append(groupPwd);
   //   Apendizamos el mensaje de error
   formContainer.append(errContainer);
   // todo: en realidad hay que apendizar el div que tiene a editar o cancelar
@@ -233,7 +233,7 @@ export const ModalEditProfile = () => {
       // inputDate.type = "date";
       inputName.value = user.user_name;
       inputDate.value = user.user_birth;
-      inputPwd.value = user.user_password;
+      // inputPwd.value = user.user_password;
       inputEmail.value = user.user_email;
     })
     .catch((err) => {
@@ -279,7 +279,7 @@ export const ModalEditProfile = () => {
       user_name: inputName.value,
       user_birth: inputDate.value,
       user_email: inputEmail.value,
-      user_password: inputPwd.value,
+      // user_password: inputPwd.value,
       user_exist: false,
       // todo: hay que modificar la foto del usuario
       // user_photo :
@@ -322,19 +322,20 @@ export const ModalEditProfile = () => {
       console.log("else if de newData.user_exist");
       return;
     }
-    // Validamos la contraseña
-    else if (!validate_password(newData.user_password)) {
-      document.getElementById("error-msg").textContent =
-        "La contraseña debe tener entre 8 a 14 carácteres";
-      requiredPwd.classList.add("modal-profile__required--active");
-      return;
-    } else {
+    // // Validamos la contraseña
+    // else if (!validate_password(newData.user_password)) {
+    //   document.getElementById("error-msg").textContent =
+    //     "La contraseña debe tener entre 8 a 14 carácteres";
+    //   requiredPwd.classList.add("modal-profile__required--active");
+    //   return;
+    // }
+    else {
       for (let element of requiredFields) {
         element.classList.remove("modal-profile__required--active");
       }
 
       const credential = await createCredential(user);
-      console.log("prueba cred.", credential, " y el user: ", user.email);
+      // console.log("prueba cred.", credential, " y el user: ", user.email);
 
       updateUserFirestore(user.uid, newData).then(() => {
         // updateEmailUserAuth(newData);
