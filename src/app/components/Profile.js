@@ -120,52 +120,10 @@ export const Profile = () => {
   labelEmail.classList.add("formProfile__label");
   labelEmail.textContent = "Correo";
 
-  //  Email Obligatorio
-  const requiredEmail = document.createElement("span");
-  requiredEmail.classList.add("formProfile__required", "hidden");
-  requiredEmail.textContent = "*";
-
   groupEmail.append(inputEmail);
   groupEmail.append(labelEmail);
-  groupEmail.append(requiredEmail);
 
-  // -----------------------------
 
-  // * Grupo: Correo del usuario
-  const groupPwd = document.createElement("div");
-  groupPwd.classList.add("formProfile__group");
-
-  //   Input email
-  const inputPwd = document.createElement("input");
-  //   inputPwd.type = "password";
-  inputPwd.type = "password";
-  inputPwd.id = "password";
-  inputPwd.classList.add("formProfile__input");
-  inputPwd.disabled = true;
-
-  //   --------
-
-  //   Label de email
-  const labelPwd = document.createElement("label");
-  labelPwd.for = "password";
-  labelPwd.classList.add("formProfile__label");
-  labelPwd.textContent = "Contraseña";
-
-  //  Email Obligatorio
-  const requiredPwd = document.createElement("span");
-  requiredPwd.classList.add("formProfile__required", "hidden");
-  requiredPwd.textContent = "*";
-
-  const iconPwd = document.createElement("span");
-  iconPwd.classList.add("formProfile__icon", "icon-eye-hidden");
-  iconPwd.id = "eye";
-
-  // let passwordMsg;
-
-  groupPwd.append(inputPwd);
-  groupPwd.append(labelPwd);
-  groupPwd.append(requiredPwd);
-  groupPwd.append(iconPwd);
   // -----------------------------
 
   //   Contenedor de campos obligatorios
@@ -191,11 +149,10 @@ export const Profile = () => {
   formContainer.append(groupName);
   formContainer.append(groupDate);
   formContainer.append(groupEmail);
-  formContainer.append(groupPwd);
-  //   Apendizamos el mensaje de error
-  formContainer.append(msgContainer);
   //  El botón de Editar
   formContainer.append(btnEdit);
+  //   Apendizamos el mensaje en caso que esté logueado con google
+  formContainer.append(msgContainer);
 
   // -----------------------------
 
@@ -206,10 +163,6 @@ export const Profile = () => {
     abrirModalEditProfile();
     console.log("editemos el perfil ");
   });
-
-  // $modalEditProfile: $modalContenedor,
-  // abrirModalEditProfile: abrirModal,
-  // cerrarModalEditProfile: cerrarModal,
 
   profileComponent.append(headerBack);
   profileComponent.append(mainContainer);
@@ -226,7 +179,6 @@ export const Profile = () => {
       inputDate.type = "date";
       inputName.value = user.user_name;
       inputDate.value = user.user_birth;
-      inputPwd.value = user.user_password;
       inputEmail.value = user.user_email;
 
       if (user.user_logedBy === "google") {
@@ -249,16 +201,6 @@ export const Profile = () => {
   // user_email: emailN,
   // user_password: passwordN,
   // user_logedBy: logedByN,
-
-  //   --------------
-  iconPwd.addEventListener("click", () => {
-    iconPwd.classList.toggle("icon-open-eye");
-    iconPwd.classList.toggle("icon-eye-hidden");
-
-    iconPwd.classList.contains("icon-open-eye")
-      ? (inputPwd.type = "text")
-      : (inputPwd.type = "password");
-  });
 
   return profileComponent;
 };
