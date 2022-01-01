@@ -13,6 +13,7 @@ import {
   // getAuth,
   changeEmail,
   changePassword,
+  createCredential,
   // updateEmail,
 } from "../firebase/firebase-auth.js";
 
@@ -332,11 +333,14 @@ export const ModalEditProfile = () => {
         element.classList.remove("modal-profile__required--active");
       }
 
+      const credential = await createCredential(user);
+      console.log("prueba cred.", credential, " y el user: ", user.email);
+
       updateUserFirestore(user.uid, newData).then(() => {
         // updateEmailUserAuth(newData);
         updateBasicInfoUserAuth(newData);
-        changeEmail(newData);
-        changePassword(newData);
+        changeEmail(user, credential, newData.user_email);
+        changePassword(user, credential, newData.user_password);
         // console.log("si se pudo!");
         // document.location.reload();
       });

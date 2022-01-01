@@ -309,7 +309,7 @@ export function updateBasicInfoUserAuth(objNewData) {
 //  user_password: objNewData.user_password,
 
 // Siempre me pedirán credencial para eliminar cuenta, cambiar contraseña o correo
-const createCredential = (user) => {
+export const createCredential = (user) => {
   const email = user.email;
   // const password = "labolabo";
   const password = prompt("Please enter your current password:");
@@ -317,18 +317,18 @@ const createCredential = (user) => {
   return credential;
 };
 
-export const changeEmail = (objNewData) => {
-  const auth = getAuth();
-  const user = auth.currentUser;
-  const credential = createCredential(user);
+export const changeEmail = (user, credential, newEmail) => {
+  // const auth = getAuth();
+  // const user = auth.currentUser;
+  // const credential = createCredential(user);
 
   reauthenticateWithCredential(user, credential)
     .then(() => {
-      console.log("si se reautenticó");
-      updateEmail(user, objNewData.user_email)
-        .then(() => console.log("Email updated!"))
+      console.log("si se reautenticó dentro de changeEmail! ");
+      updateEmail(user, newEmail)
+        .then(() => console.log("Email updated! del metodo firebase"))
         .catch((error) => {
-          console.log("catch para updateEmail", error);
+          console.log("catch para updateEmail de firebase method", error);
         });
     })
     .catch((error) => {
@@ -337,10 +337,11 @@ export const changeEmail = (objNewData) => {
 };
 
 // const changePassword = (user, credential, newPassword) => {
-export const changePassword = (objNewData) => {
-  const user = auth.currentUser;
-  const newPassword = objNewData.user_password;
-  const credential = createCredential(user);
+// export const changePassword = (user, credential, objNewData) => {
+export const changePassword = (user, credential, newPassword) => {
+  // const user = auth.currentUser;
+  // const newPassword = objNewData.user_password;
+  // const credential = createCredential(user);
 
   // const newPassword = prompt("Please enter your current password:");
   reauthenticateWithCredential(user, credential)
@@ -353,12 +354,15 @@ export const changePassword = (objNewData) => {
         })
         .catch((error) => {
           // An error ocurred
-          console.log("problemas para cambiar la contraseña", error);
+          console.log(
+            "problemas para cambiar la contraseña en updatePassword",
+            error
+          );
           // ...
         });
     })
     .catch((error) => {
-      console.log("catch de la funcion de changeEmail", error);
+      console.log("catch de la funcion de changePassword", error);
     });
 };
 
