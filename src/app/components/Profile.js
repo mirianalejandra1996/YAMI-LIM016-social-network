@@ -169,14 +169,14 @@ export const Profile = () => {
   // -----------------------------
 
   //   Contenedor de campos obligatorios
-  const errContainer = document.createElement("div");
-  errContainer.classList.add("errContainer");
+  const msgContainer = document.createElement("div");
+  msgContainer.classList.add("msgContainer");
 
-  const msgErr = document.createElement("span");
-  msgErr.classList.add("error-msg");
-  //   msgErr.textContent = "Campos obligatorios *";
+  const msgLogedByGoogle = document.createElement("span");
+  msgLogedByGoogle.classList.add("google-msg");
+  //   msgLogedByGoogle.textContent = "Campos obligatorios *";
 
-  errContainer.append(msgErr);
+  msgContainer.append(msgLogedByGoogle);
   // -----------------------------
 
   const btnEdit = document.createElement("input");
@@ -193,7 +193,7 @@ export const Profile = () => {
   formContainer.append(groupEmail);
   formContainer.append(groupPwd);
   //   Apendizamos el mensaje de error
-  formContainer.append(errContainer);
+  formContainer.append(msgContainer);
   //  El botón de Editar
   formContainer.append(btnEdit);
 
@@ -230,8 +230,8 @@ export const Profile = () => {
       inputEmail.value = user.user_email;
 
       if (user.user_logedBy === "google") {
-        msgErr.textContent = "Usted está logeado con Google";
-        msgErr.style.color = "#0f0f0f";
+        msgLogedByGoogle.textContent = "Usted está logeado con Google";
+        // msgLogedByGoogle.style.color = "#0f0f0f";
         groupDate.classList.add("hidden");
         groupPwd.classList.add("hidden");
         iconPwd.classList.add("hidden");
@@ -332,7 +332,7 @@ export const Profile = () => {
 //         <span class="formProfile__icon icon-open-eye"></span>
 //       </div>
 
-//       <div class="errContainer">
+//       <div class="msgContainer">
 //         <!-- <span class="error-msg">Campos obligatorios *</span> -->
 //       </div>
 //       <!-- Input submit -->

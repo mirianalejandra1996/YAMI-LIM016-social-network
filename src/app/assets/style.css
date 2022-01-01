@@ -269,6 +269,11 @@ input[type="password"]:focus {
   color: #ff2a2a;
   /* font-size: 0.9rem; */
 }
+
+.google-msg {
+  color: #0f0f0f;
+  /* font-size: 0.9rem; */
+}
 .form__button-g {
   height: 35px;
   width: 200px;

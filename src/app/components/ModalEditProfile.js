@@ -145,7 +145,7 @@ export const ModalEditProfile = () => {
   //   Input email
   const inputPwd = document.createElement("input");
   inputPwd.type = "text";
-  inputPwd.id = "password";
+  inputPwd.id = "newPassword";
   inputPwd.placeholder = "Contraseña";
   inputPwd.classList.add("modal-profile__input");
 
