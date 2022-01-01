@@ -123,7 +123,6 @@ export const Profile = () => {
   groupEmail.append(inputEmail);
   groupEmail.append(labelEmail);
 
-
   // -----------------------------
 
   //   Contenedor de campos obligatorios
@@ -132,9 +131,13 @@ export const Profile = () => {
 
   const msgLogedByGoogle = document.createElement("span");
   msgLogedByGoogle.classList.add("google-msg");
-  //   msgLogedByGoogle.textContent = "Campos obligatorios *";
+  msgLogedByGoogle.textContent = "Usted está logeado con Google";
 
-  msgContainer.append(msgLogedByGoogle);
+  const changePwd = document.createElement("span");
+  changePwd.classList.add("google-msg");
+  changePwd.classList.add("redirect-text__link");
+  changePwd.textContent = "Cambiar contraseña";
+
   // -----------------------------
 
   const btnEdit = document.createElement("input");
@@ -149,10 +152,10 @@ export const Profile = () => {
   formContainer.append(groupName);
   formContainer.append(groupDate);
   formContainer.append(groupEmail);
-  //  El botón de Editar
-  formContainer.append(btnEdit);
-  //   Apendizamos el mensaje en caso que esté logueado con google
-  formContainer.append(msgContainer);
+  // //  El botón de Editar
+  // formContainer.append(btnEdit);
+  // //   Apendizamos el mensaje en caso que esté logueado con google
+  // formContainer.append(msgContainer);
 
   // -----------------------------
 
@@ -182,12 +185,13 @@ export const Profile = () => {
       inputEmail.value = user.user_email;
 
       if (user.user_logedBy === "google") {
-        msgLogedByGoogle.textContent = "Usted está logeado con Google";
-        // msgLogedByGoogle.style.color = "#0f0f0f";
         groupDate.classList.add("hidden");
-        groupPwd.classList.add("hidden");
-        iconPwd.classList.add("hidden");
-        btnEdit.classList.add("hidden");
+        formContainer.append(msgContainer);
+        msgContainer.append(msgLogedByGoogle);
+      } else {
+        formContainer.append(btnEdit);
+        formContainer.append(msgContainer);
+        msgContainer.append(changePwd);
       }
     })
     .catch((err) => {
@@ -204,8 +208,6 @@ export const Profile = () => {
 
   return profileComponent;
 };
-
-// photo__avatar-container
 
 // !todo: HACER MODAL CON ESTE CODIGO PARA EDITAR PERFIL
 // <!-- Cabecera -->
