@@ -131,12 +131,18 @@ export const Profile = () => {
 
   const msgLogedByGoogle = document.createElement("span");
   msgLogedByGoogle.classList.add("google-msg");
+
   msgLogedByGoogle.textContent = "Usted está logeado con Google";
 
   const changePwd = document.createElement("span");
   changePwd.classList.add("google-msg");
   changePwd.classList.add("redirect-text__link");
+  // changePwd.id = "changePwd";
   changePwd.textContent = "Cambiar contraseña";
+
+  changePwd.addEventListener("click", () => {
+    window.location.hash = "#/passwordChange"
+  });
 
   // -----------------------------
 

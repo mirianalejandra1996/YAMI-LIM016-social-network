@@ -25,7 +25,8 @@ export function MiMuro() {
   // photoAvatar.src = "../src/app/assets/brooke-cagle-k9XZPpPHDho-unsplash.jpg";
   photoAvatar.alt = "imgAvatar";
 
-  const $nombre = document.createElement("p");
+  const $nombre = document.createElement("h1");
+  $nombre.classList.add("userNameTitle");
   $nombre.textContent = `${user.displayName}`;
 
   imgAvatarContainer.append(photoAvatar);

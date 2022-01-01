@@ -1364,3 +1364,18 @@ input[type="password"]:focus {
 .close {
   display: none;
 }
+
+/* ---Componente cambiar contraseña--------- */
+
+.userNameContainer {
+  height: 1.3rem;
+  /* background-color: red; */
+  width: 100%;
+  display: flex;
+  justify-content: center;
+}
+
+.userNameTitle {
+  font-size: 1rem;
+  font-weight: 700;
+}
