@@ -227,6 +227,8 @@ export function addComment(current_user, idPost, comment) {
 //   }
 // }
 
+// todo: AVERIGUAR SI EXISTE ALGÚN METODO EXCLUSIVO PARA SABER SI EL USUARIO EXISTE
+// todo: EN FIRESTORE O EN AUTH
 export async function isExistingUser(email) {
   const q = query(collection(db, "users"), where("user_email", "==", email));
 
@@ -239,46 +241,31 @@ export async function isExistingUser(email) {
     userEmailMatch.push(doc.data());
   });
 
-  // console.log("esperanza", result);
-  // return userEmailMatch;
+  let userExist;
+  let emailUserSearched;
+  let pwdUserSearched;
 
-  if (userEmailMatch.length === 0) return false
-  return true
+  console.log("datos del usuarioo", userEmailMatch);
 
-  // if (docSnap.exists()) {
-  //   console.log("pues si existe este usuario en firestore!");
-  //   // return await docSnap.data();
-  //   return true;
-  // } else {
-  //   // doc.data() will be undefined in this case
-  //   console.log("No such document!");
-  //   return false;
-  // }
+  if (userEmailMatch.length === 0) {
+    console.log(userEmailMatch.length);
+    userExist = false;
+    emailUserSearched = null;
+    pwdUserSearched = null;
+  } else {
+    userExist = true;
+    emailUserSearched = userEmailMatch[0].user_email;
+    pwdUserSearched = userEmailMatch[0].user_password;
+  }
+
+  return {
+    emailUserSearched,
+    pwdUserSearched,
+    userExist,
+  };
+
+  // return userExist;
 }
-
-// -----------------
-// export async function traerMisPost(userId) {
-//   const querySnapshotPosts = await getDocs(q1);
-
-//   const postsFiltradocs = querySnapshotPosts.docs; //Array
-//   const postsData = [];
-
-//   postsFiltradocs.forEach((doc) => {
-//     // doc.data() is never undefined for query doc snapshots
-
-//     const post = doc.data();
-//     console.log(post);
-//     post["post_id"] = doc.id;
-
-//     console.log(post);
-
-//     postsData.push(post);
-//     // console.log(postData)
-//     // console.log(doc.id, " => ", doc.data());
-//   });
-
-//   return postsData;
-// }
 
 // -----------------
 // export async function isExistingUser(post_id) {
@@ -360,9 +347,6 @@ export async function updateUserFirestore(user_id, objNewData) {
     user_password: objNewData.user_password,
   });
 }
-
-
-// ----------------------------------------------------------
 
 // ----------------------------------------------------------
 // const postRef = doc(db, "posts", post_id);

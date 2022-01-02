@@ -279,13 +279,15 @@ export const ModalEditProfile = () => {
       user_name: inputName.value,
       user_birth: inputDate.value,
       user_email: inputEmail.value,
-      // user_password: inputPwd.value,
       user_exist: false,
       // todo: hay que modificar la foto del usuario
       // user_photo :
     };
 
-    let userExist = await isExistingUser(newData.user_email);
+    const { emailUserSearched, pwdUserSearched, userExist } =
+      await isExistingUser(newData.user_email);
+
+    // let userExist = await isExistingUser(newData.user_email);
 
     console.log("El usuario existe? => ", userExist);
 
@@ -321,27 +323,16 @@ export const ModalEditProfile = () => {
         "Esta cuenta ya está siendo utilizada";
       console.log("else if de newData.user_exist");
       return;
-    }
-    // // Validamos la contraseña
-    // else if (!validate_password(newData.user_password)) {
-    //   document.getElementById("error-msg").textContent =
-    //     "La contraseña debe tener entre 8 a 14 carácteres";
-    //   requiredPwd.classList.add("modal-profile__required--active");
-    //   return;
-    // }
-    else {
+    } else {
       for (let element of requiredFields) {
         element.classList.remove("modal-profile__required--active");
       }
 
       const credential = await createCredential(user);
-      // console.log("prueba cred.", credential, " y el user: ", user.email);
 
       updateUserFirestore(user.uid, newData).then(() => {
-        // updateEmailUserAuth(newData);
         updateBasicInfoUserAuth(newData);
         changeEmail(user, credential, newData.user_email);
-        changePassword(user, credential, newData.user_password);
         // console.log("si se pudo!");
         // document.location.reload();
       });
