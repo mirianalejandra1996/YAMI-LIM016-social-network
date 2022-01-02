@@ -11,8 +11,8 @@ import {
   // updateEmailUserAuth,
   updateBasicInfoUserAuth,
   // getAuth,
-  changeEmail,
-  changePassword,
+  // changeEmail,
+  // changePassword,
   createCredential,
   // updateEmail,
 } from "../firebase/firebase-auth.js";

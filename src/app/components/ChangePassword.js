@@ -4,9 +4,10 @@ import { getUserData } from "../firebase/firebase-data.js";
 import {
   auth,
   validate_password,
-  // validate_field,
-  // changePassword,
-  // createCredential,
+  validate_field,
+  changePassword,
+  reautentificacion,
+  createCredentialForPassword,
 } from "../firebase/firebase-auth.js";
 
 export const ChangePassword = () => {
@@ -76,13 +77,13 @@ export const ChangePassword = () => {
   labelOldPassword.textContent = "Contraseña antigua";
 
   //  Contraseña antigua Obligatorio
-  const requiredOldPassword = document.createElement("span");
-  requiredOldPassword.classList.add("formProfile__required", "hidden");
-  requiredOldPassword.textContent = "*";
+  // const requiredOldPassword = document.createElement("span");
+  // requiredOldPassword.classList.add("formProfile__required", "hidden");
+  // requiredOldPassword.textContent = "*";
 
   groupOldPassword.append(inputOldPassword);
   groupOldPassword.append(labelOldPassword);
-  groupOldPassword.append(requiredOldPassword);
+  // groupOldPassword.append(requiredOldPassword);
 
   // -----------------------------
 
@@ -116,12 +117,12 @@ export const ChangePassword = () => {
   const labelConfirmPassword = document.createElement("label");
   labelConfirmPassword.classList.add("formProfile__label");
   labelConfirmPassword.textContent = "Confirmar nueva contraseña";
-  labelConfirmPassword.htmlFor = "confirmPassword";
+  labelConfirmPassword.htmlFor = "confirmedPassword";
 
   //   Input ConfirmPassword
   const inputConfirmPassword = document.createElement("input");
   inputConfirmPassword.type = "text";
-  inputConfirmPassword.id = "confirmPassword";
+  inputConfirmPassword.id = "confirmedPassword";
   inputConfirmPassword.classList.add("formProfile__input");
 
   groupConfirmPassword.append(inputConfirmPassword);
@@ -134,6 +135,7 @@ export const ChangePassword = () => {
 
   const msgError = document.createElement("span");
   msgError.classList.add("error-msg");
+  msgError.id = "error-msg";
 
   msgContainer.append(msgError);
 
@@ -165,14 +167,9 @@ export const ChangePassword = () => {
     const newData = {
       inputOldPassword: inputOldPassword.value,
       newPassword: inputNewPassword.value,
-      confirmPassword: inputConfirmPassword.value,
+      confirmedPassword: inputConfirmPassword.value,
     };
 
-    // let userExist = await isExistingUser(newData.user_email);
-
-    // console.log("El usuario existe? => ", userExist);
-
-    // Limpiamos el modal
     document.getElementById("error-msg").textContent = "";
     // const requiredFields = document.getElementsByClassName(
     //   "modal-profile__required"
@@ -182,30 +179,58 @@ export const ChangePassword = () => {
     //   console.log("tenemos", requiredFields.length, "inputs obligatorios");
     // }
 
-    document.getElementById("error-msg").textContent = "";
+    // document.getElementById("error-msg").textContent = "";
 
-    // Validamos la contraseña
+    // Verificamos la contraseña antigua
+    // if (!validate_password(newData.newPassword)) {
+    //   document.getElementById("error-msg").textContent =
+    //   "La contraseña debe tener entre 8 a 14 carácteres";
+    //   // requiredPwd.classList.add("modal-profile__required--active");
+    //   return;
+    // }
+    if (!validate_field(newData.inputOldPassword)) {
+      document.getElementById("error-msg").textContent =
+        "Rellene todos los campos";
+      return;
+    }
+
+    // Validamos la contraseña nueva
     if (!validate_password(newData.newPassword)) {
       document.getElementById("error-msg").textContent =
         "La contraseña debe tener entre 8 a 14 carácteres";
-      // requiredPwd.classList.add("modal-profile__required--active");
+      return;
+    }
+    // Validar si la contraseña ingresada está bien tipeada
+    if (newData.newPassword !== newData.confirmedPassword) {
+      document.getElementById("error-msg").textContent =
+        "Ambas contraseñas deben coincidir.";
       return;
     } else {
-      // for (let element of requiredFields) {
-      //   // element.classList.remove("modal-profile__required--active");
-      // }
-      // const credential = await createCredential(user);
-      // console.log("prueba cred.", credential, " y el user: ", user.email);
-      // updateUserFirestore(user.uid, newData).then(() => {
+      const credential = await createCredentialForPassword(
+        user,
+        newData.inputOldPassword
+      );
+
+      // console.log("que dará esta credencial?", credential);
+      //   // updateUserFirestore(user.uid, newData).then(() => {
+      //   //   // updateEmailUserAuth(newData);
+      //   //   updateBasicInfoUserAuth(newData);
+      //   //   // console.log("si se pudo!");
+      //   //   // document.location.reload();
+      //   // });
+      //   // updateEmailUserAuth(newData.user_email);
       //   // updateEmailUserAuth(newData);
-      //   updateBasicInfoUserAuth(newData);
-      //   // changeEmail(user, credential, newData.user_email);
-      //   changePassword(user, credential, newData.user_password);
-      //   // console.log("si se pudo!");
-      //   // document.location.reload();
-      // });
-      // updateEmailUserAuth(newData.user_email);
-      // updateEmailUserAuth(newData);
+
+      reautentificacion(user, credential)
+        .then(() => {
+          console.log("si se logró la reautentificación");
+          changePassword(user, newData.newPassword);
+        })
+        .catch((err) => {
+          console.log("no se logró la reautentificación");
+          document.getElementById("error-msg").textContent =
+            "Error de autentificación ";
+        });
     }
   });
 
