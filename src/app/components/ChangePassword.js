@@ -22,7 +22,6 @@ export const ChangePassword = () => {
   const mainContainer = document.createElement("div");
   mainContainer.classList.add("main-container__profile");
 
-  //  ! En este contenedor estarán dentro la imagen y el formulario (perfecto para el modal)
   const profileContainer = document.createElement("div");
   profileContainer.classList.add("profile-container");
 
@@ -46,7 +45,6 @@ export const ChangePassword = () => {
 
   const userName = document.createElement("h1");
   userName.classList.add("userNameTitle");
-  // userName.textContent = "Miriaaan";
 
   userNameContainer.append(userName);
 
@@ -54,7 +52,7 @@ export const ChangePassword = () => {
   photoContainer.append(userNameContainer);
 
   // -------------
-  // Datos del usuario Formulario
+  // Datos del usuario Formulario para actualizar contraseña
 
   // Contenedor Base del formulario
   const formContainer = document.createElement("div");
@@ -76,14 +74,8 @@ export const ChangePassword = () => {
   labelOldPassword.classList.add("formProfile__label");
   labelOldPassword.textContent = "Contraseña antigua";
 
-  //  Contraseña antigua Obligatorio
-  // const requiredOldPassword = document.createElement("span");
-  // requiredOldPassword.classList.add("formProfile__required", "hidden");
-  // requiredOldPassword.textContent = "*";
-
   groupOldPassword.append(inputOldPassword);
   groupOldPassword.append(labelOldPassword);
-  // groupOldPassword.append(requiredOldPassword);
 
   // -----------------------------
 
@@ -171,23 +163,7 @@ export const ChangePassword = () => {
     };
 
     document.getElementById("error-msg").textContent = "";
-    // const requiredFields = document.getElementsByClassName(
-    //   "modal-profile__required"
-    // );
-    // for (let element of requiredFields) {
-    //   element.classList.remove("modal-profile__required--active");
-    //   console.log("tenemos", requiredFields.length, "inputs obligatorios");
-    // }
-
-    // document.getElementById("error-msg").textContent = "";
-
-    // Verificamos la contraseña antigua
-    // if (!validate_password(newData.newPassword)) {
-    //   document.getElementById("error-msg").textContent =
-    //   "La contraseña debe tener entre 8 a 14 carácteres";
-    //   // requiredPwd.classList.add("modal-profile__required--active");
-    //   return;
-    // }
+ 
     if (!validate_field(newData.inputOldPassword)) {
       document.getElementById("error-msg").textContent =
         "Rellene todos los campos";
@@ -211,16 +187,7 @@ export const ChangePassword = () => {
         newData.inputOldPassword
       );
 
-      // console.log("que dará esta credencial?", credential);
-      //   // updateUserFirestore(user.uid, newData).then(() => {
-      //   //   // updateEmailUserAuth(newData);
-      //   //   updateBasicInfoUserAuth(newData);
-      //   //   // console.log("si se pudo!");
-      //   //   // document.location.reload();
-      //   // });
-      //   // updateEmailUserAuth(newData.user_email);
-      //   // updateEmailUserAuth(newData);
-
+     
       reautentificacion(user, credential)
         .then(() => {
           console.log("si se logró la reautentificación");
@@ -245,14 +212,6 @@ export const ChangePassword = () => {
     .catch((err) => {
       console.log(err);
     });
-
-  // user_id: user.uid,
-  // user_name: nameN,
-  // user_photo: photoUrlN,
-  // user_createdAt: user.metadata.createdAt,
-  // user_email: emailN,
-  // user_password: passwordN,
-  // user_logedBy: logedByN,
 
   return profileComponent;
 };
