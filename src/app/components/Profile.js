@@ -5,27 +5,8 @@ import { ModalEditProfile } from "../components/ModalEditProfile.js";
 
 export const Profile = () => {
   let user = auth.currentUser;
-  // console.log(" este es el id del usuario ", user.uid);
-
-  // let propertyId = "uid";
-
-  // let prueba = user[propertyId]; //ytgbrhrthrthrrhrht
-  // console.log(" este es el id del usuario ", prueba);
-  // console.log(" este es el id del usuario ", user.propertyId);
-  // console.log("TENGO FE ", userUpdated);
-
-  // if (userUpdated) {
-  //   user = userUpdated;
-  //   propertyId = "user_id";
-  //   console.log("POR FIN SOY ALGUIEN! ", userUpdated);
-  //   console.log("ESTE ES EL NUEVO USER ", user);
-  //   console.log("SOY ALGUIEN CON ID", userUpdated[propertyId]);
-  // }
-
   console.log(user);
-  // const user = auth.currentUser;
-  // console.log("nuevo parametro ", userUpdated);
-  //    Contenedor principal
+
   const profileComponent = document.createElement("div");
   profileComponent.classList.add("allView");
 
@@ -35,7 +16,7 @@ export const Profile = () => {
   const mainContainer = document.createElement("div");
   mainContainer.classList.add("main-container__profile");
 
-  //  ! En este contenedor estarán dentro la imagen y el formulario (perfecto para el modal)
+  //  * En este contenedor estarán dentro la imagen y el formulario
   const profileContainer = document.createElement("div");
   profileContainer.classList.add("profile-container");
 
@@ -51,16 +32,11 @@ export const Profile = () => {
   photoAvatar.classList.add("photo__avatar-img");
   photoAvatar.alt = "imgAvatar";
 
+  // todo: agregar alguna imagen gris o un loader skelet
+  photoAvatar.src =
+    "https://firebasestorage.googleapis.com/v0/b/yami-cbaa4.appspot.com/o/user.png?alt=media&token=bfe80508-5817-4d84-83e1-6a074a16f198";
+
   imgAvatarContainer.append(photoAvatar);
-
-  // Icono para editar imagen del usuario
-  // const iconPhotoContainer = document.createElement("div");
-  // iconPhotoContainer.classList.add("photo__edit-img", "hidden");
-  // const iconPhoto = document.createElement("span");
-  // iconPhoto.classList.add("icon-pencil", "pencil");
-
-  // iconPhotoContainer.append(iconPhoto);
-  // imgAvatarContainer.append(iconPhotoContainer);
 
   photoContainer.append(imgAvatarContainer);
 
@@ -212,87 +188,8 @@ export const Profile = () => {
       })
       .catch((err) => {
         console.log("no se imprimio al usuario en pantalla... ", err);
-        // console.log(err);
       });
   });
 
   return profileComponent;
 };
-
-// !todo: HACER MODAL CON ESTE CODIGO PARA EDITAR PERFIL
-// <!-- Cabecera -->
-// <div class="header-timeline"><div class="logo-timeline"></div></div>
-
-// <div class="main-container__profile">
-//   <div class="profile-container">
-//     <!-- Imagen del usuario -->
-//     <div class="photo__container">
-//       <div class="photo__avatar-container">
-//         <img
-//           class="photo__avatar-img"
-//           src="../src/app/assets/brooke-cagle-k9XZPpPHDho-unsplash.jpg"
-//           alt=""
-//         />
-//       </div>
-//       <!-- <div class="photo__edit-img">°</div> -->
-//     </div>
-
-//     <!-- Datos del usuario -->
-//     <form class="formProfile__container">
-//       <!-- input -->
-//       <div class="formProfile__group">
-//         <input
-//           type="text"
-//           id="name"
-//           class="formProfile__input"
-//           placeholder=" "
-//         />
-//         <label for="name" class="formProfile__label">Nombre</label>
-//         <span class="formProfile__required">*</span>
-//       </div>
-//       <!-- input -->
-//       <div class="formProfile__group">
-//         <input
-//           type="date"
-//           id="date"
-//           class="formProfile__input"
-//           placeholder=" "
-//         />
-//         <label for="date" class="formProfile__label">Fecha de Nacimiento</label>
-//         <!-- <span class="formProfile__required">*</span> -->
-//       </div>
-//       <!-- input -->
-//       <div class="formProfile__group">
-//         <input
-//           type="email"
-//           id="email"
-//           class="formProfile__input"
-//           placeholder=" "
-//         />
-//         <label for="email" class="formProfile__label">Correo</label>
-//         <span class="formProfile__required">*</span>
-//       </div>
-//       <!-- input -->
-//       <div class="formProfile__group">
-//         <input
-//           type="password"
-//           id="password"
-//           class="formProfile__input"
-//           placeholder=" "
-//         />
-//         <label for="password" class="formProfile__label">Contraseña</label>
-//         <span class="formProfile__required">*</span>
-//         <!-- ! Importante, no logro juntar el icono del ojo -->
-//         <span class="formProfile__icon icon-open-eye"></span>
-//       </div>
-
-//       <div class="msgContainer">
-//         <!-- <span class="error-msg">Campos obligatorios *</span> -->
-//       </div>
-//       <!-- Input submit -->
-//       <input type="submit" class="formProfile__submit" value="Editar">
-//     </form>
-
-//     </div>
-//   </div>
-// </div>
