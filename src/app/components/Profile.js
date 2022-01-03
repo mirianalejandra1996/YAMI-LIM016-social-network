@@ -5,9 +5,21 @@ import { ModalEditProfile } from "../components/ModalEditProfile.js";
 
 export const Profile = (userUpdated) => {
   let user = auth.currentUser;
+  // console.log(" este es el id del usuario ", user.uid);
+
+  let propertyId = "uid";
+
+  // let prueba = user[propertyId]; //ytgbrhrthrthrrhrht
+  // console.log(" este es el id del usuario ", prueba);
+  // console.log(" este es el id del usuario ", user.propertyId);
+  // console.log("TENGO FE ", userUpdated);
 
   if (userUpdated) {
     user = userUpdated;
+    propertyId = "user_id";
+    console.log("POR FIN SOY ALGUIEN! ", userUpdated);
+    console.log("ESTE ES EL NUEVO USER ", user);
+    console.log("SOY ALGUIEN CON ID", userUpdated[propertyId]);
   }
 
   console.log(user);
@@ -189,9 +201,9 @@ export const Profile = (userUpdated) => {
   profileComponent.append($modalEditProfile);
 
   //   --------------
-
-  getUserData(user.uid)
+  getUserData(user[propertyId])
     .then((user) => {
+      console.log("si se imprimio al usuario en pantalla!", user);
       photoAvatar.src = user.user_photo;
       inputDate.type = "date";
       inputName.value = user.user_name;
@@ -209,7 +221,8 @@ export const Profile = (userUpdated) => {
       }
     })
     .catch((err) => {
-      console.log(err);
+      console.log("no se imprimio al usuario en pantalla... ", err);
+      // console.log(err);
     });
 
   // user_id: user.uid,
