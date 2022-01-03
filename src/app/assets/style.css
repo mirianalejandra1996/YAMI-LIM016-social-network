@@ -572,7 +572,9 @@ input[type="password"]:focus {
   margin-right: 0.5em;
 }
 .card__icon-container.selected .card__icon,
-.card__icon-container.selected .card__counter {
+.card__icon-container.selected .card__counter,
+.likesDiv.selected .likesIcon,
+.likesDiv.selected .likesCounter {
   color: #ffb800;
 }
 /* Vista crear Post */
@@ -1189,9 +1191,9 @@ input[type="password"]:focus {
 .commentsOptionDiv{
   display: flex;
   justify-content: center;
-  align-items: center;
+  align-items: flex-start;
   width: 30px;
-  height: 30px;
+  height: 56px;
   border-radius: 100%;
   transition: 0.3s ease;
   margin-left: 8px;

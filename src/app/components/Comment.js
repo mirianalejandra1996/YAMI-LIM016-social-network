@@ -1,4 +1,13 @@
-export const Comment = (com) => {
+import { toggleComLikes, initListenerComLike } from "../firebase/firebase-data.js"
+import { auth } from "../firebase/firebase-auth.js";
+
+export const Comment = (postId, com) => {
+  console.log(com)
+
+    const user_id = auth.currentUser.uid;
+
+    console.log(postId, com, com.com_id)
+
     const container = document.createElement("div")
     container.classList.add("commentContainer")
 
@@ -15,12 +24,17 @@ export const Comment = (com) => {
 
     const likesDiv = document.createElement("div")
     likesDiv.classList.add("likesDiv")
+    likesDiv.addEventListener("click", ()=>{
+      toggleComLikes(postId, com.com_id)
+    })
     const likesSpan = document.createElement("span")
     likesSpan.classList.add("icon-like")
     likesSpan.classList.add("likesIcon")
     const likesCounter = document.createElement("span")
     likesCounter.textContent = `X`;
     likesCounter.classList.add("likesCounter")
+    likesCounter.id = `likeComCounter_${com.com_id}`
+    likesCounter.textContent = /*`${com.likes.length}`*/`X`
 
     likesDiv.append(likesCounter)
     likesDiv.append(likesSpan)
@@ -50,25 +64,32 @@ export const Comment = (com) => {
     commentInfo.append(commentBottom)
     commentDiv.append(commentInfo)
 
-    // const likesDiv = document.createElement("div")
-    // likesDiv.classList.add("likesDiv")
-    // const likesSpan = document.createElement("span")
-    // likesSpan.classList.add("icon-like")
-    // likesSpan.classList.add("likesIcon")
-    // const likesCounter = document.createElement("span")
-    // likesCounter.textContent = `X`
-    // likesCounter.classList.add("likesCounter")
-
-    // likesDiv.append(likesCounter)
-    // likesDiv.append(likesSpan)
-
     const optionsDiv = document.createElement("div")
     optionsDiv.classList.add("commentsOptionDiv")
+    if (user_id !== com.id_user) optionsDiv.classList.add("hidden")
     const optionsSpan = document.createElement("span")
     optionsSpan.classList.add("icon-options")
     optionsSpan.classList.add("commentOptionIcon")
     
     optionsDiv.append(optionsSpan)
+
+    initListenerComLike(postId, com.com_id, (comDoc) => {
+      //se podria cambiar cualquier campo de post pero en este caso solo necesitamos los likes
+  
+      console.log(comDoc.data())
+      
+      const likes = comDoc.data().likes;
+      // console.log("array de likes", likes);
+      if (likes.find((like) => like === user_id)) {
+        likesDiv.classList.add("selected");
+        console.log("si se encuentra");
+      } else {
+        likesDiv.classList.remove("selected");
+        // console.log("no se encuentra");
+      }
+      
+      likesCounter.textContent = `${likes.length}`;
+    });
 
     container.append(avatarDiv)
     container.append(commentDiv)
