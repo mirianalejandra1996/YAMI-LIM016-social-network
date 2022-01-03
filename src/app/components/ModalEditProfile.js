@@ -304,6 +304,35 @@ export const ModalEditProfile = () => {
               document.getElementById("error-msg").textContent =
                 "Cambios realizados!";
               // document.location.reload();
+
+              // todo: ACOMODAR ESTO!!!
+              getUserData(user.uid)
+                .then((user) => {
+                  userPasswordFirestore = user.user_password;
+                  userNameFirestore = user.user_name;
+                  userBirthFirestore = user.user_birth;
+                  userEmailFirestore = user.user_email;
+                })
+                .catch((err) => {
+                  console.log(err);
+                });
+
+              // ------------------------------
+              // getUserData(user.uid)
+              //   .then((user) => {
+              //     photoAvatar.src = user.user_photo;
+              //     // inputDate.type = "date";
+              //     inputName.value = user.user_name;
+              //     inputDate.value = user.user_birth;
+              //     userPasswordFirestore = user.user_password;
+              //     userNameFirestore = user.user_name;
+              //     userBirthFirestore = user.user_birth;
+              //     userEmailFirestore = user.user_email;
+              //     inputEmail.value = user.user_email;
+              //   })
+              //   .catch((err) => {
+              //     console.log(err);
+              //   });
             })
             .catch((err) => {
               console.log("problemas con el promise all", err);
