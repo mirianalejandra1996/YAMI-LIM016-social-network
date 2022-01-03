@@ -216,7 +216,6 @@ export function addComment(current_user, idPost, comment) {
     .catch((err) => console.log(err));
 }
 
-
 // todo: AVERIGUAR SI EXISTE ALGÚN METODO EXCLUSIVO PARA SABER SI EL USUARIO EXISTE
 // todo: EN FIRESTORE O EN AUTH
 export async function isExistingUser(email) {
@@ -329,11 +328,10 @@ export function changeBasicDataFirestore(user_id, objNewData) {
   const userDocRef = doc(db, "users", user_id);
 
   updateDoc(userDocRef, {
-    // user_photo: objNewData.user_photo,
+    user_photo: objNewData.user_photo,
     user_name: objNewData.user_name,
     user_birth: objNewData.user_birth,
     user_email: objNewData.user_email,
-    // user_password: objNewData.user_password,
   })
     .then(() => {
       console.log("Si se actualizó el usuario en el firestore ");

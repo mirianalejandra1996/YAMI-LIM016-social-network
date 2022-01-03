@@ -19,6 +19,9 @@ export const ModalEditProfile = () => {
   let userBirthFirestore;
   let userEmailFirestore;
   let userPasswordFirestore;
+  let userPhoto;
+
+  console.log("foto del firestore ", userPhoto);
 
   const $modalContenedor = document.createElement("div");
   $modalContenedor.classList.add("modal__contenedor");
@@ -258,7 +261,7 @@ export const ModalEditProfile = () => {
       user_exist: false,
       user_password: userPasswordFirestore,
       // todo: hay que modificar la foto del usuario
-      // user_photo :
+      user_photo: photoAvatar.src,
     };
 
     msgErr.textContent = "";
@@ -310,7 +313,9 @@ export const ModalEditProfile = () => {
     if (
       newData.user_name === userNameFirestore &&
       newData.user_birth === userBirthFirestore &&
-      newData.user_email === userEmailFirestore
+      // newData.user_email === userEmailFirestore
+      newData.user_email === userEmailFirestore &&
+      newData.user_photo === userPhoto
     ) {
       document.getElementById("error-msg").textContent = "Actualice los datos";
       return;
@@ -350,6 +355,9 @@ export const ModalEditProfile = () => {
                 userNameFirestore = user.user_name;
                 userBirthFirestore = user.user_birth;
                 userEmailFirestore = user.user_email;
+                userPhoto = user.user_photo;
+
+                console.log("getUserData para ver userPhoto", userPhoto);
               })
               .catch((err) => {
                 console.log(err);
@@ -371,7 +379,6 @@ export const ModalEditProfile = () => {
   getUserData(user.uid)
     .then((user) => {
       photoAvatar.src = user.user_photo;
-      // inputDate.type = "date";
       inputName.value = user.user_name;
       inputDate.value = user.user_birth;
       userPasswordFirestore = user.user_password;
@@ -379,6 +386,8 @@ export const ModalEditProfile = () => {
       userBirthFirestore = user.user_birth;
       userEmailFirestore = user.user_email;
       inputEmail.value = user.user_email;
+
+      console.log("esta es mi contraseña, ", user.user_photo);
     })
     .catch((err) => {
       console.log(err);

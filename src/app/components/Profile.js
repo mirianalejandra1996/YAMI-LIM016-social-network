@@ -170,6 +170,7 @@ export const Profile = () => {
     getUserData(user.uid)
       .then((user) => {
         console.log("si se imprimio al usuario en pantalla!", user);
+        // console.log("mira mi foto : ", user.user_photo);
         photoAvatar.src = user.user_photo;
         inputDate.type = "date";
         inputName.value = user.user_name;
