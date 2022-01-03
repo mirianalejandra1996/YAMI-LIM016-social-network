@@ -1002,9 +1002,8 @@ input[type="password"]:focus {
   width: 90px;
   height: 90px;
   margin: 10px;
-  /* overflow: hidden; */
+  overflow: hidden;
   border-radius: 100%;
-  position: relative;
 }
 
 .photo__avatar-img {
@@ -1024,8 +1023,8 @@ input[type="password"]:focus {
   height: 25px;
   background-color: #fff;
   border: 0.1px solid #f0f0f0;
-  right: 0;
-  bottom: 0;
+  right: 85px;
+  bottom: 10px;
 }
 
 .profile__text-content {
