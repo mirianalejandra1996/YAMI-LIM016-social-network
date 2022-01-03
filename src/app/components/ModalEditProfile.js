@@ -59,14 +59,24 @@ export const ModalEditProfile = () => {
 
   imgAvatarContainer.append(photoAvatar);
 
+  const inputFileNone = document.createElement("input");
+  inputFileNone.type = "file";
+  inputFileNone.accept = "image/*";
+  inputFileNone.id = "file";
+  inputFileNone.style.display = "none";
+
+  // * Este es el label
   // Icono para editar imagen del usuario
-  const iconPhotoContainer = document.createElement("div");
+  const iconPhotoContainer = document.createElement("label");
+  iconPhotoContainer.htmlFor = "file";
+
   iconPhotoContainer.classList.add("photo__edit-img");
   const iconPhoto = document.createElement("span");
   iconPhoto.classList.add("icon-pencil", "pencil");
 
   iconPhotoContainer.append(iconPhoto);
   imgAvatarContainer.append(iconPhotoContainer);
+  imgAvatarContainer.append(inputFileNone);
 
   photoContainer.append(imgAvatarContainer);
 
