@@ -3,8 +3,16 @@ import { auth } from "../firebase/firebase-auth.js";
 import { getUserData } from "../firebase/firebase-data.js";
 import { ModalEditProfile } from "../components/ModalEditProfile.js";
 
-export const Profile = () => {
-  const user = auth.currentUser;
+export const Profile = (userUpdated) => {
+  let user = auth.currentUser;
+
+  if (userUpdated) {
+    user = userUpdated;
+  }
+
+  console.log(user);
+  // const user = auth.currentUser;
+  // console.log("nuevo parametro ", userUpdated);
   //    Contenedor principal
   const profileComponent = document.createElement("div");
   profileComponent.classList.add("allView");
@@ -141,7 +149,7 @@ export const Profile = () => {
   changePwd.textContent = "Cambiar contraseña";
 
   changePwd.addEventListener("click", () => {
-    window.location.hash = "#/passwordChange"
+    window.location.hash = "#/passwordChange";
   });
 
   // -----------------------------

@@ -12,6 +12,7 @@ import {
   createCredential,
   reautentificacion,
 } from "../firebase/firebase-auth.js";
+import {Profile} from "../components/Profile.js"
 
 export const ModalEditProfile = () => {
   const user = auth.currentUser;
