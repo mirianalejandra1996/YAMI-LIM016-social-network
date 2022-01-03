@@ -345,7 +345,7 @@ export async function traerComments(id_post) {
     // console.log(postData)
     // console.log(doc.id, " => ", doc.data());
   });
-  console.log(commentsData);
+  // console.log(commentsData);
   return commentsData;
 }
 

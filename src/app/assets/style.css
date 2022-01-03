@@ -390,7 +390,7 @@ input[type="password"]:focus {
   flex-direction: column;
   /* justify-content: space-between; */
   /* height: 500px; */
-  max-height: 500px;
+  /* max-height: 500px; */
   max-width: 100%;
   padding: 1em;
   margin: 0 auto;
@@ -1293,11 +1293,14 @@ input[type="password"]:focus {
   border-radius: 100%;
   transition: 0.3s ease;
   margin-left: 8px;
-  align-self: center;
+  margin-top: 12px;
+  /* align-self: center; */
 }
 .commentOptionIcon {
   color: #848484;
   font-size: 0.8rem;
+  width: 21px;
+  height: 35px;
 }
 .commentsContainer {
   padding-top: 14px;
@@ -1384,4 +1387,32 @@ label[for="file"] {
   margin-top: 15px;
   border-radius: 10px;
   
+}
+.hiddenIcon{
+  display: none;
+}
+.comOptions__dropdown{
+  width: 75px;
+  position: absolute;
+  right: 4px;
+  top: 25px;
+  box-shadow: 4px 4px 17px #878787;
+  z-index: 1;
+  background: white;
+  border-radius: 10px;
+  overflow: hidden;
+  padding: 5px;
+  display: flex;
+  justify-content: space-between;
+}
+.comOptions__dropdown.cerrar {
+  opacity: 0;
+  padding: 0;
+  z-index: -1;
+}
+.comOptionsBtn{
+  border: transparent;
+  background: white;
+  font-size: 20px;
+  width: 30px;
 }

@@ -2,11 +2,11 @@ import { toggleComLikes, initListenerComLike } from "../firebase/firebase-data.j
 import { auth } from "../firebase/firebase-auth.js";
 
 export const Comment = (postId, com) => {
-  console.log(com)
+    // console.log(com)
 
     const user_id = auth.currentUser.uid;
 
-    console.log(postId, com, com.com_id)
+    // console.log(postId, com, com.com_id, com.id_user)
 
     const container = document.createElement("div")
     container.classList.add("commentContainer")
@@ -64,19 +64,32 @@ export const Comment = (postId, com) => {
     commentInfo.append(commentBottom)
     commentDiv.append(commentInfo)
 
+    console.log(com)
+    console.log(user_id, com.id_user)
+
     const optionsDiv = document.createElement("div")
     optionsDiv.classList.add("commentsOptionDiv")
-    if (user_id !== com.id_user) optionsDiv.classList.add("hidden")
     const optionsSpan = document.createElement("span")
     optionsSpan.classList.add("icon-options")
     optionsSpan.classList.add("commentOptionIcon")
+    if (user_id != com.id_user) optionsSpan.classList.add("hiddenIcon");
+
+    const {menuModalOptionsCom, toggleModalOptionsCom} = OptionListCom()
+
+    const optionsCom = menuModalOptionsCom
     
+    optionsSpan.addEventListener("click", () => {
+      toggleModalOptionsCom()
+    })
+
+    optionsSpan.append(optionsCom)
     optionsDiv.append(optionsSpan)
+
 
     initListenerComLike(postId, com.com_id, (comDoc) => {
       //se podria cambiar cualquier campo de post pero en este caso solo necesitamos los likes
   
-      console.log(comDoc.data())
+      // console.log(comDoc.data())
       
       const likes = comDoc.data().likes;
       // console.log("array de likes", likes);
@@ -97,6 +110,31 @@ export const Comment = (postId, com) => {
     container.append(optionsDiv)
 
     return container
+}
+
+function OptionListCom(){
+  const modalOpciones = document.createElement("div")
+  modalOpciones.classList.add("comOptions__dropdown", "cerrar")
+
+  const btnEditCom = document.createElement("button")
+  btnEditCom.textContent = `✎`
+  btnEditCom.classList.add("comOptionsBtn")
+
+  const btnRemoveCom = document.createElement("button")
+  btnRemoveCom.textContent = `✘`
+  btnRemoveCom.classList.add("comOptionsBtn")
+
+  modalOpciones.append(btnEditCom)
+  modalOpciones.append(btnRemoveCom)
+
+  const toggleModalOptionsCom = () => {
+    modalOpciones.classList.toggle("cerrar")
+  }
+
+  return {
+    menuModalOptionsCom: modalOpciones,
+    toggleModalOptionsCom: toggleModalOptionsCom,
+  }
 }
 
 function timeSince(date) {

@@ -7,7 +7,7 @@ import { traerComments } from "../firebase/firebase-data.js";
 
 export const Post = (post, setDataModalEdit, abrirModalEdit, setDataModalRemove, abrirModalRemove) => {
 
-  console.log(post)
+  // console.log(post)
 
   const user_id = auth.currentUser.uid;
   // console.log("currentuser", user_id);
@@ -178,7 +178,7 @@ export const Post = (post, setDataModalEdit, abrirModalEdit, setDataModalRemove,
     commentsList.forEach((com)=>{
         const comment = Comment(post.post_id, com)
         commentsContainer.append(comment)
-        console.log("entra")
+        // console.log("entra")
     })
   })
   .catch((err) => console.log(err))
@@ -203,7 +203,7 @@ export const Post = (post, setDataModalEdit, abrirModalEdit, setDataModalRemove,
   initListenerPost(post.post_id, (postDoc) => {
     //se podria cambiar cualquier campo de post pero en este caso solo necesitamos los likes
 
-    console.log(postDoc.data())
+    // console.log(postDoc.data())
     
     const likes = postDoc.data().likes;
     // console.log("array de likes", likes);
