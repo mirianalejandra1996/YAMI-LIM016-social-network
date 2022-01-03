@@ -134,7 +134,7 @@ body {
 }
 
 .form__input::placeholder {
-  color: #cbbdbd;
+  color: #ccc;
 }
 
 .form__input:focus {
@@ -783,13 +783,14 @@ input[type="password"]:focus {
 }
 .formPost_input-long {
   width: 80%;
-  height: 228px;
+  height: 128px;
   margin-bottom: 15px;
   border: 1px solid #ffb800;
   border-radius: 10px;
   padding: 12px;
   font-family: "Lato", sans-serif;
   resize: none;
+  font-size: 14px;
 }
 
 .formPost_input-long:focus {
@@ -797,7 +798,7 @@ input[type="password"]:focus {
 }
 
 .formPost_input-long::placeholder {
-  color: #cbbdbd;
+  color: #ccc;
 }
 .formPost_input-short {
   width: 80%;
@@ -805,6 +806,8 @@ input[type="password"]:focus {
   border: 1px solid #ffb800;
   border-radius: 10px;
   text-indent: 12px;
+  display: flex;
+  align-items: center;
   margin-bottom: 10px;
 }
 .formPost_input-short::placeholder {
@@ -1311,6 +1314,8 @@ input[type="password"]:focus {
 }
 .commentsContainer {
   padding-top: 14px;
+  overflow: auto;
+  height: 200px;
 }
 .avatarDiv {
   display: flex;
@@ -1384,4 +1389,29 @@ input[type="password"]:focus {
 .userNameTitle {
   font-size: 1rem;
   font-weight: 700;
+}
+
+/* Agregar archivo imagen a post */
+input[type="file"] {
+  width: 0.1px;
+  height: 0.1px;
+  opacity: 0;
+  overflow: hidden;
+  position: absolute;
+  z-index: -1;
+}
+label[for="file"] {
+  padding: 0px 12px 0px 0px;
+  font-size: 14px;
+  color: #ccc;
+  cursor: pointer;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.imagenFile {
+  width: 80%;
+  margin-top: 15px;
+  border-radius: 10px;
 }

@@ -5,9 +5,11 @@ import { traerMisPost } from "../firebase/firebase-data.js";
 import { Menu, MenuList, ProfileList } from "./Menu.js";
 import { ModalCerrarSesion } from "./Modal_cerrarSesion.js";
 import { ModalCreatePost } from "./ModalCreatePost.js";
+import { getUserData } from "../firebase/firebase-data.js";
 
 export function MiMuro() {
   const user = auth.currentUser;
+
   const $contenedorMuro = document.createElement("div");
 
   const $header = HeaderRetroceder();
@@ -74,6 +76,15 @@ export function MiMuro() {
       $misPostsContainer.textContent = "No hay post...";
 
       // mostrar mensaje de que no se pudo cargar los posts
+    });
+
+  getUserData(user.uid)
+    .then((user) => {
+      photoAvatar.src = user.user_photo;
+      $nombre.textContent = `${user.user_name}`;
+    })
+    .catch((err) => {
+      console.log(err);
     });
 
   //Cerrar Sesion
