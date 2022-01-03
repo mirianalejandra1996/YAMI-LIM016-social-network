@@ -59,28 +59,27 @@ export const Post = (post, setDataModalEdit, abrirModalEdit, setDataModalRemove,
   // ! Si el usuario no es dueño del post, no debería salir la lista desplegable
   if (user_id !== post.id_user) $optionsContainer.classList.add("hidden");
 
- //
+  //
 
   const handleClickEdit = () => {
-    setDataModalEdit(post)
-    abrirModalEdit()
-   }
+    setDataModalEdit(post);
+    abrirModalEdit();
+  };
 
-   const handleClickRemove = () => {
-     setDataModalRemove(post)
-     abrirModalRemove()
-   }
+  const handleClickRemove = () => {
+    setDataModalRemove(post);
+    abrirModalRemove();
+  };
 
-  const {
-    menuModalOptionsPost,
-    toggleModalOptionsPost,
-  } = OptionListPost(handleClickRemove, handleClickEdit);
+  const { menuModalOptionsPost, toggleModalOptionsPost } = OptionListPost(
+    handleClickRemove,
+    handleClickEdit
+  );
   const $menuModalOptions = menuModalOptionsPost;
 
   // EVENTO 3 PUNTITOS OPCIONES
   $optionsContainer.addEventListener("click", () => {
     console.log("deberia salir la lista desplegable de opciones de post");
-    // debugger;
     // console.log("este es el post id", post.post_id);
     toggleModalOptionsPost();
   });
@@ -94,6 +93,7 @@ export const Post = (post, setDataModalEdit, abrirModalEdit, setDataModalRemove,
   $headerContainer.append($avatarContainer);
   $headerContainer.append($dataContainer);
   $headerContainer.append($optionsContainer);
+  
 
   //   -----------------------------------------------------------
 
@@ -107,8 +107,14 @@ export const Post = (post, setDataModalEdit, abrirModalEdit, setDataModalRemove,
   $textMsg.textContent = `${post.message}`;
 
   $msgContainer.append($textMsg);
-
+ 
   //   -----------------------------------------------------------
+  //   Contenido Imagen del POST del usuario
+  const $postImageContainer = document.createElement('div')
+  const $postImg = document.createElement("img");
+  $postImg.classList.add("imagenFile");
+  $postImg.src = post.imageUrl;
+  $postImageContainer.append($postImg)
 
   //   Pie de post (para dar likes y comentar)
 
@@ -191,9 +197,9 @@ export const Post = (post, setDataModalEdit, abrirModalEdit, setDataModalRemove,
   
   $footerContainer.append($likeContainer);
   $footerContainer.append($comentContainer);
-  
+
   //   todo: HACER EVENTO a icono de like para actualizar datos
-  
+
   initListenerPost(post.post_id, (postDoc) => {
     //se podria cambiar cualquier campo de post pero en este caso solo necesitamos los likes
 
@@ -208,18 +214,18 @@ export const Post = (post, setDataModalEdit, abrirModalEdit, setDataModalRemove,
       $likeContainer.classList.remove("selected");
       // console.log("no se encuentra");
     }
-    
+
     $counterLikes.textContent = `${likes.length}`;
   });
   //   -----------------------------------------------------------
 
   $card.append($headerContainer);
   $card.append($msgContainer);
+  $card.append($postImageContainer);
   $card.append($footerContainer);
   $card.append($commentsBlock)
   // $card.append(commentsDiv)
   $card.append($postComments);
-
 
   return $card;
 };
@@ -243,7 +249,6 @@ function OptionListPost(onClickRemove, onClickEdit) {
   $modalLista.append($itemRemovePublication);
 
   // $modalLista.append($modalContenedor)
-  
 
   $itemEditPublication.addEventListener("click", onClickEdit);
   $itemRemovePublication.addEventListener("click", onClickRemove);

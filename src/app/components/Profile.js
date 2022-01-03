@@ -1,22 +1,10 @@
 import { HeaderRetroceder } from "../components/Header_retro.js";
 import { auth } from "../firebase/firebase-auth.js";
 import { getUserData } from "../firebase/firebase-data.js";
+import { ModalEditProfile } from "../components/ModalEditProfile.js";
 
 export const Profile = () => {
-  //   const user_id = auth.currentUser.uid;
   const user = auth.currentUser;
-  //   console.log("esta soy yo", user_id);
-  //   console.log("esta soy yo", user.displayName);
-  console.log("esta soy yo", user);
-  console.log("cuenta creada el ", user.metadata.createdAt);
-  console.log("foto ", user.photoURL);
-  console.log("foto ", user.emailVerified);
-  console.log("proveedor ", user.providerData);
- // console.log("proveedor ", user.providerData[0].providerId); //google
-  //console.log("proveedor ", user.providerData[1].providerId); //password
-
-  // console.log("soy yo", user);
-
   //    Contenedor principal
   const profileComponent = document.createElement("div");
   profileComponent.classList.add("allView");
@@ -41,15 +29,6 @@ export const Profile = () => {
 
   const photoAvatar = document.createElement("img");
   photoAvatar.classList.add("photo__avatar-img");
-  //   photoAvatar.src = "photoURL";
-
-  // let userImg = user.photoURL;
-  // if (!user.photoURL) {
-  //   userImg = "../src/app/assets/user-img.jpg";
-  // }
-
-  // photoAvatar.src = `${userImg}`;
-
   photoAvatar.alt = "imgAvatar";
 
   imgAvatarContainer.append(photoAvatar);
@@ -81,8 +60,6 @@ export const Profile = () => {
   inputName.type = "text";
   inputName.id = "name";
   inputName.classList.add("formProfile__input");
-  // inputName.placeholder = "Ingresa un nombre"
-  //   inputName.value = `${user.displayName}`;
   inputName.disabled = true;
 
   //   Label de nombre
@@ -113,14 +90,6 @@ export const Profile = () => {
   //   inputDate.type = "text";
   inputDate.id = "date";
   inputDate.classList.add("formProfile__input");
-  // inputName.placeholder = "Ingresa un nombre"
-
-  //   if (!dateUser) {
-  //     //   dateUser = '0000-00-00'
-  //     dateUser = "";
-  //   }
-
-  //   inputDate.value = dateUser;
   inputDate.disabled = true;
 
   //   Label de nombre
@@ -143,8 +112,6 @@ export const Profile = () => {
   inputEmail.type = "email";
   inputEmail.id = "email";
   inputEmail.classList.add("formProfile__input");
-  // inputName.placeholder = "Ingresa un nombre"
-  //   inputEmail.value = `${user.email}`;
   inputEmail.disabled = true;
 
   //   Label de email
@@ -171,11 +138,9 @@ export const Profile = () => {
   //   Input email
   const inputPwd = document.createElement("input");
   //   inputPwd.type = "password";
-  inputPwd.type = "text";
+  inputPwd.type = "password";
   inputPwd.id = "password";
   inputPwd.classList.add("formProfile__input");
-  // inputPwd.placeholder = "Ingresa un nombre"
-  //   inputPwd.value = `${user.user_password}`;
   inputPwd.disabled = true;
 
   //   --------
@@ -192,9 +157,10 @@ export const Profile = () => {
   requiredPwd.textContent = "*";
 
   const iconPwd = document.createElement("span");
-  iconPwd.classList.add("formProfile__icon", "icon-open-eye");
+  iconPwd.classList.add("formProfile__icon", "icon-eye-hidden");
+  iconPwd.id = "eye";
 
-  let passwordMsg;
+  // let passwordMsg;
 
   groupPwd.append(inputPwd);
   groupPwd.append(labelPwd);
@@ -233,23 +199,24 @@ export const Profile = () => {
 
   // -----------------------------
 
+  const { $modalEditProfile, abrirModalEditProfile, cerrarModalEditProfile } =
+    ModalEditProfile();
+
+  btnEdit.addEventListener("click", () => {
+    abrirModalEditProfile();
+    console.log("editemos el perfil ");
+  });
+
+  // $modalEditProfile: $modalContenedor,
+  // abrirModalEditProfile: abrirModal,
+  // cerrarModalEditProfile: cerrarModal,
+
   profileComponent.append(headerBack);
   profileComponent.append(mainContainer);
-
   mainContainer.append(profileContainer);
-
   profileContainer.append(photoContainer);
   profileContainer.append(formContainer);
-
-  if (user.providerData[0].providerId === "google.com") {
-    msgErr.textContent = "Usted está logeado con Google";
-    msgErr.style.color = "#0f0f0f";
-    // inputPwd.value = passwordMsg;
-    groupDate.classList.add("hidden");
-    groupPwd.classList.add("hidden");
-    iconPwd.classList.add("hidden");
-    // btnEdit.classList.add("hidden");
-  }
+  profileComponent.append($modalEditProfile);
 
   //   --------------
 
@@ -258,9 +225,18 @@ export const Profile = () => {
       photoAvatar.src = user.user_photo;
       inputDate.type = "date";
       inputName.value = user.user_name;
-      inputDate.value = user.user_date;
+      inputDate.value = user.user_birth;
       inputPwd.value = user.user_password;
       inputEmail.value = user.user_email;
+
+      if (user.user_logedBy === "google") {
+        msgErr.textContent = "Usted está logeado con Google";
+        msgErr.style.color = "#0f0f0f";
+        groupDate.classList.add("hidden");
+        groupPwd.classList.add("hidden");
+        iconPwd.classList.add("hidden");
+        btnEdit.classList.add("hidden");
+      }
     })
     .catch((err) => {
       console.log(err);
@@ -275,10 +251,19 @@ export const Profile = () => {
   // user_logedBy: logedByN,
 
   //   --------------
+  iconPwd.addEventListener("click", () => {
+    iconPwd.classList.toggle("icon-open-eye");
+    iconPwd.classList.toggle("icon-eye-hidden");
+
+    iconPwd.classList.contains("icon-open-eye")
+      ? (inputPwd.type = "text")
+      : (inputPwd.type = "password");
+  });
 
   return profileComponent;
 };
 
+// photo__avatar-container
 
 // !todo: HACER MODAL CON ESTE CODIGO PARA EDITAR PERFIL
 // <!-- Cabecera -->

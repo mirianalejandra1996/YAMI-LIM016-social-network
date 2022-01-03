@@ -1,6 +1,6 @@
 import { Post } from "./Post.js";
 import { ModalCreatePost } from "./ModalCreatePost.js";
-import {ModalEditPost} from "./ModalEditPost.js"
+import { ModalEditPost } from "./ModalEditPost.js";
 import { ModalEliminarPost } from "./ModalDeletePost.js";
 import { Menu, MenuList, ProfileList } from "./Menu.js";
 import { traerPost } from "../firebase/firebase-data.js";
@@ -10,7 +10,6 @@ import { ModalCerrarSesion } from "./Modal_cerrarSesion.js";
 // import { ModalCerrarSesion } from "./Modal_cerrar.js";
 
 export function Timeline() {
-
   const $timeline = document.createElement("div");
   // Importamos la cabecera
   const $header = HeaderSimple();
@@ -19,15 +18,16 @@ export function Timeline() {
   $postsContainer.classList.add("notification-grid");
 
   //Cerrar Sesion
-    const {  $modalCerrarSesion, abrilModalCerrarSesion } = ModalCerrarSesion();
-  const {$modalCreatePost,abrirModalCreatePost} = ModalCreatePost();
+  const { $modalCerrarSesion, abrilModalCerrarSesion } = ModalCerrarSesion();
+  const { $modalCreatePost, abrirModalCreatePost } = ModalCreatePost();
   // Crea un Post
   const { menuModalPlus, toggleModalPlus } = MenuList(abrirModalCreatePost);
   // Perfil usuario
-  const { menuModalProfile, toggleModalProfile } = ProfileList(abrilModalCerrarSesion);
+  const { menuModalProfile, toggleModalProfile } = ProfileList(
+    abrilModalCerrarSesion
+  );
   //Enviamos los eventos a Menu
   const $menu = Menu(toggleModalPlus, toggleModalProfile);
- 
 
   // -----------------------------------------------------------------------------------
   // Lista desplegable de opciones de post EDITAR ELIMINAR POST
@@ -35,15 +35,14 @@ export function Timeline() {
   const {
     $modalContenedor: $modalEditPost,
     abrirModal: abrirModalEdit,
-    setPost: setDataModalEdit 
-  } = ModalEditPost()
+    setPost: setDataModalEdit,
+  } = ModalEditPost();
 
   const {
     modalEliminarPost: $modalRemovePost,
     abrirModalEliminar: abrirModalRemove,
-    setDataModalRemove: setDataModalRemove
-  } = ModalEliminarPost()
-
+    setDataModalRemove: setDataModalRemove,
+  } = ModalEliminarPost();
 
   // -----------------------------------------------------------------------------------
   // Construye el TIMELINE
@@ -54,14 +53,14 @@ export function Timeline() {
   $timeline.append(menuModalProfile);
   $timeline.append($menu);
   $timeline.append($modalCreatePost);
-  $timeline.append($modalEditPost)
-  $timeline.append($modalRemovePost)
-  $timeline.append($modalCerrarSesion)
+  $timeline.append($modalEditPost);
+  $timeline.append($modalRemovePost);
+  $timeline.append($modalCerrarSesion);
 
   // cosas que pasan asincronamente
 
   //mientras cargan post, al $postsContainer le hago append de un loader
-  $postsContainer.textContent = "cargando posts...";
+  $postsContainer.textContent = "Cargando posts...";
 
   traerPost()
     .then((postsLista) => {
@@ -69,14 +68,20 @@ export function Timeline() {
       $postsContainer.textContent = "";
       //lleno el $postContainer con los nodos de post
       postsLista.forEach((post) => {
-        const $post = Post(post, setDataModalEdit, abrirModalEdit,setDataModalRemove,abrirModalRemove);
+        const $post = Post(
+          post,
+          setDataModalEdit,
+          abrirModalEdit,
+          setDataModalRemove,
+          abrirModalRemove
+        );
         $postsContainer.append($post);
       });
     })
     .catch((error) => {
       // mostrar mensaje de que no se pudo cargar los posts
-      console.error(error)
-      $postsContainer.textContent = "no hay posts";
+      console.error(error);
+      $postsContainer.textContent = "No hay posts";
     });
 
   return $timeline;
