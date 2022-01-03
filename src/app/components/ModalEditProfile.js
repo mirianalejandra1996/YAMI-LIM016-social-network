@@ -385,9 +385,14 @@ export const ModalEditProfile = () => {
       userNameFirestore = user.user_name;
       userBirthFirestore = user.user_birth;
       userEmailFirestore = user.user_email;
+      userPhoto = user.user_photo;
       inputEmail.value = user.user_email;
 
-      console.log("esta es mi contraseña, ", user.user_photo);
+      // console.log("esta es mi contraseña, ", user.user_photo);
+      console.log(
+        "esta mi foto recien cargando el componente MODAL, ",
+        userPhoto
+      );
     })
     .catch((err) => {
       console.log(err);
