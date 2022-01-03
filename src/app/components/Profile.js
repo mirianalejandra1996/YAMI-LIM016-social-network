@@ -54,13 +54,13 @@ export const Profile = () => {
   imgAvatarContainer.append(photoAvatar);
 
   // Icono para editar imagen del usuario
-  const iconPhotoContainer = document.createElement("div");
-  iconPhotoContainer.classList.add("photo__edit-img", "hidden");
-  const iconPhoto = document.createElement("span");
-  iconPhoto.classList.add("icon-pencil", "pencil");
+  // const iconPhotoContainer = document.createElement("div");
+  // iconPhotoContainer.classList.add("photo__edit-img", "hidden");
+  // const iconPhoto = document.createElement("span");
+  // iconPhoto.classList.add("icon-pencil", "pencil");
 
-  iconPhotoContainer.append(iconPhoto);
-  imgAvatarContainer.append(iconPhotoContainer);
+  // iconPhotoContainer.append(iconPhoto);
+  // imgAvatarContainer.append(iconPhotoContainer);
 
   photoContainer.append(imgAvatarContainer);
 
@@ -88,14 +88,8 @@ export const Profile = () => {
   labelName.classList.add("formProfile__label");
   labelName.textContent = "Nombre";
 
-  //  Nombre Obligatorio
-  const requiredName = document.createElement("span");
-  requiredName.classList.add("formProfile__required", "hidden");
-  requiredName.textContent = "*";
-
   groupName.append(inputName);
   groupName.append(labelName);
-  groupName.append(requiredName);
 
   // -----------------------------
 
@@ -107,7 +101,6 @@ export const Profile = () => {
 
   const inputDate = document.createElement("input");
 
-  //   inputDate.type = "text";
   inputDate.id = "date";
   inputDate.classList.add("formProfile__input");
   inputDate.disabled = true;

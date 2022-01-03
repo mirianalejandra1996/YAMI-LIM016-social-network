@@ -61,7 +61,7 @@ export const ModalEditProfile = () => {
 
   // Icono para editar imagen del usuario
   const iconPhotoContainer = document.createElement("div");
-  iconPhotoContainer.classList.add("photo__edit-img", "hidden");
+  iconPhotoContainer.classList.add("photo__edit-img");
   const iconPhoto = document.createElement("span");
   iconPhoto.classList.add("icon-pencil", "pencil");
 

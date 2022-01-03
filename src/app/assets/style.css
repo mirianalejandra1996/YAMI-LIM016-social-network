@@ -997,12 +997,14 @@ input[type="password"]:focus {
   align-items: center;
   flex-direction: column;
 }
+
 .photo__avatar-container {
   width: 90px;
   height: 90px;
   margin: 10px;
-  overflow: hidden;
+  /* overflow: hidden; */
   border-radius: 100%;
+  position: relative;
 }
 
 .photo__avatar-img {
@@ -1022,8 +1024,8 @@ input[type="password"]:focus {
   height: 25px;
   background-color: #fff;
   border: 0.1px solid #f0f0f0;
-  right: -5px;
-  bottom: -5px;
+  right: 0;
+  bottom: 0;
 }
 
 .profile__text-content {
