@@ -336,7 +336,9 @@ export async function traerComments(id_post) {
 
   const commentsRef = collection(db, "posts", id_post, "comments");
 
-  const querySnapshotComments = await getDocs(commentsRef);
+  const q = query(commentsRef, orderBy("date", "desc"));
+
+  const querySnapshotComments = await getDocs(q);
 
   querySnapshotComments.forEach((doc) => {
     const comment = doc.data();

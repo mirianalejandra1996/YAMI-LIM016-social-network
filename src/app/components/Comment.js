@@ -64,8 +64,8 @@ export const Comment = (postId, com) => {
     commentInfo.append(commentBottom)
     commentDiv.append(commentInfo)
 
-    console.log(com)
-    console.log(user_id, com.id_user)
+    // console.log(com)
+    // console.log(user_id, com.id_user)
 
     const optionsDiv = document.createElement("div")
     optionsDiv.classList.add("commentsOptionDiv")
@@ -89,16 +89,16 @@ export const Comment = (postId, com) => {
     initListenerComLike(postId, com.com_id, (comDoc) => {
       //se podria cambiar cualquier campo de post pero en este caso solo necesitamos los likes
   
-      // console.log(comDoc.data())
+      console.log(comDoc.data())
       
       const likes = comDoc.data().likes;
       // console.log("array de likes", likes);
       if (likes.find((like) => like === user_id)) {
         likesDiv.classList.add("selected");
-        console.log("si se encuentra");
+        // console.log("si se encuentra");
       } else {
         likesDiv.classList.remove("selected");
-        // console.log("no se encuentra");
+        console.log("no se encuentra");
       }
       
       likesCounter.textContent = `${likes.length}`;
