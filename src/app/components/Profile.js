@@ -3,24 +3,24 @@ import { auth } from "../firebase/firebase-auth.js";
 import { getUserData, initListenerProfile } from "../firebase/firebase-data.js";
 import { ModalEditProfile } from "../components/ModalEditProfile.js";
 
-export const Profile = (userUpdated) => {
+export const Profile = () => {
   let user = auth.currentUser;
   // console.log(" este es el id del usuario ", user.uid);
 
-  let propertyId = "uid";
+  // let propertyId = "uid";
 
   // let prueba = user[propertyId]; //ytgbrhrthrthrrhrht
   // console.log(" este es el id del usuario ", prueba);
   // console.log(" este es el id del usuario ", user.propertyId);
   // console.log("TENGO FE ", userUpdated);
 
-  if (userUpdated) {
-    user = userUpdated;
-    propertyId = "user_id";
-    console.log("POR FIN SOY ALGUIEN! ", userUpdated);
-    console.log("ESTE ES EL NUEVO USER ", user);
-    console.log("SOY ALGUIEN CON ID", userUpdated[propertyId]);
-  }
+  // if (userUpdated) {
+  //   user = userUpdated;
+  //   propertyId = "user_id";
+  //   console.log("POR FIN SOY ALGUIEN! ", userUpdated);
+  //   console.log("ESTE ES EL NUEVO USER ", user);
+  //   console.log("SOY ALGUIEN CON ID", userUpdated[propertyId]);
+  // }
 
   console.log(user);
   // const user = auth.currentUser;
@@ -178,10 +178,6 @@ export const Profile = (userUpdated) => {
   formContainer.append(groupName);
   formContainer.append(groupDate);
   formContainer.append(groupEmail);
-  // //  El botón de Editar
-  // formContainer.append(btnEdit);
-  // //   Apendizamos el mensaje en caso que esté logueado con google
-  // formContainer.append(msgContainer);
 
   // -----------------------------
 
@@ -201,9 +197,8 @@ export const Profile = (userUpdated) => {
   profileComponent.append($modalEditProfile);
 
   //   --------------
-  initListenerProfile(user[propertyId], () => {
-  
-    getUserData(user[propertyId])
+  initListenerProfile(user.uid, () => {
+    getUserData(user.uid)
       .then((user) => {
         console.log("si se imprimio al usuario en pantalla!", user);
         photoAvatar.src = user.user_photo;
@@ -228,46 +223,8 @@ export const Profile = (userUpdated) => {
       });
   });
 
-  // ---------RESPALDO----------------------------------
-  // getUserData(user[propertyId])
-  //   .then((user) => {
-  //     console.log("si se imprimio al usuario en pantalla!", user);
-  //     photoAvatar.src = user.user_photo;
-  //     inputDate.type = "date";
-  //     inputName.value = user.user_name;
-  //     inputDate.value = user.user_birth;
-  //     inputEmail.value = user.user_email;
-
-  //     if (user.user_logedBy === "google") {
-  //       groupDate.classList.add("hidden");
-  //       formContainer.append(msgContainer);
-  //       msgContainer.append(msgLogedByGoogle);
-  //     } else {
-  //       formContainer.append(btnEdit);
-  //       formContainer.append(msgContainer);
-  //       msgContainer.append(changePwd);
-  //     }
-
-  //     // initListenerProfile(user.user_id, (postDoc) => {
-  //     //   //se podria cambiar cualquier campo de post pero en este caso solo necesitamos los likes
-  //     //   // const user = postDoc.data();
-  //     // });
-  //   })
-  //   .catch((err) => {
-  //     console.log("no se imprimio al usuario en pantalla... ", err);
-  //     // console.log(err);
-  //   });
-
   return profileComponent;
 };
-
-// user_id: user.uid,
-// user_name: nameN,
-// user_photo: photoUrlN,
-// user_createdAt: user.metadata.createdAt,
-// user_email: emailN,
-// user_password: passwordN,
-// user_logedBy: logedByN,
 
 // !todo: HACER MODAL CON ESTE CODIGO PARA EDITAR PERFIL
 // <!-- Cabecera -->

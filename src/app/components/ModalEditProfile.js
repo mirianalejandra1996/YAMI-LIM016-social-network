@@ -12,7 +12,6 @@ import {
   createCredential,
   reautentificacion,
 } from "../firebase/firebase-auth.js";
-import { Profile } from "../components/Profile.js";
 
 export const ModalEditProfile = () => {
   const user = auth.currentUser;
@@ -313,9 +312,6 @@ export const ModalEditProfile = () => {
                   userNameFirestore = user.user_name;
                   userBirthFirestore = user.user_birth;
                   userEmailFirestore = user.user_email;
-                  // console.log("este es mi user id", user.user_id);
-                  // Profile(user.user_id);
-                  Profile(user);
                 })
                 .catch((err) => {
                   console.log(err);
