@@ -55,7 +55,8 @@ export const ModalEditProfile = () => {
   const photoAvatar = document.createElement("img");
   photoAvatar.classList.add("photo__avatar-img");
   photoAvatar.alt = "imgAvatar";
-  // photoAvatar.src = "../src/app/assets/brooke-cagle-k9XZPpPHDho-unsplash.jpg";
+  photoAvatar.src =
+    "https://firebasestorage.googleapis.com/v0/b/yami-cbaa4.appspot.com/o/user.png?alt=media&token=bfe80508-5817-4d84-83e1-6a074a16f198";
 
   imgAvatarContainer.append(photoAvatar);
 
@@ -69,6 +70,32 @@ export const ModalEditProfile = () => {
   // Icono para editar imagen del usuario
   const iconPhotoContainer = document.createElement("label");
   iconPhotoContainer.htmlFor = "file";
+
+  // Todo: preguntar por qué no escogió este camino a Lu
+  // inputFileNone.addEventListener("change", () => {
+  //   const file = this.files[0];
+  //   console.log("cambió el file", file);
+
+  //   // if (file) {
+  //   //   console.log("file es truly");
+
+  //   //   const objectURL = URL.createObjectURL(file);
+  //   //   photoAvatar.src = objectURL;
+  //   //   // });
+  //   //   // photoAvatar.src
+  //   // }
+  // });
+
+  inputFileNone.addEventListener("change", (e) => {
+    const file = e.target.files[0];
+
+    if (file) {
+      console.log("file es truly");
+
+      const objectURL = URL.createObjectURL(file);
+      photoAvatar.src = objectURL;
+    }
+  });
 
   iconPhotoContainer.classList.add("photo__edit-img");
   const iconPhoto = document.createElement("span");
@@ -266,7 +293,7 @@ export const ModalEditProfile = () => {
       return;
     }
     // Validamos el correo
-    else if (!validate_email(newData.user_email)) {
+    if (!validate_email(newData.user_email)) {
       document.getElementById("error-msg").textContent =
         "Ingrese un correo válido";
       // Activa campo como obligatorio
@@ -274,90 +301,71 @@ export const ModalEditProfile = () => {
       return;
     }
     // Si la cuenta no está disponible para usar
-    else if (userExist && newData.user_email !== user.email) {
+    if (userExist && newData.user_email !== user.email) {
       document.getElementById("error-msg").textContent =
         "Esta cuenta ya está siendo utilizada";
       return;
     }
     // Si los datos nunca fueron modificados
-    else if (
+    if (
       newData.user_name === userNameFirestore &&
       newData.user_birth === userBirthFirestore &&
       newData.user_email === userEmailFirestore
     ) {
       document.getElementById("error-msg").textContent = "Actualice los datos";
       return;
-    } else {
-      for (let element of requiredFields) {
-        element.classList.remove("modal-profile__required--active");
-      }
-
-      console.log("esta es mi contraseña ", newData.user_password);
-
-      const credential = await createCredential(user, newData.user_password);
-
-      reautentificacion(user, credential)
-        .then(() => {
-          console.log("si se logró la reautentificación");
-
-          let promises = [
-            changeEmailAuth(user, newData.user_email),
-            changeNameAndPhotoAuth(newData),
-            changeBasicDataFirestore(user.uid, newData),
-          ];
-
-          Promise.all(promises)
-            .then(() => {
-              console.log("todos los procesos se realizaron!");
-              msgErr.classList.remove("error-msg");
-              msgErr.classList.add("success-msg");
-              document.getElementById("error-msg").textContent =
-                "Cambios realizados!";
-              // document.location.reload();
-
-              // todo: ACOMODAR ESTO!!!
-              getUserData(user.uid)
-                .then((user) => {
-                  userPasswordFirestore = user.user_password;
-                  userNameFirestore = user.user_name;
-                  userBirthFirestore = user.user_birth;
-                  userEmailFirestore = user.user_email;
-                })
-                .catch((err) => {
-                  console.log(err);
-                });
-
-              // ------------------------------
-              // getUserData(user.uid)
-              //   .then((user) => {
-              //     photoAvatar.src = user.user_photo;
-              //     // inputDate.type = "date";
-              //     inputName.value = user.user_name;
-              //     inputDate.value = user.user_birth;
-              //     userPasswordFirestore = user.user_password;
-              //     userNameFirestore = user.user_name;
-              //     userBirthFirestore = user.user_birth;
-              //     userEmailFirestore = user.user_email;
-              //     inputEmail.value = user.user_email;
-              //   })
-              //   .catch((err) => {
-              //     console.log(err);
-              //   });
-            })
-            .catch((err) => {
-              console.log("problemas con el promise all", err);
-            });
-
-          // todo: actualizar la página cuando todos los procesos finalicen
-          // todo: mostrar en pantalla un spiner y que fue realizado!
-          // document.location.reload();
-        })
-        .catch((err) => {
-          console.log("no se logró la reautentificación", err);
-          document.getElementById("error-msg").textContent =
-            "Error de autentificación ";
-        });
     }
+
+    for (let element of requiredFields) {
+      element.classList.remove("modal-profile__required--active");
+    }
+
+    console.log("esta es mi contraseña ", newData.user_password);
+
+    const credential = await createCredential(user, newData.user_password);
+
+    reautentificacion(user, credential)
+      .then(() => {
+        console.log("si se logró la reautentificación");
+
+        let promises = [
+          changeEmailAuth(user, newData.user_email),
+          changeNameAndPhotoAuth(newData),
+          changeBasicDataFirestore(user.uid, newData),
+        ];
+
+        Promise.all(promises)
+          .then(() => {
+            console.log("todos los procesos se realizaron!");
+            msgErr.classList.remove("error-msg");
+            msgErr.classList.add("success-msg");
+            document.getElementById("error-msg").textContent =
+              "Cambios realizados!";
+            // document.location.reload();
+
+            // todo: ACOMODAR ESTO!!!
+            getUserData(user.uid)
+              .then((user) => {
+                userPasswordFirestore = user.user_password;
+                userNameFirestore = user.user_name;
+                userBirthFirestore = user.user_birth;
+                userEmailFirestore = user.user_email;
+              })
+              .catch((err) => {
+                console.log(err);
+              });
+          })
+          .catch((err) => {
+            console.log("problemas con el promise all", err);
+          });
+
+        // todo: mostrar en pantalla un spiner y que fue realizado!
+      })
+      .catch((err) => {
+        console.log("no se logró la reautentificación", err);
+        document.getElementById("error-msg").textContent =
+          "Error de autentificación ";
+      });
   });
 
   getUserData(user.uid)
@@ -382,15 +390,3 @@ export const ModalEditProfile = () => {
     cerrarModalEditProfile: cerrarModal,
   };
 };
-
-//   --------------
-
-// user_id: user.uid,
-// user_name: nameN,
-// user_photo: photoUrlN,
-// user_createdAt: user.metadata.createdAt,
-// user_email: emailN,
-// user_password: passwordN,
-// user_logedBy: logedByN,
-
-//   --------------
