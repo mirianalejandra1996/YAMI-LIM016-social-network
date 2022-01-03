@@ -1,6 +1,6 @@
 import { HeaderRetroceder } from "../components/Header_retro.js";
 import { auth } from "../firebase/firebase-auth.js";
-import { getUserData } from "../firebase/firebase-data.js";
+import { getUserData, initListenerProfile } from "../firebase/firebase-data.js";
 import { ModalEditProfile } from "../components/ModalEditProfile.js";
 
 export const Profile = (userUpdated) => {
@@ -201,40 +201,73 @@ export const Profile = (userUpdated) => {
   profileComponent.append($modalEditProfile);
 
   //   --------------
-  getUserData(user[propertyId])
-    .then((user) => {
-      console.log("si se imprimio al usuario en pantalla!", user);
-      photoAvatar.src = user.user_photo;
-      inputDate.type = "date";
-      inputName.value = user.user_name;
-      inputDate.value = user.user_birth;
-      inputEmail.value = user.user_email;
+  initListenerProfile(user[propertyId], () => {
+  
+    getUserData(user[propertyId])
+      .then((user) => {
+        console.log("si se imprimio al usuario en pantalla!", user);
+        photoAvatar.src = user.user_photo;
+        inputDate.type = "date";
+        inputName.value = user.user_name;
+        inputDate.value = user.user_birth;
+        inputEmail.value = user.user_email;
 
-      if (user.user_logedBy === "google") {
-        groupDate.classList.add("hidden");
-        formContainer.append(msgContainer);
-        msgContainer.append(msgLogedByGoogle);
-      } else {
-        formContainer.append(btnEdit);
-        formContainer.append(msgContainer);
-        msgContainer.append(changePwd);
-      }
-    })
-    .catch((err) => {
-      console.log("no se imprimio al usuario en pantalla... ", err);
-      // console.log(err);
-    });
+        if (user.user_logedBy === "google") {
+          groupDate.classList.add("hidden");
+          formContainer.append(msgContainer);
+          msgContainer.append(msgLogedByGoogle);
+        } else {
+          formContainer.append(btnEdit);
+          formContainer.append(msgContainer);
+          msgContainer.append(changePwd);
+        }
+      })
+      .catch((err) => {
+        console.log("no se imprimio al usuario en pantalla... ", err);
+        // console.log(err);
+      });
+  });
 
-  // user_id: user.uid,
-  // user_name: nameN,
-  // user_photo: photoUrlN,
-  // user_createdAt: user.metadata.createdAt,
-  // user_email: emailN,
-  // user_password: passwordN,
-  // user_logedBy: logedByN,
+  // ---------RESPALDO----------------------------------
+  // getUserData(user[propertyId])
+  //   .then((user) => {
+  //     console.log("si se imprimio al usuario en pantalla!", user);
+  //     photoAvatar.src = user.user_photo;
+  //     inputDate.type = "date";
+  //     inputName.value = user.user_name;
+  //     inputDate.value = user.user_birth;
+  //     inputEmail.value = user.user_email;
+
+  //     if (user.user_logedBy === "google") {
+  //       groupDate.classList.add("hidden");
+  //       formContainer.append(msgContainer);
+  //       msgContainer.append(msgLogedByGoogle);
+  //     } else {
+  //       formContainer.append(btnEdit);
+  //       formContainer.append(msgContainer);
+  //       msgContainer.append(changePwd);
+  //     }
+
+  //     // initListenerProfile(user.user_id, (postDoc) => {
+  //     //   //se podria cambiar cualquier campo de post pero en este caso solo necesitamos los likes
+  //     //   // const user = postDoc.data();
+  //     // });
+  //   })
+  //   .catch((err) => {
+  //     console.log("no se imprimio al usuario en pantalla... ", err);
+  //     // console.log(err);
+  //   });
 
   return profileComponent;
 };
+
+// user_id: user.uid,
+// user_name: nameN,
+// user_photo: photoUrlN,
+// user_createdAt: user.metadata.createdAt,
+// user_email: emailN,
+// user_password: passwordN,
+// user_logedBy: logedByN,
 
 // !todo: HACER MODAL CON ESTE CODIGO PARA EDITAR PERFIL
 // <!-- Cabecera -->

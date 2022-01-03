@@ -159,6 +159,11 @@ export function initListenerPost(postId, actualizarPost) {
   return onSnapshot(doc(db, "posts", postId), actualizarPost);
 }
 
+/******************Init Listener Profile Component*********************/
+export function initListenerProfile(userId, actualizarProfile) {
+  return onSnapshot(doc(db, "users", userId), actualizarProfile);
+}
+
 // ---------------Funciones del post -------------------------------
 
 // Actualizar post
