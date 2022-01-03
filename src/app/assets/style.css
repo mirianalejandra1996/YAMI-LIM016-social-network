@@ -270,6 +270,11 @@ input[type="password"]:focus {
   /* font-size: 0.9rem; */
 }
 
+.success-msg {
+  color: #2ecc71;
+  /* font-size: 0.9rem; */
+}
+
 .msgContainer {
   height: 1.3rem;
   /* background-color: blue; */

@@ -166,8 +166,14 @@ export const ChangePassword = () => {
     };
 
     document.getElementById("error-msg").textContent = "";
+    msgError.classList.add("error-msg");
+    msgError.classList.remove("success-msg");
 
-    if (!validate_field(newData.inputOldPassword)) {
+    if (
+      !validate_field(newData.inputOldPassword) ||
+      !validate_field(newData.newPassword) ||
+      !validate_field(newData.confirmedPassword)
+    ) {
       document.getElementById("error-msg").textContent =
         "Rellene todos los campos";
       return;
@@ -179,33 +185,59 @@ export const ChangePassword = () => {
         "La contraseña debe tener entre 8 a 14 carácteres";
       return;
     }
+
+    // Validar que la nueva contraseña no es la misma inicialmente
+    if (newData.inputOldPassword === newData.newPassword) {
+      document.getElementById("error-msg").textContent =
+        "Ingresa una contraseña diferente a la actual.";
+      return;
+    }
+
     // Validar si la contraseña ingresada está bien tipeada
     if (newData.newPassword !== newData.confirmedPassword) {
       document.getElementById("error-msg").textContent =
         "Ambas contraseñas deben coincidir.";
       return;
-    } else {
-      const credential = await createCredential(user, newData.inputOldPassword);
-
-      console.log("credencial : ", credential);
-
-      reautentificacion(user, credential)
-        .then(() => {
-          console.log("si se logró la reautentificación");
-          changePasswordAuth(user, newData.newPassword);
-          changePasswordFirestore(user.uid, newData.newPassword);
-
-          // todo: actualizar la página cuando todos los procesos finalicen
-          // todo: mostrar en pantalla un spiner y que fue realizado!
-          // document.location.reload();
-          // document.getElementById("error-msg").textContent = "Autentificado!";
-        })
-        .catch((err) => {
-          console.log("no se logró la reautentificación", err);
-          document.getElementById("error-msg").textContent =
-            "Error de autentificación ";
-        });
     }
+
+    const credential = await createCredential(user, newData.inputOldPassword);
+
+    console.log("credencial : ", credential);
+
+    reautentificacion(user, credential)
+      .then(() => {
+        console.log("si se logró la reautentificación");
+        // changePasswordAuth(user, newData.newPassword);
+        // changePasswordFirestore(user.uid, newData.newPassword);
+
+        let promises = [
+          changePasswordAuth(user, newData.newPassword),
+          changePasswordFirestore(user.uid, newData.newPassword),
+        ];
+
+        Promise.all(promises)
+          .then(() => {
+            console.log("todos los procesos se realizaron!");
+            msgError.classList.remove("error-msg");
+            msgError.classList.add("success-msg");
+            document.getElementById("error-msg").textContent =
+              "Cambios realizados!";
+            // document.location.reload();
+          })
+          .catch((err) => {
+            console.log("problemas con el promise all", err);
+          });
+
+        // todo: actualizar la página cuando todos los procesos finalicen
+        // todo: mostrar en pantalla un spiner y que fue realizado!
+        // document.location.reload();
+        // document.getElementById("error-msg").textContent = "Autentificado!";
+      })
+      .catch((err) => {
+        console.log("no se logró la reautentificación", err);
+        document.getElementById("error-msg").textContent =
+          "Error de autentificación ";
+      });
   });
 
   getUserData(user.uid)

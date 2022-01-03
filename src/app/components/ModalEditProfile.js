@@ -15,7 +15,10 @@ import {
 
 export const ModalEditProfile = () => {
   const user = auth.currentUser;
-  let userPassword;
+  let userNameFirestore;
+  let userBirthFirestore;
+  let userEmailFirestore;
+  let userPasswordFirestore;
 
   const $modalContenedor = document.createElement("div");
   $modalContenedor.classList.add("modal__contenedor");
@@ -216,10 +219,14 @@ export const ModalEditProfile = () => {
       user_birth: inputDate.value,
       user_email: inputEmail.value,
       user_exist: false,
-      user_password: userPassword,
+      user_password: userPasswordFirestore,
       // todo: hay que modificar la foto del usuario
       // user_photo :
     };
+
+    msgErr.textContent = "";
+    msgErr.classList.add("error-msg");
+    msgErr.classList.remove("success-msg");
 
     const { emailUserSearched, pwdUserSearched, userExist } =
       await isExistingUser(newData.user_email);
@@ -255,10 +262,20 @@ export const ModalEditProfile = () => {
       // Activa campo como obligatorio
       requiredEmail.classList.add("modal-profile__required--active");
       return;
-    } else if (userExist && newData.user_email !== user.email) {
+    }
+    // Si la cuenta no está disponible para usar
+    else if (userExist && newData.user_email !== user.email) {
       document.getElementById("error-msg").textContent =
         "Esta cuenta ya está siendo utilizada";
-      console.log("else if de newData.user_exist");
+      return;
+    }
+    // Si los datos nunca fueron modificados
+    else if (
+      newData.user_name === userNameFirestore &&
+      newData.user_birth === userBirthFirestore &&
+      newData.user_email === userEmailFirestore
+    ) {
+      document.getElementById("error-msg").textContent = "Actualice los datos";
       return;
     } else {
       for (let element of requiredFields) {
@@ -272,14 +289,29 @@ export const ModalEditProfile = () => {
       reautentificacion(user, credential)
         .then(() => {
           console.log("si se logró la reautentificación");
-          changeEmailAuth(user, newData.user_email);
-          changeNameAndPhotoAuth(newData);
-          changeBasicDataFirestore(user.uid, newData);
+
+          let promises = [
+            changeEmailAuth(user, newData.user_email),
+            changeNameAndPhotoAuth(newData),
+            changeBasicDataFirestore(user.uid, newData),
+          ];
+
+          Promise.all(promises)
+            .then(() => {
+              console.log("todos los procesos se realizaron!");
+              msgErr.classList.remove("error-msg");
+              msgErr.classList.add("success-msg");
+              document.getElementById("error-msg").textContent =
+                "Cambios realizados!";
+              // document.location.reload();
+            })
+            .catch((err) => {
+              console.log("problemas con el promise all", err);
+            });
 
           // todo: actualizar la página cuando todos los procesos finalicen
           // todo: mostrar en pantalla un spiner y que fue realizado!
           // document.location.reload();
-          // document.getElementById("error-msg").textContent = "Autentificado!";
         })
         .catch((err) => {
           console.log("no se logró la reautentificación", err);
@@ -295,7 +327,10 @@ export const ModalEditProfile = () => {
       // inputDate.type = "date";
       inputName.value = user.user_name;
       inputDate.value = user.user_birth;
-      userPassword = user.user_password;
+      userPasswordFirestore = user.user_password;
+      userNameFirestore = user.user_name;
+      userBirthFirestore = user.user_birth;
+      userEmailFirestore = user.user_email;
       inputEmail.value = user.user_email;
     })
     .catch((err) => {
