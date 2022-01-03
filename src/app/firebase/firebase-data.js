@@ -416,3 +416,11 @@ export async function updateUserFirestore(user_id, objNewData) {
 // user_password: passwordN,
 // user_logedBy: logedByN,
 // user_birth: birthN,
+
+// Eliminar comentario
+
+export async function deleteCom(postId, comId) {
+  const comRef = doc(db, "posts", postId, "comments", comId);
+
+  return await deleteDoc(comRef);
+}

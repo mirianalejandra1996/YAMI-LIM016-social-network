@@ -34,7 +34,7 @@ export const Comment = (postId, com) => {
     likesCounter.textContent = `X`;
     likesCounter.classList.add("likesCounter")
     likesCounter.id = `likeComCounter_${com.com_id}`
-    likesCounter.textContent = /*`${com.likes.length}`*/`X`
+    // likesCounter.textContent = /*`${com.likes.length}`*/`X`
 
     likesDiv.append(likesCounter)
     likesDiv.append(likesSpan)
@@ -72,9 +72,24 @@ export const Comment = (postId, com) => {
     const optionsSpan = document.createElement("span")
     optionsSpan.classList.add("icon-options")
     optionsSpan.classList.add("commentOptionIcon")
+
     if (user_id != com.id_user) optionsSpan.classList.add("hiddenIcon");
 
-    const {menuModalOptionsCom, toggleModalOptionsCom} = OptionListCom()
+    /**
+     const handleClickEdit = () => {
+    setDataModalEdit(com);
+    abrirModalEdit();
+  };
+*/
+    const handleClickRemove = () => {
+    setDataModalRemove(com);
+    abrirModalRemove();
+  };
+    
+    const {menuModalOptionsCom, toggleModalOptionsCom} = OptionListCom(
+      handleClickRemove,
+      handleClickEdit
+    );
 
     const optionsCom = menuModalOptionsCom
     
