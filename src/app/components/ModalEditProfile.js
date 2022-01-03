@@ -1,14 +1,14 @@
 import {
   getUserData,
-  updateUserFirestore,
+  changeBasicDataFirestore,
   isExistingUser,
 } from "../firebase/firebase-data.js";
 import {
   auth,
   validate_email,
   validate_field,
-  updateBasicInfoUserAuth,
-  changeEmail,
+  changeNameAndPhotoAuth,
+  changeEmailAuth,
   createCredential,
   reautentificacion,
 } from "../firebase/firebase-auth.js";
@@ -255,12 +255,6 @@ export const ModalEditProfile = () => {
       // Activa campo como obligatorio
       requiredEmail.classList.add("modal-profile__required--active");
       return;
-    }
-    // Si el correo ingresado está en el firestore, pero la tiene el usuario, solo actualizará datos
-    // basicos como el nombre y fecha de nacimiento.
-    else if (user.email === emailUserSearched) {
-      console.log("Esta cuenta actualmente la usa este usuario logueado!");
-      // todo: Solo debería llamar a la funcion de updateBasicInfo
     } else if (userExist && newData.user_email !== user.email) {
       document.getElementById("error-msg").textContent =
         "Esta cuenta ya está siendo utilizada";
@@ -278,11 +272,12 @@ export const ModalEditProfile = () => {
       reautentificacion(user, credential)
         .then(() => {
           console.log("si se logró la reautentificación");
-          changeEmail(user, newData.user_email);
-          updateBasicInfoUserAuth(newData);
-          updateUserFirestore(user.uid, newData);
+          changeEmailAuth(user, newData.user_email);
+          changeNameAndPhotoAuth(newData);
+          changeBasicDataFirestore(user.uid, newData);
 
           // todo: actualizar la página cuando todos los procesos finalicen
+          // todo: mostrar en pantalla un spiner y que fue realizado!
           // document.location.reload();
           // document.getElementById("error-msg").textContent = "Autentificado!";
         })

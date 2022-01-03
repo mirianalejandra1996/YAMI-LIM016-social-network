@@ -335,7 +335,22 @@ export async function traerComments(id_post) {
 
 // Actualiza el usuario
 
-export function updateUserFirestore(user_id, objNewData) {
+export function changePasswordFirestore(user_id, password) {
+  console.log("función updateUser va a actualizar los datos");
+  const userDocRef = doc(db, "users", user_id);
+
+  updateDoc(userDocRef, {
+    user_password: password,
+  })
+    .then(() => {
+      console.log("Si se actualizó el usuario en el firestore ");
+    })
+    .catch((err) => {
+      console.log("No se puede actualizar el usuario en el firestore ", err);
+    });
+}
+
+export function changeBasicDataFirestore(user_id, objNewData) {
   console.log("función updateUser va a actualizar los datos");
   const userDocRef = doc(db, "users", user_id);
 
@@ -361,15 +376,3 @@ export function updateUserFirestore(user_id, objNewData) {
       console.log("No se puede actualizar el usuario en el firestore ", err);
     });
 }
-
-// ----------------------------------------------------------
-// const postRef = doc(db, "posts", post_id);
-
-// // user_id: user.uid,
-// user_name: nameN,
-// user_photo: photoUrlN,
-// user_createdAt: user.metadata.createdAt,
-// user_email: emailN,
-// user_password: passwordN,
-// user_logedBy: logedByN,
-// user_birth: birthN,

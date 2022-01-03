@@ -1,11 +1,14 @@
 import { HeaderRetroceder } from "../components/Header_retro.js";
-import { getUserData } from "../firebase/firebase-data.js";
+import {
+  getUserData,
+  changePasswordFirestore,
+} from "../firebase/firebase-data.js";
 
 import {
   auth,
   validate_password,
   validate_field,
-  changePassword,
+  changePasswordAuth,
   reautentificacion,
   createCredential,
 } from "../firebase/firebase-auth.js";
@@ -189,7 +192,13 @@ export const ChangePassword = () => {
       reautentificacion(user, credential)
         .then(() => {
           console.log("si se logró la reautentificación");
-          changePassword(user, newData.newPassword);
+          changePasswordAuth(user, newData.newPassword);
+          changePasswordFirestore(user.uid, newData.newPassword);
+
+          // todo: actualizar la página cuando todos los procesos finalicen
+          // todo: mostrar en pantalla un spiner y que fue realizado!
+          // document.location.reload();
+          // document.getElementById("error-msg").textContent = "Autentificado!";
         })
         .catch((err) => {
           console.log("no se logró la reautentificación", err);

@@ -1,17 +1,13 @@
 import { app } from "../firebase/firebase-initializer.js";
-// import { checkRegisteredUser } from "../firebase/firebase-data.js";
 
 import {
   signInWithEmailAndPassword,
   getAuth,
   createUserWithEmailAndPassword,
   GoogleAuthProvider,
-  getRedirectResult,
-  signInWithRedirect,
   signInWithPopup,
   signOut,
   sendPasswordResetEmail,
-  onAuthStateChanged,
   updateEmail,
   updatePassword,
   updateProfile,
@@ -280,13 +276,13 @@ export function olvideContrasena() {
     });
 }
 
-export function updateBasicInfoUserAuth(objNewData) {
+export function changeNameAndPhotoAuth(objNewData) {
   const auth = getAuth();
 
   // console.log("probando ando", auth.currentUser);
   updateProfile(auth.currentUser, {
     displayName: objNewData.user_name,
-    email: objNewData.user_email,
+    // email: objNewData.user_email,
     // photoURL: objNewData.user_photo
     // photoURL: "https://example.com/jane-q-user/profile.jpg"
   })
@@ -302,12 +298,6 @@ export function updateBasicInfoUserAuth(objNewData) {
     });
 }
 
-// user_photo: objNewData.user_photo,
-//  user_name: objNewData.user_name,
-//  user_birth: objNewData.user_birth,
-//  user_email: objNewData.user_email,
-//  user_password: objNewData.user_password,
-
 // Siempre me pedirán credencial para eliminar cuenta, cambiar contraseña o correo
 export const createCredential = (user, password) => {
   const email = user.email;
@@ -322,7 +312,7 @@ export const reautentificacion = async (user, credential) => {
   return await reauthenticateWithCredential(user, credential);
 };
 
-export const changePassword = (user, newPassword) => {
+export const changePasswordAuth = (user, newPassword) => {
   return updatePassword(user, newPassword)
     .then(() => {
       console.log("si cambió la contraseña");
@@ -338,7 +328,7 @@ export const changePassword = (user, newPassword) => {
     });
 };
 
-export const changeEmail = (user, newEmail) => {
+export const changeEmailAuth = (user, newEmail) => {
   return updateEmail(user, newEmail)
     .then(() => {
       console.log("Email updated! del metodo firebase");
