@@ -6,6 +6,7 @@ import { Menu, MenuList, ProfileList } from "./Menu.js";
 import { traerPost } from "../firebase/firebase-data.js";
 import { HeaderSimple } from "./Header_simple.js";
 import { ModalCerrarSesion } from "./Modal_cerrarSesion.js";
+import { ModalEliminarCom } from "./ModalDeleteComment.js";
 // import { ModalEditPost } from './Edit_post.js'
 // import { ModalCerrarSesion } from "./Modal_cerrar.js";
 
@@ -45,6 +46,14 @@ export function Timeline() {
   } = ModalEliminarPost();
 
   // -----------------------------------------------------------------------------------
+  // Lista desplegable de opciones de comentario EDITAR ELIMINAR COMENTARIO
+  // -----------------------------------------------------------------------------------
+  const {
+    modalEliminarCom: $modalRemoveCom,
+    abrirModalEliminarCom: abrirModalRemoveCom,
+    setDataModalRemoveCom: setDataModalRemoveCom,
+  } = ModalEliminarCom();
+  // -----------------------------------------------------------------------------------
   // Construye el TIMELINE
   // -----------------------------------------------------------------------------------
   $timeline.append($header);
@@ -55,6 +64,7 @@ export function Timeline() {
   $timeline.append($modalCreatePost);
   $timeline.append($modalEditPost);
   $timeline.append($modalRemovePost);
+  $timeline.append($modalRemoveCom);
   $timeline.append($modalCerrarSesion);
 
   // cosas que pasan asincronamente
@@ -73,7 +83,9 @@ export function Timeline() {
           setDataModalEdit,
           abrirModalEdit,
           setDataModalRemove,
-          abrirModalRemove
+          abrirModalRemove,
+          abrirModalRemoveCom,
+          setDataModalRemoveCom
         );
         $postsContainer.append($post);
       });

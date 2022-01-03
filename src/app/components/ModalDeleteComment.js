@@ -50,10 +50,10 @@ export function ModalEliminarCom() {
   
   };
 
-  const setDataModalRemove = (comData) => {
+  const setDataModalRemove = (/*comData*/postId, comId) => {
     $cerrar.addEventListener("click", cerrarModal);
     cerrarButtonClickListener = () =>{
-      deleteCom(comData.com_id).then(() => {
+      deleteCom(/*comData.com_id*/postId, comId).then(() => { /*revisar ruta*/
         // cerrarModal();
         window.location.hash = "#/";
       });

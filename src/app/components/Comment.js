@@ -1,7 +1,7 @@
 import { toggleComLikes, initListenerComLike } from "../firebase/firebase-data.js"
 import { auth } from "../firebase/firebase-auth.js";
 
-export const Comment = (postId, com) => {
+export const Comment = (postId, com, abrirModalRemoveCom, setDataModalRemoveCom) => {
     // console.log(com)
 
     const user_id = auth.currentUser.uid;
@@ -82,13 +82,13 @@ export const Comment = (postId, com) => {
   };
 */
     const handleClickRemove = () => {
-    setDataModalRemove(com);
-    abrirModalRemove();
+    setDataModalRemoveCom(postId, com.com_id);
+    abrirModalRemoveCom();
   };
     
     const {menuModalOptionsCom, toggleModalOptionsCom} = OptionListCom(
       handleClickRemove,
-      handleClickEdit
+      // handleClickEdit
     );
 
     const optionsCom = menuModalOptionsCom
@@ -127,7 +127,7 @@ export const Comment = (postId, com) => {
     return container
 }
 
-function OptionListCom(){
+function OptionListCom(onclickRemove){
   const modalOpciones = document.createElement("div")
   modalOpciones.classList.add("comOptions__dropdown", "cerrar")
 
@@ -141,6 +141,8 @@ function OptionListCom(){
 
   modalOpciones.append(btnEditCom)
   modalOpciones.append(btnRemoveCom)
+
+  btnRemoveCom.addEventListener("click", onclickRemove)
 
   const toggleModalOptionsCom = () => {
     modalOpciones.classList.toggle("cerrar")

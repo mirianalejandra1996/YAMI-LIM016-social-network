@@ -3,9 +3,17 @@ import { auth } from "../firebase/firebase-auth.js";
 import { NewComments } from "./Post-comments.js";
 import { Comment } from "./Comment.js";
 import { traerComments } from "../firebase/firebase-data.js";
+
 // import { Menu, OptionListPost } from "./Menu.js";
 
-export const Post = (post, setDataModalEdit, abrirModalEdit, setDataModalRemove, abrirModalRemove) => {
+export const Post = (
+  post, 
+  setDataModalEdit, 
+  abrirModalEdit, 
+  setDataModalRemove, 
+  abrirModalRemove,
+  abrirModalRemoveCom,
+  setDataModalRemoveCom) => {
 
   // console.log(post)
 
@@ -176,7 +184,11 @@ export const Post = (post, setDataModalEdit, abrirModalEdit, setDataModalRemove,
     }
   
     commentsList.forEach((com)=>{
-        const comment = Comment(post.post_id, com)
+        const comment = Comment(
+          post.post_id, 
+          com,
+          abrirModalRemoveCom,
+          setDataModalRemoveCom)
         commentsContainer.append(comment)
         // console.log("entra")
     })
