@@ -13,6 +13,7 @@ import {
   updateProfile,
   reauthenticateWithCredential,
   EmailAuthProvider,
+  // updatePassword,
 } from "https://www.gstatic.com/firebasejs/9.5.0/firebase-auth.js";
 
 import { addUser } from "./firebase-data.js";

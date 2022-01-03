@@ -972,7 +972,7 @@ input[type="password"]:focus {
 }
 
 .main-container__profile {
-  height: calc(100% - 80px);
+  /* height: calc(100% - 80px); */
   display: flex;
   justify-content: center;
   width: 100%;
