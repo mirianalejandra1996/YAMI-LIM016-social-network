@@ -207,8 +207,6 @@ export const ChangePassword = () => {
     reautentificacion(user, credential)
       .then(() => {
         console.log("si se logró la reautentificación");
-        // changePasswordAuth(user, newData.newPassword);
-        // changePasswordFirestore(user.uid, newData.newPassword);
 
         let promises = [
           changePasswordAuth(user, newData.newPassword),
@@ -222,7 +220,6 @@ export const ChangePassword = () => {
             msgError.classList.add("success-msg");
             document.getElementById("error-msg").textContent =
               "Cambios realizados!";
-            // document.location.reload();
           })
           .catch((err) => {
             console.log("problemas con el promise all", err);
@@ -230,7 +227,9 @@ export const ChangePassword = () => {
 
         // todo: actualizar la página cuando todos los procesos finalicen
         // todo: mostrar en pantalla un spiner y que fue realizado!
+        // window.top.location.reload(true);
         // document.location.reload();
+        // document.location.reload(false);
         // document.getElementById("error-msg").textContent = "Autentificado!";
       })
       .catch((err) => {
