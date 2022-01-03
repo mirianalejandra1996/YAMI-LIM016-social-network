@@ -7,7 +7,7 @@ import {
   validate_field,
   changePassword,
   reautentificacion,
-  createCredentialForPassword,
+  createCredential,
 } from "../firebase/firebase-auth.js";
 
 export const ChangePassword = () => {
@@ -163,7 +163,7 @@ export const ChangePassword = () => {
     };
 
     document.getElementById("error-msg").textContent = "";
- 
+
     if (!validate_field(newData.inputOldPassword)) {
       document.getElementById("error-msg").textContent =
         "Rellene todos los campos";
@@ -182,19 +182,17 @@ export const ChangePassword = () => {
         "Ambas contraseñas deben coincidir.";
       return;
     } else {
-      const credential = await createCredentialForPassword(
-        user,
-        newData.inputOldPassword
-      );
+      const credential = await createCredential(user, newData.inputOldPassword);
 
-     
+      console.log("credencial : ", credential);
+
       reautentificacion(user, credential)
         .then(() => {
           console.log("si se logró la reautentificación");
           changePassword(user, newData.newPassword);
         })
         .catch((err) => {
-          console.log("no se logró la reautentificación");
+          console.log("no se logró la reautentificación", err);
           document.getElementById("error-msg").textContent =
             "Error de autentificación ";
         });

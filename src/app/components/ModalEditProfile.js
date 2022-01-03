@@ -6,19 +6,16 @@ import {
 import {
   auth,
   validate_email,
-  validate_password,
   validate_field,
-  // updateEmailUserAuth,
   updateBasicInfoUserAuth,
-  // getAuth,
-  // changeEmail,
-  // changePassword,
+  changeEmail,
   createCredential,
-  // updateEmail,
+  reautentificacion,
 } from "../firebase/firebase-auth.js";
 
 export const ModalEditProfile = () => {
   const user = auth.currentUser;
+  let userPassword;
 
   const $modalContenedor = document.createElement("div");
   $modalContenedor.classList.add("modal__contenedor");
@@ -138,28 +135,6 @@ export const ModalEditProfile = () => {
 
   // -----------------------------
 
-  // // * Grupo: Correo del usuario
-  // const groupPwd = document.createElement("div");
-  // groupPwd.classList.add("formProfile__group");
-
-  // //   Input email
-  // const inputPwd = document.createElement("input");
-  // inputPwd.type = "text";
-  // inputPwd.id = "newPassword";
-  // inputPwd.placeholder = "Contraseña";
-  // inputPwd.classList.add("modal-profile__input");
-
-  // //   --------
-
-  // //  Email Obligatorio
-  // const requiredPwd = document.createElement("span");
-  // requiredPwd.classList.add("modal-profile__required");
-  // requiredPwd.textContent = "*";
-
-  // groupPwd.append(inputPwd);
-  // groupPwd.append(requiredPwd);
-  // -----------------------------
-
   //   Contenedor de campos obligatorios
   const errContainer = document.createElement("div");
   errContainer.classList.add("errContainer--modal");
@@ -197,7 +172,6 @@ export const ModalEditProfile = () => {
   formContainer.append(groupName);
   formContainer.append(groupDate);
   formContainer.append(groupEmail);
-  // formContainer.append(groupPwd);
   //   Apendizamos el mensaje de error
   formContainer.append(errContainer);
   // todo: en realidad hay que apendizar el div que tiene a editar o cancelar
@@ -205,52 +179,14 @@ export const ModalEditProfile = () => {
 
   // -----------------------------
 
-  // const { $modalEditProfile, abrirModalEditProfile, cerrarModalEditProfile } =
-  //   ModalEditProfile();
-
   btnSaveChanges.addEventListener("click", () => {
-    // abrirModalEditProfile();
     console.log("editemos el perfil ");
   });
 
-  // $modalEditProfile: $modalContenedor,
-  // abrirModalEditProfile: abrirModal,
-  // cerrarModalEditProfile: cerrarModal,
-
-  // profileComponent.append(headerBack);
-  // profileComponent.append(mainContainer);
-  // mainContainer.append(profileContainer);
   profileContainer.append(headerModal);
   profileContainer.append(photoContainer);
   profileContainer.append(formContainer);
-  // profileComponent.append($modalEditProfile);
 
-  //   --------------
-
-  getUserData(user.uid)
-    .then((user) => {
-      photoAvatar.src = user.user_photo;
-      // inputDate.type = "date";
-      inputName.value = user.user_name;
-      inputDate.value = user.user_birth;
-      // inputPwd.value = user.user_password;
-      inputEmail.value = user.user_email;
-    })
-    .catch((err) => {
-      console.log(err);
-    });
-
-  // user_id: user.uid,
-  // user_name: nameN,
-  // user_photo: photoUrlN,
-  // user_createdAt: user.metadata.createdAt,
-  // user_email: emailN,
-  // user_password: passwordN,
-  // user_logedBy: logedByN,
-
-  //   --------------
-
-  // $modalContenedor.append($formPost);
   //Modal oculto
   $modalContenedor.style.opacity = "0";
   $modalContenedor.style.visibility = "hidden";
@@ -280,6 +216,7 @@ export const ModalEditProfile = () => {
       user_birth: inputDate.value,
       user_email: inputEmail.value,
       user_exist: false,
+      user_password: userPassword,
       // todo: hay que modificar la foto del usuario
       // user_photo :
     };
@@ -318,7 +255,13 @@ export const ModalEditProfile = () => {
       // Activa campo como obligatorio
       requiredEmail.classList.add("modal-profile__required--active");
       return;
-    } else if (userExist) {
+    }
+    // Si el correo ingresado está en el firestore, pero la tiene el usuario, solo actualizará datos
+    // basicos como el nombre y fecha de nacimiento.
+    else if (user.email === emailUserSearched) {
+      console.log("Esta cuenta actualmente la usa este usuario logueado!");
+      // todo: Solo debería llamar a la funcion de updateBasicInfo
+    } else if (userExist && newData.user_email !== user.email) {
       document.getElementById("error-msg").textContent =
         "Esta cuenta ya está siendo utilizada";
       console.log("else if de newData.user_exist");
@@ -328,22 +271,57 @@ export const ModalEditProfile = () => {
         element.classList.remove("modal-profile__required--active");
       }
 
-      const credential = await createCredential(user);
+      console.log("esta es mi contraseña ", newData.user_password);
 
-      updateUserFirestore(user.uid, newData).then(() => {
-        updateBasicInfoUserAuth(newData);
-        changeEmail(user, credential, newData.user_email);
-        // console.log("si se pudo!");
-        // document.location.reload();
-      });
+      const credential = await createCredential(user, newData.user_password);
 
-      // updateEmailUserAuth(newData.user_email);
-      // updateEmailUserAuth(newData);
+      reautentificacion(user, credential)
+        .then(() => {
+          console.log("si se logró la reautentificación");
+          changeEmail(user, newData.user_email);
+          updateBasicInfoUserAuth(newData);
+          updateUserFirestore(user.uid, newData);
+
+          // todo: actualizar la página cuando todos los procesos finalicen
+          // document.location.reload();
+          // document.getElementById("error-msg").textContent = "Autentificado!";
+        })
+        .catch((err) => {
+          console.log("no se logró la reautentificación", err);
+          document.getElementById("error-msg").textContent =
+            "Error de autentificación ";
+        });
     }
   });
+
+  getUserData(user.uid)
+    .then((user) => {
+      photoAvatar.src = user.user_photo;
+      // inputDate.type = "date";
+      inputName.value = user.user_name;
+      inputDate.value = user.user_birth;
+      userPassword = user.user_password;
+      inputEmail.value = user.user_email;
+    })
+    .catch((err) => {
+      console.log(err);
+    });
+
   return {
     $modalEditProfile: $modalContenedor,
     abrirModalEditProfile: abrirModal,
     cerrarModalEditProfile: cerrarModal,
   };
 };
+
+//   --------------
+
+// user_id: user.uid,
+// user_name: nameN,
+// user_photo: photoUrlN,
+// user_createdAt: user.metadata.createdAt,
+// user_email: emailN,
+// user_password: passwordN,
+// user_logedBy: logedByN,
+
+//   --------------

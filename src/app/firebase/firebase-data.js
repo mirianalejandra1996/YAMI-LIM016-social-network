@@ -335,17 +335,31 @@ export async function traerComments(id_post) {
 
 // Actualiza el usuario
 
-export async function updateUserFirestore(user_id, objNewData) {
+export function updateUserFirestore(user_id, objNewData) {
   console.log("función updateUser va a actualizar los datos");
   const userDocRef = doc(db, "users", user_id);
 
-  return await updateDoc(userDocRef, {
+  // return await updateDoc(userDocRef, {
+  //   // user_photo: objNewData.user_photo,
+  //   user_name: objNewData.user_name,
+  //   user_birth: objNewData.user_birth,
+  //   user_email: objNewData.user_email,
+  //   user_password: objNewData.user_password,
+  // });
+
+  updateDoc(userDocRef, {
     // user_photo: objNewData.user_photo,
     user_name: objNewData.user_name,
     user_birth: objNewData.user_birth,
     user_email: objNewData.user_email,
-    user_password: objNewData.user_password,
-  });
+    // user_password: objNewData.user_password,
+  })
+    .then(() => {
+      console.log("Si se actualizó el usuario en el firestore ");
+    })
+    .catch((err) => {
+      console.log("No se puede actualizar el usuario en el firestore ", err);
+    });
 }
 
 // ----------------------------------------------------------

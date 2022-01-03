@@ -309,78 +309,41 @@ export function updateBasicInfoUserAuth(objNewData) {
 //  user_password: objNewData.user_password,
 
 // Siempre me pedirán credencial para eliminar cuenta, cambiar contraseña o correo
-export const createCredential = (user) => {
-  const email = user.email;
-  const password = prompt("Please enter your current password:");
-  const credential = EmailAuthProvider.credential(email, password);
-  return credential;
-};
-
-export const createCredentialForPassword = (user, password) => {
+export const createCredential = (user, password) => {
   const email = user.email;
   // const password = prompt("Please enter your current password:");
   const credential = EmailAuthProvider.credential(email, password);
   return credential;
 };
 
-// export const changeEmail = (user, credential, newEmail) => {
-//   reauthenticateWithCredential(user, credential)
-//     .then(() => {
-//       console.log("si se reautenticó dentro de changeEmail! ");
-//       updateEmail(user, newEmail)
-//         .then(() => console.log("Email updated! del metodo firebase"))
-//         .catch((error) => {
-//           console.log("catch para updateEmail de firebase method", error);
-//         });
-//     })
-//     .catch((error) => {
-//       console.log("catch de la funcion de changeEmail", error);
-//     });
-// };
-
-// export const changePassword = (user, credential, newPassword) => {
-//   reauthenticateWithCredential(user, credential)
-//     .then(() => {
-//       console.log("si se reautenticó");
-//       updatePassword(user, newPassword)
-//         .then(() => {
-//           console.log("si cambió la contraseña");
-//           // Update successful.
-//         })
-//         .catch((error) => {
-//           // An error ocurred
-//           console.log(
-//             "problemas para cambiar la contraseña en updatePassword",
-//             error
-//           );
-//           // ...
-//         });
-//     })
-//     .catch((error) => {
-//       console.log("catch de la funcion de changePassword", error);
-//     });
-// };
-
-
 // El método indicará la funcion (si es para actualizar el correo o la contraseña)
 
 export const reautentificacion = async (user, credential) => {
-  return await reauthenticateWithCredential(user, credential)
+  return await reauthenticateWithCredential(user, credential);
 };
 
 export const changePassword = (user, newPassword) => {
+  return updatePassword(user, newPassword)
+    .then(() => {
+      console.log("si cambió la contraseña");
+      // Update successful.
+    })
+    .catch((error) => {
+      // An error ocurred
+      console.log(
+        "problemas para cambiar la contraseña en updatePassword",
+        error
+      );
+      // ...
+    });
+};
 
-      return updatePassword(user, newPassword)
-        .then(() => {
-          console.log("si cambió la contraseña");
-          // Update successful.
-        })
-        .catch((error) => {
-          // An error ocurred
-          console.log(
-            "problemas para cambiar la contraseña en updatePassword",
-            error
-          );
-          // ...
-        });
+export const changeEmail = (user, newEmail) => {
+  return updateEmail(user, newEmail)
+    .then(() => {
+      console.log("Email updated! del metodo firebase");
+    })
+    .catch((error) => {
+      console.log("catch para updateEmail de firebase method", error);
+    });
 };
