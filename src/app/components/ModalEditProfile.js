@@ -22,6 +22,10 @@ export const ModalEditProfile = () => {
   let userPasswordFirestore;
   let userPhoto;
 
+  console.log("userName del firestore ", userNameFirestore);
+  console.log("birth del firestore ", userBirthFirestore);
+  console.log("email del firestore ", userEmailFirestore);
+  console.log("pwd del firestore ", userPasswordFirestore);
   console.log("foto del firestore ", userPhoto);
 
   const $modalContenedor = document.createElement("div");
@@ -69,6 +73,8 @@ export const ModalEditProfile = () => {
   inputFileNone.accept = "image/*";
   inputFileNone.id = "file";
   inputFileNone.style.display = "none";
+  console.log("probando solo el input", inputFileNone);
+  console.log("probando propiedad file del input", inputFileNone.files[0]);
 
   // * Este es el label
   // Icono para editar imagen del usuario
@@ -92,8 +98,8 @@ export const ModalEditProfile = () => {
   // });
 
   inputFileNone.addEventListener("change", (e) => {
-    // const file = e.target.files[0];
-    const file = inputFileNone.files[0];
+    const file = e.target.files[0];
+    // const file = inputFileNone.files[0];
     // console.log('este es el inpu')
     console.log("este es el file, ", file);
 
@@ -266,8 +272,9 @@ export const ModalEditProfile = () => {
       user_exist: false,
       user_password: userPasswordFirestore,
       // todo: hay que modificar la foto del usuario
-      // user_photo: photoAvatar.src,
-      user_photo: null,
+      user_photo: photoAvatar.src,
+      // user_photo: null,
+      // user_photo: null,
     };
 
     msgErr.textContent = "";
@@ -339,19 +346,28 @@ export const ModalEditProfile = () => {
       .then(() => {
         console.log("si se logró la reautentificación");
 
+        // let indexArray = 1
         let promises = [
           changeEmailAuth(user, newData.user_email),
-          changeNameAndPhotoAuth(newData),
-          changeBasicDataFirestore(user.uid, newData),
-
+          // changeNameAndPhotoAuth(newData),
+          // changeBasicDataFirestore(user.uid, newData),
           uploadUserProfileImg(inputFileNone.files[0], user.uid),
-          // uploadUserProfileImg(inputFileNone, user.uid),
-          // uploadUserProfileImg(file, userId)
         ];
+
+        // if (!inputFileNone.files[0]){
+
+        //   promises = [
+        //     changeEmailAuth(user, newData.user_email)
+        //   ];
+        // }
 
         Promise.all(promises)
           .then((res) => {
-            newData.user_photo = res[3];
+            // if (!inputFileNone.files[0]){
+
+            // }
+
+            newData.user_photo = res[1];
             console.log("todos estos son nuevos datos", newData);
             changeNameAndPhotoAuth(newData);
             changeBasicDataFirestore(user.uid, newData);
@@ -404,6 +420,12 @@ export const ModalEditProfile = () => {
       userEmailFirestore = user.user_email;
       userPhoto = user.user_photo;
       inputEmail.value = user.user_email;
+
+      console.log("userName del firestore ", userNameFirestore);
+      console.log("birth del firestore ", userBirthFirestore);
+      console.log("email del firestore ", userEmailFirestore);
+      console.log("pwd del firestore ", userPasswordFirestore);
+      console.log("foto del firestore ", userPhoto);
 
       // console.log("esta es mi contraseña, ", user.user_photo);
       console.log(
