@@ -42,6 +42,7 @@ export const Router = () => {
       }
       case "#/perfil": {
         if (auth.currentUser) {
+          $root.classList.remove("main-container");
           return $root.appendChild(components.perfil());
         } else {
           return (window.location.hash = "#/");
@@ -49,20 +50,15 @@ export const Router = () => {
       }
       case "#/timeline": {
         if (auth.currentUser) {
+          $root.classList.remove("main-container");
           return $root.appendChild(components.timeline());
-        } else {
-          return (window.location.hash = "#/");
-        }
-      }
-      case "#/formPost": {
-        if (auth.currentUser) {
-          return $root.appendChild(components.formPost());
         } else {
           return (window.location.hash = "#/");
         }
       }
       case "#/editPost": {
         if (auth.currentUser) {
+          $root.classList.remove("main-container");
           return $root.appendChild(components.editPost());
         } else {
           return (window.location.hash = "#/");
@@ -70,6 +66,7 @@ export const Router = () => {
       }
       case "#/muro": {
         if (auth.currentUser) {
+          $root.classList.remove("main-container");
           return $root.appendChild(components.muro());
         } else {
           return (window.location.hash = "#/");
@@ -77,7 +74,21 @@ export const Router = () => {
       }
       case "#/profile": {
         if (auth.currentUser) {
+          $root.classList.remove("main-container");
           return $root.appendChild(components.profile());
+        } else {
+          return (window.location.hash = "#/");
+        }
+      }
+      case "#/passwordChange": {
+        if (auth.currentUser.providerData[0].providerId === "google.com") {
+          console.log(
+            "AQUÍ HAREMOS APPEND DE UN COMPONENTE DE 404 NOT FOUND O ALGO"
+          );
+        }
+        if (auth.currentUser) {
+          $root.classList.remove("main-container");
+          return $root.appendChild(components.changePassword());
         } else {
           return (window.location.hash = "#/");
         }

@@ -1,11 +1,23 @@
 import { toggleLikes, initListenerPost } from "../firebase/firebase-data.js";
 import { auth } from "../firebase/firebase-auth.js";
-import { ModalEditPost } from "./Edit_post.js";
-import { ModalEliminarPost } from "./Modal_eliminarPost.js";
 import { NewComments } from "./Post-comments.js";
+import { Comment } from "./Comment.js";
+import { traerComments } from "../firebase/firebase-data.js";
+
 // import { Menu, OptionListPost } from "./Menu.js";
 
-export const Post = (post, setDataModalEdit, abrirModalEdit, setDataModalRemove, abrirModalRemove) => {
+export const Post = (
+  post, 
+  setDataModalEdit, 
+  abrirModalEdit, 
+  setDataModalRemove, 
+  abrirModalRemove,
+  abrirModalRemoveCom,
+  setDataModalRemoveCom,
+  abrirModalEditCom,
+  setDataModalEditCom) => {
+
+  // console.log(post)
 
   const user_id = auth.currentUser.uid;
   // console.log("currentuser", user_id);
@@ -21,7 +33,7 @@ export const Post = (post, setDataModalEdit, abrirModalEdit, setDataModalRemove,
 
   const $avatarImg = document.createElement("img");
   $avatarImg.classList.add("card__avatar-img");
-  $avatarImg.src = "./app/assets/user-img.jpg";
+  $avatarImg.src = post.user_photo;
 
   const $avatarOverlay = document.createElement("div");
   $avatarOverlay.classList.add("card__avatar-overlay");
@@ -57,28 +69,27 @@ export const Post = (post, setDataModalEdit, abrirModalEdit, setDataModalRemove,
   // ! Si el usuario no es dueño del post, no debería salir la lista desplegable
   if (user_id !== post.id_user) $optionsContainer.classList.add("hidden");
 
- //
+  //
 
   const handleClickEdit = () => {
-    setDataModalEdit(post)
-    abrirModalEdit()
-   }
+    setDataModalEdit(post);
+    abrirModalEdit();
+  };
 
-   const handleClickRemove = () => {
-     setDataModalRemove(post)
-     abrirModalRemove()
-   }
+  const handleClickRemove = () => {
+    setDataModalRemove(post);
+    abrirModalRemove();
+  };
 
-  const {
-    menuModalOptionsPost,
-    toggleModalOptionsPost,
-  } = OptionListPost(handleClickRemove, handleClickEdit);
+  const { menuModalOptionsPost, toggleModalOptionsPost } = OptionListPost(
+    handleClickRemove,
+    handleClickEdit
+  );
   const $menuModalOptions = menuModalOptionsPost;
 
   // EVENTO 3 PUNTITOS OPCIONES
   $optionsContainer.addEventListener("click", () => {
     console.log("deberia salir la lista desplegable de opciones de post");
-    // debugger;
     // console.log("este es el post id", post.post_id);
     toggleModalOptionsPost();
   });
@@ -92,6 +103,7 @@ export const Post = (post, setDataModalEdit, abrirModalEdit, setDataModalRemove,
   $headerContainer.append($avatarContainer);
   $headerContainer.append($dataContainer);
   $headerContainer.append($optionsContainer);
+  
 
   //   -----------------------------------------------------------
 
@@ -105,8 +117,14 @@ export const Post = (post, setDataModalEdit, abrirModalEdit, setDataModalRemove,
   $textMsg.textContent = `${post.message}`;
 
   $msgContainer.append($textMsg);
-
+ 
   //   -----------------------------------------------------------
+  //   Contenido Imagen del POST del usuario
+  const $postImageContainer = document.createElement('div')
+  const $postImg = document.createElement("img");
+  $postImg.classList.add("imagenFile");
+  $postImg.src = post.imageUrl;
+  $postImageContainer.append($postImg)
 
   //   Pie de post (para dar likes y comentar)
 
@@ -137,7 +155,7 @@ export const Post = (post, setDataModalEdit, abrirModalEdit, setDataModalRemove,
   const $comentContainer = document.createElement("div");
   $comentContainer.classList.add("card__icon-container");
   $comentContainer.addEventListener("click", () => {
-    // Abrir coments(post.post_id);
+    $commentsBlock.classList.toggle("close")
   });
 
   const $iconComent = document.createElement("span");
@@ -147,20 +165,61 @@ export const Post = (post, setDataModalEdit, abrirModalEdit, setDataModalRemove,
   const $comentarioTitle = document.createElement("span");
   $comentarioTitle.classList.add("card__counter");
   $comentarioTitle.id = "comentario";
-  $comentarioTitle.textContent = "comentar";
+
+  /****************************/
+
+  const $commentsBlock = document.createElement("div")
+  $commentsBlock.classList.add("close")
+
+  const commentsDiv = document.createElement("div")
+  commentsDiv.classList.add("commentsDiv")
+  const commentsContainer = document.createElement("div")
+  commentsContainer.classList.add("commentsContainer")
+
+  traerComments(post.post_id)
+
+  .then((commentsList)=>{
+    if(commentsList.length>1 || commentsList.length===0){
+      $comentarioTitle.textContent = commentsList.length+" comentarios";
+    }else{
+      $comentarioTitle.textContent = commentsList.length+" comentario";
+    }
+  
+    commentsList.forEach((com)=>{
+        const comment = Comment(
+          post.post_id, 
+          com,
+          abrirModalRemoveCom,
+          setDataModalRemoveCom,
+          abrirModalEditCom,
+          setDataModalEditCom)
+        commentsContainer.append(comment)
+        // console.log("entra")
+    })
+  })
+  .catch((err) => console.log(err))
+
+  commentsDiv.append(commentsContainer)
 
   const $postComments = NewComments(post.post_id);
 
-  $comentContainer.appendChild($iconComent);
-  $comentContainer.appendChild($comentarioTitle);
+  $commentsBlock.append(commentsDiv)
+  // $commentsBlock.append($postComments)
 
+  /****************************/
+
+  $comentContainer.appendChild($comentarioTitle);
+  $comentContainer.appendChild($iconComent);
+  
   $footerContainer.append($likeContainer);
   $footerContainer.append($comentContainer);
-  
+
   //   todo: HACER EVENTO a icono de like para actualizar datos
-  
+
   initListenerPost(post.post_id, (postDoc) => {
     //se podria cambiar cualquier campo de post pero en este caso solo necesitamos los likes
+
+    // console.log(postDoc.data())
     
     const likes = postDoc.data().likes;
     // console.log("array de likes", likes);
@@ -171,16 +230,18 @@ export const Post = (post, setDataModalEdit, abrirModalEdit, setDataModalRemove,
       $likeContainer.classList.remove("selected");
       // console.log("no se encuentra");
     }
-    
+
     $counterLikes.textContent = `${likes.length}`;
   });
   //   -----------------------------------------------------------
 
   $card.append($headerContainer);
   $card.append($msgContainer);
+  $card.append($postImageContainer);
   $card.append($footerContainer);
+  $card.append($commentsBlock)
+  // $card.append(commentsDiv)
   $card.append($postComments);
-
 
   return $card;
 };
@@ -204,7 +265,6 @@ function OptionListPost(onClickRemove, onClickEdit) {
   $modalLista.append($itemRemovePublication);
 
   // $modalLista.append($modalContenedor)
-  
 
   $itemEditPublication.addEventListener("click", onClickEdit);
   $itemRemovePublication.addEventListener("click", onClickRemove);
@@ -218,10 +278,6 @@ function OptionListPost(onClickRemove, onClickEdit) {
     toggleModalOptionsPost: toggleModalOptionsPost,
   };
 }
-
-
-
-
 
 function timeSince(date) {
   var seconds = Math.floor((new Date() - date) / 1000);

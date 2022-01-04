@@ -3,9 +3,13 @@ import { HeaderRetroceder } from "../components/Header_retro.js";
 import { Post } from "./Post.js";
 import { traerMisPost } from "../firebase/firebase-data.js";
 import { Menu, MenuList, ProfileList } from "./Menu.js";
+import { ModalCerrarSesion } from "./Modal_cerrarSesion.js";
+import { ModalCreatePost } from "./ModalCreatePost.js";
+import { getUserData } from "../firebase/firebase-data.js";
 
 export function MiMuro() {
   const user = auth.currentUser;
+
   const $contenedorMuro = document.createElement("div");
 
   const $header = HeaderRetroceder();
@@ -20,10 +24,11 @@ export function MiMuro() {
   photoAvatar.classList.add("photo__avatar-img");
   //   photoAvatar.src = "photoURL";
   photoAvatar.src = `${user.photoURL}`;
-  //   photoAvatar.src = "../src/app/assets/brooke-cagle-k9XZPpPHDho-unsplash.jpg";
+  // photoAvatar.src = "../src/app/assets/brooke-cagle-k9XZPpPHDho-unsplash.jpg";
   photoAvatar.alt = "imgAvatar";
 
-  const $nombre = document.createElement("p");
+  const $nombre = document.createElement("h1");
+  $nombre.classList.add("userNameTitle");
   $nombre.textContent = `${user.displayName}`;
 
   imgAvatarContainer.append(photoAvatar);
@@ -48,31 +53,50 @@ export function MiMuro() {
   $opcionesMuro.append($editarPerfil);
 
   const $misPostsContainer = document.createElement("div");
-  $misPostsContainer.classList.add("shown");
+  $misPostsContainer.classList.add("notification-grid");
   //mientras cargan post, al $postsContainer le hago append de un loader
-  $misPostsContainer.textContent = "cargando posts...";
+  $misPostsContainer.textContent = "Cargando posts...";
 
   traerMisPost(user.uid)
     .then((postsLista) => {
       // una vez que tengo la lista le quito el loader
       $misPostsContainer.textContent = "";
       //lleno el $postContainer con los nodos de post
-      postsLista.forEach((post) => {
-        const $post = Post(post);
-        $misPostsContainer.append($post);
-      });
+      if (postsLista.length === 0) {
+        $misPostsContainer.textContent = "No hay post creados";
+      } else {
+        postsLista.forEach((post) => {
+          const $post = Post(post);
+          $misPostsContainer.append($post);
+        });
+      }
     })
     .catch((error) => {
       console.error(error);
+      $misPostsContainer.textContent = "No hay post...";
+
       // mostrar mensaje de que no se pudo cargar los posts
     });
 
-  // Crea un post
-  const { menuModalPlus, toggleModalPlus } = MenuList();
-  // Perfil usuario
-  const { menuModalProfile, toggleModalProfile } = ProfileList();
+  getUserData(user.uid)
+    .then((user) => {
+      photoAvatar.src = user.user_photo;
+      $nombre.textContent = `${user.user_name}`;
+    })
+    .catch((err) => {
+      console.log(err);
+    });
 
-  // Abre y cierra Lista desplegable del Menu
+  //Cerrar Sesion
+  const { $modalCerrarSesion, abrilModalCerrarSesion } = ModalCerrarSesion();
+  const { $modalCreatePost, abrirModalCreatePost } = ModalCreatePost();
+  // Crea un Post
+  const { menuModalPlus, toggleModalPlus } = MenuList(abrirModalCreatePost);
+  // Perfil usuario
+  const { menuModalProfile, toggleModalProfile } = ProfileList(
+    abrilModalCerrarSesion
+  );
+  //Enviamos los eventos a Menu
   const $menu = Menu(toggleModalPlus, toggleModalProfile);
 
   // -----------------------------------------------------------------------------------
@@ -83,6 +107,8 @@ export function MiMuro() {
   $contenedorMuro.append(menuModalPlus);
   $contenedorMuro.append(menuModalProfile);
   $contenedorMuro.append($menu);
+  $contenedorMuro.append($modalCreatePost);
+  $contenedorMuro.append($modalCerrarSesion);
 
   return $contenedorMuro;
 }

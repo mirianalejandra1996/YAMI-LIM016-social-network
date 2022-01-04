@@ -1,18 +1,19 @@
 import { app } from "../firebase/firebase-initializer.js";
-import { checkRegisteredUser } from "../firebase/firebase-data.js";
 
 import {
   signInWithEmailAndPassword,
   getAuth,
   createUserWithEmailAndPassword,
   GoogleAuthProvider,
-  getRedirectResult,
-  signInWithRedirect,
   signInWithPopup,
   signOut,
   sendPasswordResetEmail,
-  onAuthStateChanged,
+  updateEmail,
+  updatePassword,
   updateProfile,
+  reauthenticateWithCredential,
+  EmailAuthProvider,
+  // updatePassword,
 } from "https://www.gstatic.com/firebasejs/9.5.0/firebase-auth.js";
 
 import { addUser } from "./firebase-data.js";
@@ -175,8 +176,9 @@ export function enviarRegistro() {
 
         return updateProfile(auth.currentUser, {
           displayName: name,
-          password: password,
-          photoURL: "https://firebasestorage.googleapis.com/v0/b/yami-cbaa4.appspot.com/o/default-profile.jpeg?alt=media&token=772a7498-d018-4994-9805-041ae047bdc6"
+          // password: password,
+          photoURL:
+            "https://firebasestorage.googleapis.com/v0/b/yami-cbaa4.appspot.com/o/user.png?alt=media&token=bfe80508-5817-4d84-83e1-6a074a16f198",
         })
           .then(() => {
             console.log(
@@ -211,32 +213,35 @@ export function enviarRegistro() {
 
 // todo: pendiente hacer funcionalidad de validación de nombre
 // nombre: /^[a-zA-ZÀ-ÿ\s]{1,40}$/, // Letras y espacios, pueden llevar acentos.
-
 // Funciones validadoras
-function validate_email(email) {
-  const expression = /^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$/;
+export function validate_email(email) {
+  const expression = /^([\.\_a-zA-Z0-9]+)@([a-zA-A]+)\.([a-zA-Z]){2,8}/;
+
   return expression.test(email);
 }
 
-function validate_password(password) {
+export function validate_password(password) {
   // La contraseña debe tener entre 8 a 14 caracteres
 
   const expression = /^.{6,14}$/;
+
+  // si hace match
+  if (!expression.test(password)) {
+    console.log("contraseña fallida");
+    // console.log("contraseña buena");
+  }
   return expression.test(password);
 }
 
-function validate_field(field) {
+export function validate_field(field) {
   // const expression = /^[a-zA-ZÀ-ÿ\s]{1,40}$/;
 
   // if (!expression.test(field) == true){
   //   return false
   // }
 
-  if (field == null) {
-    return false;
-  }
-
-  if (field.length <= 0) {
+  if (field.length <= 0 || field == null) {
+    console.log("field", field, "malo");
     return false;
   } else {
     return true;
@@ -271,3 +276,65 @@ export function olvideContrasena() {
       // ..
     });
 }
+
+export function changeNameAndPhotoAuth(objNewData) {
+  const auth = getAuth();
+
+  // console.log("probando ando", auth.currentUser);
+  updateProfile(auth.currentUser, {
+    displayName: objNewData.user_name,
+    // email: objNewData.user_email,
+    // photoURL: objNewData.user_photo
+    // photoURL: "https://example.com/jane-q-user/profile.jpg"
+  })
+    .then(() => {
+      // Profile updated!
+      // console.log("función updateBasicInfoUserAuth exitosa!");
+      // ...
+    })
+    .catch((error) => {
+      // An error occurred
+      // console.log("función updateBasicInfoUserAuth fracasada!");
+      // ...
+    });
+}
+
+// Siempre me pedirán credencial para eliminar cuenta, cambiar contraseña o correo
+export const createCredential = (user, password) => {
+  const email = user.email;
+  // const password = prompt("Please enter your current password:");
+  const credential = EmailAuthProvider.credential(email, password);
+  return credential;
+};
+
+// El método indicará la funcion (si es para actualizar el correo o la contraseña)
+
+export const reautentificacion = async (user, credential) => {
+  return await reauthenticateWithCredential(user, credential);
+};
+
+export const changePasswordAuth = (user, newPassword) => {
+  return updatePassword(user, newPassword)
+    .then(() => {
+      console.log("si cambió la contraseña");
+      // Update successful.
+    })
+    .catch((error) => {
+      // An error ocurred
+      console.log(
+        "problemas para cambiar la contraseña en updatePassword",
+        error
+      );
+      // ...
+    });
+};
+
+export const changeEmailAuth = (user, newEmail) => {
+  return updateEmail(user, newEmail)
+    .then(() => {
+      console.log("Email updated! del metodo firebase");
+    })
+    .catch((error) => {
+      console.log("catch para updateEmail de firebase method", error);
+    });
+};

@@ -1,5 +1,5 @@
 import { enviarRegistro, loginGoogle } from "../firebase/firebase-auth.js";
-import { ModalTerminos } from "./Modal.js";
+import { ModalTerminos } from "./ModalTerminos.js";
 import { Logo } from "./Logo.js";
 import { Eslogan } from "./Eslogan.js";
 

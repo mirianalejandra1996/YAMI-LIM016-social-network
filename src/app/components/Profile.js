@@ -1,23 +1,12 @@
 import { HeaderRetroceder } from "../components/Header_retro.js";
 import { auth } from "../firebase/firebase-auth.js";
-import { getUserData } from "../firebase/firebase-data.js";
+import { getUserData, initListenerProfile } from "../firebase/firebase-data.js";
+import { ModalEditProfile } from "../components/ModalEditProfile.js";
 
 export const Profile = () => {
-  //   const user_id = auth.currentUser.uid;
-  const user = auth.currentUser;
-  //   console.log("esta soy yo", user_id);
-  //   console.log("esta soy yo", user.displayName);
-  console.log("esta soy yo", user);
-  console.log("cuenta creada el ", user.metadata.createdAt);
-  console.log("foto ", user.photoURL);
-  console.log("foto ", user.emailVerified);
-  console.log("proveedor ", user.providerData);
- // console.log("proveedor ", user.providerData[0].providerId); //google
-  //console.log("proveedor ", user.providerData[1].providerId); //password
+  let user = auth.currentUser;
+  console.log(user);
 
-  // console.log("soy yo", user);
-
-  //    Contenedor principal
   const profileComponent = document.createElement("div");
   profileComponent.classList.add("allView");
 
@@ -27,7 +16,7 @@ export const Profile = () => {
   const mainContainer = document.createElement("div");
   mainContainer.classList.add("main-container__profile");
 
-  //  ! En este contenedor estarán dentro la imagen y el formulario (perfecto para el modal)
+  //  * En este contenedor estarán dentro la imagen y el formulario
   const profileContainer = document.createElement("div");
   profileContainer.classList.add("profile-container");
 
@@ -41,27 +30,13 @@ export const Profile = () => {
 
   const photoAvatar = document.createElement("img");
   photoAvatar.classList.add("photo__avatar-img");
-  //   photoAvatar.src = "photoURL";
-
-  // let userImg = user.photoURL;
-  // if (!user.photoURL) {
-  //   userImg = "../src/app/assets/user-img.jpg";
-  // }
-
-  // photoAvatar.src = `${userImg}`;
-
   photoAvatar.alt = "imgAvatar";
 
+  // todo: agregar alguna imagen gris o un loader skelet
+  photoAvatar.src =
+    "https://firebasestorage.googleapis.com/v0/b/yami-cbaa4.appspot.com/o/user.png?alt=media&token=bfe80508-5817-4d84-83e1-6a074a16f198";
+
   imgAvatarContainer.append(photoAvatar);
-
-  // Icono para editar imagen del usuario
-  const iconPhotoContainer = document.createElement("div");
-  iconPhotoContainer.classList.add("photo__edit-img", "hidden");
-  const iconPhoto = document.createElement("span");
-  iconPhoto.classList.add("icon-pencil", "pencil");
-
-  iconPhotoContainer.append(iconPhoto);
-  imgAvatarContainer.append(iconPhotoContainer);
 
   photoContainer.append(imgAvatarContainer);
 
@@ -81,8 +56,6 @@ export const Profile = () => {
   inputName.type = "text";
   inputName.id = "name";
   inputName.classList.add("formProfile__input");
-  // inputName.placeholder = "Ingresa un nombre"
-  //   inputName.value = `${user.displayName}`;
   inputName.disabled = true;
 
   //   Label de nombre
@@ -91,14 +64,8 @@ export const Profile = () => {
   labelName.classList.add("formProfile__label");
   labelName.textContent = "Nombre";
 
-  //  Nombre Obligatorio
-  const requiredName = document.createElement("span");
-  requiredName.classList.add("formProfile__required", "hidden");
-  requiredName.textContent = "*";
-
   groupName.append(inputName);
   groupName.append(labelName);
-  groupName.append(requiredName);
 
   // -----------------------------
 
@@ -110,17 +77,8 @@ export const Profile = () => {
 
   const inputDate = document.createElement("input");
 
-  //   inputDate.type = "text";
   inputDate.id = "date";
   inputDate.classList.add("formProfile__input");
-  // inputName.placeholder = "Ingresa un nombre"
-
-  //   if (!dateUser) {
-  //     //   dateUser = '0000-00-00'
-  //     dateUser = "";
-  //   }
-
-  //   inputDate.value = dateUser;
   inputDate.disabled = true;
 
   //   Label de nombre
@@ -143,8 +101,6 @@ export const Profile = () => {
   inputEmail.type = "email";
   inputEmail.id = "email";
   inputEmail.classList.add("formProfile__input");
-  // inputName.placeholder = "Ingresa un nombre"
-  //   inputEmail.value = `${user.email}`;
   inputEmail.disabled = true;
 
   //   Label de email
@@ -153,64 +109,30 @@ export const Profile = () => {
   labelEmail.classList.add("formProfile__label");
   labelEmail.textContent = "Correo";
 
-  //  Email Obligatorio
-  const requiredEmail = document.createElement("span");
-  requiredEmail.classList.add("formProfile__required", "hidden");
-  requiredEmail.textContent = "*";
-
   groupEmail.append(inputEmail);
   groupEmail.append(labelEmail);
-  groupEmail.append(requiredEmail);
 
-  // -----------------------------
-
-  // * Grupo: Correo del usuario
-  const groupPwd = document.createElement("div");
-  groupPwd.classList.add("formProfile__group");
-
-  //   Input email
-  const inputPwd = document.createElement("input");
-  //   inputPwd.type = "password";
-  inputPwd.type = "text";
-  inputPwd.id = "password";
-  inputPwd.classList.add("formProfile__input");
-  // inputPwd.placeholder = "Ingresa un nombre"
-  //   inputPwd.value = `${user.user_password}`;
-  inputPwd.disabled = true;
-
-  //   --------
-
-  //   Label de email
-  const labelPwd = document.createElement("label");
-  labelPwd.for = "password";
-  labelPwd.classList.add("formProfile__label");
-  labelPwd.textContent = "Contraseña";
-
-  //  Email Obligatorio
-  const requiredPwd = document.createElement("span");
-  requiredPwd.classList.add("formProfile__required", "hidden");
-  requiredPwd.textContent = "*";
-
-  const iconPwd = document.createElement("span");
-  iconPwd.classList.add("formProfile__icon", "icon-open-eye");
-
-  let passwordMsg;
-
-  groupPwd.append(inputPwd);
-  groupPwd.append(labelPwd);
-  groupPwd.append(requiredPwd);
-  groupPwd.append(iconPwd);
   // -----------------------------
 
   //   Contenedor de campos obligatorios
-  const errContainer = document.createElement("div");
-  errContainer.classList.add("errContainer");
+  const msgContainer = document.createElement("div");
+  msgContainer.classList.add("msgContainer");
 
-  const msgErr = document.createElement("span");
-  msgErr.classList.add("error-msg");
-  //   msgErr.textContent = "Campos obligatorios *";
+  const msgLogedByGoogle = document.createElement("span");
+  msgLogedByGoogle.classList.add("google-msg");
 
-  errContainer.append(msgErr);
+  msgLogedByGoogle.textContent = "Usted está logeado con Google";
+
+  const changePwd = document.createElement("span");
+  changePwd.classList.add("google-msg");
+  changePwd.classList.add("redirect-text__link");
+  // changePwd.id = "changePwd";
+  changePwd.textContent = "Cambiar contraseña";
+
+  changePwd.addEventListener("click", () => {
+    window.location.hash = "#/passwordChange";
+  });
+
   // -----------------------------
 
   const btnEdit = document.createElement("input");
@@ -225,135 +147,50 @@ export const Profile = () => {
   formContainer.append(groupName);
   formContainer.append(groupDate);
   formContainer.append(groupEmail);
-  formContainer.append(groupPwd);
-  //   Apendizamos el mensaje de error
-  formContainer.append(errContainer);
-  //  El botón de Editar
-  formContainer.append(btnEdit);
 
   // -----------------------------
 
+  const { $modalEditProfile, abrirModalEditProfile, cerrarModalEditProfile } =
+    ModalEditProfile();
+
+  btnEdit.addEventListener("click", () => {
+    abrirModalEditProfile();
+    console.log("editemos el perfil ");
+  });
+
   profileComponent.append(headerBack);
   profileComponent.append(mainContainer);
-
   mainContainer.append(profileContainer);
-
   profileContainer.append(photoContainer);
   profileContainer.append(formContainer);
-
-  if (user.providerData[0].providerId === "google.com") {
-    msgErr.textContent = "Usted está logeado con Google";
-    msgErr.style.color = "#0f0f0f";
-    // inputPwd.value = passwordMsg;
-    groupDate.classList.add("hidden");
-    groupPwd.classList.add("hidden");
-    iconPwd.classList.add("hidden");
-    // btnEdit.classList.add("hidden");
-  }
+  profileComponent.append($modalEditProfile);
 
   //   --------------
+  initListenerProfile(user.uid, () => {
+    getUserData(user.uid)
+      .then((user) => {
+        console.log("si se imprimio al usuario en pantalla!", user);
+        // console.log("mira mi foto : ", user.user_photo);
+        photoAvatar.src = user.user_photo;
+        inputDate.type = "date";
+        inputName.value = user.user_name;
+        inputDate.value = user.user_birth;
+        inputEmail.value = user.user_email;
 
-  getUserData(user.uid)
-    .then((user) => {
-      photoAvatar.src = user.user_photo;
-      inputDate.type = "date";
-      inputName.value = user.user_name;
-      inputDate.value = user.user_date;
-      inputPwd.value = user.user_password;
-      inputEmail.value = user.user_email;
-    })
-    .catch((err) => {
-      console.log(err);
-    });
-
-  // user_id: user.uid,
-  // user_name: nameN,
-  // user_photo: photoUrlN,
-  // user_createdAt: user.metadata.createdAt,
-  // user_email: emailN,
-  // user_password: passwordN,
-  // user_logedBy: logedByN,
-
-  //   --------------
+        if (user.user_logedBy === "google") {
+          groupDate.classList.add("hidden");
+          formContainer.append(msgContainer);
+          msgContainer.append(msgLogedByGoogle);
+        } else {
+          formContainer.append(btnEdit);
+          formContainer.append(msgContainer);
+          msgContainer.append(changePwd);
+        }
+      })
+      .catch((err) => {
+        console.log("no se imprimio al usuario en pantalla... ", err);
+      });
+  });
 
   return profileComponent;
 };
-
-
-// !todo: HACER MODAL CON ESTE CODIGO PARA EDITAR PERFIL
-// <!-- Cabecera -->
-// <div class="header-timeline"><div class="logo-timeline"></div></div>
-
-// <div class="main-container__profile">
-//   <div class="profile-container">
-//     <!-- Imagen del usuario -->
-//     <div class="photo__container">
-//       <div class="photo__avatar-container">
-//         <img
-//           class="photo__avatar-img"
-//           src="../src/app/assets/brooke-cagle-k9XZPpPHDho-unsplash.jpg"
-//           alt=""
-//         />
-//       </div>
-//       <!-- <div class="photo__edit-img">°</div> -->
-//     </div>
-
-//     <!-- Datos del usuario -->
-//     <form class="formProfile__container">
-//       <!-- input -->
-//       <div class="formProfile__group">
-//         <input
-//           type="text"
-//           id="name"
-//           class="formProfile__input"
-//           placeholder=" "
-//         />
-//         <label for="name" class="formProfile__label">Nombre</label>
-//         <span class="formProfile__required">*</span>
-//       </div>
-//       <!-- input -->
-//       <div class="formProfile__group">
-//         <input
-//           type="date"
-//           id="date"
-//           class="formProfile__input"
-//           placeholder=" "
-//         />
-//         <label for="date" class="formProfile__label">Fecha de Nacimiento</label>
-//         <!-- <span class="formProfile__required">*</span> -->
-//       </div>
-//       <!-- input -->
-//       <div class="formProfile__group">
-//         <input
-//           type="email"
-//           id="email"
-//           class="formProfile__input"
-//           placeholder=" "
-//         />
-//         <label for="email" class="formProfile__label">Correo</label>
-//         <span class="formProfile__required">*</span>
-//       </div>
-//       <!-- input -->
-//       <div class="formProfile__group">
-//         <input
-//           type="password"
-//           id="password"
-//           class="formProfile__input"
-//           placeholder=" "
-//         />
-//         <label for="password" class="formProfile__label">Contraseña</label>
-//         <span class="formProfile__required">*</span>
-//         <!-- ! Importante, no logro juntar el icono del ojo -->
-//         <span class="formProfile__icon icon-open-eye"></span>
-//       </div>
-
-//       <div class="errContainer">
-//         <!-- <span class="error-msg">Campos obligatorios *</span> -->
-//       </div>
-//       <!-- Input submit -->
-//       <input type="submit" class="formProfile__submit" value="Editar">
-//     </form>
-
-//     </div>
-//   </div>
-// </div>
