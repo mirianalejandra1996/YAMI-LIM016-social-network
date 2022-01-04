@@ -72,6 +72,7 @@ export const ModalEditProfile = () => {
   // * Este es el label
   // Icono para editar imagen del usuario
   const iconPhotoContainer = document.createElement("label");
+  iconPhotoContainer.id = ''
   iconPhotoContainer.htmlFor = "file";
 
   // Todo: preguntar por qué no escogió este camino a Lu

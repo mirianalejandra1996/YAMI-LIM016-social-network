@@ -1400,7 +1400,9 @@ input[type="file"] {
   position: absolute;
   z-index: -1;
 }
-label[for="file"] {
+
+/* ! Mirian: cambió esto por una clase para que no le afecte un label de un componente */
+.modal__fileInput {
   padding: 0px 12px 0px 0px;
   font-size: 14px;
   color: #ccc;
@@ -1410,6 +1412,16 @@ label[for="file"] {
   align-items: center;
   justify-content: space-between;
 }
+/* label[for="file"] {
+  padding: 0px 12px 0px 0px;
+  font-size: 14px;
+  color: #ccc;
+  cursor: pointer;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+} */
 .imagenFile {
   width: 80%;
   margin-top: 15px;
