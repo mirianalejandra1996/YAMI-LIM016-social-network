@@ -347,7 +347,7 @@ export const ModalEditProfile = () => {
 
         Promise.all(promises)
           .then(() => {
-            console.log("este es el file ", inputFileNone.files[0].name);
+            // console.log("este es el file ", inputFileNone.files[0].name);
             console.log("todos los procesos se realizaron!");
             msgErr.classList.remove("error-msg");
             msgErr.classList.add("success-msg");
