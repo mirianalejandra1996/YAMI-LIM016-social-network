@@ -351,23 +351,21 @@ export const ModalEditProfile = () => {
           changeEmailAuth(user, newData.user_email),
           // changeNameAndPhotoAuth(newData),
           // changeBasicDataFirestore(user.uid, newData),
-          uploadUserProfileImg(inputFileNone.files[0], user.uid),
+
+          // ! Este es importante
+          // uploadUserProfileImg(inputFileNone.files[0], user.uid),
         ];
 
-        // if (!inputFileNone.files[0]){
-
-        //   promises = [
-        //     changeEmailAuth(user, newData.user_email)
-        //   ];
-        // }
+        if (inputFileNone.files[0]) {
+          promises.push(uploadUserProfileImg(inputFileNone.files[0], user.uid));
+        }
 
         Promise.all(promises)
           .then((res) => {
-            // if (!inputFileNone.files[0]){
+            if (inputFileNone.files[0]) {
+              newData.user_photo = res[1];
+            }
 
-            // }
-
-            newData.user_photo = res[1];
             console.log("todos estos son nuevos datos", newData);
             changeNameAndPhotoAuth(newData);
             changeBasicDataFirestore(user.uid, newData);
