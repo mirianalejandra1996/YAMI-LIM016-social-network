@@ -269,6 +269,20 @@ input[type="password"]:focus {
   color: #ff2a2a;
   /* font-size: 0.9rem; */
 }
+
+.success-msg {
+  color: #2ecc71;
+  /* font-size: 0.9rem; */
+}
+
+.msgContainer {
+  height: 1.3rem;
+  /* background-color: blue; */
+}
+.google-msg {
+  color: #0f0f0f;
+  /* font-size: 0.9rem; */
+}
 .form__button-g {
   height: 35px;
   width: 200px;
@@ -963,7 +977,7 @@ input[type="password"]:focus {
 }
 
 .main-container__profile {
-  height: calc(100% - 80px);
+  /* height: calc(100% - 80px); */
   display: flex;
   justify-content: center;
   width: 100%;
@@ -988,6 +1002,10 @@ input[type="password"]:focus {
   align-items: center;
   flex-direction: column;
 }
+.photo__container.row {
+  flex-direction: row;
+}
+
 .photo__avatar-container {
   width: 90px;
   height: 90px;
@@ -1013,8 +1031,8 @@ input[type="password"]:focus {
   height: 25px;
   background-color: #fff;
   border: 0.1px solid #f0f0f0;
-  right: -5px;
-  bottom: -5px;
+  right: 85px;
+  bottom: 10px;
 }
 
 .profile__text-content {
@@ -1142,7 +1160,7 @@ input[type="password"]:focus {
 .errContainer--modal {
   /* background-color: red; */
   margin-bottom: 1rem;
-  height: 40px;
+  height: 1.3rem;
 }
 
 .pencil {
@@ -1383,10 +1401,24 @@ label[for="file"] {
   justify-content: space-between;
 }
 .imagenFile {
-  width: 80%;
+  width: 100%;
   margin-top: 15px;
   border-radius: 10px;
-  
+}  
+
+/* ---Componente cambiar contraseña--------- */
+
+.userNameContainer {
+  height: 1.3rem;
+  /* background-color: red; */
+  width: 100%;
+  display: flex;
+  justify-content: center;
+}
+
+.userNameTitle {
+  font-size: 1rem;
+  font-weight: 700;
 }
 .hiddenIcon{
   display: none;
@@ -1415,4 +1447,50 @@ label[for="file"] {
   background: white;
   font-size: 20px;
   width: 30px;
+}
+
+/* Desktop */
+@media (min-width: 768px){
+  .menu{
+    position: absolute;
+    top:0;
+    justify-content:space-between;
+    background: linear-gradient(45deg, #ffbd00,#fa610c);
+  }
+  .menu__link{
+    display: none;
+  }
+  .header-timeline{
+    display: none;
+  }
+  .photo__container{
+    margin-top: 60px;
+  }
+  .menu__link.user{
+    display: block;
+    margin-right: 30px;
+  }
+  .menu__link.home{
+    margin-left: 30px;
+    display: block;
+    width: 50px;
+    height: auto;
+    content: url("logo.svg");
+  }
+  .modal__lista{
+    position: absolute;
+    top: 60px;
+    right: 0;
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 60px;
+    width: auto;
+    border-top-left-radius: 0px;
+    border-top-right-radius: 0px;
+    overflow: hidden;
+    background-color: white;
+    /* padding: 0 10px; */
+    transition: transform 0.5s ease-in-out;
+    transform: translateY(0%);
+  }
 }
