@@ -7,6 +7,7 @@ import { traerPost } from "../firebase/firebase-data.js";
 import { HeaderSimple } from "./Header_simple.js";
 import { ModalCerrarSesion } from "./Modal_cerrarSesion.js";
 import { ModalEliminarCom } from "./ModalDeleteComment.js";
+import { ModalEditCom } from "./ModalEditComment.js";
 // import { ModalEditPost } from './Edit_post.js'
 // import { ModalCerrarSesion } from "./Modal_cerrar.js";
 
@@ -53,6 +54,13 @@ export function Timeline() {
     abrirModalEliminarCom: abrirModalRemoveCom,
     setDataModalRemoveCom: setDataModalRemoveCom,
   } = ModalEliminarCom();
+
+  const {
+    $modalContenedor: $modalEditCom,
+    abrirModal: abrirModalEditCom,
+    setCom: setDataModalEditCom,
+  } = ModalEditCom();
+
   // -----------------------------------------------------------------------------------
   // Construye el TIMELINE
   // -----------------------------------------------------------------------------------
@@ -64,6 +72,7 @@ export function Timeline() {
   $timeline.append($modalCreatePost);
   $timeline.append($modalEditPost);
   $timeline.append($modalRemovePost);
+  $timeline.append($modalEditCom);
   $timeline.append($modalRemoveCom);
   $timeline.append($modalCerrarSesion);
 
@@ -85,7 +94,9 @@ export function Timeline() {
           setDataModalRemove,
           abrirModalRemove,
           abrirModalRemoveCom,
-          setDataModalRemoveCom
+          setDataModalRemoveCom,
+          abrirModalEditCom,
+          setDataModalEditCom
         );
         $postsContainer.append($post);
       });

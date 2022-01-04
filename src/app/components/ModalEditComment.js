@@ -1,14 +1,14 @@
-import { updatePost } from "../firebase/firebase-data.js";
+import { updateCom } from "../firebase/firebase-data.js";
 
-export const ModalEditPost = () => {
+export const ModalEditCom = () => {
   // * modalContenedor es el overlay
   const $modalContenedor = document.createElement("div");
   $modalContenedor.classList.add("modal__contenedor");
   $modalContenedor.classList.add("modal-cerrar");
 
   //  * Contenedor de toda la información
-  const $formPost = document.createElement("div");
-  $formPost.classList.add("formPost-edit");
+  const $formCom = document.createElement("div");
+  $formCom.classList.add("formPost-edit");
 
   // * Cabecera
   const $header = document.createElement("div");
@@ -37,7 +37,7 @@ export const ModalEditPost = () => {
   //Titulo del Modal
   const $title = document.createElement("h2");
   $title.classList.add("formPost_h2");
-  $title.textContent = `Editar publicación`;
+  $title.textContent = `Editar comentario`;
 
   $header.append($opcionesCabecera);
   $header.append($title);
@@ -45,21 +45,16 @@ export const ModalEditPost = () => {
   const $inputsContainer = document.createElement("div");
   $inputsContainer.classList.add("formPost_inputs");
 
-  const $post = document.createElement("textarea");
-  $post.classList.add("formPost_input-long");
-  $post.placeholder = `¿Qué estas pensando?`;
+  const $com = document.createElement("textarea");
+  $com.classList.add("formPost_input-long");
+  $com.placeholder = `Escribe un comentario...`;
 
-  $inputsContainer.append($post);
+  $inputsContainer.append($com);
 
   const $tags = document.createElement("input");
   $tags.classList.add("formPost_input-short");
   $tags.placeholder = `Añadir etiquetas`;
   //$inputsContainer.append($tags);
-
-  const $picture = document.createElement("input");
-  $picture.classList.add("formPost_input-short");
-  $picture.placeholder = `Añadir imagen`;
-  $inputsContainer.append($picture);
 
   const $btnsContainer = document.createElement("div");
   $btnsContainer.classList.add("formPost_btns");
@@ -85,11 +80,11 @@ export const ModalEditPost = () => {
   $textTag.textContent = `Etiquetas`;
   $tagBtnDiv.append($textTag);
 
-  $formPost.append($header);
-  $formPost.append($inputsContainer);
+  $formCom.append($header);
+  $formCom.append($inputsContainer);
   //$formPost.append($btnsContainer);
 
-  $modalContenedor.append($formPost);
+  $modalContenedor.append($formCom);
 
   //Modal oculto
   $modalContenedor.style.opacity = "0";
@@ -109,15 +104,17 @@ export const ModalEditPost = () => {
     $modalContenedor.style.visibility = "hidden";
   };
 
+
+
+
   // Evento para guardar post (update en firebase)
     $guardar.addEventListener("click", () => {
-    console.log("entramos para actualizar");
+    // console.log("entramos para actualizar");
     // const nuevoMensaje = document.getElementById("msgPost").value;
-    // console.log(postData)
-    const nuevoMensaje = document.getElementById(`msgPost_${postData.post_id}`).value;
-    console.log("este es el nuevo mensaje", nuevoMensaje);
+    const nuevoMensaje = document.getElementById(`msgCom_${comData.com_id}`).value;
+    // console.log("este es el nuevo mensaje", nuevoMensaje);
     //limpiar modal antes de cerrar
-    $post.value = "";
+    $com.value = "";
     //eliminar event listeners a cualquier nodo o elemeno
     $guardar.removeEventListener("click", guardarButtonClickListener);
 
@@ -125,15 +122,20 @@ export const ModalEditPost = () => {
     $modalContenedor.style.visibility = "hidden";
   })
 
-  const setPost = (postData) => {
-    $post.value = `${postData.message}`;
+
+
+
+  const setCom = (comData, postId) => {
+    $com.value = `${comData.message}`;
 
     guardarButtonClickListener = () => {
-      console.log("entramos a actualizar post");
+      console.log("entramos a actualizar comment");
       // const nuevoMensaje = document.getElementById("msgPost").value;
-      const nuevoMensaje = $post.value;
+      const nuevoMensaje = $com.value;
+      console.log(nuevoMensaje)
       //Actualiza el Post
-      updatePost(postData.post_id, {message: nuevoMensaje}).then(() => {
+      updateCom(postId, comData.com_id, nuevoMensaje).then(() => {
+        console.log(nuevoMensaje)
         window.location.hash = "#/";
       });
     };
@@ -141,5 +143,5 @@ export const ModalEditPost = () => {
     $guardar.addEventListener("click", guardarButtonClickListener);
   };
 
-  return { $modalContenedor, abrirModal, cerrarModal, setPost };
+  return { $modalContenedor, abrirModal, cerrarModal, setCom };
 };

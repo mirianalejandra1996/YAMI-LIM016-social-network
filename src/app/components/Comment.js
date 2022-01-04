@@ -1,7 +1,13 @@
 import { toggleComLikes, initListenerComLike } from "../firebase/firebase-data.js"
 import { auth } from "../firebase/firebase-auth.js";
 
-export const Comment = (postId, com, abrirModalRemoveCom, setDataModalRemoveCom) => {
+export const Comment = (
+  postId, 
+  com, 
+  abrirModalRemoveCom, 
+  setDataModalRemoveCom, 
+  abrirModalEditCom,
+  setDataModalEditCom) => {
     // console.log(com)
 
     const user_id = auth.currentUser.uid;
@@ -75,12 +81,12 @@ export const Comment = (postId, com, abrirModalRemoveCom, setDataModalRemoveCom)
 
     if (user_id != com.id_user) optionsSpan.classList.add("hiddenIcon");
 
-    /**
-     const handleClickEdit = () => {
-    setDataModalEdit(com);
-    abrirModalEdit();
+    
+    const handleClickEdit = () => {
+    setDataModalEditCom(com, postId);
+    abrirModalEditCom();
   };
-*/
+
     const handleClickRemove = () => {
     setDataModalRemoveCom(postId, com.com_id);
     abrirModalRemoveCom();
@@ -88,7 +94,7 @@ export const Comment = (postId, com, abrirModalRemoveCom, setDataModalRemoveCom)
     
     const {menuModalOptionsCom, toggleModalOptionsCom} = OptionListCom(
       handleClickRemove,
-      // handleClickEdit
+      handleClickEdit
     );
 
     const optionsCom = menuModalOptionsCom
@@ -127,7 +133,7 @@ export const Comment = (postId, com, abrirModalRemoveCom, setDataModalRemoveCom)
     return container
 }
 
-function OptionListCom(onclickRemove){
+function OptionListCom(onclickRemove, onClickEdit){
   const modalOpciones = document.createElement("div")
   modalOpciones.classList.add("comOptions__dropdown", "cerrar")
 
@@ -143,6 +149,7 @@ function OptionListCom(onclickRemove){
   modalOpciones.append(btnRemoveCom)
 
   btnRemoveCom.addEventListener("click", onclickRemove)
+  btnEditCom.addEventListener("click", onClickEdit)
 
   const toggleModalOptionsCom = () => {
     modalOpciones.classList.toggle("cerrar")

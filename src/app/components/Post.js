@@ -13,7 +13,9 @@ export const Post = (
   setDataModalRemove, 
   abrirModalRemove,
   abrirModalRemoveCom,
-  setDataModalRemoveCom) => {
+  setDataModalRemoveCom,
+  abrirModalEditCom,
+  setDataModalEditCom) => {
 
   // console.log(post)
 
@@ -188,7 +190,9 @@ export const Post = (
           post.post_id, 
           com,
           abrirModalRemoveCom,
-          setDataModalRemoveCom)
+          setDataModalRemoveCom,
+          abrirModalEditCom,
+          setDataModalEditCom)
         commentsContainer.append(comment)
         // console.log("entra")
     })

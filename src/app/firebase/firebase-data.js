@@ -424,3 +424,13 @@ export async function deleteCom(postId, comId) {
 
   return await deleteDoc(comRef);
 }
+
+// Actualizar comentario
+
+export async function updateCom(postId, comId, message) {
+  const postRef = doc(db, "posts", postId, "comments", comId);
+
+  return await updateDoc(postRef, {
+    message,
+  });
+}
