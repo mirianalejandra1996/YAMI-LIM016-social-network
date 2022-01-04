@@ -1,22 +1,27 @@
 import {
   getUserData,
-  updateUserFirestore,
+  changeBasicDataFirestore,
   isExistingUser,
 } from "../firebase/firebase-data.js";
 import {
   auth,
   validate_email,
-  validate_password,
   validate_field,
-  // updateEmailUserAuth,
-  updateBasicInfoUserAuth,
-  // getAuth,
-  changeEmail,
-  // updateEmail,
+  changeNameAndPhotoAuth,
+  changeEmailAuth,
+  createCredential,
+  reautentificacion,
 } from "../firebase/firebase-auth.js";
 
 export const ModalEditProfile = () => {
   const user = auth.currentUser;
+  let userNameFirestore;
+  let userBirthFirestore;
+  let userEmailFirestore;
+  let userPasswordFirestore;
+  let userPhoto;
+
+  console.log("foto del firestore ", userPhoto);
 
   const $modalContenedor = document.createElement("div");
   $modalContenedor.classList.add("modal__contenedor");
@@ -53,18 +58,55 @@ export const ModalEditProfile = () => {
   const photoAvatar = document.createElement("img");
   photoAvatar.classList.add("photo__avatar-img");
   photoAvatar.alt = "imgAvatar";
-  // photoAvatar.src = "../src/app/assets/brooke-cagle-k9XZPpPHDho-unsplash.jpg";
+  photoAvatar.src =
+    "https://firebasestorage.googleapis.com/v0/b/yami-cbaa4.appspot.com/o/user.png?alt=media&token=bfe80508-5817-4d84-83e1-6a074a16f198";
 
   imgAvatarContainer.append(photoAvatar);
 
+  const inputFileNone = document.createElement("input");
+  inputFileNone.type = "file";
+  inputFileNone.accept = "image/*";
+  inputFileNone.id = "file";
+  inputFileNone.style.display = "none";
+
+  // * Este es el label
   // Icono para editar imagen del usuario
-  const iconPhotoContainer = document.createElement("div");
-  iconPhotoContainer.classList.add("photo__edit-img", "hidden");
+  const iconPhotoContainer = document.createElement("label");
+  iconPhotoContainer.htmlFor = "file";
+
+  // Todo: preguntar por qué no escogió este camino a Lu
+  // inputFileNone.addEventListener("change", () => {
+  //   const file = this.files[0];
+  //   console.log("cambió el file", file);
+
+  //   // if (file) {
+  //   //   console.log("file es truly");
+
+  //   //   const objectURL = URL.createObjectURL(file);
+  //   //   photoAvatar.src = objectURL;
+  //   //   // });
+  //   //   // photoAvatar.src
+  //   // }
+  // });
+
+  inputFileNone.addEventListener("change", (e) => {
+    const file = e.target.files[0];
+
+    if (file) {
+      console.log("file es truly");
+
+      const objectURL = URL.createObjectURL(file);
+      photoAvatar.src = objectURL;
+    }
+  });
+
+  iconPhotoContainer.classList.add("photo__edit-img");
   const iconPhoto = document.createElement("span");
   iconPhoto.classList.add("icon-pencil", "pencil");
 
   iconPhotoContainer.append(iconPhoto);
   imgAvatarContainer.append(iconPhotoContainer);
+  imgAvatarContainer.append(inputFileNone);
 
   photoContainer.append(imgAvatarContainer);
 
@@ -136,28 +178,6 @@ export const ModalEditProfile = () => {
 
   // -----------------------------
 
-  // * Grupo: Correo del usuario
-  const groupPwd = document.createElement("div");
-  groupPwd.classList.add("formProfile__group");
-
-  //   Input email
-  const inputPwd = document.createElement("input");
-  inputPwd.type = "text";
-  inputPwd.id = "password";
-  inputPwd.placeholder = "Contraseña";
-  inputPwd.classList.add("modal-profile__input");
-
-  //   --------
-
-  //  Email Obligatorio
-  const requiredPwd = document.createElement("span");
-  requiredPwd.classList.add("modal-profile__required");
-  requiredPwd.textContent = "*";
-
-  groupPwd.append(inputPwd);
-  groupPwd.append(requiredPwd);
-  // -----------------------------
-
   //   Contenedor de campos obligatorios
   const errContainer = document.createElement("div");
   errContainer.classList.add("errContainer--modal");
@@ -195,7 +215,6 @@ export const ModalEditProfile = () => {
   formContainer.append(groupName);
   formContainer.append(groupDate);
   formContainer.append(groupEmail);
-  formContainer.append(groupPwd);
   //   Apendizamos el mensaje de error
   formContainer.append(errContainer);
   // todo: en realidad hay que apendizar el div que tiene a editar o cancelar
@@ -203,52 +222,14 @@ export const ModalEditProfile = () => {
 
   // -----------------------------
 
-  // const { $modalEditProfile, abrirModalEditProfile, cerrarModalEditProfile } =
-  //   ModalEditProfile();
-
   btnSaveChanges.addEventListener("click", () => {
-    // abrirModalEditProfile();
     console.log("editemos el perfil ");
   });
 
-  // $modalEditProfile: $modalContenedor,
-  // abrirModalEditProfile: abrirModal,
-  // cerrarModalEditProfile: cerrarModal,
-
-  // profileComponent.append(headerBack);
-  // profileComponent.append(mainContainer);
-  // mainContainer.append(profileContainer);
   profileContainer.append(headerModal);
   profileContainer.append(photoContainer);
   profileContainer.append(formContainer);
-  // profileComponent.append($modalEditProfile);
 
-  //   --------------
-
-  getUserData(user.uid)
-    .then((user) => {
-      photoAvatar.src = user.user_photo;
-      // inputDate.type = "date";
-      inputName.value = user.user_name;
-      inputDate.value = user.user_birth;
-      inputPwd.value = user.user_password;
-      inputEmail.value = user.user_email;
-    })
-    .catch((err) => {
-      console.log(err);
-    });
-
-  // user_id: user.uid,
-  // user_name: nameN,
-  // user_photo: photoUrlN,
-  // user_createdAt: user.metadata.createdAt,
-  // user_email: emailN,
-  // user_password: passwordN,
-  // user_logedBy: logedByN,
-
-  //   --------------
-
-  // $modalContenedor.append($formPost);
   //Modal oculto
   $modalContenedor.style.opacity = "0";
   $modalContenedor.style.visibility = "hidden";
@@ -277,13 +258,20 @@ export const ModalEditProfile = () => {
       user_name: inputName.value,
       user_birth: inputDate.value,
       user_email: inputEmail.value,
-      user_password: inputPwd.value,
       user_exist: false,
+      user_password: userPasswordFirestore,
       // todo: hay que modificar la foto del usuario
-      // user_photo :
+      user_photo: photoAvatar.src,
     };
 
-    let userExist = await isExistingUser(newData.user_email);
+    msgErr.textContent = "";
+    msgErr.classList.add("error-msg");
+    msgErr.classList.remove("success-msg");
+
+    const { emailUserSearched, pwdUserSearched, userExist } =
+      await isExistingUser(newData.user_email);
+
+    // let userExist = await isExistingUser(newData.user_email);
 
     console.log("El usuario existe? => ", userExist);
 
@@ -308,41 +296,108 @@ export const ModalEditProfile = () => {
       return;
     }
     // Validamos el correo
-    else if (!validate_email(newData.user_email)) {
+    if (!validate_email(newData.user_email)) {
       document.getElementById("error-msg").textContent =
         "Ingrese un correo válido";
       // Activa campo como obligatorio
       requiredEmail.classList.add("modal-profile__required--active");
       return;
-    } else if (userExist) {
+    }
+    // Si la cuenta no está disponible para usar
+    if (userExist && newData.user_email !== user.email) {
       document.getElementById("error-msg").textContent =
         "Esta cuenta ya está siendo utilizada";
-      console.log("else if de newData.user_exist");
       return;
     }
-    // Validamos la contraseña
-    else if (!validate_password(newData.user_password)) {
-      document.getElementById("error-msg").textContent =
-        "La contraseña debe tener entre 8 a 14 carácteres";
-      requiredPwd.classList.add("modal-profile__required--active");
+    // Si los datos nunca fueron modificados
+    if (
+      newData.user_name === userNameFirestore &&
+      newData.user_birth === userBirthFirestore &&
+      // newData.user_email === userEmailFirestore
+      newData.user_email === userEmailFirestore &&
+      newData.user_photo === userPhoto
+    ) {
+      document.getElementById("error-msg").textContent = "Actualice los datos";
       return;
-    } else {
-      for (let element of requiredFields) {
-        element.classList.remove("modal-profile__required--active");
-      }
+    }
 
-      updateUserFirestore(user.uid, newData).then(() => {
-        // updateEmailUserAuth(newData);
-        updateBasicInfoUserAuth(newData);
-        changeEmail(newData);
-        // console.log("si se pudo!");
-        // document.location.reload();
+    for (let element of requiredFields) {
+      element.classList.remove("modal-profile__required--active");
+    }
+
+    console.log("esta es mi contraseña ", newData.user_password);
+
+    const credential = await createCredential(user, newData.user_password);
+
+    reautentificacion(user, credential)
+      .then(() => {
+        console.log("si se logró la reautentificación");
+
+        let promises = [
+          changeEmailAuth(user, newData.user_email),
+          changeNameAndPhotoAuth(newData),
+          changeBasicDataFirestore(user.uid, newData),
+        ];
+
+        Promise.all(promises)
+          .then(() => {
+            console.log("todos los procesos se realizaron!");
+            msgErr.classList.remove("error-msg");
+            msgErr.classList.add("success-msg");
+            document.getElementById("error-msg").textContent =
+              "Cambios realizados!";
+            // document.location.reload();
+
+            // todo: ACOMODAR ESTO!!!
+            getUserData(user.uid)
+              .then((user) => {
+                userPasswordFirestore = user.user_password;
+                userNameFirestore = user.user_name;
+                userBirthFirestore = user.user_birth;
+                userEmailFirestore = user.user_email;
+                userPhoto = user.user_photo;
+
+                console.log("getUserData para ver userPhoto", userPhoto);
+              })
+              .catch((err) => {
+                console.log(err);
+              });
+          })
+          .catch((err) => {
+            console.log("problemas con el promise all", err);
+          });
+
+        // todo: mostrar en pantalla un spiner y que fue realizado!
+      })
+      .catch((err) => {
+        console.log("no se logró la reautentificación", err);
+        document.getElementById("error-msg").textContent =
+          "Error de autentificación ";
       });
-
-      // updateEmailUserAuth(newData.user_email);
-      // updateEmailUserAuth(newData);
-    }
   });
+
+  getUserData(user.uid)
+    .then((user) => {
+      photoAvatar.src = user.user_photo;
+      inputName.value = user.user_name;
+      inputDate.value = user.user_birth;
+      userPasswordFirestore = user.user_password;
+      userNameFirestore = user.user_name;
+      userBirthFirestore = user.user_birth;
+      userEmailFirestore = user.user_email;
+      userPhoto = user.user_photo;
+      inputEmail.value = user.user_email;
+
+      // console.log("esta es mi contraseña, ", user.user_photo);
+      console.log(
+        "esta mi foto recien cargando el componente MODAL, ",
+        userPhoto
+      );
+    })
+    .catch((err) => {
+      console.log(err);
+    });
+
   return {
     $modalEditProfile: $modalContenedor,
     abrirModalEditProfile: abrirModal,

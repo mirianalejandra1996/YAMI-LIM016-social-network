@@ -1,21 +1,19 @@
 import { app } from "../firebase/firebase-initializer.js";
-// import { checkRegisteredUser } from "../firebase/firebase-data.js";
 
 import {
   signInWithEmailAndPassword,
   getAuth,
   createUserWithEmailAndPassword,
   GoogleAuthProvider,
-  getRedirectResult,
-  signInWithRedirect,
   signInWithPopup,
   signOut,
   sendPasswordResetEmail,
-  onAuthStateChanged,
   updateEmail,
+  updatePassword,
   updateProfile,
   reauthenticateWithCredential,
   EmailAuthProvider,
+  // updatePassword,
 } from "https://www.gstatic.com/firebasejs/9.5.0/firebase-auth.js";
 
 import { addUser } from "./firebase-data.js";
@@ -279,13 +277,13 @@ export function olvideContrasena() {
     });
 }
 
-export function updateBasicInfoUserAuth(objNewData) {
+export function changeNameAndPhotoAuth(objNewData) {
   const auth = getAuth();
 
   // console.log("probando ando", auth.currentUser);
   updateProfile(auth.currentUser, {
     displayName: objNewData.user_name,
-    email: objNewData.user_email,
+    // email: objNewData.user_email,
     // photoURL: objNewData.user_photo
     // photoURL: "https://example.com/jane-q-user/profile.jpg"
   })
@@ -301,36 +299,42 @@ export function updateBasicInfoUserAuth(objNewData) {
     });
 }
 
-// user_photo: objNewData.user_photo,
-//  user_name: objNewData.user_name,
-//  user_birth: objNewData.user_birth,
-//  user_email: objNewData.user_email,
-//  user_password: objNewData.user_password,
-
-
 // Siempre me pedirán credencial para eliminar cuenta, cambiar contraseña o correo
-const createCredential = (user) => {
+export const createCredential = (user, password) => {
   const email = user.email;
-  const password = "labolabo";
+  // const password = prompt("Please enter your current password:");
   const credential = EmailAuthProvider.credential(email, password);
   return credential;
 };
 
-export const changeEmail = async (objNewData) => {
-  const auth = getAuth();
-  const user = auth.currentUser;
-  const credential = await createCredential(user);
+// El método indicará la funcion (si es para actualizar el correo o la contraseña)
 
-  reauthenticateWithCredential(user, credential)
+export const reautentificacion = async (user, credential) => {
+  return await reauthenticateWithCredential(user, credential);
+};
+
+export const changePasswordAuth = (user, newPassword) => {
+  return updatePassword(user, newPassword)
     .then(() => {
-      console.log("si se reautenticó");
-      updateEmail(user, objNewData.user_email)
-        .then(() => console.log("Email updated!"))
-        .catch((error) => {
-          console.log("catch para updateEmail", error);
-        });
+      console.log("si cambió la contraseña");
+      // Update successful.
     })
     .catch((error) => {
-      console.log("catch de la funcion de changeEmail", error);
+      // An error ocurred
+      console.log(
+        "problemas para cambiar la contraseña en updatePassword",
+        error
+      );
+      // ...
+    });
+};
+
+export const changeEmailAuth = (user, newEmail) => {
+  return updateEmail(user, newEmail)
+    .then(() => {
+      console.log("Email updated! del metodo firebase");
+    })
+    .catch((error) => {
+      console.log("catch para updateEmail de firebase method", error);
     });
 };

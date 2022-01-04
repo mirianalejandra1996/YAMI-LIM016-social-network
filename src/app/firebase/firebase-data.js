@@ -160,6 +160,11 @@ export function initListenerPost(postId, actualizarPost) {
   return onSnapshot(doc(db, "posts", postId), actualizarPost);
 }
 
+/******************Init Listener Profile Component*********************/
+export function initListenerProfile(userId, actualizarProfile) {
+  return onSnapshot(doc(db, "users", userId), actualizarProfile);
+}
+
 // ---------------Funciones del post -------------------------------
 
 // Actualizar post
@@ -213,22 +218,8 @@ export function addComment(current_user, idPost, comment) {
     .catch((err) => console.log(err));
 }
 
-// Check Registered User
-
-// export async function isExistingUser(email) {
-//   const q = query(collection(db, "users"), where("user_email", "==", email));
-
-//   const docSnap = await getDoc(q);
-
-//   if (docSnap.exists) {
-//     console.log("pues si existe este usuario en firestore!");
-//     return await docSnap.data();
-//   } else {
-//     // doc.data() will be undefined in this case
-//     console.log("No such document!");
-//   }
-// }
-
+// todo: AVERIGUAR SI EXISTE ALGÚN METODO EXCLUSIVO PARA SABER SI EL USUARIO EXISTE
+// todo: EN FIRESTORE O EN AUTH
 export async function isExistingUser(email) {
   const q = query(collection(db, "users"), where("user_email", "==", email));
 
@@ -241,62 +232,31 @@ export async function isExistingUser(email) {
     userEmailMatch.push(doc.data());
   });
 
-  // console.log("esperanza", result);
-  // return userEmailMatch;
+  let userExist;
+  let emailUserSearched;
+  let pwdUserSearched;
 
-  if (userEmailMatch.length === 0) return false
-  return true
+  console.log("datos del usuarioo", userEmailMatch);
 
-  // if (docSnap.exists()) {
-  //   console.log("pues si existe este usuario en firestore!");
-  //   // return await docSnap.data();
-  //   return true;
-  // } else {
-  //   // doc.data() will be undefined in this case
-  //   console.log("No such document!");
-  //   return false;
-  // }
+  if (userEmailMatch.length === 0) {
+    console.log(userEmailMatch.length);
+    userExist = false;
+    emailUserSearched = null;
+    pwdUserSearched = null;
+  } else {
+    userExist = true;
+    emailUserSearched = userEmailMatch[0].user_email;
+    pwdUserSearched = userEmailMatch[0].user_password;
+  }
+
+  return {
+    emailUserSearched,
+    pwdUserSearched,
+    userExist,
+  };
+
+  // return userExist;
 }
-
-// -----------------
-// export async function traerMisPost(userId) {
-//   const querySnapshotPosts = await getDocs(q1);
-
-//   const postsFiltradocs = querySnapshotPosts.docs; //Array
-//   const postsData = [];
-
-//   postsFiltradocs.forEach((doc) => {
-//     // doc.data() is never undefined for query doc snapshots
-
-//     const post = doc.data();
-//     console.log(post);
-//     post["post_id"] = doc.id;
-
-//     console.log(post);
-
-//     postsData.push(post);
-//     // console.log(postData)
-//     // console.log(doc.id, " => ", doc.data());
-//   });
-
-//   return postsData;
-// }
-
-// -----------------
-// export async function isExistingUser(post_id) {
-//   const userRef = doc(db, "users", post_id);
-//   const docSnap = await getDoc(userRef);
-
-//   if (docSnap.exists()) {
-//     console.log("pues si existe este usuario en firestore!");
-//     return await docSnap.data();
-//   } else {
-//     // doc.data() will be undefined in this case
-//     console.log("No such document!");
-//   }
-// }
-
-// Recopila los posts del Usuario
 
 export async function traerMisPost(userId) {
   // -------------------
@@ -350,30 +310,35 @@ export async function traerComments(id_post) {
 
 // Actualiza el usuario
 
-export async function updateUserFirestore(user_id, objNewData) {
+export function changePasswordFirestore(user_id, password) {
   console.log("función updateUser va a actualizar los datos");
   const userDocRef = doc(db, "users", user_id);
 
-  return await updateDoc(userDocRef, {
-    // user_photo: objNewData.user_photo,
+  updateDoc(userDocRef, {
+    user_password: password,
+  })
+    .then(() => {
+      console.log("Si se actualizó el usuario en el firestore ");
+    })
+    .catch((err) => {
+      console.log("No se puede actualizar el usuario en el firestore ", err);
+    });
+}
+
+export function changeBasicDataFirestore(user_id, objNewData) {
+  console.log("función updateUser va a actualizar los datos");
+  const userDocRef = doc(db, "users", user_id);
+
+  updateDoc(userDocRef, {
+    user_photo: objNewData.user_photo,
     user_name: objNewData.user_name,
     user_birth: objNewData.user_birth,
     user_email: objNewData.user_email,
-    user_password: objNewData.user_password,
-  });
+  })
+    .then(() => {
+      console.log("Si se actualizó el usuario en el firestore ");
+    })
+    .catch((err) => {
+      console.log("No se puede actualizar el usuario en el firestore ", err);
+    });
 }
-
-
-// ----------------------------------------------------------
-
-// ----------------------------------------------------------
-// const postRef = doc(db, "posts", post_id);
-
-// // user_id: user.uid,
-// user_name: nameN,
-// user_photo: photoUrlN,
-// user_createdAt: user.metadata.createdAt,
-// user_email: emailN,
-// user_password: passwordN,
-// user_logedBy: logedByN,
-// user_birth: birthN,

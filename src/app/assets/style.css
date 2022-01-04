@@ -269,6 +269,20 @@ input[type="password"]:focus {
   color: #ff2a2a;
   /* font-size: 0.9rem; */
 }
+
+.success-msg {
+  color: #2ecc71;
+  /* font-size: 0.9rem; */
+}
+
+.msgContainer {
+  height: 1.3rem;
+  /* background-color: blue; */
+}
+.google-msg {
+  color: #0f0f0f;
+  /* font-size: 0.9rem; */
+}
 .form__button-g {
   height: 35px;
   width: 200px;
@@ -961,7 +975,7 @@ input[type="password"]:focus {
 }
 
 .main-container__profile {
-  height: calc(100% - 80px);
+  /* height: calc(100% - 80px); */
   display: flex;
   justify-content: center;
   width: 100%;
@@ -986,6 +1000,7 @@ input[type="password"]:focus {
   align-items: center;
   flex-direction: column;
 }
+
 .photo__avatar-container {
   width: 90px;
   height: 90px;
@@ -1011,8 +1026,8 @@ input[type="password"]:focus {
   height: 25px;
   background-color: #fff;
   border: 0.1px solid #f0f0f0;
-  right: -5px;
-  bottom: -5px;
+  right: 85px;
+  bottom: 10px;
 }
 
 .profile__text-content {
@@ -1140,7 +1155,7 @@ input[type="password"]:focus {
 .errContainer--modal {
   /* background-color: red; */
   margin-bottom: 1rem;
-  height: 40px;
+  height: 1.3rem;
 }
 
 .pencil {
@@ -1381,5 +1396,19 @@ label[for="file"] {
   width: 80%;
   margin-top: 15px;
   border-radius: 10px;
-  
+}  
+
+/* ---Componente cambiar contraseña--------- */
+
+.userNameContainer {
+  height: 1.3rem;
+  /* background-color: red; */
+  width: 100%;
+  display: flex;
+  justify-content: center;
+}
+
+.userNameTitle {
+  font-size: 1rem;
+  font-weight: 700;
 }

@@ -4,6 +4,7 @@ import { Registro } from "../components/Register.js";
 import { Timeline } from "../components/Timeline.js";
 import { Profile } from "../components/Profile.js";
 import { MiMuro } from "../components/Muro.js";
+import { ChangePassword } from "../components/ChangePassword.js";
 
 export const components = {
   login: Login,
@@ -11,7 +12,8 @@ export const components = {
   timeline: Timeline,
   perfil: Perfil,
   profile: Profile,
-  muro: MiMuro
+  muro: MiMuro,
+  changePassword: ChangePassword,
 };
 
 // const DATE_UNITS = {
