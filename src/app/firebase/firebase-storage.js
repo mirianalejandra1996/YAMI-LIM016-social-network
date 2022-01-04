@@ -32,20 +32,9 @@ const userPath = "users";
 export function uploadUserProfileImg(file, userId) {
   const fileName = file.name;
   console.log("este es el name del file , ", fileName);
-  const imageRef = ref(storage, `${userPath}/${userId}/${fileName}`)
-    .put(file)
-    .then((snapshot) => {
-      // console.log('Uploaded a blob or file!');
-      console.log("Foto del usuario subida al storage!", snapshot);
-    })
-    .catch((err) => {
-      console.log(
-        "problemas para subir la foto del usuario al firestore, ",
-        err
-      );
-    });
+  const imageRef = ref(storage, `${userPath}/${userId}/${fileName}`);
 
-  // return uploadBytes(imageRef, file).then(snapshot => {
-  //     return getDownloadURL(snapshot.ref)
-  // })
+  return uploadBytes(imageRef, file).then((snapshot) => {
+    return getDownloadURL(snapshot.ref);
+  });
 }

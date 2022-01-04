@@ -147,7 +147,7 @@ export const ModalCreatePost = () => {
       $mensajeError.textContent = "completar campos *";
     } else {
       console.log("creamos el nuevo post!!", $formPostMsg);
-      //anadir loader mientras sube imagen
+      // anadir loader mientras sube imagen
       let newPostId;
       addPost($formPostMsg)
         .then((postDocRef) => {

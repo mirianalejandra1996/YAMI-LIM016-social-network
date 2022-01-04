@@ -92,7 +92,10 @@ export const ModalEditProfile = () => {
   // });
 
   inputFileNone.addEventListener("change", (e) => {
-    const file = e.target.files[0];
+    // const file = e.target.files[0];
+    const file = inputFileNone.files[0];
+    // console.log('este es el inpu')
+    console.log("este es el file, ", file);
 
     if (file) {
       console.log("file es truly");
@@ -263,7 +266,8 @@ export const ModalEditProfile = () => {
       user_exist: false,
       user_password: userPasswordFirestore,
       // todo: hay que modificar la foto del usuario
-      user_photo: photoAvatar.src,
+      // user_photo: photoAvatar.src,
+      user_photo: null,
     };
 
     msgErr.textContent = "";
@@ -340,15 +344,21 @@ export const ModalEditProfile = () => {
           changeNameAndPhotoAuth(newData),
           changeBasicDataFirestore(user.uid, newData),
 
-          // uploadUserProfileImg(inputFileNone.files[0], user.uid),
+          uploadUserProfileImg(inputFileNone.files[0], user.uid),
           // uploadUserProfileImg(inputFileNone, user.uid),
           // uploadUserProfileImg(file, userId)
         ];
 
         Promise.all(promises)
-          .then(() => {
+          .then((res) => {
+            newData.user_photo = res[3];
+            console.log("todos estos son nuevos datos", newData);
+            changeNameAndPhotoAuth(newData);
+            changeBasicDataFirestore(user.uid, newData);
+
+            console.log("este es el url", res[3]);
             // console.log("este es el file ", inputFileNone.files[0].name);
-            console.log("todos los procesos se realizaron!");
+            console.log("todos los procesos se realizaron!", res);
             msgErr.classList.remove("error-msg");
             msgErr.classList.add("success-msg");
             document.getElementById("error-msg").textContent =
