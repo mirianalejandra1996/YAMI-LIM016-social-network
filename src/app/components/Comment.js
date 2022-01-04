@@ -1,81 +1,141 @@
-export const Comment = (com) => {
-  const container = document.createElement("div");
-  container.classList.add("commentContainer");
+import { toggleComLikes, initListenerComLike } from "../firebase/firebase-data.js"
+import { auth } from "../firebase/firebase-auth.js";
 
-  const avatarDiv = document.createElement("div");
-  avatarDiv.classList.add("avatarDiv");
-  const avatarCircle = document.createElement("div");
-  avatarCircle.classList.add("commentAvatarCircle");
-  const avatarImg = document.createElement("img");
-  avatarImg.src = "./app/assets/user-img.jpg";
-  avatarImg.classList.add("commentAvatar");
+export const Comment = (postId, com) => {
+    // console.log(com)
 
-  avatarCircle.append(avatarImg);
-  avatarDiv.append(avatarCircle);
+    const user_id = auth.currentUser.uid;
 
-  const likesDiv = document.createElement("div");
-  likesDiv.classList.add("likesDiv");
-  const likesSpan = document.createElement("span");
-  likesSpan.classList.add("icon-like");
-  likesSpan.classList.add("likesIcon");
-  const likesCounter = document.createElement("span");
-  likesCounter.textContent = `X`;
-  likesCounter.classList.add("likesCounter");
+    // console.log(postId, com, com.com_id, com.id_user)
 
-  likesDiv.append(likesCounter);
-  likesDiv.append(likesSpan);
+    const container = document.createElement("div")
+    container.classList.add("commentContainer")
 
-  const commentDiv = document.createElement("div");
-  commentDiv.classList.add("commentDiv");
-  const commentInfo = document.createElement("div");
-  commentInfo.classList.add("commentInfo");
-  const commentName = document.createElement("h4");
-  commentName.classList.add("commentName");
-  commentName.textContent = `${com.user_name}`;
-  const commentMessage = document.createElement("p");
-  commentMessage.classList.add("commentMessage");
-  commentMessage.textContent = `${com.message}`;
-  const commentBottom = document.createElement("div");
-  commentBottom.classList.add("commentBottom");
-  const commentTime = document.createElement("span");
-  commentTime.textContent = `${timeSince(com.date)}`;
-  commentTime.classList.add("commentTime");
+    const avatarDiv = document.createElement("div")
+    avatarDiv.classList.add("avatarDiv")
+    const avatarCircle = document.createElement("div")
+    avatarCircle.classList.add("commentAvatarCircle")
+    const avatarImg = document.createElement("img")
+    avatarImg.src= "./app/assets/user-img.jpg"
+    avatarImg.classList.add("commentAvatar")
 
-  commentBottom.append(commentTime);
-  commentBottom.append(likesDiv);
+    avatarCircle.append(avatarImg)
+    avatarDiv.append(avatarCircle)
 
-  commentInfo.append(commentName);
-  commentInfo.append(commentMessage);
-  commentInfo.append(commentBottom);
-  commentDiv.append(commentInfo);
+    const likesDiv = document.createElement("div")
+    likesDiv.classList.add("likesDiv")
+    likesDiv.addEventListener("click", ()=>{
+      toggleComLikes(postId, com.com_id)
+    })
+    const likesSpan = document.createElement("span")
+    likesSpan.classList.add("icon-like")
+    likesSpan.classList.add("likesIcon")
+    const likesCounter = document.createElement("span")
+    likesCounter.textContent = `X`;
+    likesCounter.classList.add("likesCounter")
+    likesCounter.id = `likeComCounter_${com.com_id}`
+    likesCounter.textContent = /*`${com.likes.length}`*/`X`
 
-  // const likesDiv = document.createElement("div")
-  // likesDiv.classList.add("likesDiv")
-  // const likesSpan = document.createElement("span")
-  // likesSpan.classList.add("icon-like")
-  // likesSpan.classList.add("likesIcon")
-  // const likesCounter = document.createElement("span")
-  // likesCounter.textContent = `X`
-  // likesCounter.classList.add("likesCounter")
+    likesDiv.append(likesCounter)
+    likesDiv.append(likesSpan)
 
-  // likesDiv.append(likesCounter)
-  // likesDiv.append(likesSpan)
+    const commentDiv = document.createElement("div")
+    commentDiv.classList.add("commentDiv")
+    const commentInfo = document.createElement("div")
+    commentInfo.classList.add("commentInfo")
+    const commentName = document.createElement("h4")
+    commentName.classList.add("commentName")
+    commentName.textContent = `${com.user_name}`
+    const commentMessage = document.createElement("p")
+    commentMessage.classList.add("commentMessage")
+    commentMessage.textContent = `${com.message}`
+    const commentBottom = document.createElement("div")
+    commentBottom.classList.add("commentBottom")
+    const commentTime = document.createElement("span")
+    commentTime.textContent = `${timeSince(com.date)}`
+    commentTime.classList.add("commentTime")
 
-  const optionsDiv = document.createElement("div");
-  optionsDiv.classList.add("commentsOptionDiv");
-  const optionsSpan = document.createElement("span");
-  optionsSpan.classList.add("icon-options");
-  optionsSpan.classList.add("commentOptionIcon");
+    commentBottom.append(commentTime)
+    commentBottom.append(likesDiv)
+    
 
-  optionsDiv.append(optionsSpan);
+    commentInfo.append(commentName)
+    commentInfo.append(commentMessage)
+    commentInfo.append(commentBottom)
+    commentDiv.append(commentInfo)
 
-  container.append(avatarDiv);
-  container.append(commentDiv);
-  // container.append(likesDiv)
-  container.append(optionsDiv);
+    console.log(com)
+    console.log(user_id, com.id_user)
 
-  return container;
-};
+    const optionsDiv = document.createElement("div")
+    optionsDiv.classList.add("commentsOptionDiv")
+    const optionsSpan = document.createElement("span")
+    optionsSpan.classList.add("icon-options")
+    optionsSpan.classList.add("commentOptionIcon")
+    if (user_id != com.id_user) optionsSpan.classList.add("hiddenIcon");
+
+    const {menuModalOptionsCom, toggleModalOptionsCom} = OptionListCom()
+
+    const optionsCom = menuModalOptionsCom
+    
+    optionsSpan.addEventListener("click", () => {
+      toggleModalOptionsCom()
+    })
+
+    optionsSpan.append(optionsCom)
+    optionsDiv.append(optionsSpan)
+
+
+    initListenerComLike(postId, com.com_id, (comDoc) => {
+      //se podria cambiar cualquier campo de post pero en este caso solo necesitamos los likes
+  
+      // console.log(comDoc.data())
+      
+      const likes = comDoc.data().likes;
+      // console.log("array de likes", likes);
+      if (likes.find((like) => like === user_id)) {
+        likesDiv.classList.add("selected");
+        console.log("si se encuentra");
+      } else {
+        likesDiv.classList.remove("selected");
+        // console.log("no se encuentra");
+      }
+      
+      likesCounter.textContent = `${likes.length}`;
+    });
+
+    container.append(avatarDiv)
+    container.append(commentDiv)
+    // container.append(likesDiv)
+    container.append(optionsDiv)
+
+    return container
+}
+
+function OptionListCom(){
+  const modalOpciones = document.createElement("div")
+  modalOpciones.classList.add("comOptions__dropdown", "cerrar")
+
+  const btnEditCom = document.createElement("button")
+  btnEditCom.textContent = `✎`
+  btnEditCom.classList.add("comOptionsBtn")
+
+  const btnRemoveCom = document.createElement("button")
+  btnRemoveCom.textContent = `✘`
+  btnRemoveCom.classList.add("comOptionsBtn")
+
+  modalOpciones.append(btnEditCom)
+  modalOpciones.append(btnRemoveCom)
+
+  const toggleModalOptionsCom = () => {
+    modalOpciones.classList.toggle("cerrar")
+  }
+
+  return {
+    menuModalOptionsCom: modalOpciones,
+    toggleModalOptionsCom: toggleModalOptionsCom,
+  }
+}
 
 function timeSince(date) {
   var seconds = Math.floor((new Date() - date) / 1000);

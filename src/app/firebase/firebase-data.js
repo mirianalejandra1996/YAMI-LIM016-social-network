@@ -211,6 +211,7 @@ export function addComment(current_user, idPost, comment) {
     user_name: current_user.displayName,
     message: comment,
     date: Date.now(),
+    likes: [],
   })
     .then(() => {
       console.log("comentario en firestore");
@@ -299,15 +300,51 @@ export async function traerComments(id_post) {
 
   querySnapshotComments.forEach((doc) => {
     const comment = doc.data();
-    // comment["post_id"] = doc.id;
+    comment["com_id"] = doc.id;
     commentsData.push(comment);
     // console.log(postData)
     // console.log(doc.id, " => ", doc.data());
   });
-  console.log(commentsData);
+  // console.log(commentsData);
   return commentsData;
 }
 
+//Toggle Likes Comment
+
+export async function toggleComLikes(post_id, com_id) {
+  // console.log(post.post_id);
+
+  console.log(post_id);
+  // en la colección posts, nos vamos a la propiedad "like" (campo) del documento
+  const comRef = doc(db, "posts", post_id, "comments", com_id); // documentRef
+
+  console.log("este es comRef", comRef);
+  const userId = auth.currentUser.uid;
+  console.log(userId);
+
+  const comment = await getDoc(comRef);
+  const likes =comment.data().likes;
+  const userLike = likes.find((like) => {
+    //.find defines true o false hasta q las entencia se cumple
+    return like === userId;
+  });
+
+  if (userLike) {
+    await updateDoc(comRef, {
+      likes: arrayRemove(userId),
+    });
+  } else {
+    await updateDoc(comRef, {
+      likes: arrayUnion(userId),
+    });
+  }
+}
+
+//Init listener comment likes
+
+export function initListenerComLike(postId, comId, actualizarComment) {
+  return onSnapshot(doc(db, "posts", postId, "comments", comId), actualizarComment);
+}
 // Actualiza el usuario
 
 export function changePasswordFirestore(user_id, password) {

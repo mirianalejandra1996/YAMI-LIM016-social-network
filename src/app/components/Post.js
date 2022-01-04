@@ -7,7 +7,8 @@ import { traerComments } from "../firebase/firebase-data.js";
 
 export const Post = (post, setDataModalEdit, abrirModalEdit, setDataModalRemove, abrirModalRemove) => {
 
- 
+  // console.log(post)
+
   const user_id = auth.currentUser.uid;
   // console.log("currentuser", user_id);
   const $card = document.createElement("div");
@@ -154,7 +155,6 @@ export const Post = (post, setDataModalEdit, abrirModalEdit, setDataModalRemove,
   const $comentarioTitle = document.createElement("span");
   $comentarioTitle.classList.add("card__counter");
   $comentarioTitle.id = "comentario";
-  // $comentarioTitle.textContent = "X comentarios";
 
   /****************************/
 
@@ -175,11 +175,11 @@ export const Post = (post, setDataModalEdit, abrirModalEdit, setDataModalRemove,
       $comentarioTitle.textContent = commentsList.length+" comentario";
     }
   
-      commentsList.forEach((com)=>{
-          const comment = Comment(com)
-          commentsContainer.append(comment)
-          console.log("entra")
-      })
+    commentsList.forEach((com)=>{
+        const comment = Comment(post.post_id, com)
+        commentsContainer.append(comment)
+        // console.log("entra")
+    })
   })
   .catch((err) => console.log(err))
 
@@ -203,6 +203,8 @@ export const Post = (post, setDataModalEdit, abrirModalEdit, setDataModalRemove,
   initListenerPost(post.post_id, (postDoc) => {
     //se podria cambiar cualquier campo de post pero en este caso solo necesitamos los likes
 
+    // console.log(postDoc.data())
+    
     const likes = postDoc.data().likes;
     // console.log("array de likes", likes);
     if (likes.find((like) => like === user_id)) {
