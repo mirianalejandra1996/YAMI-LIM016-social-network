@@ -1322,6 +1322,8 @@ input[type="password"]:focus {
 }
 .commentsContainer {
   padding-top: 14px;
+  overflow: auto;
+  height: 200px;
 }
 .avatarDiv {
   display: flex;
@@ -1381,8 +1383,24 @@ input[type="password"]:focus {
 .close {
   display: none;
 }
+
+/* ---Componente cambiar contraseña--------- */
+
+.userNameContainer {
+  height: 1.3rem;
+  /* background-color: red; */
+  width: 100%;
+  display: flex;
+  justify-content: center;
+}
+
+.userNameTitle {
+  font-size: 1rem;
+  font-weight: 700;
+}
+
 /* Agregar archivo imagen a post */
-input[type="file"]{
+input[type="file"] {
   width: 0.1px;
   height: 0.1px;
   opacity: 0;
@@ -1390,7 +1408,9 @@ input[type="file"]{
   position: absolute;
   z-index: -1;
 }
-label[for="file"] {
+
+/* ! Mirian: cambió esto por una clase para que no le afecte un label de un componente */
+.modal__fileInput {
   padding: 0px 12px 0px 0px;
   font-size: 14px;
   color: #ccc;
@@ -1400,6 +1420,16 @@ label[for="file"] {
   align-items: center;
   justify-content: space-between;
 }
+/* label[for="file"] {
+  padding: 0px 12px 0px 0px;
+  font-size: 14px;
+  color: #ccc;
+  cursor: pointer;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+} */
 .imagenFile {
   width: 100%;
   margin-top: 15px;

@@ -1,6 +1,6 @@
 import { addPost, updatePost } from "../firebase/firebase-data.js";
-import {auth} from '../firebase/firebase-auth.js'
-import {uploadImage} from '../firebase/firebase-storage.js'
+import { auth } from "../firebase/firebase-auth.js";
+import { uploadImage } from "../firebase/firebase-storage.js";
 export const ModalCreatePost = () => {
   // * modalContenedor es el overlay
   const $modalContenedor = document.createElement("div");
@@ -59,7 +59,7 @@ export const ModalCreatePost = () => {
   const $imagenFile = document.createElement("img");
   $imagenFile.classList.add("imagenFile");
 
-  let postImageFile
+  let postImageFile;
 
   // Escuchar cuando cambie
   $picture.addEventListener("change", () => {
@@ -80,6 +80,7 @@ export const ModalCreatePost = () => {
 
   const $pictureLabel = document.createElement("label");
   $pictureLabel.setAttribute("for", "file");
+  $pictureLabel.classList.add("modal__fileInput");
   $pictureLabel.textContent = "Añadir imagen";
 
   const $iconPicture = document.createElement("span");
@@ -147,19 +148,22 @@ export const ModalCreatePost = () => {
     } else {
       console.log("creamos el nuevo post!!", $formPostMsg);
       //anadir loader mientras sube imagen
-      let newPostId
+      let newPostId;
       addPost($formPostMsg)
-      .then((postDocRef) => {
-        newPostId = postDocRef.id
-        const user = auth.currentUser;
-        return uploadImage(postImageFile, user.uid)  
-      })
-      .then((downloadURL) => {
-        return updatePost(newPostId, { message: $formPostMsg, imageUrl: downloadURL})
-      })
-      .then(() => {
-        cerrarModal()
-      });
+        .then((postDocRef) => {
+          newPostId = postDocRef.id;
+          const user = auth.currentUser;
+          return uploadImage(postImageFile, user.uid);
+        })
+        .then((downloadURL) => {
+          return updatePost(newPostId, {
+            message: $formPostMsg,
+            imageUrl: downloadURL,
+          });
+        })
+        .then(() => {
+          cerrarModal();
+        });
     }
   });
 

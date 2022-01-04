@@ -12,6 +12,7 @@ import {
   createCredential,
   reautentificacion,
 } from "../firebase/firebase-auth.js";
+import { uploadUserProfileImg } from "../firebase/firebase-storage.js";
 
 export const ModalEditProfile = () => {
   const user = auth.currentUser;
@@ -72,21 +73,22 @@ export const ModalEditProfile = () => {
   // * Este es el label
   // Icono para editar imagen del usuario
   const iconPhotoContainer = document.createElement("label");
+  iconPhotoContainer.id = "";
   iconPhotoContainer.htmlFor = "file";
 
   // Todo: preguntar por qué no escogió este camino a Lu
-  // inputFileNone.addEventListener("change", () => {
-  //   const file = this.files[0];
+  // inputFileNone.addEventListener("change", (e) => {
+  //   const file = e.target.files[0];
   //   console.log("cambió el file", file);
 
-  //   // if (file) {
-  //   //   console.log("file es truly");
+  // if (file) {
+  //   console.log("file es truly");
 
-  //   //   const objectURL = URL.createObjectURL(file);
-  //   //   photoAvatar.src = objectURL;
-  //   //   // });
-  //   //   // photoAvatar.src
-  //   // }
+  //   const objectURL = URL.createObjectURL(file);
+  //   photoAvatar.src = objectURL;
+  //   // });
+  //   // photoAvatar.src
+  // }
   // });
 
   inputFileNone.addEventListener("change", (e) => {
@@ -337,10 +339,15 @@ export const ModalEditProfile = () => {
           changeEmailAuth(user, newData.user_email),
           changeNameAndPhotoAuth(newData),
           changeBasicDataFirestore(user.uid, newData),
+
+          // uploadUserProfileImg(inputFileNone.files[0], user.uid),
+          // uploadUserProfileImg(inputFileNone, user.uid),
+          // uploadUserProfileImg(file, userId)
         ];
 
         Promise.all(promises)
           .then(() => {
+            console.log("este es el file ", inputFileNone.files[0].name);
             console.log("todos los procesos se realizaron!");
             msgErr.classList.remove("error-msg");
             msgErr.classList.add("success-msg");

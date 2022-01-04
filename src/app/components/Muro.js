@@ -78,7 +78,7 @@ export function MiMuro() {
       // mostrar mensaje de que no se pudo cargar los posts
     });
 
-    getUserData(user.uid)
+  getUserData(user.uid)
     .then((user) => {
       photoAvatar.src = user.user_photo;
       $nombre.textContent = `${user.user_name}`;
