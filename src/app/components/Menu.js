@@ -1,16 +1,17 @@
 
 
+
 export function Menu(toggleModalPlus, toggleModalProfile) {
   const d = document;
   //Menu
   const $menu = d.createElement("nav");
   $menu.classList.add("menu");
   $menu.id = "menu";
-
+ 
   //iconos del menu
   //icono 1
   const itemHome = d.createElement("a");
-  itemHome.classList.add("menu__link");
+  itemHome.classList.add("menu__link","home");
   const $iconHome = document.createElement("i");
   $iconHome.classList.add("icon-home");
 
@@ -52,9 +53,9 @@ export function Menu(toggleModalPlus, toggleModalProfile) {
   itemReseña.append($iconReseña);
   //icono 5
   const itemPerfil = d.createElement("a");
-  itemPerfil.classList.add("menu__link");
+  itemPerfil.classList.add("menu__link" ,"user");
   const $iconPerfil = document.createElement("i");
-  $iconPerfil.classList.add("icon-user");
+  $iconPerfil.classList.add("icon-user1");
 
   itemPerfil.append($iconPerfil);
   itemPerfil.addEventListener("click", () => {

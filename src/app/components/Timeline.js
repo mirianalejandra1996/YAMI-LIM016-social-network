@@ -1,3 +1,4 @@
+import { Bienvenida } from "./Bienvenida.js"
 import { Post } from "./Post.js";
 import { ModalCreatePost } from "./ModalCreatePost.js";
 import { ModalEditPost } from "./ModalEditPost.js";
@@ -13,6 +14,8 @@ export function Timeline() {
   const $timeline = document.createElement("div");
   // Importamos la cabecera
   const $header = HeaderSimple();
+  // Importamos la Bienvenida al usuario
+  const $bienvenidaUser = Bienvenida();
   // Contenedor de las publicaciones
   const $postsContainer = document.createElement("div");
   $postsContainer.classList.add("notification-grid");
@@ -48,6 +51,7 @@ export function Timeline() {
   // Construye el TIMELINE
   // -----------------------------------------------------------------------------------
   $timeline.append($header);
+  $timeline.append($bienvenidaUser);
   $timeline.append($postsContainer);
   $timeline.append(menuModalPlus);
   $timeline.append(menuModalProfile);
