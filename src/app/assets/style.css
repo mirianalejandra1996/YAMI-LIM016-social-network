@@ -1015,6 +1015,7 @@ input[type="password"]:focus {
 
 .photo__avatar-container {
   width: 90px;
+  height: 90px;
   margin: 10px;
   overflow: hidden;
   border-radius: 100%;
