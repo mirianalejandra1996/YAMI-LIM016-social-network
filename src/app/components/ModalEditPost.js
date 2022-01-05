@@ -57,24 +57,25 @@ export const ModalEditPost = () => {
   //$inputsContainer.append($tags);
 
   //Input de la Imagen
-  const $pictureContainer = document.createElement("div");
-  $pictureContainer.classList.add("formPost_input-short", "iconImg_rigth");
-  const $picture = document.createElement("input");
-  $picture.id = "file";
-  $picture.type = "file";
+  const $pictureContainerEdit = document.createElement("div");
+  $pictureContainerEdit.classList.add("formPost_input-short", "iconImg_rigth");
+  const $pictureEdit = document.createElement("input");
+  $pictureEdit.id = "fileEdit";
+  $pictureEdit.type = "file";
 
-  const $imagenFile = document.createElement("img");
-  $imagenFile.classList.add("imagenFile");
+  const $imagenFileEdit = document.createElement("img");
+  $imagenFileEdit.classList.add("imagenFile");
 
   let postImageFile;
 
   // Escuchar cuando cambie
-  $picture.addEventListener("change", () => {
+  $pictureEdit.addEventListener("change", (e) => {
     // Los archivos seleccionados, pueden ser muchos o uno
-    const archivos = $picture.files;
+    debugger
+    const archivos = e.target.files;
     // Si no hay archivos salimos de la función y quitamos la imagen
     if (!archivos || !archivos.length) {
-      $imagenFile.src = "";
+      $imagenFileEdit.src = "";
       return;
     }
     // Ahora tomamos el primer archivo, el cual vamos a previsualizar
@@ -82,7 +83,7 @@ export const ModalEditPost = () => {
     // Lo convertimos a un objeto de tipo objectURL
     const objectURL = URL.createObjectURL(postImageFile);
     // Y a la fuente de la imagen le ponemos el objectURL
-    $imagenFile.src = objectURL;
+    $imagenFileEdit.src = objectURL;
   });
 
   const $pictureLabel = document.createElement("label");
@@ -96,13 +97,13 @@ export const ModalEditPost = () => {
 
   $pictureLabel.append($iconPicture);
 
-  $pictureContainer.append($pictureLabel);
-  $pictureContainer.append($picture);
+  $pictureContainerEdit.append($pictureLabel);
+  $pictureContainerEdit.append($pictureEdit);
 
   //////////////////////////
   $inputsContainer.append($post);
-  $inputsContainer.append($pictureContainer);
-  $inputsContainer.append($imagenFile);
+  $inputsContainer.append($pictureContainerEdit);
+  $inputsContainer.append($imagenFileEdit);
   ////////////////////////////
 
   const $btnsContainer = document.createElement("div");
@@ -171,7 +172,7 @@ export const ModalEditPost = () => {
 
   const setPost = (postData) => {
     $post.value = `${postData.message}`;
-    $imagenFile.src = postData.imageUrl;
+    $imagenFileEdit.src = postData.imageUrl;
 
     guardarButtonClickListener = () => {
       console.log("entramos a actualizar post");

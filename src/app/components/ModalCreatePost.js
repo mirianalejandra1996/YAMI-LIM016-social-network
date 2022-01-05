@@ -63,6 +63,17 @@ export const ModalCreatePost = () => {
 
   const $imagenFile = document.createElement("img");
   $imagenFile.classList.add("imagenFile");
+  const $pictureLabel = document.createElement("label");
+  $pictureLabel.setAttribute("for", "file");
+  $pictureLabel.classList.add("modal__fileInput");
+  $pictureLabel.textContent = "Añadir imagen";
+
+  const $iconPicture = document.createElement("span");
+  $iconPicture.classList.add("icon-addimg");
+  $iconPicture.classList.add("card__icon");
+
+  $pictureLabel.append($iconPicture);
+
 
   $imagenDivContenedor.append($imagenFile)
 
@@ -83,18 +94,10 @@ export const ModalCreatePost = () => {
     const objectURL = URL.createObjectURL(postImageFile);
     // Y a la fuente de la imagen le ponemos el objectURL
     $imagenFile.src = objectURL;
+    $pictureLabel.textContent =postImageFile.name
   });
 
-  const $pictureLabel = document.createElement("label");
-  $pictureLabel.setAttribute("for", "file");
-  $pictureLabel.classList.add("modal__fileInput");
-  $pictureLabel.textContent = "Añadir imagen";
 
-  const $iconPicture = document.createElement("span");
-  $iconPicture.classList.add("icon-addimg");
-  $iconPicture.classList.add("card__icon");
-
-  $pictureLabel.append($iconPicture);
 
   $pictureInputDiv.append($pictureLabel);
   $pictureInputDiv.append($picture);
