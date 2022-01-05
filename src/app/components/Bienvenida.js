@@ -5,10 +5,10 @@ export function Bienvenida() {
   const user = auth.currentUser;
 
   const $contenedorBienvenida = document.createElement("div");
-
+$contenedorBienvenida.classList.add("perfil-grid")
   //   Contenedor Base de foto del usuario
   const $photoContainer = document.createElement("div");
-  $photoContainer.classList.add("photo__container","row");
+  $photoContainer.classList.add("photo__container","row","card");
   //   Imagen del usuario Contenedor
   const imgAvatarContainer = document.createElement("div");
   imgAvatarContainer.classList.add("photo__avatar-container");
