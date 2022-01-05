@@ -468,6 +468,7 @@ input[type="password"]:focus {
 .card__avatar-fullname {
   font-size: 1rem;
   font-weight: 700;
+  width: fit-content;
 }
 
 .card__avatar-fullname:hover {
@@ -493,6 +494,12 @@ input[type="password"]:focus {
 
 .card__options-container--relative {
   position: relative;
+}
+
+.card__textAndIconContainer {
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
 }
 
 .card__options-container:hover,
@@ -1433,7 +1440,7 @@ input[type="file"] {
   width: 100%;
   margin-top: 15px;
   border-radius: 10px;
-}  
+}
 
 /* ---Componente cambiar contraseña--------- */
 
@@ -1449,10 +1456,10 @@ input[type="file"] {
   font-size: 1rem;
   font-weight: 700;
 }
-.hiddenIcon{
+.hiddenIcon {
   display: none;
 }
-.comOptions__dropdown{
+.comOptions__dropdown {
   width: 75px;
   position: absolute;
   right: 4px;
@@ -1471,7 +1478,7 @@ input[type="file"] {
   padding: 0;
   z-index: -1;
 }
-.comOptionsBtn{
+.comOptionsBtn {
   border: transparent;
   background: white;
   font-size: 20px;
@@ -1485,34 +1492,34 @@ input[type="file"] {
   padding: 1rem 1rem 0px;
 }
 /* Desktop */
-@media (min-width: 768px){
-  .menu{
+@media (min-width: 768px) {
+  .menu {
     position: absolute;
-    top:0;
-    justify-content:space-between;
-    background: linear-gradient(45deg, #ffbd00,#fa610c);
+    top: 0;
+    justify-content: space-between;
+    background: linear-gradient(45deg, #ffbd00, #fa610c);
   }
-  .menu__link{
+  .menu__link {
     display: none;
   }
-  .header-timeline{
+  .header-timeline {
     display: none;
   }
   .photo__container{
     justify-content: flex-start;
   }
-  .menu__link.user{
+  .menu__link.user {
     display: block;
     margin-right: 30px;
   }
-  .menu__link.home{
+  .menu__link.home {
     margin-left: 30px;
     display: block;
     width: 50px;
     height: auto;
     content: url("logo.svg");
   }
-  .modal__lista{
+  .modal__lista {
     position: absolute;
     top: 60px;
     right: 0;

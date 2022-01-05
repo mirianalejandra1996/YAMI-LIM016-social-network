@@ -26,19 +26,18 @@ $contenedorBienvenida.classList.add("perfil-grid")
   $photoContainer.append(imgAvatarContainer);
   $photoContainer.append($nombre);
 
-    getUserData(user.uid)
+  getUserData(user.uid)
     .then((user) => {
       photoAvatar.src = user.user_photo;
-      $nombre.textContent = `¿Que estas pensando, ${user.user_name}?`;
+      $nombre.textContent = `¿Qué estas pensando, ${user.user_name}?`;
     })
     .catch((err) => {
       console.log(err);
     });
 
-
   // -----------------------------------------------------------------------------------
 
   $contenedorBienvenida.append($photoContainer);
- 
+
   return $contenedorBienvenida;
 }
