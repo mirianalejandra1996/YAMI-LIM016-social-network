@@ -566,7 +566,7 @@ input[type="password"]:focus {
   align-items: center;
   justify-content: space-between;
   margin-top: 1em;
-  margin-bottom: 5px;
+  margin-bottom: /*5px*/9px;
   border-bottom: 1px solid #efeff1;
 }
 
@@ -1254,7 +1254,7 @@ input[type="password"]:focus {
   position: relative;
   /* border-top: 1px solid #efeff1; */
   /* margin-top: 5px; */
-  padding-top: 10px;
+  /* padding-top: 10px; */
   /* margin-top: 1em; */
 }
 
@@ -1336,7 +1336,7 @@ input[type="password"]:focus {
   height: 35px;
 }
 .commentsContainer {
-  padding-top: 14px;
+  /* padding-top: 14px; */
   overflow: auto;
   max-height: 200px;
 }
