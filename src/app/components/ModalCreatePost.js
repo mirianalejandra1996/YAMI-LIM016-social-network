@@ -95,7 +95,6 @@ export const ModalCreatePost = () => {
   $pictureContainer.append($picture);
 
   $inputsContainer.append($post);
-  // $inputsContainer.append(tags);
   $inputsContainer.append($pictureContainer);
   $inputsContainer.append($imagenFile);
 
