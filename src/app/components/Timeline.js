@@ -14,6 +14,7 @@ import { ModalEditCom } from "./ModalEditComment.js";
 
 export function Timeline() {
   const $timeline = document.createElement("div");
+  $timeline.classList.add("timeline")
   // Importamos la cabecera
   const $header = HeaderSimple();
   // Importamos la Bienvenida al usuario
