@@ -28,6 +28,9 @@ export const Post = (
   $headerContainer.classList.add("card__header");
 
   // Foto del usuario
+  const $avatarContainerDiv = document.createElement("div")
+  $avatarContainerDiv.classList.add("avatarContainerDiv")
+
   const $avatarContainer = document.createElement("div");
   $avatarContainer.classList.add("card__avatar-container");
 
@@ -40,6 +43,7 @@ export const Post = (
 
   $avatarContainer.append($avatarImg);
   $avatarContainer.append($avatarOverlay);
+  $avatarContainerDiv.append($avatarContainer)
 
   // ! aqui!
   const $textAndIconContainer = document.createElement("div");
@@ -106,7 +110,7 @@ export const Post = (
 
   $optionsContainer.append($iconOptions);
   $optionsContainer.append($menuModalOptions);
-  $headerContainer.append($avatarContainer);
+  $headerContainer.append($avatarContainerDiv);
 
   // ! aqui! va a cambiar todo por un solo div
   $headerContainer.append($textAndIconContainer);

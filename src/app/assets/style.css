@@ -426,6 +426,11 @@ input[type="password"]:focus {
   background-color: #efeff1;
   bottom: -0.7em;
 }
+.avatarContainerDiv{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
 .card__avatar-container {
   width: 50px;
   height: 50px;
