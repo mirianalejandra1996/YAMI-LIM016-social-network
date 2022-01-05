@@ -28,8 +28,8 @@ export const Post = (
   $headerContainer.classList.add("card__header");
 
   // Foto del usuario
-  const $avatarContainerDiv = document.createElement("div")
-  $avatarContainerDiv.classList.add("avatarContainerDiv")
+  const $avatarContainerDiv = document.createElement("div");
+  $avatarContainerDiv.classList.add("avatarContainerDiv");
 
   const $avatarContainer = document.createElement("div");
   $avatarContainer.classList.add("card__avatar-container");
@@ -43,7 +43,7 @@ export const Post = (
 
   $avatarContainer.append($avatarImg);
   $avatarContainer.append($avatarOverlay);
-  $avatarContainerDiv.append($avatarContainer)
+  $avatarContainerDiv.append($avatarContainer);
 
   // ! aqui!
   const $textAndIconContainer = document.createElement("div");
@@ -137,9 +137,9 @@ export const Post = (
   $postImageContainer.classList.add("imagenPostDiv")
   const $postImg = document.createElement("img");
   $postImg.classList.add("imagenPost");
-  if(post.imageUrl){
+  if (post.imageUrl) {
     $postImg.src = post.imageUrl;
-    $postImageContainer.append($postImg)
+    $postImageContainer.append($postImg);
   }
 
   //   Pie de post (para dar likes y comentar)

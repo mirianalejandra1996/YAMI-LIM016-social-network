@@ -81,6 +81,8 @@ export const ModalCreatePost = () => {
 
   // Escuchar cuando cambie
   $picture.addEventListener("change", () => {
+
+    console.log('probando input file de componente CreatePost , ' , $picture.files )
     // Los archivos seleccionados, pueden ser muchos o uno
     const archivos = $picture.files;
     // Si no hay archivos salimos de la función y quitamos la imagen
