@@ -129,13 +129,16 @@ export const Post = (
 
   //   -----------------------------------------------------------
   //   Contenido Imagen del POST del usuario
-  const $postImageContainer = document.createElement("div");
+  
+  const $postImageContainer = document.createElement('div')
+  $postImageContainer.classList.add("imagenPostDiv")
   const $postImg = document.createElement("img");
-  $postImg.classList.add("imagenFile");
+  $postImg.classList.add("imagenPost");
   if(post.imageUrl){
     $postImg.src = post.imageUrl;
     $postImageContainer.append($postImg)
   }
+
 
   //   Pie de post (para dar likes y comentar)
 
