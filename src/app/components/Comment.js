@@ -22,7 +22,8 @@ export const Comment = (
     const avatarCircle = document.createElement("div")
     avatarCircle.classList.add("commentAvatarCircle")
     const avatarImg = document.createElement("img")
-    avatarImg.src= "./app/assets/user-img.jpg"
+    avatarImg.src= com.user_photo
+    // "./app/assets/user-img.jpg"
     avatarImg.classList.add("commentAvatar")
 
     avatarCircle.append(avatarImg)

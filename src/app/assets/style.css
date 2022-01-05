@@ -1009,9 +1009,9 @@ input[type="password"]:focus {
   align-items: center;
   flex-direction: column;
 }
-.photo__container.row {
-  /* flex-direction: row; */
-}
+/* .photo__container.row {
+  flex-direction: row;
+} */
 
 .photo__avatar-container {
   width: 90px;
