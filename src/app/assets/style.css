@@ -207,12 +207,12 @@ input[type="password"]:focus {
   font-size: 0.9rem;
 }
 
-.timeline {
+/* .timeline {
   background-color: black;
   height: 100%;
   width: 100%;
   color: #ff6f00;
-}
+} */
 
 /* registro */
 
@@ -468,6 +468,7 @@ input[type="password"]:focus {
 .card__avatar-fullname {
   font-size: 1rem;
   font-weight: 700;
+  width: fit-content;
 }
 
 .card__avatar-fullname:hover {
@@ -493,6 +494,12 @@ input[type="password"]:focus {
 
 .card__options-container--relative {
   position: relative;
+}
+
+.card__textAndIconContainer {
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
 }
 
 .card__options-container:hover,
@@ -696,7 +703,7 @@ input[type="password"]:focus {
 
 @media (min-width: 1200px) {
   .card {
-    max-width: 60%;
+    max-width: 90%;
     /* overflow: hidden; */
   }
 
@@ -1003,7 +1010,7 @@ input[type="password"]:focus {
   flex-direction: column;
 }
 .photo__container.row {
-  flex-direction: row;
+  /* flex-direction: row; */
 }
 
 .photo__avatar-container {
@@ -1472,10 +1479,10 @@ input[type="file"] {
   font-size: 1rem;
   font-weight: 700;
 }
-.hiddenIcon{
+.hiddenIcon {
   display: none;
 }
-.comOptions__dropdown{
+.comOptions__dropdown {
   width: 75px;
   position: absolute;
   right: 4px;
@@ -1494,42 +1501,48 @@ input[type="file"] {
   padding: 0;
   z-index: -1;
 }
-.comOptionsBtn{
+.comOptionsBtn {
   border: transparent;
   background: white;
   font-size: 20px;
   width: 30px;
 }
-
+/* CLASES DEL COMPONENTE BIENVENIDA */
+.perfil-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  row-gap: 1rem;
+  padding: 1rem 1rem 0px;
+}
 /* Desktop */
-@media (min-width: 768px){
-  .menu{
+@media (min-width: 768px) {
+  .menu {
     position: absolute;
-    top:0;
-    justify-content:space-between;
-    background: linear-gradient(45deg, #ffbd00,#fa610c);
+    top: 0;
+    justify-content: space-between;
+    background: linear-gradient(45deg, #ffbd00, #fa610c);
   }
-  .menu__link{
+  .menu__link {
     display: none;
   }
-  .header-timeline{
+  .header-timeline {
     display: none;
   }
   .photo__container{
-    margin-top: 60px;
+    justify-content: flex-start;
   }
-  .menu__link.user{
+  .menu__link.user {
     display: block;
     margin-right: 30px;
   }
-  .menu__link.home{
+  .menu__link.home {
     margin-left: 30px;
     display: block;
     width: 50px;
     height: auto;
     content: url("logo.svg");
   }
-  .modal__lista{
+  .modal__lista {
     position: absolute;
     top: 60px;
     right: 0;
@@ -1544,5 +1557,17 @@ input[type="file"] {
     /* padding: 0 10px; */
     transition: transform 0.5s ease-in-out;
     transform: translateY(0%);
+  }
+  .notification-grid{
+    max-width: 60%;
+    padding: 1rem 0rem 0px;
+    margin-top: 60px;
+  }
+  .perfil-grid{
+    margin-top: 60px;
+    min-width: 40%;
+  }
+  .timeline {
+   display: flex;
   }
 }

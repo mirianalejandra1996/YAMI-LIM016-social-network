@@ -37,7 +37,7 @@ export function addPost(message) {
   })
     .then((postDocRef) => {
       console.log("post subido al firestore!");
-      return postDocRef
+      return postDocRef;
     })
     .catch((err) => console.log(err));
 }
@@ -55,7 +55,7 @@ export function addUser(user, name, password) {
     photoUrlN,
     logedByN,
     passwordN,
-    birthN = null;
+    birthN = "";
 
   if (user.providerData[0].providerId === "google.com") {
     console.log("estás logueado con google!!");
@@ -169,12 +169,12 @@ export function initListenerProfile(userId, actualizarProfile) {
 
 // Actualizar post
 
-export async function updatePost(post_id, {message, imageUrl=''}) {
+export async function updatePost(post_id, { message, imageUrl = "" }) {
   const postRef = doc(db, "posts", post_id);
 
   return await updateDoc(postRef, {
     message,
-    imageUrl
+    imageUrl,
   });
 }
 
@@ -325,7 +325,7 @@ export async function toggleComLikes(post_id, com_id) {
   console.log(userId);
 
   const comment = await getDoc(comRef);
-  const likes =comment.data().likes;
+  const likes = comment.data().likes;
   const userLike = likes.find((like) => {
     //.find defines true o false hasta q las entencia se cumple
     return like === userId;
@@ -345,7 +345,10 @@ export async function toggleComLikes(post_id, com_id) {
 //Init listener comment likes
 
 export function initListenerComLike(postId, comId, actualizarComment) {
-  return onSnapshot(doc(db, "posts", postId, "comments", comId), actualizarComment);
+  return onSnapshot(
+    doc(db, "posts", postId, "comments", comId),
+    actualizarComment
+  );
 }
 
 // Actualiza el usuario

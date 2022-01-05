@@ -1,6 +1,8 @@
 import { addPost, updatePost } from "../firebase/firebase-data.js";
 import { auth } from "../firebase/firebase-auth.js";
 import { uploadImage } from "../firebase/firebase-storage.js";
+import { Loader } from "../view-controller/Loader.js"
+
 export const ModalCreatePost = () => {
   // * modalContenedor es el overlay
   const $modalContenedor = document.createElement("div");
@@ -152,6 +154,9 @@ export const ModalCreatePost = () => {
       $mensajeError.textContent = "completar campos *";
     } else {
       console.log("creamos el nuevo post!!", $formPostMsg);
+      const loader = Loader()
+      $modalContenedor.textContent=""
+      $modalContenedor.appendChild(loader)
       //anadir loader mientras sube imagen
       let newPostId;
       addPost($formPostMsg)
@@ -168,6 +173,7 @@ export const ModalCreatePost = () => {
         })
         .then(() => {
           cerrarModal();
+          
         });
     }
   });
