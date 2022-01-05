@@ -121,8 +121,9 @@ export const Post = (
   //   -----------------------------------------------------------
   //   Contenido Imagen del POST del usuario
   const $postImageContainer = document.createElement('div')
+  $postImageContainer.classList.add("imagenPostDiv")
   const $postImg = document.createElement("img");
-  $postImg.classList.add("imagenFile");
+  $postImg.classList.add("imagenPost");
   $postImg.src = post.imageUrl;
   $postImageContainer.append($postImg)
 
