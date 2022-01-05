@@ -206,12 +206,15 @@ export async function getUserData(user_id) {
 export function addComment(current_user, idPost, comment) {
   const commentsRef = collection(db, "posts", idPost, "comments");
 
+  console.log(current_user)
+
   addDoc(commentsRef, {
     id_user: current_user.uid,
     user_name: current_user.displayName,
     message: comment,
     date: Date.now(),
     likes: [],
+    user_photo: current_user.photoURL
   })
     .then(() => {
       console.log("comentario en firestore");

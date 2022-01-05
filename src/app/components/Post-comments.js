@@ -19,8 +19,7 @@ export function NewComments(idPost) {
   const avatarImage = document.createElement("img");
   avatarImage.classList.add("avatarImage");
   // avatarImage.src = "./app/assets/user-img.jpg"
-  avatarImage.src =
-    "https://firebasestorage.googleapis.com/v0/b/yami-cbaa4.appspot.com/o/default-profile.jpeg?alt=media&token=772a7498-d018-4994-9805-041ae047bdc6";
+  avatarImage.src =auth.currentUser.photoURL
   avatarContainer.append(avatarImage);
   avatarDiv.append(avatarContainer);
 

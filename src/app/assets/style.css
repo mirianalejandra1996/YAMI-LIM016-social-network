@@ -426,6 +426,11 @@ input[type="password"]:focus {
   background-color: #efeff1;
   bottom: -0.7em;
 }
+.avatarContainerDiv{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
 .card__avatar-container {
   width: 50px;
   height: 50px;
@@ -561,7 +566,7 @@ input[type="password"]:focus {
   align-items: center;
   justify-content: space-between;
   margin-top: 1em;
-  margin-bottom: 5px;
+  margin-bottom: /*5px*/9px;
   border-bottom: 1px solid #efeff1;
 }
 
@@ -1009,9 +1014,9 @@ input[type="password"]:focus {
   align-items: center;
   flex-direction: column;
 }
-.photo__container.row {
-  /* flex-direction: row; */
-}
+/* .photo__container.row {
+  flex-direction: row;
+} */
 
 .photo__avatar-container {
   width: 90px;
@@ -1248,8 +1253,8 @@ input[type="password"]:focus {
   align-items: center;
   position: relative;
   /* border-top: 1px solid #efeff1; */
-  margin-top: 5px;
-  padding-top: 10px;
+  /* margin-top: 5px; */
+  /* padding-top: 10px; */
   /* margin-top: 1em; */
 }
 
@@ -1331,9 +1336,9 @@ input[type="password"]:focus {
   height: 35px;
 }
 .commentsContainer {
-  padding-top: 14px;
+  /* padding-top: 14px; */
   overflow: auto;
-  height: 200px;
+  max-height: 200px;
 }
 .avatarDiv {
   display: flex;
