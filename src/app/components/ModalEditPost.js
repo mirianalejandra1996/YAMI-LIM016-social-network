@@ -49,8 +49,6 @@ export const ModalEditPost = () => {
   $post.classList.add("formPost_input-long");
   $post.placeholder = `¿Qué estas pensando?`;
 
- 
-
   const $tags = document.createElement("input");
   $tags.classList.add("formPost_input-short");
   $tags.placeholder = `Añadir etiquetas`;
@@ -62,16 +60,22 @@ export const ModalEditPost = () => {
   const $pictureEdit = document.createElement("input");
   $pictureEdit.id = "fileEdit";
   $pictureEdit.type = "file";
+  console.log("probando ", $pictureEdit.files);
 
   const $imagenFileEdit = document.createElement("img");
   $imagenFileEdit.classList.add("imagenFile");
 
   let postImageFile;
 
+  // $pictureEdit.addEventListener("click", () =>
+  //   console.log("he hecho click en input file de modalEdit")
+  // );
   // Escuchar cuando cambie
-  $pictureEdit.addEventListener("change", (e) => {
+
+    $pictureEdit.addEventListener("change", (e) => {
     // Los archivos seleccionados, pueden ser muchos o uno
-    debugger
+    console.log("qué ocurre aquí? ", e.target);
+    debugger;
     const archivos = e.target.files;
     // Si no hay archivos salimos de la función y quitamos la imagen
     if (!archivos || !archivos.length) {
@@ -90,6 +94,12 @@ export const ModalEditPost = () => {
   $pictureLabel.setAttribute("for", "file");
   $pictureLabel.classList.add("modal__fileInput");
   $pictureLabel.textContent = "Añadir imagen";
+
+  // ! Mirian probando
+
+  $pictureLabel.addEventListener("click", () =>
+    console.log("mirian ", $pictureEdit.files)
+  );
 
   const $iconPicture = document.createElement("span");
   $iconPicture.classList.add("icon-addimg");
@@ -155,11 +165,13 @@ export const ModalEditPost = () => {
   };
 
   // Evento para guardar post (update en firebase)
-    $guardar.addEventListener("click", () => {
+  $guardar.addEventListener("click", () => {
     console.log("entramos para actualizar");
     // const nuevoMensaje = document.getElementById("msgPost").value;
     // console.log(postData)
-    const nuevoMensaje = document.getElementById(`msgPost_${postData.post_id}`).value;
+    const nuevoMensaje = document.getElementById(
+      `msgPost_${postData.post_id}`
+    ).value;
     console.log("este es el nuevo mensaje", nuevoMensaje);
     //limpiar modal antes de cerrar
     $post.value = "";
@@ -168,7 +180,7 @@ export const ModalEditPost = () => {
 
     $modalContenedor.style.opacity = "0";
     $modalContenedor.style.visibility = "hidden";
-  })
+  });
 
   const setPost = (postData) => {
     $post.value = `${postData.message}`;
@@ -179,7 +191,7 @@ export const ModalEditPost = () => {
       // const nuevoMensaje = document.getElementById("msgPost").value;
       const nuevoMensaje = $post.value;
       //Actualiza el Post
-      updatePost(postData.post_id, {message: nuevoMensaje}).then(() => {
+      updatePost(postData.post_id, { message: nuevoMensaje }).then(() => {
         window.location.hash = "#/";
       });
     };
