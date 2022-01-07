@@ -1,6 +1,7 @@
-import { app } from "../firebase/firebase-initializer.js";
+// import { app } from "../firebase/firebase-initializer.js";
 
 import {
+  app,
   signInWithEmailAndPassword,
   getAuth,
   createUserWithEmailAndPassword,
@@ -14,7 +15,7 @@ import {
   reauthenticateWithCredential,
   EmailAuthProvider,
   // updatePassword,
-} from "https://www.gstatic.com/firebasejs/9.5.0/firebase-auth.js";
+} from "../firebase/firebase-initializer.js";
 
 import { addUser } from "./firebase-data.js";
 export const auth = getAuth(app);

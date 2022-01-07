@@ -1,11 +1,12 @@
-import { db } from "../firebase/firebase-initializer.js";
+// import { db } from "../firebase/firebase-initializer.js";
 import { auth } from "../firebase/firebase-auth.js";
-import { storage } from "../firebase/firebase-initializer.js";
+// import { storage } from "../firebase/firebase-initializer.js";
 import {
+  storage,
   uploadBytes,
   ref,
   getDownloadURL,
-} from "https://www.gstatic.com/firebasejs/9.5.0/firebase-storage.js";
+} from "../firebase/firebase-initializer.js";
 
 const postPath = "posts";
 
