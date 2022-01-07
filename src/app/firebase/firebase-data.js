@@ -193,7 +193,9 @@ export async function getUserData(user_id) {
   const docSnap = await getDoc(userRef);
 
   if (docSnap.exists()) {
-    console.log("Document data:", docSnap.data());
+    // console.log("Document data:", docSnap.data());
+    // console.log("Probando", docSnap.id);
+    console.log("Probando", docSnap);
     return await docSnap.data();
   } else {
     // doc.data() will be undefined in this case
@@ -206,7 +208,7 @@ export async function getUserData(user_id) {
 export function addComment(current_user, idPost, comment) {
   const commentsRef = collection(db, "posts", idPost, "comments");
 
-  console.log(current_user)
+  console.log(current_user);
 
   addDoc(commentsRef, {
     id_user: current_user.uid,
@@ -214,7 +216,7 @@ export function addComment(current_user, idPost, comment) {
     message: comment,
     date: Date.now(),
     likes: [],
-    user_photo: current_user.photoURL
+    user_photo: current_user.photoURL,
   })
     .then(() => {
       console.log("comentario en firestore");
