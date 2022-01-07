@@ -1,5 +1,6 @@
-import { initializeApp } from "https://www.gstatic.com/firebasejs/9.5.0/firebase-app.js";
+// import { initializeApp } from "https://www.gstatic.com/firebasejs/9.5.0/firebase-app.js";
 import {
+  db,
   getFirestore,
   collection,
   doc,
@@ -15,8 +16,8 @@ import {
   onSnapshot,
   deleteDoc,
   orderBy,
-} from "https://www.gstatic.com/firebasejs/9.5.0/firebase-firestore.js";
-import { db } from "../firebase/firebase-initializer.js";
+} from "../firebase/firebase-initializer.js";
+// import { db } from "../firebase/firebase-initializer.js";
 import { auth } from "../firebase/firebase-auth.js";
 
 
@@ -78,6 +79,7 @@ export async function getUserData(user_id) {
   } else {
     // doc.data() will be undefined in this case
     console.log("No such document!");
+    return {}
   }
 }
 // todo: AVERIGUAR SI EXISTE ALGÚN METODO EXCLUSIVO PARA SABER SI EL USUARIO EXISTE
@@ -121,11 +123,11 @@ export async function isExistingUser(email) {
 }
 
 // Actualiza el usuario
-export function changePasswordFirestore(user_id, password) {
+export async function changePasswordFirestore(user_id, password) {
   console.log("función updateUser va a actualizar los datos");
-  const userDocRef = doc(db, "users", user_id);
+  const userDocRef = await doc(db, "users", user_id);
 
-  updateDoc(userDocRef, {
+  return updateDoc(userDocRef, {
     user_password: password,
   })
     .then(() => {
