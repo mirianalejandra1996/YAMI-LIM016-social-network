@@ -1,8 +1,6 @@
 import { initializeApp } from "https://www.gstatic.com/firebasejs/9.5.0/firebase-app.js";
-import {
-  getFirestore,
-} from "https://www.gstatic.com/firebasejs/9.5.0/firebase-firestore.js";
-import { getStorage } from "https://www.gstatic.com/firebasejs/9.5.0/firebase-storage.js"
+import { getFirestore } from "https://www.gstatic.com/firebasejs/9.5.0/firebase-firestore.js";
+import { getStorage } from "https://www.gstatic.com/firebasejs/9.5.0/firebase-storage.js";
 
 // Importacion de metodos
 
@@ -18,8 +16,7 @@ export {
   updatePassword,
   updateProfile,
   reauthenticateWithCredential,
-  EmailAuthProvider,
-  // updatePassword,
+  EmailAuthProvider, // updatePassword,
 } from "https://www.gstatic.com/firebasejs/9.5.0/firebase-auth.js";
 
 export {
@@ -46,7 +43,6 @@ export {
   getDownloadURL,
 } from "https://www.gstatic.com/firebasejs/9.5.0/firebase-storage.js";
 
-
 const firebaseConfig = {
   apiKey: "AIzaSyB1tnQskPHc5NpzhYk6pPtJDjt0z5SbEJM",
   authDomain: "yami-cbaa4.firebaseapp.com",
@@ -58,6 +54,7 @@ const firebaseConfig = {
 };
 
 // Initialize Firebase
+
 export const app = initializeApp(firebaseConfig);
 
 export const db = getFirestore();

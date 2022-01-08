@@ -329,11 +329,11 @@ export const changePasswordAuth = (user, newPassword) => {
 };
 
 export const changeEmailAuth = (user, newEmail) => {
-  return updateEmail(user, newEmail)
-    .then(() => {
-      console.log("Email updated! del metodo firebase");
-    })
-    .catch((error) => {
-      console.log("catch para updateEmail de firebase method", error);
-    });
+  return updateEmail(user, newEmail);
+  // .then(() => {
+  //   console.log("Email updated! del metodo firebase");
+  // })
+  // .catch((error) => {
+  //   console.log("catch para updateEmail de firebase method", error);
+  // });
 };
