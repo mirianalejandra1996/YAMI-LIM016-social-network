@@ -178,7 +178,6 @@ export const ModalCreatePost = () => {
         })
         .then(() => {
           cerrarModal();
-          
         });
     }
   });

@@ -20,7 +20,7 @@ import {
 // import { db } from "../firebase/firebase-initializer.js";
 import { auth } from "../firebase/firebase-auth.js";
 
-
+// export const auth =
 
 /******************Funciones de los Usuario*********************/
 //Agrega un usuario a FS
@@ -33,7 +33,7 @@ export function addUser(user, name, password) {
     birthN = "";
 
   if (user.providerData[0].providerId === "google.com") {
-   // console.log("estás logueado con google!!");
+    // console.log("estás logueado con google!!");
     nameN = user.displayName;
     emailN = user.email;
     photoUrlN = user.photoURL;
@@ -48,7 +48,7 @@ export function addUser(user, name, password) {
     logedByN = "password";
     passwordN = password;
   }
- //console.log("entramos a AddUsers");
+  //console.log("entramos a AddUsers");
   const userdoc = doc(db, "users", user.uid); //Creamos un documento con el id de nuestro usuario
   // setDoc lo usamos para especificar un id único que nosotros vamos a colocarle,
   // El addDoc autogenera el id
@@ -79,7 +79,7 @@ export async function getUserData(user_id) {
   } else {
     // doc.data() will be undefined in this case
     console.log("No such document!");
-    return {}
+    return {};
   }
 }
 // todo: AVERIGUAR SI EXISTE ALGÚN METODO EXCLUSIVO PARA SABER SI EL USUARIO EXISTE
@@ -129,13 +129,13 @@ export async function changePasswordFirestore(user_id, password) {
 
   return updateDoc(userDocRef, {
     user_password: password,
-  })
-    .then(() => {
-      console.log("Si se actualizó el usuario en el firestore ");
-    })
-    .catch((err) => {
-      console.log("No se puede actualizar el usuario en el firestore ", err);
-    });
+  });
+  // .then(() => {
+  //   console.log("Si se actualizó el usuario en el firestore ");
+  // })
+  // .catch((err) => {
+  //   console.log("No se puede actualizar el usuario en el firestore ", err);
+  // });
 }
 
 export function changeBasicDataFirestore(user_id, objNewData) {
@@ -177,10 +177,8 @@ export function addPost(message) {
     .catch((err) => console.log(err));
 }
 
-
 //Recopila todos los posts
 export async function traerPost() {
-
   const postsData = [];
   const postsRef = collection(db, "posts");
   const q = query(postsRef, orderBy("date", "desc"));
@@ -243,7 +241,6 @@ export async function deletePost(post_id) {
 
 // Traer Posts de un Usuario
 export async function traerMisPost(userId) {
- 
   const q1 = query(
     collection(db, "posts"),
     where("id_user", "==", userId),
@@ -283,12 +280,9 @@ export function addComment(current_user, idPost, comment) {
     .catch((err) => console.log(err));
 }
 
-
-
 /******************Funciones de los Comentarios*********************/
 // Traer los Comentarios
 export async function traerComments(id_post) {
-
   const commentsData = [];
   const commentsRef = collection(db, "posts", id_post, "comments");
   const q = query(commentsRef, orderBy("date", "desc"));
@@ -333,8 +327,6 @@ export async function toggleComLikes(post_id, com_id) {
   }
 }
 
-
-
 // Actualizar comentario
 export async function updateCom(postId, comId, message) {
   const postRef = doc(db, "posts", postId, "comments", comId);
@@ -347,7 +339,6 @@ export async function deleteCom(postId, comId) {
   const comRef = doc(db, "posts", postId, "comments", comId);
   return await deleteDoc(comRef);
 }
-
 
 /******************Funciones del LISTENERS*********************/
 //Init Listener Post

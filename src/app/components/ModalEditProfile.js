@@ -337,7 +337,7 @@ export const ModalEditProfile = () => {
     for (let element of requiredFields) {
       element.classList.remove("modal-profile__required--active");
     }
-    
+
     console.log("esta es mi contraseña ", newData.user_password);
 
     const credential = await createCredential(user, newData.user_password);
