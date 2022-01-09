@@ -82,21 +82,6 @@ export const ModalEditProfile = () => {
   iconPhotoContainer.id = "";
   iconPhotoContainer.htmlFor = "file";
 
-  // Todo: preguntar por qué no escogió este camino a Lu
-  // inputFileNone.addEventListener("change", (e) => {
-  //   const file = e.target.files[0];
-  //   console.log("cambió el file", file);
-
-  // if (file) {
-  //   console.log("file es truly");
-
-  //   const objectURL = URL.createObjectURL(file);
-  //   photoAvatar.src = objectURL;
-  //   // });
-  //   // photoAvatar.src
-  // }
-  // });
-
   inputFileNone.addEventListener("change", (e) => {
     const file = e.target.files[0];
     // const file = inputFileNone.files[0];
@@ -196,8 +181,6 @@ export const ModalEditProfile = () => {
   const msgErr = document.createElement("span");
   msgErr.classList.add("error-msg");
   msgErr.id = "error-msg";
-  // errorLogin
-  //   msgErr.textContent = "Campos obligatorios *";
 
   errContainer.append(msgErr);
   // -----------------------------
@@ -346,64 +329,52 @@ export const ModalEditProfile = () => {
       .then(() => {
         console.log("si se logró la reautentificación");
 
-        // let indexArray = 1
-        let promises = [
-          changeEmailAuth(user, newData.user_email),
-          // changeNameAndPhotoAuth(newData),
-          // changeBasicDataFirestore(user.uid, newData),
-
-          // ! Este es importante
-          // uploadUserProfileImg(inputFileNone.files[0], user.uid),
-        ];
-
+        // Verifica si el usuario adjuntó alguna imagen para su perfil
         if (inputFileNone.files[0]) {
-          promises.push(uploadUserProfileImg(inputFileNone.files[0], user.uid));
+          console.log("si adjuntó imagen");
+          return uploadUserProfileImg(inputFileNone.files[0], user.uid);
+        } else {
+          console.log("no adjuntó imagen");
+          return Promise.resolve("");
+        }
+      })
+      .then((urlImg) => {
+        if (urlImg !== "") {
+          newData.user_photo = urlImg;
         }
 
-        Promise.all(promises)
-          .then((res) => {
-            if (inputFileNone.files[0]) {
-              newData.user_photo = res[1];
-            }
-
-            console.log("todos estos son nuevos datos", newData);
-            changeNameAndPhotoAuth(newData);
-            changeBasicDataFirestore(user.uid, newData);
-
-            console.log("este es el url", res[3]);
-            // console.log("este es el file ", inputFileNone.files[0].name);
-            console.log("todos los procesos se realizaron!", res);
-            msgErr.classList.remove("error-msg");
-            msgErr.classList.add("success-msg");
-            document.getElementById("error-msg").textContent =
-              "Cambios realizados!";
-            // document.location.reload();
-
-            // todo: ACOMODAR ESTO!!!
-            getUserData(user.uid)
-              .then((user) => {
-                userPasswordFirestore = user.user_password;
-                userNameFirestore = user.user_name;
-                userBirthFirestore = user.user_birth;
-                userEmailFirestore = user.user_email;
-                userPhoto = user.user_photo;
-
-                console.log("getUserData para ver userPhoto", userPhoto);
-              })
-              .catch((err) => {
-                console.log(err);
-              });
-          })
-          .catch((err) => {
-            console.log("problemas con el promise all", err);
-          });
-
-        // todo: mostrar en pantalla un spiner y que fue realizado!
+        return changeEmailAuth(user, newData.user_email);
+      })
+      .then(() => {
+        console.log("2 ok");
+        return changeNameAndPhotoAuth(newData);
+      })
+      .then(() => {
+        console.log("3 ok");
+        return changeBasicDataFirestore(user.uid, newData);
+      })
+      .then(() => {
+        console.log("4 ok");
+        return getUserData(user.uid);
+      })
+      .then((user) => {
+        console.log("5 ok");
+        userPasswordFirestore = user.user_password;
+        userNameFirestore = user.user_name;
+        userBirthFirestore = user.user_birth;
+        userEmailFirestore = user.user_email;
+        userPhoto = user.user_photo;
+      })
+      .then(() => {
+        console.log("todo ok!");
+        msgErr.classList.remove("error-msg");
+        msgErr.classList.add("success-msg");
+        msgErr.textContent = "Cambios realizados!";
+        // ! Aqui debería ocultar el spinner
       })
       .catch((err) => {
         console.log("no se logró la reautentificación", err);
-        document.getElementById("error-msg").textContent =
-          "Error de autentificación ";
+        msgErr.textContent = "Error de autentificación ";
       });
   });
 
@@ -425,7 +396,6 @@ export const ModalEditProfile = () => {
       console.log("pwd del firestore ", userPasswordFirestore);
       console.log("foto del firestore ", userPhoto);
 
-      // console.log("esta es mi contraseña, ", user.user_photo);
       console.log(
         "esta mi foto recien cargando el componente MODAL, ",
         userPhoto
