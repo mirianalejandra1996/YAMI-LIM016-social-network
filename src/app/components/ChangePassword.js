@@ -3,11 +3,12 @@ import {
   getUserData,
   changePasswordFirestore,
 } from "../firebase/firebase-data.js";
-
+import {
+  validate_field,
+  validate_password,
+} from "../helpers/forms-validation.js";
 import {
   auth,
-  validate_password,
-  validate_field,
   changePasswordAuth,
   reautentificacion,
   createCredential,

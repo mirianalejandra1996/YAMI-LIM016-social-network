@@ -5,13 +5,15 @@ import {
 } from "../firebase/firebase-data.js";
 import {
   auth,
-  validate_email,
-  validate_field,
+  // validate_email,
+  // validate_field,
   changeNameAndPhotoAuth,
   changeEmailAuth,
   createCredential,
   reautentificacion,
 } from "../firebase/firebase-auth.js";
+import { validate_email, validate_field } from "../helpers/forms-validation.js";
+
 import { uploadUserProfileImg } from "../firebase/firebase-storage.js";
 import { Loader } from "../view-controller/Loader.js";
 
