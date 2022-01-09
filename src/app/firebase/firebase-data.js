@@ -92,15 +92,12 @@ export async function isExistingUser(email) {
   const userEmailMatch = [];
 
   docSnap.forEach((doc) => {
-    console.log("creo que sirve?", doc.data());
     userEmailMatch.push(doc.data());
   });
 
   let userExist;
   let emailUserSearched;
   // let pwdUserSearched;
-
-  console.log("datos del usuarioo", userEmailMatch);
 
   if (userEmailMatch.length === 0) {
     console.log(userEmailMatch.length);
