@@ -150,7 +150,7 @@ export const Profile = () => {
 
   // -----------------------------
 
-  const { $modalEditProfile, abrirModalEditProfile, cerrarModalEditProfile } =
+  const { modalEditProfile, abrirModalEditProfile, cerrarModalEditProfile } =
     ModalEditProfile();
 
   btnEdit.addEventListener("click", () => {
@@ -163,7 +163,7 @@ export const Profile = () => {
   mainContainer.append(profileContainer);
   profileContainer.append(photoContainer);
   profileContainer.append(formContainer);
-  profileComponent.append($modalEditProfile);
+  profileComponent.append(modalEditProfile);
 
   //   --------------
   initListenerProfile(user.uid, () => {

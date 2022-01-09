@@ -1,7 +1,7 @@
 import { addPost, updatePost } from "../firebase/firebase-data.js";
 import { auth } from "../firebase/firebase-auth.js";
 import { uploadImage } from "../firebase/firebase-storage.js";
-import { Loader } from "../view-controller/Loader.js"
+import { Loader } from "../view-controller/Loader.js";
 
 export const ModalCreatePost = () => {
   // * modalContenedor es el overlay
@@ -58,8 +58,8 @@ export const ModalCreatePost = () => {
   $picture.id = "file";
   $picture.type = "file";
 
-  const $imagenDivContenedor = document.createElement("div")
-  $imagenDivContenedor.classList.add("imagenDivContenedor")
+  const $imagenDivContenedor = document.createElement("div");
+  $imagenDivContenedor.classList.add("imagenDivContenedor");
 
   const $imagenFile = document.createElement("img");
   $imagenFile.classList.add("imagenFile");
@@ -74,15 +74,16 @@ export const ModalCreatePost = () => {
 
   $pictureLabel.append($iconPicture);
 
-
-  $imagenDivContenedor.append($imagenFile)
+  $imagenDivContenedor.append($imagenFile);
 
   let postImageFile;
 
   // Escuchar cuando cambie
   $picture.addEventListener("change", () => {
-
-    console.log('probando input file de componente CreatePost , ' , $picture.files )
+    console.log(
+      "probando input file de componente CreatePost , ",
+      $picture.files
+    );
     // Los archivos seleccionados, pueden ser muchos o uno
     const archivos = $picture.files;
     // Si no hay archivos salimos de la función y quitamos la imagen
@@ -96,10 +97,8 @@ export const ModalCreatePost = () => {
     const objectURL = URL.createObjectURL(postImageFile);
     // Y a la fuente de la imagen le ponemos el objectURL
     $imagenFile.src = objectURL;
-    $pictureLabel.textContent =postImageFile.name
+    $pictureLabel.textContent = postImageFile.name;
   });
-
-
 
   $pictureInputDiv.append($pictureLabel);
   $pictureInputDiv.append($picture);
@@ -156,12 +155,12 @@ export const ModalCreatePost = () => {
     const $mensajeError = document.getElementById("errorCrearPost");
     const $formPostMsg = document.getElementById("msgPostForm").value;
     if ($formPostMsg == "") {
-      $mensajeError.textContent = "completar campos *";
+      $mensajeError.textContent = "Por favor ingrese un mensaje";
     } else {
       console.log("creamos el nuevo post!!", $formPostMsg);
-      const loader = Loader()
-      $modalContenedor.textContent=""
-      $modalContenedor.appendChild(loader)
+      const loader = Loader();
+      $modalContenedor.textContent = "";
+      $modalContenedor.appendChild(loader);
       //anadir loader mientras sube imagen
       let newPostId;
       addPost($formPostMsg)

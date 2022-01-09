@@ -13,28 +13,24 @@ import {
   reautentificacion,
 } from "../firebase/firebase-auth.js";
 import { uploadUserProfileImg } from "../firebase/firebase-storage.js";
+import { Loader } from "../view-controller/Loader.js";
 
 export const ModalEditProfile = () => {
   const user = auth.currentUser;
+  // Todos estos son los datos actuales del usuario
   let userNameFirestore;
   let userBirthFirestore;
   let userEmailFirestore;
   let userPasswordFirestore;
   let userPhoto;
 
-  console.log("userName del firestore ", userNameFirestore);
-  console.log("birth del firestore ", userBirthFirestore);
-  console.log("email del firestore ", userEmailFirestore);
-  console.log("pwd del firestore ", userPasswordFirestore);
-  console.log("foto del firestore ", userPhoto);
-
-  const $modalContenedor = document.createElement("div");
-  $modalContenedor.classList.add("modal__contenedor");
-  $modalContenedor.classList.add("modal-cerrar");
+  const modalContenedor = document.createElement("div");
+  modalContenedor.classList.add("modal__contenedor");
+  modalContenedor.classList.add("modal-cerrar");
 
   const profileContainer = document.createElement("div");
   profileContainer.classList.add("modal-profile");
-  $modalContenedor.append(profileContainer);
+  modalContenedor.append(profileContainer);
 
   // Cabecera del modal
 
@@ -47,7 +43,6 @@ export const ModalEditProfile = () => {
 
   const closeIcon = document.createElement("span");
   closeIcon.classList.add("icon-icon-close", "modal-profile__closeIcon");
-  // profileContainer.append(headerModal)
 
   headerModal.append(titulo);
   headerModal.append(closeIcon);
@@ -73,8 +68,6 @@ export const ModalEditProfile = () => {
   inputFileNone.accept = "image/*";
   inputFileNone.id = "file";
   inputFileNone.style.display = "none";
-  console.log("probando solo el input", inputFileNone);
-  console.log("probando propiedad file del input", inputFileNone.files[0]);
 
   // * Este es el label
   // Icono para editar imagen del usuario
@@ -82,15 +75,14 @@ export const ModalEditProfile = () => {
   iconPhotoContainer.id = "";
   iconPhotoContainer.htmlFor = "file";
 
+  iconPhotoContainer.addEventListener("click", () => {
+    throwMsg.textContent = "";
+  });
+
   inputFileNone.addEventListener("change", (e) => {
     const file = e.target.files[0];
-    // const file = inputFileNone.files[0];
-    // console.log('este es el inpu')
-    console.log("este es el file, ", file);
 
     if (file) {
-      console.log("file es truly");
-
       const objectURL = URL.createObjectURL(file);
       photoAvatar.src = objectURL;
     }
@@ -114,7 +106,6 @@ export const ModalEditProfile = () => {
   // todo: cambiar clase de modal
 
   formContainer.classList.add("modal-profile__container");
-  // formContainer.classList.add("formProfile__container");
 
   // * Grupo: Nombre del usuario
   const groupName = document.createElement("div");
@@ -135,6 +126,10 @@ export const ModalEditProfile = () => {
   groupName.append(inputName);
   groupName.append(requiredName);
 
+  inputName.addEventListener("click", () => {
+    throwMsg.textContent = "";
+  });
+
   // -----------------------------
 
   // * Grupo: Fecha de Nacimiento del usuario
@@ -142,14 +137,16 @@ export const ModalEditProfile = () => {
   groupDate.classList.add("formProfile__group");
 
   //   Input Fecha
-
   const inputDate = document.createElement("input");
-
   inputDate.type = "date";
   inputDate.id = "date";
   inputDate.classList.add("modal-profile__input");
 
   groupDate.append(inputDate);
+
+  inputDate.addEventListener("click", () => {
+    throwMsg.textContent = "";
+  });
 
   // -----------------------------
 
@@ -163,6 +160,10 @@ export const ModalEditProfile = () => {
   inputEmail.id = "email";
   inputEmail.placeholder = "Correo electrónico";
   inputEmail.classList.add("modal-profile__input");
+
+  inputEmail.addEventListener("click", () => {
+    throwMsg.textContent = "";
+  });
 
   //  Email Obligatorio
   const requiredEmail = document.createElement("span");
@@ -178,11 +179,11 @@ export const ModalEditProfile = () => {
   const errContainer = document.createElement("div");
   errContainer.classList.add("errContainer--modal");
 
-  const msgErr = document.createElement("span");
-  msgErr.classList.add("error-msg");
-  msgErr.id = "error-msg";
+  const throwMsg = document.createElement("span");
+  throwMsg.classList.add("error-msg");
+  throwMsg.id = "error-msg";
 
-  errContainer.append(msgErr);
+  errContainer.append(throwMsg);
   // -----------------------------
 
   const btnsContainer = document.createElement("div");
@@ -211,40 +212,39 @@ export const ModalEditProfile = () => {
   formContainer.append(groupEmail);
   //   Apendizamos el mensaje de error
   formContainer.append(errContainer);
-  // todo: en realidad hay que apendizar el div que tiene a editar o cancelar
   formContainer.append(btnsContainer);
 
   // -----------------------------
-
-  btnSaveChanges.addEventListener("click", () => {
-    console.log("editemos el perfil ");
-  });
 
   profileContainer.append(headerModal);
   profileContainer.append(photoContainer);
   profileContainer.append(formContainer);
 
   //Modal oculto
-  $modalContenedor.style.opacity = "0";
-  $modalContenedor.style.visibility = "hidden";
+  modalContenedor.style.opacity = "0";
+  modalContenedor.style.visibility = "hidden";
 
   const abrirModal = () => {
-    $modalContenedor.style.opacity = "1";
-    $modalContenedor.style.visibility = "visible";
-    $modalContenedor.classList.toggle("modal-cerrar");
+    modalContenedor.style.opacity = "1";
+    modalContenedor.style.visibility = "visible";
+    modalContenedor.classList.toggle("modal-cerrar");
   };
   const cerrarModal = () => {
-    $modalContenedor.classList.toggle("modal-cerrar");
-    $modalContenedor.style.opacity = "0";
-    $modalContenedor.style.visibility = "hidden";
+    modalContenedor.classList.toggle("modal-cerrar");
+    modalContenedor.style.opacity = "0";
+    modalContenedor.style.visibility = "hidden";
   };
 
+  // Limpia el mensaje que lanza el modal
   closeIcon.addEventListener("click", () => {
     cerrarModal();
+    throwMsg.textContent = "";
   });
 
+  // Limpia el mensaje que lanza el modal
   btnCancel.addEventListener("click", () => {
     cerrarModal();
+    throwMsg.textContent = "";
   });
 
   btnSaveChanges.addEventListener("click", async () => {
@@ -252,40 +252,32 @@ export const ModalEditProfile = () => {
       user_name: inputName.value,
       user_birth: inputDate.value,
       user_email: inputEmail.value,
+      user_photo: photoAvatar.src,
       user_exist: false,
       user_password: userPasswordFirestore,
-      // todo: hay que modificar la foto del usuario
-      user_photo: photoAvatar.src,
-      // user_photo: null,
-      // user_photo: null,
     };
 
-    msgErr.textContent = "";
-    msgErr.classList.add("error-msg");
-    msgErr.classList.remove("success-msg");
+    throwMsg.textContent = "";
+    throwMsg.classList.add("error-msg");
+    throwMsg.classList.remove("success-msg");
 
-    const { emailUserSearched, pwdUserSearched, userExist } =
-      await isExistingUser(newData.user_email);
-
-    // let userExist = await isExistingUser(newData.user_email);
-
-    console.log("El usuario existe? => ", userExist);
+    const { emailUserSearched, userExist } = await isExistingUser(
+      newData.user_email
+    );
 
     // Limpiamos el modal
-    document.getElementById("error-msg").textContent = "";
+    throwMsg.textContent = "";
     const requiredFields = document.getElementsByClassName(
       "modal-profile__required"
     );
     for (let element of requiredFields) {
       element.classList.remove("modal-profile__required--active");
-      console.log("tenemos", requiredFields.length, "inputs obligatorios");
     }
 
-    document.getElementById("error-msg").textContent = "";
+    throwMsg.textContent = "";
     // Validamos el nombre
     if (!validate_field(newData.user_name)) {
-      document.getElementById("error-msg").textContent =
-        "Ingrese un nombre válido";
+      throwMsg.textContent = "Ingrese un nombre válido";
 
       // Activa campo como obligatorio
       requiredName.classList.add("modal-profile__required--active");
@@ -293,27 +285,23 @@ export const ModalEditProfile = () => {
     }
     // Validamos el correo
     if (!validate_email(newData.user_email)) {
-      document.getElementById("error-msg").textContent =
-        "Ingrese un correo válido";
+      throwMsg.textContent = "Ingrese un correo válido";
       // Activa campo como obligatorio
       requiredEmail.classList.add("modal-profile__required--active");
       return;
     }
-    // Si la cuenta no está disponible para usar
-    if (userExist && newData.user_email !== user.email) {
-      document.getElementById("error-msg").textContent =
-        "Esta cuenta ya está siendo utilizada";
+    if (userExist && emailUserSearched !== userEmailFirestore) {
+      throwMsg.textContent = "Esta cuenta ya está siendo utilizada";
       return;
     }
     // Si los datos nunca fueron modificados
     if (
       newData.user_name === userNameFirestore &&
       newData.user_birth === userBirthFirestore &&
-      // newData.user_email === userEmailFirestore
       newData.user_email === userEmailFirestore &&
       newData.user_photo === userPhoto
     ) {
-      document.getElementById("error-msg").textContent = "Actualice los datos";
+      throwMsg.textContent = "Actualice los datos";
       return;
     }
 
@@ -321,20 +309,19 @@ export const ModalEditProfile = () => {
       element.classList.remove("modal-profile__required--active");
     }
 
-    console.log("esta es mi contraseña ", newData.user_password);
+    const loader = Loader();
+    loader.classList.add("spinnerContainer--absolute");
+    throwMsg.textContent = "";
+    modalContenedor.appendChild(loader);
 
     const credential = await createCredential(user, newData.user_password);
 
     reautentificacion(user, credential)
       .then(() => {
-        console.log("si se logró la reautentificación");
-
         // Verifica si el usuario adjuntó alguna imagen para su perfil
         if (inputFileNone.files[0]) {
-          console.log("si adjuntó imagen");
           return uploadUserProfileImg(inputFileNone.files[0], user.uid);
         } else {
-          console.log("no adjuntó imagen");
           return Promise.resolve("");
         }
       })
@@ -346,19 +333,15 @@ export const ModalEditProfile = () => {
         return changeEmailAuth(user, newData.user_email);
       })
       .then(() => {
-        console.log("2 ok");
         return changeNameAndPhotoAuth(newData);
       })
       .then(() => {
-        console.log("3 ok");
         return changeBasicDataFirestore(user.uid, newData);
       })
       .then(() => {
-        console.log("4 ok");
         return getUserData(user.uid);
       })
       .then((user) => {
-        console.log("5 ok");
         userPasswordFirestore = user.user_password;
         userNameFirestore = user.user_name;
         userBirthFirestore = user.user_birth;
@@ -366,15 +349,14 @@ export const ModalEditProfile = () => {
         userPhoto = user.user_photo;
       })
       .then(() => {
-        console.log("todo ok!");
-        msgErr.classList.remove("error-msg");
-        msgErr.classList.add("success-msg");
-        msgErr.textContent = "Cambios realizados!";
-        // ! Aqui debería ocultar el spinner
+        throwMsg.classList.remove("error-msg");
+        throwMsg.classList.add("success-msg");
+        throwMsg.textContent = "Cambios realizados!";
+        // Cuando termine todos los procesos se oculta el spinner
+        loader.remove();
       })
       .catch((err) => {
-        console.log("no se logró la reautentificación", err);
-        msgErr.textContent = "Error de autentificación ";
+        throwMsg.textContent = "Error de autentificación ";
       });
   });
 
@@ -383,30 +365,19 @@ export const ModalEditProfile = () => {
       photoAvatar.src = user.user_photo;
       inputName.value = user.user_name;
       inputDate.value = user.user_birth;
-      userPasswordFirestore = user.user_password;
+      inputEmail.value = user.user_email;
+      userPhoto = user.user_photo;
       userNameFirestore = user.user_name;
       userBirthFirestore = user.user_birth;
       userEmailFirestore = user.user_email;
-      userPhoto = user.user_photo;
-      inputEmail.value = user.user_email;
-
-      console.log("userName del firestore ", userNameFirestore);
-      console.log("birth del firestore ", userBirthFirestore);
-      console.log("email del firestore ", userEmailFirestore);
-      console.log("pwd del firestore ", userPasswordFirestore);
-      console.log("foto del firestore ", userPhoto);
-
-      console.log(
-        "esta mi foto recien cargando el componente MODAL, ",
-        userPhoto
-      );
+      userPasswordFirestore = user.user_password;
     })
     .catch((err) => {
-      console.log(err);
+      // Deberia crear algun tipo de error? o un 404 not found
     });
 
   return {
-    $modalEditProfile: $modalContenedor,
+    modalEditProfile: modalContenedor,
     abrirModalEditProfile: abrirModal,
     cerrarModalEditProfile: cerrarModal,
   };

@@ -98,7 +98,7 @@ export async function isExistingUser(email) {
 
   let userExist;
   let emailUserSearched;
-  let pwdUserSearched;
+  // let pwdUserSearched;
 
   console.log("datos del usuarioo", userEmailMatch);
 
@@ -106,16 +106,16 @@ export async function isExistingUser(email) {
     console.log(userEmailMatch.length);
     userExist = false;
     emailUserSearched = null;
-    pwdUserSearched = null;
+    // pwdUserSearched = null;
   } else {
     userExist = true;
     emailUserSearched = userEmailMatch[0].user_email;
-    pwdUserSearched = userEmailMatch[0].user_password;
+    // pwdUserSearched = userEmailMatch[0].user_password;
   }
 
   return {
     emailUserSearched,
-    pwdUserSearched,
+    // pwdUserSearched,
     userExist,
   };
 
