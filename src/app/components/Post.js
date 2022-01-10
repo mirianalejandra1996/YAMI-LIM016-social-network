@@ -248,7 +248,16 @@ export const Post = (
       // console.log("no se encuentra");
     }
 
+    if (postDoc.data().imageUrl) {
+      $postImg.src = postDoc.data().imageUrl;
+    } else {
+      $postImg.src = ''
+    }
+
     $counterLikes.textContent = `${likes.length}`;
+
+    post.likes = likes
+    post.imageUrl = postDoc.data().imageUrl
   });
   //   -----------------------------------------------------------
 

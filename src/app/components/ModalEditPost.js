@@ -1,4 +1,5 @@
 import { updatePost } from "../firebase/firebase-data.js";
+import { uploadImage } from '../firebase/firebase-storage.js';
 
 export const ModalEditPost = () => {
   // * modalContenedor es el overlay
@@ -13,9 +14,11 @@ export const ModalEditPost = () => {
   // * Cabecera
   const $header = document.createElement("div");
   $header.classList.add("modal__cabecera");
+
   //Opciones de Cabecera
   const $opcionesCabecera = document.createElement("div");
   $opcionesCabecera.classList.add("modal__opcionesCabecera");
+
   //Opcion Cerrar
   const $cerrarContainer = document.createElement("div");
   $cerrarContainer.classList.add("card__icon-container");
@@ -26,7 +29,8 @@ export const ModalEditPost = () => {
   $iconClose.classList.add("card__icon", "close__icon");
   $iconClose.classList.add("icon-icon-close");
   $cerrarContainer.appendChild($iconClose);
-  //opcion Guardar
+
+  //Opcion Guardar
   const $guardar = document.createElement("h1");
   $guardar.classList.add("formPost_h1");
   $guardar.textContent = "Guardar";
@@ -42,78 +46,93 @@ export const ModalEditPost = () => {
   $header.append($opcionesCabecera);
   $header.append($title);
 
+  //Formulario
   const $inputsContainer = document.createElement("div");
   $inputsContainer.classList.add("formPost_inputs");
 
+  //Text Area
   const $post = document.createElement("textarea");
   $post.classList.add("formPost_input-long");
   $post.placeholder = `¿Qué estas pensando?`;
-
+  //Tags
   const $tags = document.createElement("input");
   $tags.classList.add("formPost_input-short");
   $tags.placeholder = `Añadir etiquetas`;
   //$inputsContainer.append($tags);
 
-  //Input de la Imagen
+  //InputFile de la Imagen
   const $pictureContainerEdit = document.createElement("div");
   $pictureContainerEdit.classList.add("formPost_input-short", "iconImg_rigth");
   const $pictureEdit = document.createElement("input");
   $pictureEdit.id = "fileEdit";
   $pictureEdit.type = "file";
   console.log("probando ", $pictureEdit.files);
+  //Label dentro del inputFie
+  const $pictureLabel = document.createElement("label");
+  $pictureLabel.setAttribute("for", "fileEdit");
+  $pictureLabel.classList.add("modal__fileInput");
 
+  //Contenedor de la imagen
+  const $imageFileContainer = document.createElement("div")
+  $imageFileContainer.classList.add("imagenFileContainer")
+  //Remover imagen
+  const $removeImageButton = document.createElement("div")
+  $removeImageButton.classList.add("removeImageButton")
+  const $CloseIcon = document.createElement("div")
+  $CloseIcon.classList.add('icon-icon-close', 'modal__close')
+  $removeImageButton.append($CloseIcon)
+  //Imagen
   const $imagenFileEdit = document.createElement("img");
   $imagenFileEdit.classList.add("imagenFile");
 
+//Eliminar imagen del contenedor
+  $removeImageButton.addEventListener('click', () => {
+    postImageFile = null
+    $pictureEdit.value = null
+    $imagenFileEdit.removeAttribute('src')
+    changeImageInputLabelText($pictureLabel, 'Añadir Imagen');
+  })
+
+  //Cambia el texto del input file 
+  function changeImageInputLabelText($label, text) {
+    $pictureLabel.textContent = text;
+    const $iconPicture = document.createElement("span");
+    $iconPicture.classList.add("icon-addimg");
+    $iconPicture.classList.add("card__icon");
+    $pictureLabel.append($iconPicture);
+  }
   let postImageFile;
-
-  // $pictureEdit.addEventListener("click", () =>
-  //   console.log("he hecho click en input file de modalEdit")
-  // );
-  // Escuchar cuando cambie
-
+  // Escuchar cuando cambie el input file
     $pictureEdit.addEventListener("change", (e) => {
-    // Los archivos seleccionados, pueden ser muchos o uno
-    console.log("qué ocurre aquí? ", e.target);
-    debugger;
-    const archivos = e.target.files;
-    // Si no hay archivos salimos de la función y quitamos la imagen
-    if (!archivos || !archivos.length) {
-      $imagenFileEdit.src = "";
-      return;
-    }
-    // Ahora tomamos el primer archivo, el cual vamos a previsualizar
-    postImageFile = archivos[0];
-    // Lo convertimos a un objeto de tipo objectURL
-    const objectURL = URL.createObjectURL(postImageFile);
-    // Y a la fuente de la imagen le ponemos el objectURL
-    $imagenFileEdit.src = objectURL;
-  });
+      // Los archivos seleccionados, pueden ser muchos o uno
+      const archivos = e.target.files;
+      // Si no hay archivos salimos de la función y quitamos la imagen
+      if (!archivos || !archivos.length) {
 
-  const $pictureLabel = document.createElement("label");
-  $pictureLabel.setAttribute("for", "file");
-  $pictureLabel.classList.add("modal__fileInput");
-  $pictureLabel.textContent = "Añadir imagen";
+        $imagenFileEdit.removeAttribute('src')
+        return;
+      }
+      // Ahora tomamos el primer archivo, el cual vamos a previsualizar
+      postImageFile = archivos[0];
+      // Lo convertimos a un objeto de tipo objectURL
+      const objectURL = URL.createObjectURL(postImageFile);
+      // Y a la fuente de la imagen le ponemos el objectURL
+      $imagenFileEdit.src = objectURL;
+      changeImageInputLabelText($pictureLabel, postImageFile.name);
+    });
 
-  // ! Mirian probando
 
-  $pictureLabel.addEventListener("click", () =>
-    console.log("mirian ", $pictureEdit.files)
-  );
 
-  const $iconPicture = document.createElement("span");
-  $iconPicture.classList.add("icon-addimg");
-  $iconPicture.classList.add("card__icon");
-
-  $pictureLabel.append($iconPicture);
-
+  // construye el file
   $pictureContainerEdit.append($pictureLabel);
   $pictureContainerEdit.append($pictureEdit);
-
+  //Construye el contenedor de la imagen
+  $imageFileContainer.append($imagenFileEdit)
+  $imageFileContainer.append($removeImageButton)
   //////////////////////////
   $inputsContainer.append($post);
   $inputsContainer.append($pictureContainerEdit);
-  $inputsContainer.append($imagenFileEdit);
+  $inputsContainer.append($imageFileContainer);
   ////////////////////////////
 
   const $btnsContainer = document.createElement("div");
@@ -163,38 +182,42 @@ export const ModalEditPost = () => {
     $modalContenedor.style.opacity = "0";
     $modalContenedor.style.visibility = "hidden";
   };
-
-  // Evento para guardar post (update en firebase)
-  $guardar.addEventListener("click", () => {
-    console.log("entramos para actualizar");
-    // const nuevoMensaje = document.getElementById("msgPost").value;
-    // console.log(postData)
-    const nuevoMensaje = document.getElementById(
-      `msgPost_${postData.post_id}`
-    ).value;
-    console.log("este es el nuevo mensaje", nuevoMensaje);
-    //limpiar modal antes de cerrar
-    $post.value = "";
-    //eliminar event listeners a cualquier nodo o elemeno
-    $guardar.removeEventListener("click", guardarButtonClickListener);
-
-    $modalContenedor.style.opacity = "0";
-    $modalContenedor.style.visibility = "hidden";
-  });
-
+  
   const setPost = (postData) => {
     $post.value = `${postData.message}`;
-    $imagenFileEdit.src = postData.imageUrl;
+    let label = ''
+    if(postData.imageUrl) {
+      $imagenFileEdit.src = postData.imageUrl;
+      label = 'Cambiar Imagen'
+    } else {
+      $imagenFileEdit.removeAttribute('src')
+      label = 'Añadir imagen'
+    }
+    
+    changeImageInputLabelText($pictureLabel, label)
 
-    guardarButtonClickListener = () => {
-      console.log("entramos a actualizar post");
-      // const nuevoMensaje = document.getElementById("msgPost").value;
+    if(guardarButtonClickListener) {
+      $guardar.removeEventListener("click", guardarButtonClickListener);
+    }
+    guardarButtonClickListener = async () => {
       const nuevoMensaje = $post.value;
       //Actualiza el Post
-      updatePost(postData.post_id, { message: nuevoMensaje }).then(() => {
-        window.location.hash = "#/";
-      });
-    };
+      let nuevaImageUrl = ''
+
+      if(postImageFile) {
+        nuevaImageUrl = await uploadImage(postImageFile, postData.id_user)
+      }else if($imagenFileEdit.src){
+
+        nuevaImageUrl = $imagenFileEdit.src
+      }
+
+      console.log({nuevaImageUrl})
+  
+      await updatePost(postData.post_id, { message: nuevoMensaje, imageUrl: nuevaImageUrl})
+      // window.location.hash = "#/";
+      cerrarModal()
+    }
+  
     // Evento para guardar post (update en firebase)
     $guardar.addEventListener("click", guardarButtonClickListener);
   };
