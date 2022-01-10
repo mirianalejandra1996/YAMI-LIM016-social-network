@@ -1580,6 +1580,8 @@ input[type="file"] {
   .photo__container {
     justify-content: flex-start;
     height: fit-content;
+    position: sticky;
+    top: 18px;
   }
   .menu__link.user {
     display: block;
