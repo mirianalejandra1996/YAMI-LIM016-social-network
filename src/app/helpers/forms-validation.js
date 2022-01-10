@@ -1,7 +1,15 @@
 export function validate_email(email) {
   const expression = /^([\.\_a-zA-Z0-9]+)@([a-zA-A]+)\.([a-zA-Z]){2,8}/;
 
-  return expression.test(email);
+  if (!email) {
+    return false;
+  }
+
+  // return expression.test(email.trim());
+
+  return typeof email === "string"
+    ? expression.test(email.trim())
+    : expression.test("" + email);
 }
 
 export function validate_password(password) {
@@ -13,10 +21,9 @@ export function validate_password(password) {
     return false;
   }
 
-  return typeof str === "string"
+  return typeof password === "string"
     ? expression.test(password.trim())
     : expression.test("" + password);
-
 }
 
 export function validate_field(field) {
