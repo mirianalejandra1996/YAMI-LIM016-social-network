@@ -14,14 +14,13 @@ import { ModalEditCom } from "./ModalEditComment.js";
 
 export function Timeline() {
   const $timeline = document.createElement("div");
+  $timeline.classList.add("timeline")
   // Importamos la cabecera
   const $header = HeaderSimple();
-  // Importamos la Bienvenida al usuario
-  const $bienvenidaUser = Bienvenida();
   // Contenedor de las publicaciones
   const $postsContainer = document.createElement("div");
   $postsContainer.classList.add("notification-grid");
-
+  
   //Cerrar Sesion
   const { $modalCerrarSesion, abrilModalCerrarSesion } = ModalCerrarSesion();
   const { $modalCreatePost, abrirModalCreatePost } = ModalCreatePost();
@@ -30,7 +29,9 @@ export function Timeline() {
   // Perfil usuario
   const { menuModalProfile, toggleModalProfile } = ProfileList(
     abrilModalCerrarSesion
-  );
+    );
+ // Importamos la Bienvenida al usuario
+const $bienvenidaUser = Bienvenida(abrirModalCreatePost);
   //Enviamos los eventos a Menu
   const $menu = Menu(toggleModalPlus, toggleModalProfile);
 

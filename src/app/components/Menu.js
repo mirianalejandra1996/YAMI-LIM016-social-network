@@ -1,17 +1,14 @@
-
-
-
 export function Menu(toggleModalPlus, toggleModalProfile) {
   const d = document;
   //Menu
   const $menu = d.createElement("nav");
   $menu.classList.add("menu");
   $menu.id = "menu";
- 
+
   //iconos del menu
   //icono 1
   const itemHome = d.createElement("a");
-  itemHome.classList.add("menu__link","home");
+  itemHome.classList.add("menu__link", "home");
   const $iconHome = document.createElement("i");
   $iconHome.classList.add("icon-home");
 
@@ -53,7 +50,7 @@ export function Menu(toggleModalPlus, toggleModalProfile) {
   itemReseña.append($iconReseña);
   //icono 5
   const itemPerfil = d.createElement("a");
-  itemPerfil.classList.add("menu__link" ,"user");
+  itemPerfil.classList.add("menu__link", "user");
   const $iconPerfil = document.createElement("i");
   $iconPerfil.classList.add("icon-user1");
 
@@ -67,9 +64,9 @@ export function Menu(toggleModalPlus, toggleModalProfile) {
   });
 
   $menu.append(itemHome);
-  $menu.append(itemLupa);
+  // $menu.append(itemLupa);
   $menu.append(itemPlus);
-  $menu.append(itemReseña);
+  // $menu.append(itemReseña);
   $menu.append(itemPerfil);
 
   return $menu;
@@ -90,7 +87,7 @@ export function MenuList(abrirModalCreatePost) {
   $itemsPublicacion.textContent = "Publicación";
 
   $itemsPublicacion.addEventListener("click", () => {
-    abrirModalCreatePost()
+    abrirModalCreatePost();
   });
 
   const $itemsReseña = document.createElement("button");
@@ -107,9 +104,9 @@ export function MenuList(abrirModalCreatePost) {
 
   $modalContenedor.append($modalLista);
 
-  $modalContenedor.addEventListener('click',() =>{
-    toggleModalPlus()
-  })
+  $modalContenedor.addEventListener("click", () => {
+    toggleModalPlus();
+  });
   const toggleModalPlus = () => {
     $modalContenedor.classList.toggle("cerrado");
   };
@@ -119,7 +116,6 @@ export function MenuList(abrirModalCreatePost) {
     toggleModalPlus: toggleModalPlus,
   };
 }
-
 
 export function ProfileList(abrilModalCerrarSesion) {
   const $modalContenedorPerfil = document.createElement("div");
@@ -141,11 +137,10 @@ export function ProfileList(abrilModalCerrarSesion) {
   $itemsCerrarSesion.classList.add("modal__button");
   $itemsCerrarSesion.textContent = "Cerrar sesión";
 
-  $itemsCerrarSesion.addEventListener("click",()=>{
-    abrilModalCerrarSesion()
-  })
+  $itemsCerrarSesion.addEventListener("click", () => {
+    abrilModalCerrarSesion();
+  });
   /********************************************/
-
 
   $itemsPerfil.addEventListener("click", () => {
     console.log("cambiando de vista a Muro!");
@@ -162,9 +157,9 @@ export function ProfileList(abrilModalCerrarSesion) {
 
   $modalContenedorPerfil.append($modalLista);
 
-  $modalContenedorPerfil.addEventListener('click',() =>{
-    toggleModalProfile()
-  })
+  $modalContenedorPerfil.addEventListener("click", () => {
+    toggleModalProfile();
+  });
   const toggleModalProfile = () => {
     $modalContenedorPerfil.classList.toggle("cerrado");
   };

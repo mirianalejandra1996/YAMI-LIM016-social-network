@@ -1,6 +1,7 @@
 import { auth } from "../firebase/firebase-auth.js";
 import { components } from "../view-controller/index.js";
 import { onAuthStateChanged } from "https://www.gstatic.com/firebasejs/9.5.0/firebase-auth.js";
+import { Loader } from "../view-controller/Loader.js"
 
 //se ejecuta una sola vez
 export const Router = () => {
@@ -9,12 +10,7 @@ export const Router = () => {
   const $root = document.getElementById("root");
   $root.textContent = "";
 
-  const loader = document.createElement("div");
-  loader.classList.add("spinnerContainer");
-  const loaderSpinner = document.createElement("img");
-  loaderSpinner.classList.add("spinner");
-  loaderSpinner.src = "../src/app/assets/Spinner.svg";
-  loader.append(loaderSpinner);
+  const loader = Loader()
   $root.appendChild(loader);
 
   function render() {

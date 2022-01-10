@@ -7,16 +7,16 @@ import { traerComments } from "../firebase/firebase-data.js";
 // import { Menu, OptionListPost } from "./Menu.js";
 
 export const Post = (
-  post, 
-  setDataModalEdit, 
-  abrirModalEdit, 
-  setDataModalRemove, 
+  post,
+  setDataModalEdit,
+  abrirModalEdit,
+  setDataModalRemove,
   abrirModalRemove,
   abrirModalRemoveCom,
   setDataModalRemoveCom,
   abrirModalEditCom,
-  setDataModalEditCom) => {
-
+  setDataModalEditCom
+) => {
   // console.log(post)
 
   const user_id = auth.currentUser.uid;
@@ -28,6 +28,9 @@ export const Post = (
   $headerContainer.classList.add("card__header");
 
   // Foto del usuario
+  const $avatarContainerDiv = document.createElement("div");
+  $avatarContainerDiv.classList.add("avatarContainerDiv");
+
   const $avatarContainer = document.createElement("div");
   $avatarContainer.classList.add("card__avatar-container");
 
@@ -40,7 +43,11 @@ export const Post = (
 
   $avatarContainer.append($avatarImg);
   $avatarContainer.append($avatarOverlay);
+  $avatarContainerDiv.append($avatarContainer);
 
+  // ! aqui!
+  const $textAndIconContainer = document.createElement("div");
+  $textAndIconContainer.classList.add("card__textAndIconContainer");
   // Nombre y hora de publicación del usuario
 
   const $dataContainer = document.createElement("div");
@@ -65,6 +72,9 @@ export const Post = (
   const $optionsContainer = document.createElement("div");
   $optionsContainer.classList.add("card__options-container");
   // $optionsContainer.id = `optionsPost_${post.post_id}`;
+
+  $textAndIconContainer.append($dataContainer);
+  $textAndIconContainer.append($optionsContainer);
 
   // ! Si el usuario no es dueño del post, no debería salir la lista desplegable
   if (user_id !== post.id_user) $optionsContainer.classList.add("hidden");
@@ -100,10 +110,13 @@ export const Post = (
 
   $optionsContainer.append($iconOptions);
   $optionsContainer.append($menuModalOptions);
-  $headerContainer.append($avatarContainer);
-  $headerContainer.append($dataContainer);
-  $headerContainer.append($optionsContainer);
-  
+  $headerContainer.append($avatarContainerDiv);
+
+  // ! aqui! va a cambiar todo por un solo div
+  $headerContainer.append($textAndIconContainer);
+
+  // $headerContainer.append($dataContainer);
+  // $headerContainer.append($optionsContainer);
 
   //   -----------------------------------------------------------
 
@@ -117,14 +130,17 @@ export const Post = (
   $textMsg.textContent = `${post.message}`;
 
   $msgContainer.append($textMsg);
- 
+
   //   -----------------------------------------------------------
   //   Contenido Imagen del POST del usuario
-  const $postImageContainer = document.createElement('div')
+  const $postImageContainer = document.createElement("div");
+  $postImageContainer.classList.add("imagenPostDiv");
   const $postImg = document.createElement("img");
-  $postImg.classList.add("imagenFile");
-  $postImg.src = post.imageUrl;
-  $postImageContainer.append($postImg)
+  $postImg.classList.add("imagenPost");
+  if (post.imageUrl) {
+    $postImg.src = post.imageUrl;
+    $postImageContainer.append($postImg);
+  }
 
   //   Pie de post (para dar likes y comentar)
 
@@ -155,7 +171,7 @@ export const Post = (
   const $comentContainer = document.createElement("div");
   $comentContainer.classList.add("card__icon-container");
   $comentContainer.addEventListener("click", () => {
-    $commentsBlock.classList.toggle("close")
+    $commentsBlock.classList.toggle("close");
   });
 
   const $iconComent = document.createElement("span");
@@ -168,49 +184,49 @@ export const Post = (
 
   /****************************/
 
-  const $commentsBlock = document.createElement("div")
-  $commentsBlock.classList.add("close")
+  const $commentsBlock = document.createElement("div");
+  $commentsBlock.classList.add("close");
 
-  const commentsDiv = document.createElement("div")
-  commentsDiv.classList.add("commentsDiv")
-  const commentsContainer = document.createElement("div")
-  commentsContainer.classList.add("commentsContainer")
+  const commentsDiv = document.createElement("div");
+  commentsDiv.classList.add("commentsDiv");
+  const commentsContainer = document.createElement("div");
+  commentsContainer.classList.add("commentsContainer");
 
   traerComments(post.post_id)
+    .then((commentsList) => {
+      if (commentsList.length > 1 || commentsList.length === 0) {
+        $comentarioTitle.textContent = commentsList.length + " comentarios";
+      } else {
+        $comentarioTitle.textContent = commentsList.length + " comentario";
+      }
 
-  .then((commentsList)=>{
-    if(commentsList.length>1 || commentsList.length===0){
-      $comentarioTitle.textContent = commentsList.length+" comentarios";
-    }else{
-      $comentarioTitle.textContent = commentsList.length+" comentario";
-    }
-  
-    commentsList.forEach((com)=>{
+      commentsList.forEach((com) => {
         const comment = Comment(
-          post.post_id, 
+          post.post_id,
           com,
           abrirModalRemoveCom,
           setDataModalRemoveCom,
           abrirModalEditCom,
-          setDataModalEditCom)
-        commentsContainer.append(comment)
+          setDataModalEditCom
+        );
+        commentsContainer.append(comment);
         // console.log("entra")
+      });
     })
-  })
-  .catch((err) => console.log(err))
+    .catch((err) => console.log(err));
 
-  commentsDiv.append(commentsContainer)
+  commentsDiv.append(commentsContainer);
 
   const $postComments = NewComments(post.post_id);
 
-  $commentsBlock.append(commentsDiv)
+  $commentsBlock.append(commentsDiv);
   // $commentsBlock.append($postComments)
 
   /****************************/
 
   $comentContainer.appendChild($comentarioTitle);
   $comentContainer.appendChild($iconComent);
-  
+
   $footerContainer.append($likeContainer);
   $footerContainer.append($comentContainer);
 
@@ -220,7 +236,7 @@ export const Post = (
     //se podria cambiar cualquier campo de post pero en este caso solo necesitamos los likes
 
     // console.log(postDoc.data())
-    
+
     const likes = postDoc.data().likes;
     // console.log("array de likes", likes);
     if (likes.find((like) => like === user_id)) {
@@ -231,7 +247,16 @@ export const Post = (
       // console.log("no se encuentra");
     }
 
+    if (postDoc.data().imageUrl) {
+      $postImg.src = postDoc.data().imageUrl;
+    } else {
+      $postImg.src = ''
+    }
+
     $counterLikes.textContent = `${likes.length}`;
+
+    post.likes = likes
+    post.imageUrl = postDoc.data().imageUrl
   });
   //   -----------------------------------------------------------
 
@@ -239,7 +264,7 @@ export const Post = (
   $card.append($msgContainer);
   $card.append($postImageContainer);
   $card.append($footerContainer);
-  $card.append($commentsBlock)
+  $card.append($commentsBlock);
   // $card.append(commentsDiv)
   $card.append($postComments);
 

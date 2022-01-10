@@ -283,9 +283,7 @@ export function changeNameAndPhotoAuth(objNewData) {
   // console.log("probando ando", auth.currentUser);
   updateProfile(auth.currentUser, {
     displayName: objNewData.user_name,
-    // email: objNewData.user_email,
-    // photoURL: objNewData.user_photo
-    // photoURL: "https://example.com/jane-q-user/profile.jpg"
+    photoURL: objNewData.user_photo,
   })
     .then(() => {
       // Profile updated!
