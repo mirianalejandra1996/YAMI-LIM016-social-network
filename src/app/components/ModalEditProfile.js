@@ -233,9 +233,9 @@ export const ModalEditProfile = () => {
 
   // -----------------------------
 
-  btnSaveChanges.addEventListener("click", () => {
-    console.log("editemos el perfil ");
-  });
+  // btnSaveChanges.addEventListener("click", () => {
+  //   console.log("editemos el perfil ");
+  // });
 
   profileContainer.append(headerModal);
   profileContainer.append(photoContainer);
