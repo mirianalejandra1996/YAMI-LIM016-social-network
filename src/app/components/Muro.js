@@ -4,8 +4,9 @@ import { Post } from "./Post.js";
 import { traerMisPost } from "../firebase/firebase-data.js";
 import { Menu, MenuList, ProfileList } from "./Menu.js";
 import { ModalCerrarSesion } from "./Modal_cerrarSesion.js";
-import { ModalCreatePost } from "./ModalCreatePost.js";
 import { getUserData } from "../firebase/firebase-data.js";
+import { ModalCreatePost } from "./ModalCreatePost.js";
+import { ModalEditPost } from "./ModalEditPost.js";
 
 export function MiMuro() {
   const user = auth.currentUser;
@@ -89,8 +90,13 @@ export function MiMuro() {
 
   //Cerrar Sesion
   const { $modalCerrarSesion, abrilModalCerrarSesion } = ModalCerrarSesion();
-  const { $modalCreatePost, abrirModalCreatePost } = ModalCreatePost();
   // Crea un Post
+  const { $modalCreatePost, abrirModalCreatePost } = ModalCreatePost();
+
+  // Edita un post
+  const { $modalContenedor, abrirModal, cerrarModal, setPost } =
+    ModalEditPost();
+
   const { menuModalPlus, toggleModalPlus } = MenuList(abrirModalCreatePost);
   // Perfil usuario
   const { menuModalProfile, toggleModalProfile } = ProfileList(
@@ -108,6 +114,8 @@ export function MiMuro() {
   $contenedorMuro.append(menuModalProfile);
   $contenedorMuro.append($menu);
   $contenedorMuro.append($modalCreatePost);
+  // ! Aqui
+  $contenedorMuro.append($modalContenedor);
   $contenedorMuro.append($modalCerrarSesion);
 
   return $contenedorMuro;
