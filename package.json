@@ -36,6 +36,7 @@
     "node": ">=10"
   },
   "dependencies": {
-    "firebase": "^9.5.0"
+    "firebase": "^9.5.0",
+    "jsdom": "^19.0.0"
   }
 }
