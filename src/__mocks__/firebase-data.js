@@ -34,6 +34,6 @@ export const auth = {
 
 // export const collection = jest.fn((nameCollection) => Promise.resolve({nameCollection}));
 
-// export const doc = jest.fn((db, collection, docId) => Promise.resolve({}));
-// export const updateDoc = jest.fn((doc, values) => Promise.resolve({values}))
-// export const db = {};
+export const doc = jest.fn((db, collection, docId) => Promise.resolve({}));
+export const updateDoc = jest.fn((doc, values) => Promise.resolve({values}))
+export const db = {};
