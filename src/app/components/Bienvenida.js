@@ -1,7 +1,7 @@
 import { auth } from "../firebase/firebase-auth.js";
 import { getUserData } from "../firebase/firebase-data.js";
 
-export function Bienvenida() {
+export function Bienvenida(abrirModalCreatePost) {
   const user = auth.currentUser;
 
   const $contenedorBienvenida = document.createElement("div");
@@ -36,8 +36,23 @@ $contenedorBienvenida.classList.add("perfil-grid")
     });
 
   // -----------------------------------------------------------------------------------
+const $buttonAddPost = document.createElement("button")
+$buttonAddPost.classList.add("buttonAddPost_desktop")
+
+const $iconPlus = document.createElement("i");
+$iconPlus.classList.add("icon-addPost");
+
+$buttonAddPost.append($iconPlus);
+
+$buttonAddPost.addEventListener("click", () => {
+
+  abrirModalCreatePost();
+  });
+
+
 
   $contenedorBienvenida.append($photoContainer);
+  $photoContainer.append($buttonAddPost);
 
   return $contenedorBienvenida;
 }
