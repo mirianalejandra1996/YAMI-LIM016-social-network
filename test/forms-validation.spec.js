@@ -86,6 +86,8 @@ describe("validate_email function", () => {
 // Date.now = jest.fn(() => 1644364800000)
 
 // Date.now = jest.fn(() => new Date(Date.UTC(2022, 1, 9)).valueOf())
+
+
 // 2022, Enero , dia 9 - A las 22:23 pm
 jest.useFakeTimers().setSystemTime(new Date(1641784980776).valueOf());
 
