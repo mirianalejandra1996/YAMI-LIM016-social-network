@@ -9,13 +9,10 @@ describe("changePasswordFirestore", async () => {
   it("funciona", () => {
     return changePasswordFirestore("fakeUserId", "newfakePassword").then(
       (data) => {
-        console.log("esto es data, ", data);
-        expect(data).toStrictEqual({ user_password: "fakePassword" });
+        // console.log("esto es data, ", data);
+        expect(data).toStrictEqual({ user_password: "newfakePassword" });
       }
     );
-
-    console.log("esto es doc", doc.mock);
-    console.log("updateDoc", updateDoc.mock);
   });
 
   it("falla si no recibe argumentos", () => {});
