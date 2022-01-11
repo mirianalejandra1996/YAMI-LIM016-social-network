@@ -17,7 +17,7 @@ export function MiMuro() {
 
   //   Contenedor Base de foto del usuario
   const $photoContainer = document.createElement("div");
-  $photoContainer.classList.add("photo__container");
+  $photoContainer.classList.add("photo__container","perfil");
   //   Imagen del usuario Contenedor
   const imgAvatarContainer = document.createElement("div");
   imgAvatarContainer.classList.add("photo__avatar-container");
@@ -54,7 +54,7 @@ export function MiMuro() {
   $opcionesMuro.append($editarPerfil);
 
   const $misPostsContainer = document.createElement("div");
-  $misPostsContainer.classList.add("notification-grid");
+  $misPostsContainer.classList.add("notification-grid","perfil");
   //mientras cargan post, al $postsContainer le hago append de un loader
   $misPostsContainer.textContent = "Cargando posts...";
 
