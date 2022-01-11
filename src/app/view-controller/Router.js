@@ -1,7 +1,7 @@
 import { auth } from "../firebase/firebase-auth.js";
 import { components } from "../view-controller/index.js";
 import { onAuthStateChanged } from "https://www.gstatic.com/firebasejs/9.5.0/firebase-auth.js";
-import { Loader } from "../view-controller/Loader.js"
+import { Loader } from "../view-controller/Loader.js";
 
 //se ejecuta una sola vez
 export const Router = () => {
@@ -10,7 +10,7 @@ export const Router = () => {
   const $root = document.getElementById("root");
   $root.textContent = "";
 
-  const loader = Loader()
+  const loader = Loader();
   $root.appendChild(loader);
 
   function render() {
@@ -34,14 +34,6 @@ export const Router = () => {
         if (auth.currentUser) return (window.location.hash = "#/timeline");
         else {
           return $root.appendChild(components.registro());
-        }
-      }
-      case "#/perfil": {
-        if (auth.currentUser) {
-          $root.classList.remove("main-container");
-          return $root.appendChild(components.perfil());
-        } else {
-          return (window.location.hash = "#/");
         }
       }
       case "#/timeline": {

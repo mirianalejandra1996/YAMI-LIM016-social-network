@@ -3,11 +3,12 @@ import {
   getUserData,
   changePasswordFirestore,
 } from "../firebase/firebase-data.js";
-
+import {
+  validate_field,
+  validate_password,
+} from "../helpers/forms-validation.js";
 import {
   auth,
-  validate_password,
-  validate_field,
   changePasswordAuth,
   reautentificacion,
   createCredential,
@@ -213,14 +214,26 @@ export const ChangePassword = () => {
           changePasswordFirestore(user.uid, newData.newPassword),
         ];
 
+        // const prueba = await changePasswordFirestore(
+        //   user.uid,
+        //   newData.newPassword
+        // );
+        // console.log("probando ando", prueba);
+
         Promise.all(promises)
-          .then(() => {
+          .then((data) => {
+            // const prueba = data[1];
+            // console.log("probando ando", { data });
             console.log("todos los procesos se realizaron!");
             msgError.classList.remove("error-msg");
             msgError.classList.add("success-msg");
             document.getElementById("error-msg").textContent =
               "Cambios realizados!";
+            // return changePasswordFirestore(user.uid, newData.newPassword);
           })
+          // .then((data) => {
+          //   console.log("changing password", data);
+          // })
           .catch((err) => {
             console.log("problemas con el promise all", err);
           });

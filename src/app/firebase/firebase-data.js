@@ -1,5 +1,6 @@
-import { initializeApp } from "https://www.gstatic.com/firebasejs/9.5.0/firebase-app.js";
+// import { initializeApp } from "https://www.gstatic.com/firebasejs/9.5.0/firebase-app.js";
 import {
+  db,
   getFirestore,
   collection,
   doc,
@@ -15,11 +16,11 @@ import {
   onSnapshot,
   deleteDoc,
   orderBy,
-} from "https://www.gstatic.com/firebasejs/9.5.0/firebase-firestore.js";
-import { db } from "../firebase/firebase-initializer.js";
+} from "../firebase/firebase-initializer.js";
+// import { db } from "../firebase/firebase-initializer.js";
 import { auth } from "../firebase/firebase-auth.js";
 
-
+// export const auth =
 
 /******************Funciones de los Usuario*********************/
 //Agrega un usuario a FS
@@ -32,7 +33,7 @@ export function addUser(user, name, password) {
     birthN = "";
 
   if (user.providerData[0].providerId === "google.com") {
-   // console.log("estás logueado con google!!");
+    // console.log("estás logueado con google!!");
     nameN = user.displayName;
     emailN = user.email;
     photoUrlN = user.photoURL;
@@ -47,7 +48,7 @@ export function addUser(user, name, password) {
     logedByN = "password";
     passwordN = password;
   }
- //console.log("entramos a AddUsers");
+  //console.log("entramos a AddUsers");
   const userdoc = doc(db, "users", user.uid); //Creamos un documento con el id de nuestro usuario
   // setDoc lo usamos para especificar un id único que nosotros vamos a colocarle,
   // El addDoc autogenera el id
@@ -78,6 +79,7 @@ export async function getUserData(user_id) {
   } else {
     // doc.data() will be undefined in this case
     console.log("No such document!");
+    return {};
   }
 }
 // todo: AVERIGUAR SI EXISTE ALGÚN METODO EXCLUSIVO PARA SABER SI EL USUARIO EXISTE
@@ -90,30 +92,27 @@ export async function isExistingUser(email) {
   const userEmailMatch = [];
 
   docSnap.forEach((doc) => {
-    console.log("creo que sirve?", doc.data());
     userEmailMatch.push(doc.data());
   });
 
   let userExist;
   let emailUserSearched;
-  let pwdUserSearched;
-
-  console.log("datos del usuarioo", userEmailMatch);
+  // let pwdUserSearched;
 
   if (userEmailMatch.length === 0) {
     console.log(userEmailMatch.length);
     userExist = false;
     emailUserSearched = null;
-    pwdUserSearched = null;
+    // pwdUserSearched = null;
   } else {
     userExist = true;
     emailUserSearched = userEmailMatch[0].user_email;
-    pwdUserSearched = userEmailMatch[0].user_password;
+    // pwdUserSearched = userEmailMatch[0].user_password;
   }
 
   return {
     emailUserSearched,
-    pwdUserSearched,
+    // pwdUserSearched,
     userExist,
   };
 
@@ -121,19 +120,19 @@ export async function isExistingUser(email) {
 }
 
 // Actualiza el usuario
-export function changePasswordFirestore(user_id, password) {
+export async function changePasswordFirestore(user_id, password) {
   console.log("función updateUser va a actualizar los datos");
-  const userDocRef = doc(db, "users", user_id);
+  const userDocRef = await doc(db, "users", user_id);
 
-  updateDoc(userDocRef, {
+  return updateDoc(userDocRef, {
     user_password: password,
   })
-    .then(() => {
-      console.log("Si se actualizó el usuario en el firestore ");
-    })
-    .catch((err) => {
-      console.log("No se puede actualizar el usuario en el firestore ", err);
-    });
+    // .then((data) => {
+    //   console.log("Si se actualizó el usuario en el firestore , ", data);
+    // })
+    // .catch((err) => {
+    //   console.log("No se puede actualizar el usuario en el firestore ", err);
+    // });
 }
 
 export function changeBasicDataFirestore(user_id, objNewData) {
@@ -175,10 +174,8 @@ export function addPost(message) {
     .catch((err) => console.log(err));
 }
 
-
 //Recopila todos los posts
 export async function traerPost() {
-
   const postsData = [];
   const postsRef = collection(db, "posts");
   const q = query(postsRef, orderBy("date", "desc"));
@@ -241,7 +238,6 @@ export async function deletePost(post_id) {
 
 // Traer Posts de un Usuario
 export async function traerMisPost(userId) {
- 
   const q1 = query(
     collection(db, "posts"),
     where("id_user", "==", userId),
@@ -265,7 +261,7 @@ export async function traerMisPost(userId) {
 export function addComment(current_user, idPost, comment) {
   const commentsRef = collection(db, "posts", idPost, "comments");
 
-  console.log(current_user)
+  console.log(current_user);
 
   addDoc(commentsRef, {
     id_user: current_user.uid,
@@ -273,7 +269,7 @@ export function addComment(current_user, idPost, comment) {
     message: comment,
     date: Date.now(),
     likes: [],
-    user_photo: current_user.photoURL
+    user_photo: current_user.photoURL,
   })
     .then(() => {
       console.log("comentario en firestore");
@@ -281,12 +277,9 @@ export function addComment(current_user, idPost, comment) {
     .catch((err) => console.log(err));
 }
 
-
-
 /******************Funciones de los Comentarios*********************/
 // Traer los Comentarios
 export async function traerComments(id_post) {
-
   const commentsData = [];
   const commentsRef = collection(db, "posts", id_post, "comments");
   const q = query(commentsRef, orderBy("date", "desc"));
@@ -331,8 +324,6 @@ export async function toggleComLikes(post_id, com_id) {
   }
 }
 
-
-
 // Actualizar comentario
 export async function updateCom(postId, comId, message) {
   const postRef = doc(db, "posts", postId, "comments", comId);
@@ -345,7 +336,6 @@ export async function deleteCom(postId, comId) {
   const comRef = doc(db, "posts", postId, "comments", comId);
   return await deleteDoc(comRef);
 }
-
 
 /******************Funciones del LISTENERS*********************/
 //Init Listener Post

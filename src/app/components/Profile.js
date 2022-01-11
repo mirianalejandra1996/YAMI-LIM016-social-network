@@ -5,7 +5,6 @@ import { ModalEditProfile } from "../components/ModalEditProfile.js";
 
 export const Profile = () => {
   let user = auth.currentUser;
-  console.log(user);
 
   const profileComponent = document.createElement("div");
   profileComponent.classList.add("allView");
@@ -150,12 +149,11 @@ export const Profile = () => {
 
   // -----------------------------
 
-  const { $modalEditProfile, abrirModalEditProfile, cerrarModalEditProfile } =
+  const { modalEditProfile, abrirModalEditProfile, cerrarModalEditProfile } =
     ModalEditProfile();
 
   btnEdit.addEventListener("click", () => {
     abrirModalEditProfile();
-    console.log("editemos el perfil ");
   });
 
   profileComponent.append(headerBack);
@@ -163,14 +161,12 @@ export const Profile = () => {
   mainContainer.append(profileContainer);
   profileContainer.append(photoContainer);
   profileContainer.append(formContainer);
-  profileComponent.append($modalEditProfile);
+  profileComponent.append(modalEditProfile);
 
   //   --------------
   initListenerProfile(user.uid, () => {
     getUserData(user.uid)
       .then((user) => {
-        console.log("si se imprimio al usuario en pantalla!", user);
-        // console.log("mira mi foto : ", user.user_photo);
         photoAvatar.src = user.user_photo;
         inputDate.type = "date";
         inputName.value = user.user_name;
@@ -187,9 +183,7 @@ export const Profile = () => {
           msgContainer.append(changePwd);
         }
       })
-      .catch((err) => {
-        console.log("no se imprimio al usuario en pantalla... ", err);
-      });
+      .catch((err) => {});
   });
 
   return profileComponent;

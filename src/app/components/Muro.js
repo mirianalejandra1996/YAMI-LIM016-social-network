@@ -4,8 +4,9 @@ import { Post } from "./Post.js";
 import { traerMisPost } from "../firebase/firebase-data.js";
 import { Menu, MenuList, ProfileList } from "./Menu.js";
 import { ModalCerrarSesion } from "./Modal_cerrarSesion.js";
-import { ModalCreatePost } from "./ModalCreatePost.js";
 import { getUserData } from "../firebase/firebase-data.js";
+import { ModalCreatePost } from "./ModalCreatePost.js";
+import { ModalEditPost } from "./ModalEditPost.js";
 
 export function MiMuro() {
   const user = auth.currentUser;
@@ -16,7 +17,7 @@ export function MiMuro() {
 
   //   Contenedor Base de foto del usuario
   const $photoContainer = document.createElement("div");
-  $photoContainer.classList.add("photo__container");
+  $photoContainer.classList.add("photo__container","perfil");
   //   Imagen del usuario Contenedor
   const imgAvatarContainer = document.createElement("div");
   imgAvatarContainer.classList.add("photo__avatar-container");
@@ -31,9 +32,22 @@ export function MiMuro() {
   $nombre.classList.add("userNameTitle");
   $nombre.textContent = `${user.displayName}`;
 
+  const $buttonAddPost = document.createElement("button");
+  $buttonAddPost.classList.add("buttonAddPost_desktop");
+
+  const $iconPlus = document.createElement("i");
+  $iconPlus.classList.add("icon-addPost");
+
+  $buttonAddPost.append($iconPlus);
+
+  $buttonAddPost.addEventListener("click", () => {
+    abrirModalCreatePost();
+  });
+
   imgAvatarContainer.append(photoAvatar);
   $photoContainer.append(imgAvatarContainer);
   $photoContainer.append($nombre);
+  $photoContainer.append($buttonAddPost);
 
   const $opcionesMuro = document.createElement("div");
   $opcionesMuro.classList.add("opcionesMuro__container");
@@ -53,7 +67,7 @@ export function MiMuro() {
   $opcionesMuro.append($editarPerfil);
 
   const $misPostsContainer = document.createElement("div");
-  $misPostsContainer.classList.add("notification-grid");
+  $misPostsContainer.classList.add("notification-grid","perfil");
   //mientras cargan post, al $postsContainer le hago append de un loader
   $misPostsContainer.textContent = "Cargando posts...";
 
@@ -89,8 +103,13 @@ export function MiMuro() {
 
   //Cerrar Sesion
   const { $modalCerrarSesion, abrilModalCerrarSesion } = ModalCerrarSesion();
-  const { $modalCreatePost, abrirModalCreatePost } = ModalCreatePost();
   // Crea un Post
+  const { $modalCreatePost, abrirModalCreatePost } = ModalCreatePost();
+
+  // Edita un post
+  const { $modalContenedor, abrirModal, cerrarModal, setPost } =
+    ModalEditPost();
+
   const { menuModalPlus, toggleModalPlus } = MenuList(abrirModalCreatePost);
   // Perfil usuario
   const { menuModalProfile, toggleModalProfile } = ProfileList(
@@ -108,6 +127,8 @@ export function MiMuro() {
   $contenedorMuro.append(menuModalProfile);
   $contenedorMuro.append($menu);
   $contenedorMuro.append($modalCreatePost);
+  // ! Aqui
+  $contenedorMuro.append($modalContenedor);
   $contenedorMuro.append($modalCerrarSesion);
 
   return $contenedorMuro;

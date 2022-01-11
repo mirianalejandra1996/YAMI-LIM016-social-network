@@ -381,6 +381,16 @@ input[type="password"]:focus {
   align-items: center;
   /* height: 100%; */
   height: 100vh;
+  /* position: absolute; */
+}
+
+.spinnerContainer--absolute {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  /* height: 100%; */
+  height: 100vh;
+  position: absolute;
 }
 .spinner {
   width: 80px;
@@ -426,7 +436,7 @@ input[type="password"]:focus {
   background-color: #efeff1;
   bottom: -0.7em;
 }
-.avatarContainerDiv{
+.avatarContainerDiv {
   display: flex;
   align-items: center;
   justify-content: center;
@@ -566,7 +576,7 @@ input[type="password"]:focus {
   align-items: center;
   justify-content: space-between;
   margin-top: 1em;
-  margin-bottom: /*5px*/9px;
+  margin-bottom: /*5px*/ 9px;
   border-bottom: 1px solid #efeff1;
 }
 
@@ -1013,6 +1023,7 @@ input[type="password"]:focus {
   justify-content: center;
   align-items: center;
   flex-direction: column;
+  margin: 20px 0px;
 }
 /* .photo__container.row {
   flex-direction: row;
@@ -1239,7 +1250,6 @@ input[type="password"]:focus {
 /* Muro */
 .opcionesMuro__container {
   padding: 20px 10px;
-  margin: 20px 0;
   display: flex;
   justify-content: space-around;
   align-content: center;
@@ -1448,9 +1458,8 @@ input[type="file"] {
 
 .imagenFileContainer {
   position: relative;
-  margin-bottom:  10px;
+  margin-bottom: 10px;
 }
-
 
 .removeImageButton {
   display: none;
@@ -1465,11 +1474,10 @@ input[type="file"] {
   width: 100%;
   height: 100%;
 
-  background-color: rgba(0,0,0, .5);
-
+  background-color: rgba(0, 0, 0, 0.5);
 }
 
-.imagenFileContainer:hover .removeImageButton{
+.imagenFileContainer:hover .removeImageButton {
   display: flex;
 }
 .imagenFile {
@@ -1478,28 +1486,28 @@ input[type="file"] {
   /* margin-top: 15px; */
   border-radius: 10px;
   display: block;
-}  
+}
 
-.imagenFileContainer:hover .imagenFile:not([src]) + .removeImageButton{
+.imagenFileContainer:hover .imagenFile:not([src]) + .removeImageButton {
   display: none;
 }
 
-.imagenDivContenedor{
+.imagenDivContenedor {
   width: 80%;
   /* height: 150px; */
   overflow: hidden;
   margin-top: 10px;
-  border-radius: 10px; 
+  border-radius: 10px;
   justify-content: center;
   display: flex;
 }
-.imagenPost{
+.imagenPost {
   /* max-height: 110px; */
   max-width: 100%;
   margin-top: 15px;
   border-radius: 10px;
 }
-.imagenPostDiv{
+.imagenPostDiv {
   display: flex;
   justify-content: center;
 }
@@ -1553,7 +1561,7 @@ input[type="file"] {
   padding: 1rem 1rem 0px;
 }
 .buttonAddPost_desktop {
-display: none;
+  display: none;
 }
 /* Desktop */
 @media (min-width: 768px) {
@@ -1569,8 +1577,16 @@ display: none;
   .header-timeline {
     display: none;
   }
-  .photo__container{
+  .photo__container {
     justify-content: flex-start;
+    height: fit-content;
+    position: sticky;
+    top: 18px;
+    margin: 0;
+  }
+  .photo__container.perfil {
+    position:relative;
+    margin: 60px 0 40px 0;
   }
   .menu__link.user {
     display: block;
@@ -1598,29 +1614,67 @@ display: none;
     /* padding: 0 10px; */
     transition: transform 0.5s ease-in-out;
     transform: translateY(0%);
+    border-radius: 0px 0 10px 10px;
   }
-  .notification-grid{
+  .notification-grid {
     max-width: 60%;
     padding: 1rem 0rem 0px;
     margin-top: 60px;
   }
-  .perfil-grid{
+  .notification-grid.perfil {
+    max-width: 100%;
+    margin: 0 60px;
+  }
+  .perfil-grid {
     margin-top: 60px;
     min-width: 40%;
   }
   .timeline {
-   display: flex;
+    display: flex;
   }
+  /* !Mirian */
   .buttonAddPost_desktop {
+    background: none;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 20px;
+    margin-top: 15px;
+    cursor: pointer;
+    height: 39px;
+    width: 100%;
+    border-radius: 25px;
+    border: 1px solid transparent;
+    background-image: linear-gradient(white, white),
+      radial-gradient(circle at top left, #ffb800, #ff6f00);
+    background-origin: border-box;
+    background-clip: content-box, border-box;
+    transition: color 0.3s ease;
+  }
+
+  .icon-addPost {
+    color: #ffb800;
+    transition: color 0.3s ease;
+    transition-property: all;
+    transition-duration: 0.3s;
+    transition-timing-function: ease;
+    transition-delay: 0s;
+  }
+  .buttonAddPost_desktop:hover .icon-addPost {
+    transition: color 0.3s ease;
+    color: #ff6f00;
+  }
+
+  /* .buttonAddPost_desktop {
     display: block;
     width: 100%;
     background: linear-gradient(45deg, #ffbd00, #fa610c);
     margin-bottom: 5px;
     border-radius: 7px;
     /* background-color: #fa610c; */
-    border: none;
+  /* border: none;
     color: #ffff;
     height: 2.5rem;
     font-size: 20px;
-}
+  } */
 }

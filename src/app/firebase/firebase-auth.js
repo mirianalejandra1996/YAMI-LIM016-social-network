@@ -1,6 +1,5 @@
-import { app } from "../firebase/firebase-initializer.js";
-
 import {
+  app,
   signInWithEmailAndPassword,
   getAuth,
   createUserWithEmailAndPassword,
@@ -13,8 +12,12 @@ import {
   updateProfile,
   reauthenticateWithCredential,
   EmailAuthProvider,
-  // updatePassword,
-} from "https://www.gstatic.com/firebasejs/9.5.0/firebase-auth.js";
+} from "../firebase/firebase-initializer.js";
+import {
+  validate_field,
+  validate_password,
+  validate_email,
+} from "../helpers/forms-validation.js";
 
 import { addUser } from "./firebase-data.js";
 export const auth = getAuth(app);
@@ -214,39 +217,39 @@ export function enviarRegistro() {
 // todo: pendiente hacer funcionalidad de validación de nombre
 // nombre: /^[a-zA-ZÀ-ÿ\s]{1,40}$/, // Letras y espacios, pueden llevar acentos.
 // Funciones validadoras
-export function validate_email(email) {
-  const expression = /^([\.\_a-zA-Z0-9]+)@([a-zA-A]+)\.([a-zA-Z]){2,8}/;
+// export function validate_email(email) {
+//   const expression = /^([\.\_a-zA-Z0-9]+)@([a-zA-A]+)\.([a-zA-Z]){2,8}/;
 
-  return expression.test(email);
-}
+//   return expression.test(email);
+// }
 
-export function validate_password(password) {
-  // La contraseña debe tener entre 8 a 14 caracteres
+// export function validate_password(password) {
+//   // La contraseña debe tener entre 8 a 14 caracteres
 
-  const expression = /^.{6,14}$/;
+//   const expression = /^.{6,14}$/;
 
-  // si hace match
-  if (!expression.test(password)) {
-    console.log("contraseña fallida");
-    // console.log("contraseña buena");
-  }
-  return expression.test(password);
-}
+//   // si hace match
+//   if (!expression.test(password)) {
+//     console.log("contraseña fallida");
+//     // console.log("contraseña buena");
+//   }
+//   return expression.test(password);
+// }
 
-export function validate_field(field) {
-  // const expression = /^[a-zA-ZÀ-ÿ\s]{1,40}$/;
+// export function validate_field(field) {
+//   // const expression = /^[a-zA-ZÀ-ÿ\s]{1,40}$/;
 
-  // if (!expression.test(field) == true){
-  //   return false
-  // }
+//   // if (!expression.test(field) == true){
+//   //   return false
+//   // }
 
-  if (field.length <= 0 || field == null) {
-    console.log("field", field, "malo");
-    return false;
-  } else {
-    return true;
-  }
-}
+//   if (field.length <= 0 || field == null) {
+//     console.log("field", field, "malo");
+//     return false;
+//   } else {
+//     return true;
+//   }
+// }
 
 /********************Olvide mi contraseña**************************/
 
@@ -255,8 +258,9 @@ export function olvideContrasena() {
   const email = document.getElementById("lemail").value;
   sendPasswordResetEmail(auth, email)
     .then(() => {
-      document.getElementById("errorLogin").innerHTML =
-        "Se envió un mensaje a su correo";
+      document.getElementById(
+        "errorLogin"
+      ).innerHTML = ` Se envió un mensaje al correo ${email}`;
     })
     .catch((error) => {
       const errorCode = error.code;
@@ -328,11 +332,11 @@ export const changePasswordAuth = (user, newPassword) => {
 };
 
 export const changeEmailAuth = (user, newEmail) => {
-  return updateEmail(user, newEmail)
-    .then(() => {
-      console.log("Email updated! del metodo firebase");
-    })
-    .catch((error) => {
-      console.log("catch para updateEmail de firebase method", error);
-    });
+  return updateEmail(user, newEmail);
+  // .then(() => {
+  //   console.log("Email updated! del metodo firebase");
+  // })
+  // .catch((error) => {
+  //   console.log("catch para updateEmail de firebase method", error);
+  // });
 };
