@@ -1023,6 +1023,7 @@ input[type="password"]:focus {
   justify-content: center;
   align-items: center;
   flex-direction: column;
+  margin: 20px 0px;
 }
 /* .photo__container.row {
   flex-direction: row;
@@ -1249,7 +1250,6 @@ input[type="password"]:focus {
 /* Muro */
 .opcionesMuro__container {
   padding: 20px 10px;
-  margin: 20px 0;
   display: flex;
   justify-content: space-around;
   align-content: center;
@@ -1582,6 +1582,11 @@ input[type="file"] {
     height: fit-content;
     position: sticky;
     top: 18px;
+    margin: 0;
+  }
+  .photo__container.perfil {
+    position:relative;
+    margin: 60px 0 40px 0;
   }
   .menu__link.user {
     display: block;
@@ -1615,6 +1620,10 @@ input[type="file"] {
     max-width: 60%;
     padding: 1rem 0rem 0px;
     margin-top: 60px;
+  }
+  .notification-grid.perfil {
+    max-width: 100%;
+    margin: 0 60px;
   }
   .perfil-grid {
     margin-top: 60px;
