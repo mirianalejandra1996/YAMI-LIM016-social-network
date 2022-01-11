@@ -75,7 +75,9 @@ export const Post = (
   // $optionsContainer.id = `optionsPost_${post.post_id}`;
 
   $textAndIconContainer.append($dataContainer);
-  $textAndIconContainer.append($optionsContainer);
+  if(post.id_user == user_id){
+    $textAndIconContainer.append($optionsContainer);
+  }
 
   // ! Si el usuario no es dueño del post, no debería salir la lista desplegable
   // if (user_id !== post.id_user) $optionsContainer.classList.add("hidden");
