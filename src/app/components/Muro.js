@@ -32,9 +32,22 @@ export function MiMuro() {
   $nombre.classList.add("userNameTitle");
   $nombre.textContent = `${user.displayName}`;
 
+  const $buttonAddPost = document.createElement("button");
+  $buttonAddPost.classList.add("buttonAddPost_desktop");
+
+  const $iconPlus = document.createElement("i");
+  $iconPlus.classList.add("icon-addPost");
+
+  $buttonAddPost.append($iconPlus);
+
+  $buttonAddPost.addEventListener("click", () => {
+    abrirModalCreatePost();
+  });
+
   imgAvatarContainer.append(photoAvatar);
   $photoContainer.append(imgAvatarContainer);
   $photoContainer.append($nombre);
+  $photoContainer.append($buttonAddPost);
 
   const $opcionesMuro = document.createElement("div");
   $opcionesMuro.classList.add("opcionesMuro__container");
