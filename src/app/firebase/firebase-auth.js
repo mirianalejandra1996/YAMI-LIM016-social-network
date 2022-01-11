@@ -16,6 +16,7 @@ import {
 import {
   validate_field,
   validate_password,
+  validate_email,
 } from "../helpers/forms-validation.js";
 
 import { addUser } from "./firebase-data.js";
@@ -257,8 +258,9 @@ export function olvideContrasena() {
   const email = document.getElementById("lemail").value;
   sendPasswordResetEmail(auth, email)
     .then(() => {
-      document.getElementById("errorLogin").innerHTML =
-        "Se envió un mensaje a su correo";
+      document.getElementById(
+        "errorLogin"
+      ).innerHTML = ` Se envió un mensaje al correo ${email}`;
     })
     .catch((error) => {
       const errorCode = error.code;

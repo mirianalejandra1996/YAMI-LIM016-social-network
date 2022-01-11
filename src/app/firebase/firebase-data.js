@@ -126,13 +126,13 @@ export async function changePasswordFirestore(user_id, password) {
 
   return updateDoc(userDocRef, {
     user_password: password,
-  });
-  // .then(() => {
-  //   console.log("Si se actualizó el usuario en el firestore ");
-  // })
-  // .catch((err) => {
-  //   console.log("No se puede actualizar el usuario en el firestore ", err);
-  // });
+  })
+    // .then((data) => {
+    //   console.log("Si se actualizó el usuario en el firestore , ", data);
+    // })
+    // .catch((err) => {
+    //   console.log("No se puede actualizar el usuario en el firestore ", err);
+    // });
 }
 
 export function changeBasicDataFirestore(user_id, objNewData) {
