@@ -1,5 +1,4 @@
 import { Login } from "../components/Login.js";
-import { Perfil } from "../components/Perfil.js";
 import { Registro } from "../components/Register.js";
 import { Timeline } from "../components/Timeline.js";
 import { Profile } from "../components/Profile.js";
@@ -10,7 +9,6 @@ export const components = {
   login: Login,
   registro: Registro,
   timeline: Timeline,
-  perfil: Perfil,
   profile: Profile,
   muro: MiMuro,
   changePassword: ChangePassword,
