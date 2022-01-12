@@ -1,10 +1,14 @@
 import {
   enviarIngreso,
   loginGoogle,
-  olvideContrasena,
+  sendPasswordResetEmail,
+  auth,
 } from "../firebase/firebase-auth.js";
 import { Logo } from "./Logo.js";
 import { Eslogan } from "./Eslogan.js";
+
+
+
 
 export const Login = () => {
   const root = document.getElementById("root");
@@ -73,7 +77,10 @@ export const Login = () => {
   $forgotPsw.classList.add("redirect-text__link-small");
   $forgotPsw.textContent = `Olvidé mi contraseña`;
 
-  $forgotPsw.addEventListener("click", olvideContrasena);
+  $forgotPsw.addEventListener("click",() => {
+    const email = document.getElementById("lemail").value;
+    olvideContrasena(email)
+  });
 
   const $btn = document.createElement("div");
   $btn.classList.add("btn");
@@ -155,5 +162,33 @@ export const Login = () => {
   $login.append($eslogan);
   $login.append($inputsContainer);
 
+  console.log("esto es login",$login)
   return $login;
 };
+
+export function olvideContrasena (email) {
+  
+   return sendPasswordResetEmail(auth, email)
+  .then(() => {
+    document.getElementById(
+      "errorLogin"
+    ).innerHTML = `Se envió un mensaje al correo ${email}`;
+  })
+  .catch((error) => {
+    const errorCode = error.code;
+    console.log(errorCode);
+    switch (errorCode) {
+      case "auth/user-not-found":
+        document.getElementById("errorLogin").innerHTML =
+          "Usuario no registrado";
+        break;
+      case "auth/missing-email":
+        document.getElementById("errorLogin").innerHTML = "Ingrese su correo";
+        break;
+      case "auth/invalid-email":
+        document.getElementById("errorLogin").innerHTML = "Correo inválido";
+        break;
+    }
+    // ..
+  });
+}

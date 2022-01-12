@@ -1,4 +1,5 @@
 import {
+  auth,
   app,
   signInWithEmailAndPassword,
   getAuth,
@@ -13,6 +14,10 @@ import {
   reauthenticateWithCredential,
   EmailAuthProvider,
 } from "../firebase/firebase-initializer.js";
+export {
+  sendPasswordResetEmail,
+  auth,
+}
 import {
   validate_field,
   validate_password,
@@ -20,7 +25,7 @@ import {
 } from "../helpers/forms-validation.js";
 
 import { addUser } from "./firebase-data.js";
-export const auth = getAuth(app);
+
 
 const provider = new GoogleAuthProvider(app);
 
@@ -253,33 +258,33 @@ export function enviarRegistro() {
 
 /********************Olvide mi contraseña**************************/
 
-export function olvideContrasena() {
-  //const auth = getAuth();
-  const email = document.getElementById("lemail").value;
-  sendPasswordResetEmail(auth, email)
-    .then(() => {
-      document.getElementById(
-        "errorLogin"
-      ).innerHTML = ` Se envió un mensaje al correo ${email}`;
-    })
-    .catch((error) => {
-      const errorCode = error.code;
-      console.log(errorCode);
-      switch (errorCode) {
-        case "auth/user-not-found":
-          document.getElementById("errorLogin").innerHTML =
-            "Usuario no registrado";
-          break;
-        case "auth/missing-email":
-          document.getElementById("errorLogin").innerHTML = "Ingrese su correo";
-          break;
-        case "auth/invalid-email":
-          document.getElementById("errorLogin").innerHTML = "Correo inválido";
-          break;
-      }
-      // ..
-    });
-}
+// export function olvideContrasena() {
+//   //const auth = getAuth();
+//   const email = document.getElementById("lemail").value;
+//   return sendPasswordResetEmail(auth, email)
+//     .then(() => {
+//       document.getElementById(
+//         "errorLogin"
+//       ).innerHTML = ` Se envió un mensaje al correo ${email}`;
+//     })
+//     .catch((error) => {
+//       const errorCode = error.code;
+//       console.log(errorCode);
+//       switch (errorCode) {
+//         case "auth/user-not-found":
+//           document.getElementById("errorLogin").innerHTML =
+//             "Usuario no registrado";
+//           break;
+//         case "auth/missing-email":
+//           document.getElementById("errorLogin").innerHTML = "Ingrese su correo";
+//           break;
+//         case "auth/invalid-email":
+//           document.getElementById("errorLogin").innerHTML = "Correo inválido";
+//           break;
+//       }
+//       // ..
+//     });
+// }
 
 export function changeNameAndPhotoAuth(objNewData) {
   const auth = getAuth();
