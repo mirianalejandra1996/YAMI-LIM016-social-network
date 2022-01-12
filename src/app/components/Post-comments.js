@@ -36,10 +36,11 @@ export function NewComments(idPost) {
 
   commentBtn.append(commentIcon);
 
-  commentBtn.addEventListener("click", () => {
+  commentBtn.addEventListener("click", async() => {
     const comment = document.getElementById(`comment_${idPost}`).value;
     if (comment !== "") {
-      addComment(current_user, idPost, comment);
+      await addComment(current_user, idPost, comment);
+      window.location.hash = '#/'
     }
   });
 

@@ -26,14 +26,15 @@ export function Bienvenida(abrirModalCreatePost) {
   $photoContainer.append(imgAvatarContainer);
   $photoContainer.append($nombre);
 
-  getUserData(user.uid)
-    .then((user) => {
-      photoAvatar.src = user.user_photo;
-      $nombre.textContent = `¿Qué estás pensando, ${user.user_name}?`;
-    })
-    .catch((err) => {
-      console.log(err);
-    });
+  obtenerUsuario(user.uid, photoAvatar, $nombre)
+  // getUserData(user.uid)
+  //   .then((user) => {
+  //     photoAvatar.src = user.user_photo;
+  //     $nombre.textContent = `¿Qué estás pensando, ${user.user_name}?`;
+  //   })
+  //   .catch((err) => {
+  //     console.log(err);
+  //   });
 
   // -----------------------------------------------------------------------------------
   const $buttonAddPost = document.createElement("button");
@@ -52,4 +53,15 @@ export function Bienvenida(abrirModalCreatePost) {
   $photoContainer.append($buttonAddPost);
 
   return $contenedorBienvenida;
+}
+
+export function obtenerUsuario (user_uid, user_photo, user_nombre) {
+  return getUserData(user_uid)
+    .then((user) => {
+      user_photo.src = user.user_photo;
+      user_nombre.textContent = `¿Qué estás pensando, ${user.user_name}?`;
+    })
+    .catch((err) => {
+      console.log(err);
+    });
 }
