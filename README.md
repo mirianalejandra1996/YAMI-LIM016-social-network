@@ -84,7 +84,7 @@ a. Yo como visitante, quiero registrarme, para tener una cuenta en la app
   
   <details><summary>Definición de terminado</summary><p>
   
-  * Verificación manual de datos en Firebase
+  * Verificación manual de datos en Firebase Authentication
   *	Testeo de usabilidad</p></details>
 
 b. Yo como usuario registrado, quiero logearme, para acceder al contenido de la aplicación
@@ -103,7 +103,7 @@ b. Yo como usuario registrado, quiero logearme, para acceder al contenido de la 
   
   <details><summary>Definición de terminado</summary><p>
   
-  * Verificación manual de datos en Firebase
+  * Verificación manual de datos en Firebase Authentication
   *	Testeo de usabilidad</p></details>
   
 c. Yo como usuario, quiero publicar posts, para expresar mis dudas, opiniones o tips culinarios con otros usuarios
@@ -119,7 +119,7 @@ c. Yo como usuario, quiero publicar posts, para expresar mis dudas, opiniones o 
   
   <details><summary>Definición de terminado</summary><p>
   
-  * Verificación manual de datos en Firebase
+  * Verificación manual de datos en Firestore Database
   *	Testeo de usabilidad</p></details>
   
 d. Yo como usuario, quiero poder dar y retirar mi like de un post/reseña, para indicar que me agrada o dejó de agradarme su contenido  
@@ -135,7 +135,7 @@ d. Yo como usuario, quiero poder dar y retirar mi like de un post/reseña, para 
   
   <details><summary>Definición de terminado</summary><p>
   
-  * Verificación manual de datos en Firebase
+  * Verificación manual de datos en Firestore Database
   *	Testeo de usabilidad</p></details>
   
 e. Yo como usuario, quiero editar mi post/reseña, para actualizar la información ingresada como disponga
@@ -152,7 +152,7 @@ e. Yo como usuario, quiero editar mi post/reseña, para actualizar la informaci�
   
   <details><summary>Definición de terminado</summary><p>
   
-  * Verificación manual de datos en Firebase
+  * Verificación manual de datos en Firestore Database
   *	Testeo de usabilidad</p></details>
   
 f. Yo como usuario, quiero eliminar mi post/reseña, para dejar de compartir esta información con el resto de usuarios
@@ -168,14 +168,70 @@ f. Yo como usuario, quiero eliminar mi post/reseña, para dejar de compartir est
   
   <details><summary>Definición de terminado</summary><p>
   
-  * Verificación manual de datos en Firebase
+  * Verificación manual de datos en Firestore Database
   *	Testeo de usabilidad</p></details>
   
 ### Hacker edition
 
-a. Comentar un post
-b. Añadir imágenes a los posts
+a. Yo como usuario, quiero poder comentar un post mio o ajeno, para expresarme sobre el contenido del post
+
+<details><summary>Criterios de aceptación</summary><p>
+
+  *	El usuario debe estar logeado
+  * El comentario debe hacerse sobre un post existente
+  * Cada post debe tener un input para comentar y botón para enviar
+  * El comentario debe tener el avatar del usuario, su nombre, el mensaje y la hora de posteo
+  * El comentario debe poder ser likeado/deslikeado por todos los usuarios
+  * Solo se permite un like por usuario
+  * Cada comentario hecho por el propio usuario debe tener un botón de opciones
+  * Las opciones del comentario son editar (que abre un modal para editar) y remover (que despliega un modal para confirmar)</p></details>
+  
+  <details><summary>Definición de terminado</summary><p>
+  
+  * Verificación manual de subcolección en Firestore Database
+  *	Testeo de usabilidad</p></details>
+  
+b. Yo como usuario, quiero añadir imágenes a mis posts, para describir mejor mi post
+
+<details><summary>Criterios de aceptación</summary><p>
+
+  *	El usuario debe estar logeado
+  * El usuario debe estar creando/editando un post
+  * El post debe tener un texto
+  * Al hacer click sobre el campo de imagen debe abrir una ventana para elegir una imagen en los archivos locales
+  * El input debe contener el nombre del archivo 
+  * Debajo en un div se mostrará una previsualización de la imagen cargada
+  * El timeline renderizará el post con la imagen debajo del texto
+  * La imagen estará centrada ocupando un tamaño que no deforme el post
+  * Al editar, en el modal, la imagen aparece con la opción de borrarse y permitiendo agregar una nueva
+  </p></details>
+  
+  <details><summary>Definición de terminado</summary><p>
+  
+  * Verificación manual de datos en Firestore Database y Storage
+  *	Testeo de usabilidad</p></details>
+
 c. Editar perfil
+
+<details><summary>Criterios de aceptación</summary><p>
+
+  *	El usuario debe estar logeado
+  * El usuario solo puede editar su propio perfil
+  * Al entrar al perfil y hacer click en Editar perfil, se redirecciona a una pantalla con la info actual del usuario (avatar, nombre, fecha de nacimiento y correo)
+  * Haciendo click en el botón de Editar, aparece un modal donde podremos editar nuestros datos
+  * Los campos no pueden quedar vacíos, salvo por el de fecha de nacimiento
+  * Si hay un error, aparecerá un mensaje descriptivo
+  * Cuando los cmabios sean realizados, un mensaje lo confirmará
+  * Para cambiar de contraseña, haremos click sobre el texto de "Cambiar contraseña"
+  * Se nos pedirá ingresar la contraseña actual e ingresar 2 veces la nueva contraseña
+  * Habrán mensajes de error al errar en la contraseña actual o ingresar una contraseña nueva no adecuada
+  * Cuando los cambios de hayan guardado, aparecerá el mensaje "Cambios realizados!"
+  </p></details>
+  
+  <details><summary>Definición de terminado</summary><p>
+  
+  * Verificación manual de datos en Firestore Authentication, Firestore Database y Storage
+  *	Testeo de usabilidad</p></details>
 
 ## 4. Proceso de diseño
 
