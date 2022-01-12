@@ -14,7 +14,7 @@
   const loginGoogle  = jest.fn((auth,email)=>Promise.resolve({values}))
   const sendPasswordResetEmail = jest.fn(() => Promise.resolve());
   const GoogleAuthProvider = jest.fn(() => Promise.resolve({}));
-const collection = jest.fn((db, values) => Promise.resolve(values));
+  const collection = jest.fn((db, values) => Promise.resolve(values));
  const setDoc = jest.fn((document, values) => Promise.resolve({values}));
  const doc = jest.fn(() => Promise.resolve({}));
  const db = {};
