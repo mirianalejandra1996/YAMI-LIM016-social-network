@@ -16,9 +16,9 @@ import {
   onSnapshot,
   deleteDoc,
   orderBy,
+  auth,
 } from "../firebase/firebase-initializer.js";
 // import { db } from "../firebase/firebase-initializer.js";
-import { auth } from "../firebase/firebase-auth.js";
 
 // export const auth =
 

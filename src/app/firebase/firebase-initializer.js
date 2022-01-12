@@ -1,10 +1,8 @@
-import { initializeApp } from "https://www.gstatic.com/firebasejs/9.5.0/firebase-app.js";
-import { getFirestore } from "https://www.gstatic.com/firebasejs/9.5.0/firebase-firestore.js";
-import { getStorage } from "https://www.gstatic.com/firebasejs/9.5.0/firebase-storage.js";
+// eslint-disable-next-line import/no-unresolved
+import { initializeApp } from 'https://www.gstatic.com/firebasejs/9.5.0/firebase-app.js';
 
 // Importacion de metodos
-
-export {
+import {
   signInWithEmailAndPassword,
   getAuth,
   createUserWithEmailAndPassword,
@@ -17,9 +15,10 @@ export {
   updateProfile,
   reauthenticateWithCredential,
   EmailAuthProvider, // updatePassword,
+  // eslint-disable-next-line import/no-unresolved
 } from "https://www.gstatic.com/firebasejs/9.5.0/firebase-auth.js";
 
-export {
+import {
   getFirestore,
   collection,
   doc,
@@ -35,12 +34,15 @@ export {
   onSnapshot,
   deleteDoc,
   orderBy,
+  // eslint-disable-next-line import/no-unresolved
 } from "https://www.gstatic.com/firebasejs/9.5.0/firebase-firestore.js";
 
-export {
+import {
+  getStorage,
   uploadBytes,
   ref,
   getDownloadURL,
+  // eslint-disable-next-line import/no-unresolved
 } from "https://www.gstatic.com/firebasejs/9.5.0/firebase-storage.js";
 
 const firebaseConfig = {
@@ -57,6 +59,46 @@ const firebaseConfig = {
 
 export const app = initializeApp(firebaseConfig);
 
-export const db = getFirestore();
+const db = getFirestore(app);
 
-export const storage = getStorage();
+const storage = getStorage(app);
+
+const auth = getAuth(app);
+
+export {
+  db,
+  storage,
+  auth,
+  getStorage,
+  uploadBytes,
+  ref,
+  getFirestore,
+  getDownloadURL,
+  collection,
+  doc,
+  addDoc,
+  setDoc,
+  query,
+  where,
+  getDocs,
+  getDoc,
+  updateDoc,
+  arrayUnion,
+  arrayRemove,
+  onSnapshot,
+  deleteDoc,
+  orderBy,
+  signInWithEmailAndPassword,
+  getAuth,
+  createUserWithEmailAndPassword,
+  GoogleAuthProvider,
+  signInWithPopup,
+  signOut,
+  sendPasswordResetEmail,
+  updateEmail,
+  updatePassword,
+  updateProfile,
+  reauthenticateWithCredential,
+  EmailAuthProvider,
+  initializeApp,
+};
