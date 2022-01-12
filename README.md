@@ -211,7 +211,7 @@ b. Yo como usuario, quiero añadir imágenes a mis posts, para describir mejor m
   * Verificación manual de datos en Firestore Database y Storage
   *	Testeo de usabilidad</p></details>
 
-c. Editar perfil
+c. Yo como usuario, quiero poder editar mi perfil, para poder cambiar mi información a mi gusto
 
 <details><summary>Criterios de aceptación</summary><p>
 
