@@ -80,7 +80,7 @@ export function enviarIngreso() {
 
 const user = auth.currentUser;
 // console.log("este es el user actual", user);
-console.log("esto es auth", auth);
+//console.log("esto es auth", auth);
 
 export const loginGoogle = () => {
   // ! Deberiamos chequear primero si esta cuenta ya se encuentra registrada en el firebase,

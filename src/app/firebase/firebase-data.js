@@ -77,7 +77,7 @@ export async function getUserData(user_id) {
   console.log ({usuario})
   // if (docSnap.exists()) {
   //   console.log("Document data:", docSnap.data());
-    return  usuario;
+ return  usuario;
   // } else {
   //   // doc.data() will be undefined in this case
   //   console.log("No such document!");
