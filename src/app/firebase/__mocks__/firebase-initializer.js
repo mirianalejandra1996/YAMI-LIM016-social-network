@@ -30,10 +30,14 @@
   const app = {};
   const storage = {};
 
-
+const getUserData = jest.fn((newLocal) => Promise.resolve(
+  {values:
+    {name: "fake-name",
+    src: "fake-src"}}))
 
 export {
   getFirestore,
+  getUserData,
   getStorage,
   auth,
   enviarIngreso,
