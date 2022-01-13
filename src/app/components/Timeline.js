@@ -9,6 +9,8 @@ import { HeaderSimple } from "./Header_simple.js";
 import { ModalCerrarSesion } from "./Modal_cerrarSesion.js";
 import { ModalEliminarCom } from "./ModalDeleteComment.js";
 import { ModalEditCom } from "./ModalEditComment.js";
+import { auth } from "../firebase/firebase-auth.js";
+
 // import { ModalEditPost } from './Edit_post.js'
 // import { ModalCerrarSesion } from "./Modal_cerrar.js";
 
@@ -31,7 +33,8 @@ export function Timeline() {
     abrilModalCerrarSesion
     );
  // Importamos la Bienvenida al usuario
-const $bienvenidaUser = Bienvenida(abrirModalCreatePost);
+ const user = auth.currentUser;
+const $bienvenidaUser = Bienvenida(abrirModalCreatePost,user);
   //Enviamos los eventos a Menu
   const $menu = Menu(toggleModalPlus, toggleModalProfile);
 
