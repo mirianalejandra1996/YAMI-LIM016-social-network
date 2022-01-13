@@ -1,8 +1,6 @@
-import { auth } from "../firebase/firebase-auth.js";
 import { getUserData } from "../firebase/firebase-data.js";
 
-export function Bienvenida(abrirModalCreatePost) {
-  const user = auth.currentUser;
+export function Bienvenida(abrirModalCreatePost,user) {
 
   const $contenedorBienvenida = document.createElement("div");
   $contenedorBienvenida.classList.add("perfil-grid");
@@ -15,7 +13,7 @@ export function Bienvenida(abrirModalCreatePost) {
   const photoAvatar = document.createElement("img");
   photoAvatar.classList.add("photo__avatar-img");
   //   photoAvatar.src = "photoURL";
-  photoAvatar.src = `${user.photoURL}`;
+  //photoAvatar.src = `${user.photoURL}`;
   // photoAvatar.src = "../src/app/assets/brooke-cagle-k9XZPpPHDho-unsplash.jpg";
   photoAvatar.alt = "imgAvatar";
 
