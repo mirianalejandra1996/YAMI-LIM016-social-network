@@ -33,7 +33,7 @@ const provider = new GoogleAuthProvider(app);
 auth.languageCode = "es";
 
 /*******************Inicio de sesion con correo***************************/
-export const enviarIngreso = (email,password) => signInWithEmailAndPassword(auth, email, password)
+export const enviarIngreso = (email, password) => signInWithEmailAndPassword(auth, email, password)
 
 // export function enviarIngreso() {
 //   const email = document.getElementById("lemail").value;
