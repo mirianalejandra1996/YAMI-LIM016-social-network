@@ -18,7 +18,7 @@ export const Post = (
   abrirModalEditCom,
   setDataModalEditCom
 ) => {
-  // console.log(post)
+   console.log("aquiiiii",post)
 
   const user_id = auth.currentUser.uid;
   // console.log("currentuser", user_id);

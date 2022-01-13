@@ -23,4 +23,4 @@ describe('Testing DOM manipulation', () => {
     expect($errorLoginMessage).not.toBeUndefined()
     expect($errorLoginMessage.textContent).toBe(`Se envió un mensaje al correo ${testEmail}`)
 });
-  })g
+  })
