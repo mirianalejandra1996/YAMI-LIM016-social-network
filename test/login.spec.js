@@ -6,9 +6,8 @@
 import { olvideContrasena, Login, handleSubmit} from '../src/app/components/Login';
 
 
-jest.mock('../src/app/firebase/firebase-auth.js');
+// jest.mock('../src/app/firebase/firebase-auth.js');
 jest.mock('../src/app/firebase/firebase-initializer.js');
-
 
 describe('Testing DOM manipulation', () => {
     beforeAll((done) => {
