@@ -73,19 +73,17 @@ export async function getUserData(user_id) {
   const userRef = doc(db, "users", user_id);
   const docSnap = await getDoc(userRef);
 
-  // console.log( "esto es docsnap", docSnap)
-  // console.log("esto es data de docsnap",  docSnap.data())
-
-
+  const usuario = docSnap.data()
+  console.log ({usuario})
   // if (docSnap.exists()) {
-    // console.log("Document data:", docSnap.data());
-    return docSnap.data();
+  //   console.log("Document data:", docSnap.data());
+ return  usuario;
   // } else {
   //   // doc.data() will be undefined in this case
   //   console.log("No such document!");
   //   return {};
-  }
-
+  // }
+}
 // todo: AVERIGUAR SI EXISTE ALGÚN METODO EXCLUSIVO PARA SABER SI EL USUARIO EXISTE
 // todo: EN FIRESTORE O EN AUTH
 export async function isExistingUser(email) {
