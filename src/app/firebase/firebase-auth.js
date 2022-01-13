@@ -14,10 +14,12 @@ import {
   reauthenticateWithCredential,
   EmailAuthProvider,
 } from "../firebase/firebase-initializer.js";
+
 export {
   sendPasswordResetEmail,
   auth,
 }
+
 import {
   validate_field,
   validate_password,
