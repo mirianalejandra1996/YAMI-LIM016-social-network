@@ -21,13 +21,19 @@
   //   },
   // }
   // ));
-  const enviarIngreso = jest.fn(() => new Promise ((resolve,reject) => {
+
+  const enviarIngreso = jest.fn(() => { 
+    new Promise ((resolve,reject) => {
 
     resolve({
       user : {
           emailVerified: true,
         }}); 
-    reject();
+
+        reject({
+      user : {
+          errorMsg: true,
+        }}); 
   })
 
   // const enviarIngreso  = jest.fn((auth,email)=>Promise.resolve({values}))
@@ -65,6 +71,6 @@ export {
   app,
   storage,
   collection,
-  GoogleAuthProvider
+  GoogleAuthProvider,
   
-};
+}

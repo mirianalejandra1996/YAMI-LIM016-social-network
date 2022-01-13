@@ -198,11 +198,7 @@ export function olvideContrasena (email) {
 
 export const handleSubmit = (email,password) =>  {
   
-    console.log(email.value)
-    console.log(password.value)
-  
     return enviarIngreso(email.value, password.value)
-    // return enviarIngreso(auth, email.value, password.value)
     .then((userCredential) => {
       console.log("entramos al then de fn Enviar Ingreso");
       const user = userCredential.user;

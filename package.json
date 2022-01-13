@@ -41,5 +41,6 @@
     "firebase": "^9.5.0",
     "jquery": "^3.6.0",
     "jsdom": "^19.0.0"
-  }
+  },
+  "type": "module"
 }
