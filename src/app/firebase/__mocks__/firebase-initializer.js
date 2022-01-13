@@ -15,22 +15,36 @@
     user: newLocal,
   }
 
-  const enviarIngreso  = jest.fn((auth,email)=>Promise.resolve({values}))
+  // const enviarIngreso = jest.fn(() => Promise.resolve({
+  //   user: {
+  //     emailVerified: true,
+  //   },
+  // }
+  // ));
+
+  const enviarIngreso = jest.fn(() => { 
+    new Promise ((resolve,reject) => {
+
+    resolve({
+      user : {
+          emailVerified: true,
+        }}); 
+
+        reject({
+      user : {
+          errorMsg: true,
+        }}); 
+  })
+
+  // const enviarIngreso  = jest.fn((auth,email)=>Promise.resolve({values}))
   const loginGoogle  = jest.fn((auth,email)=>Promise.resolve({values}))
   const sendPasswordResetEmail = jest.fn(() => Promise.resolve());
   const GoogleAuthProvider = jest.fn(() => Promise.resolve({}));
   const collection = jest.fn((db, values) => Promise.resolve(values));
-  // const getDoc = jest.fn((userRef) => Promise.resolve(
-  //   {values:
-  //     {name: "fake-name",
-  //     src: "fake-src"}}))
-      const getDoc = jest.fn((userRef) => Promise.resolve(
-        {user:
-          {user_name: 'fake-name',
-          user_photo: "fake-photo",
-          }
-        }
-  ))
+  const getDoc = jest.fn((userRef) => Promise.resolve(
+    {values:
+      {name: "fake-name",
+      src: "fake-src"}}))
   const setDoc = jest.fn((document, values) => Promise.resolve({values}));
   const doc = jest.fn(() => Promise.resolve({}));
   const db = {};
@@ -57,6 +71,6 @@ export {
   app,
   storage,
   collection,
-  GoogleAuthProvider
+  GoogleAuthProvider,
   
-};
+}})
