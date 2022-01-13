@@ -1,3 +1,7 @@
+/**
+ * @jest-environment jsdom
+ */
+
 import { Bienvenida, obtenerUsuario } from '../src/app/components/Bienvenida.js';
 import { getUserData } from '../src/app/firebase/firebase-data.js';
 import { getDoc } from '../src/app/firebase/__mocks__/firebase-initializer.js';
