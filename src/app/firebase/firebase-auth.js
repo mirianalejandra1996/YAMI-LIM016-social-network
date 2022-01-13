@@ -35,54 +35,56 @@ const provider = new GoogleAuthProvider(app);
 auth.languageCode = "es";
 
 /*******************Inicio de sesion con correo***************************/
-export function enviarIngreso() {
-  const email = document.getElementById("lemail").value;
-  const password = document.getElementById("lpassword").value;
+export const enviarIngreso = (email,password) => signInWithEmailAndPassword(auth, email, password)
 
-  let $email = document.getElementById("lemail");
-  let $password = document.getElementById("lpassword");
+// export function enviarIngreso() {
+//   const email = document.getElementById("lemail").value;
+//   const password = document.getElementById("lpassword").value;
 
-  // console.log(email);
-  // console.log(password);
+//   let $email = document.getElementById("lemail");
+//   let $password = document.getElementById("lpassword");
 
-  signInWithEmailAndPassword(auth, email, password)
-    .then((userCredential) => {
-      console.log("entramos al then de fn Enviar Ingreso");
-      const user = userCredential.user;
-      console.log({ user });
-      window.location.hash = "#/timeline";
-    })
-    .catch((error) => {
-      const errorCode = error.code;
+//   // console.log(email);
+//   // console.log(password);
 
-      $email.classList.add("error");
-      $password.classList.add("error");
+//   signInWithEmailAndPassword(auth, email, password)
+//     .then((userCredential) => {
+//       console.log("entramos al then de fn Enviar Ingreso");
+//       const user = userCredential.user;
+//       console.log({ user });
+//       window.location.hash = "#/timeline";
+//     })
+//     .catch((error) => {
+//       const errorCode = error.code;
 
-      switch (errorCode) {
-        case "auth/user-not-found":
-          document.getElementById("errorLogin").innerHTML =
-            "Usuario no registrado";
-          break;
-        case "auth/wrong-password":
-          document.getElementById("errorLogin").innerHTML =
-            "Contraseña inválida";
-          break;
-        case "auth/invalid-email":
-          document.getElementById("errorLogin").innerHTML = "Ingrese su correo";
-          break;
-        case "auth/internal-error":
-          document.getElementById("errorLogin").innerHTML =
-            "Ingrese su contraseña";
-          break;
-      }
-    });
-}
+//       $email.classList.add("error");
+//       $password.classList.add("error");
+
+//       switch (errorCode) {
+//         case "auth/user-not-found":
+//           document.getElementById("errorLogin").innerHTML =
+//             "Usuario no registrado";
+//           break;
+//         case "auth/wrong-password":
+//           document.getElementById("errorLogin").innerHTML =
+//             "Contraseña inválida";
+//           break;
+//         case "auth/invalid-email":
+//           document.getElementById("errorLogin").innerHTML = "Ingrese su correo";
+//           break;
+//         case "auth/internal-error":
+//           document.getElementById("errorLogin").innerHTML =
+//             "Ingrese su contraseña";
+//           break;
+//       }
+//     });
+// }
 
 /************************Continuar con Google**********************************/
 
 const user = auth.currentUser;
 // console.log("este es el user actual", user);
-console.log("esto es auth", auth);
+//console.log("esto es auth", auth);
 
 export const loginGoogle = () => {
   // ! Deberiamos chequear primero si esta cuenta ya se encuentra registrada en el firebase,

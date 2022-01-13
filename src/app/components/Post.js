@@ -236,6 +236,7 @@ export const Post = (
   //   todo: HACER EVENTO a icono de like para actualizar datos
 
   initListenerPost(post.post_id, (postDoc) => {
+    console.log("holaaaaaa",postDoc)
     //se podria cambiar cualquier campo de post pero en este caso solo necesitamos los likes
 
     // console.log(postDoc.data())
