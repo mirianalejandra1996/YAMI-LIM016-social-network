@@ -2,7 +2,9 @@
  * @jest-environment jsdom
  */
 
+// import { olvideContrasena, Login } from '../src/app/components/Login';
 import { olvideContrasena, Login } from '../src/app/components/Login';
+
 
 jest.mock('../src/app/firebase/firebase-auth.js');
 jest.mock('../src/app/firebase/firebase-initializer.js');

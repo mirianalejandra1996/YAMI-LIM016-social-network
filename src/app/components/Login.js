@@ -86,8 +86,10 @@ export const Login = () => {
   $btn.classList.add("btn");
   $btn.id = "submit-register";
   $btn.addEventListener("click", () => {
-    enviarIngreso();
-  });
+    const email = document.getElementById("lemail")
+    const password = document.getElementById("lpassword")
+    handleSubmit(email,password)}
+    );
 
   $btn.href = "/#timeline";
   const $ingresar = document.createElement("span");
@@ -192,3 +194,45 @@ export function olvideContrasena (email) {
     // ..
   });
 }
+
+
+export const handleSubmit = (email,password) =>  {
+  
+    console.log(email.value)
+    console.log(password.value)
+  
+    return enviarIngreso(email.value, password.value)
+    // return enviarIngreso(auth, email.value, password.value)
+    .then((userCredential) => {
+      console.log("entramos al then de fn Enviar Ingreso");
+      const user = userCredential.user;
+      console.log({ user });
+      window.location.hash = "#/timeline";
+    })
+    .catch((error) => {
+      console.log('hubo un error, ', error.code)
+      const errorCode = error.code;
+
+        email.classList.add("error");
+        password.classList.add("error");
+
+      switch (errorCode) {
+        case "auth/user-not-found":
+          console.log('no se consiguió usuario')
+          document.getElementById("errorLogin").innerHTML =
+            "Usuario no registrado";
+          break;
+        case "auth/wrong-password":
+          document.getElementById("errorLogin").innerHTML =
+            "Contraseña inválida";
+          break;
+        case "auth/invalid-email":
+          document.getElementById("errorLogin").innerHTML = "Ingrese su correo";
+          break;
+        case "auth/internal-error":
+          document.getElementById("errorLogin").innerHTML =
+            "Ingrese su contraseña";
+          break;
+      }
+    })
+  }
