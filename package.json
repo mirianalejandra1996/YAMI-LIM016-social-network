@@ -14,10 +14,13 @@
     "eslint": "eslint --ext .js src/ test/",
     "stylelint": "stylelint --aei src/**/*.css",
     "pretest.out": "npm run htmlhint && npm run eslint && npm run stylelint",
-    "test": "NODE_OPTIONS=--experimental-vm-modules jest --coverage",
+    "test": "jest --coverage",
     "start": "serve src/"
   },
   "devDependencies": {
+    "@babel/core": "^7.16.7",
+    "@babel/preset-env": "^7.16.8",
+    "babel-jest": "^27.4.6",
     "eslint": "^7.7.0",
     "eslint-config-airbnb-base": "^14.2.0",
     "eslint-plugin-import": "^2.18.2",
@@ -34,5 +37,9 @@
   "engines": {
     "node": ">=10"
   },
-  "type": "module"
+  "dependencies": {
+    "firebase": "^9.5.0",
+    "jquery": "^3.6.0",
+    "jsdom": "^19.0.0"
+  }
 }
