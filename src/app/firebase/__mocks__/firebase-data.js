@@ -1,6 +1,3 @@
-const getFirestore = jest.fn();
-const getStorage = jest.fn();
-
 const newLocal = "fake-uid";
 
 const auth = {
@@ -48,3 +45,15 @@ export {
   collection,
   GoogleAuthProvider,
 };
+
+
+const createUser = jest.fn(() => new Promise((resolve, reject) => {
+    resolve({
+      userCredential: {
+        user: {
+          emailVerified: true,
+        },
+      },
+    });
+    reject(window.alert = jest.fn());
+  }));
