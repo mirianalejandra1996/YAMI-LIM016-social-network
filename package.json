@@ -42,7 +42,5 @@
     "jquery": "^3.6.0",
     "jsdom": "^19.0.0"
   },
-  "type": {
-    
-  }
+  "type": "module"
 }
