@@ -251,11 +251,21 @@ c. Yo como usuario, quiero poder editar mi perfil, para poder cambiar mi informa
 
 ### Testeo manual
 
+En cada sprint del proyecto el equipo testeo la aplicación desde cero para evitar llevarnos bugs de un sprint a otro.  Al destinar el primer sprint al diseño, evitamos muchas fallas en layout, contraste y malentendidos en la interfaz.
 
+La pantallas de registro y login mostraban el mismo eslogan, haciendolas muy similares a primera vista, por lo que decidimos usar el eslogan solo en registro y un mensaje de bienvenida en el login.
+
+Los diferentes modales también tenían errores, no se superponían al contenido del timeline o se superponian entre ellos al abrirlos simultaneamente, para esto anclamos los modales al timeline y creamos una función para hacer un toggle entre ellos.
+
+Los posts tenían una estructura más amplia que el resto de componentes por lo que encontramos muchos problemas en el camino.  Varios procesos de creación/actualización tomaban algo de tiempo, para esto implementamos el uso del loader.  Al editar, un post, la imagen no era editable, esta no cargaba y al volver a publicar, desaparecía.  Por último, el post tenía un max-height que no permitía ver el contenido completo si la imagen ingresada era muy grande, haciendo imposible comentar el post.
+
+En la etapa final del proyecto, agregamos una imagen por defecto a los usuarios nuevos logeados con correo electrónico y corregimos un bug que permitía a un usuario diferente al autor, editar y eliminar el post al inspeccionar la página.
 
 ### Testeo en entrevistas
 
+Realizamos varias entrevistas con diferentes usuarios de diferentes perfiles, desde compañeras de bootcamp (que también conocen el proceso de elaboración del proyecto), usuarios con amplia experiencia en redes sociales y usuarios poco experimentados en redes sociales.
 
+Tuvimos un percance al inicio del testeo, olvidamos colocar el url del deploy entre los dominios de Firebase, identificado el problema lo añadimos y continuamos con el testeo.  Los entrevistados coincidieron en que el diseño era agradable y bastante atractivo en su versión móvil, sus componentes son fácilmente entendibles al mirarlos.
 
 ## 6. Producto final
 
