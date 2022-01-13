@@ -15,7 +15,22 @@
     user: newLocal,
   }
 
-  const enviarIngreso  = jest.fn((auth,email)=>Promise.resolve({values}))
+  // const enviarIngreso = jest.fn(() => Promise.resolve({
+  //   user: {
+  //     emailVerified: true,
+  //   },
+  // }
+  // ));
+  const enviarIngreso = jest.fn(() => new Promise ((resolve,reject) => {
+
+    resolve({
+      user : {
+          emailVerified: true,
+        }}); 
+    reject();
+  })
+
+  // const enviarIngreso  = jest.fn((auth,email)=>Promise.resolve({values}))
   const loginGoogle  = jest.fn((auth,email)=>Promise.resolve({values}))
   const sendPasswordResetEmail = jest.fn(() => Promise.resolve());
   const GoogleAuthProvider = jest.fn(() => Promise.resolve({}));
