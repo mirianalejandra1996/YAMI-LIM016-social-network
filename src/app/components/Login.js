@@ -203,10 +203,10 @@ export const handleSubmit = () => {
   return enviarIngreso(emailContent, passwordContent)
     .then((userCredential) => {
       console.log("entramos al then de fn Enviar Ingreso");
+      document.getElementById("errorLogin").innerHTML = "Ingresando";
       const user = userCredential.user;
       console.log({ user });
       window.location.hash = "#/timeline";
-      document.getElementById("errorLogin").innerHTML = "Ingresando";
     })
     .catch((error) => {
       console.log("hubo un error, ", error.code);
