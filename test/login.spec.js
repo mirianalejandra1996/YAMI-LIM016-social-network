@@ -8,7 +8,10 @@ import {
   handleSubmit,
 } from "../src/app/components/Login";
 
-import { enviarIngreso } from "../src/app/firebase/firebase-auth.js";
+import {
+  enviarIngreso,
+  signInWithPopup,
+} from "../src/app/firebase/firebase-auth.js";
 
 jest.mock("../src/app/firebase/firebase-auth.js");
 jest.mock("../src/app/firebase/firebase-initializer.js");
@@ -102,4 +105,58 @@ describe("Testing DOM manipulation of olvideContrasena", () => {
       })
       .catch(done);
   });
+});
+
+// -------------------------------------------------------------------------------------
+
+describe("Testing function signInWithPopup of Firebase Auth", () => {
+  beforeAll((done) => {
+    document.body.id = "root";
+    document.body.innerHTML = "";
+    document.body.append(Login());
+    done();
+  });
+
+  it("should return an user id when button 'SignIn with Google' is clicked", (done) => {
+    // const signInElem = SignIn();
+    const btn = document.getElementById("btn-g");
+    const eventClick = new Event("click");
+    btn.dispatchEvent(eventClick);
+    const id = "fake-id-user";
+    const id2 = "fake-id-user-2";
+
+    signInWithPopup()
+      .then((data) => {
+        expect(data).toBe(id);
+        expect(data).not.toBe(id2);
+        done();
+      })
+      .catch(done);
+  });
+
+  // it("should return an user id when button 'SignIn with Google' is clicked USING MOCK.RESULTS", () => {
+  //   // const signInElem = SignIn();
+  //   const btn = document.getElementById("btn-g");
+  //   const eventClick = new Event("click");
+  //   btn.dispatchEvent(eventClick);
+  //   const id = "fake-id-user";
+
+  //   signInWithPopup.mock.results[0].value
+  //     .then((data) => {
+  //       expect(data).toBe(id);
+  //       // done();
+  //     })
+  //     .catch(done);
+  // });
+
+  // it("should return an user id when button 'SignIn with Google' is clicked USING MOCK.RESULTS", () => {
+  //   const signInElem = Login();
+  //   const btn = signInElem.querySelector("#btn-g");
+  //   const evt = new Event("click");
+  //   btn.dispatchEvent(evt);
+  //   const id = "fake-id-user";
+  //   signInWithPopup.mock.results[0].value.then((data) => {
+  //     expect(data).toBe(id);
+  //   });
+  // });
 });

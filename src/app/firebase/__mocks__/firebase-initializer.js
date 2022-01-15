@@ -16,7 +16,7 @@ const auth = {
 const setDoc = jest.fn((document, values) => Promise.resolve({ values }));
 const doc = jest.fn((db, collection, docId) => Promise.resolve({}));
 const db = {};
-// const collection = jest.fn((db, nameColletion) => Promise.resolve({}));
+const collection = jest.fn((db, nameColletion) => Promise.resolve({}));
 
 // const db = jest.fn(() => Promise.resolve({}));
 
@@ -25,7 +25,7 @@ export {
   setDoc,
   doc,
   db,
-  // collection,
+  collection,
   // getFirestore,
   // getUserData,
   // getStorage,

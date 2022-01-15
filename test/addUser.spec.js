@@ -1,3 +1,9 @@
+// import { enviarIngreso } from "../src/app/firebase/firebase-auth.js";
+
+// jest.mock("../src/app/firebase/firebase-auth.js");
+// jest.mock("../src/app/firebase/firebase-initializer.js");
+
+
 // import { Bienvenida, obtenerUsuario } from '../src/app/components/Bienvenida.js';
 import { addUser } from "../src/app/firebase/firebase-data.js";
 // import { addUser } from "../src/app/firebase/firebase-auth.js";
@@ -10,12 +16,7 @@ import {
   collection,
 } from "../src/app/firebase/firebase-initializer.js";
 
-// import { setDoc } from '../src/app/firebase/__mocks__/firebase-initializer.js';
-// import { getDoc } from '../src/app/firebase/__mocks__/firebase-initializer.js';
-
-// jest.mock("../src/app/firebase/firebase-auth.js");
 jest.mock("../src/app/firebase/firebase-initializer.js");
-// jest.mock("../src/app/firebase/firebase-data.js");
 
 describe("Testing AddUser firestore MOCK", () => {
   it(" should create a user if user is logged by google", () => {

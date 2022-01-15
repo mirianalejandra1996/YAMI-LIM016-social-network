@@ -1,6 +1,9 @@
-export const enviarIngreso = jest.fn(() => Promise.resolve());
-export const loginGoogle = jest.fn(() => Promise.resolve());
-export const sendPasswordResetEmail = jest.fn(() => Promise.resolve());
+const enviarIngreso = jest.fn(() => Promise.resolve());
+const loginGoogle = jest.fn(() => Promise.resolve());
+const sendPasswordResetEmail = jest.fn(() => Promise.resolve());
+const signInWithPopup = jest.fn(() => Promise.resolve("fake-id-user"));
+
+export { enviarIngreso, loginGoogle, sendPasswordResetEmail, signInWithPopup };
 
 // ! preguntar como hacer los casos de errores en caso que la promesa sea rechazada.
 // const here = false;
