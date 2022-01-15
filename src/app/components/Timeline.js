@@ -1,4 +1,4 @@
-import { Bienvenida } from "./Bienvenida.js"
+import { Bienvenida } from "./Bienvenida.js";
 import { Post } from "./Post.js";
 import { ModalCreatePost } from "./ModalCreatePost.js";
 import { ModalEditPost } from "./ModalEditPost.js";
@@ -9,18 +9,21 @@ import { HeaderSimple } from "./Header_simple.js";
 import { ModalCerrarSesion } from "./Modal_cerrarSesion.js";
 import { ModalEliminarCom } from "./ModalDeleteComment.js";
 import { ModalEditCom } from "./ModalEditComment.js";
+import { auth } from "../firebase/firebase-auth.js";
+
 // import { ModalEditPost } from './Edit_post.js'
 // import { ModalCerrarSesion } from "./Modal_cerrar.js";
 
 export function Timeline() {
+  console.log("esto es auth", auth);
   const $timeline = document.createElement("div");
-  $timeline.classList.add("timeline")
+  $timeline.classList.add("timeline");
   // Importamos la cabecera
   const $header = HeaderSimple();
   // Contenedor de las publicaciones
   const $postsContainer = document.createElement("div");
   $postsContainer.classList.add("notification-grid");
-  
+
   //Cerrar Sesion
   const { $modalCerrarSesion, abrilModalCerrarSesion } = ModalCerrarSesion();
   const { $modalCreatePost, abrirModalCreatePost } = ModalCreatePost();
@@ -29,9 +32,10 @@ export function Timeline() {
   // Perfil usuario
   const { menuModalProfile, toggleModalProfile } = ProfileList(
     abrilModalCerrarSesion
-    );
- // Importamos la Bienvenida al usuario
-const $bienvenidaUser = Bienvenida(abrirModalCreatePost);
+  );
+  // Importamos la Bienvenida al usuario
+  const user = auth.currentUser;
+  const $bienvenidaUser = Bienvenida(abrirModalCreatePost, user);
   //Enviamos los eventos a Menu
   const $menu = Menu(toggleModalPlus, toggleModalProfile);
 
