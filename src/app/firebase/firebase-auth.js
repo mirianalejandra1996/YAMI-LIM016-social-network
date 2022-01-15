@@ -15,10 +15,7 @@ import {
   EmailAuthProvider,
 } from "../firebase/firebase-initializer.js";
 
-export {
-  sendPasswordResetEmail,
-  auth,
-}
+export { sendPasswordResetEmail, auth };
 
 import {
   validate_field,
@@ -28,14 +25,14 @@ import {
 
 import { addUser } from "./firebase-data.js";
 
-
 const provider = new GoogleAuthProvider(app);
 
 // ! Qué dará esto?
 auth.languageCode = "es";
 
 /*******************Inicio de sesion con correo***************************/
-export const enviarIngreso = (email, password) => signInWithEmailAndPassword(auth, email, password)
+export const enviarIngreso = (email, password) =>
+  signInWithEmailAndPassword(auth, email, password);
 
 // export function enviarIngreso() {
 //   const email = document.getElementById("lemail").value;
@@ -89,10 +86,11 @@ const user = auth.currentUser;
 export const loginGoogle = () => {
   // ! Deberiamos chequear primero si esta cuenta ya se encuentra registrada en el firebase,
   // ! en caso de estar en el firestore, pedirle que ingrese sus datos
-  signInWithPopup(auth, provider)
+  return signInWithPopup(auth, provider)
     .then((response) => {
       const user = response.user;
-      console.log("sign in pop exitoso", user);
+      console.log("sign in pop exitoso", response);
+      // console.log("sign in pop exitoso", user);
       addUser(user, "", "");
       window.location.hash = "#/timeline";
     })

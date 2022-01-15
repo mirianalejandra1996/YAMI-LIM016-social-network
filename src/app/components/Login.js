@@ -209,7 +209,8 @@ export const handleSubmit = () => {
       window.location.hash = "#/timeline";
     })
     .catch((error) => {
-      console.log("hubo un error, ", error.code);
+      // console.log("hubo un error, ", error.code);
+      console.log("hubo un error, ", error);
       const errorCode = error.code;
 
       email.classList.add("error");

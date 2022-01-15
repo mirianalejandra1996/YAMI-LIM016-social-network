@@ -32,7 +32,11 @@ export function addUser(user, name, password) {
     passwordN,
     birthN = "";
 
+  console.log("tu eres el user", user);
+  console.log("tu eres el provider", user.providerData);
+  // user.currentUser.providerData[0].providerId
   if (user.providerData[0].providerId === "google.com") {
+    // console.log("tu eres el user", user);
     // console.log("estás logueado con google!!");
     nameN = user.displayName;
     emailN = user.email;
@@ -73,16 +77,16 @@ export async function getUserData(user_id) {
   const userRef = doc(db, "users", user_id);
   const docSnap = await getDoc(userRef);
 
-  const usuario = docSnap.data()
-  console.log ({usuario})
-  // if (docSnap.exists()) {
-  //   console.log("Document data:", docSnap.data());
- return  usuario;
-  // } else {
-  //   // doc.data() will be undefined in this case
-  //   console.log("No such document!");
-  //   return {};
-  // }
+  const usuario = docSnap.data();
+  console.log({ usuario });
+  if (docSnap.exists()) {
+    //   console.log("Document data:", docSnap.data());
+    return usuario;
+  } else {
+    //   // doc.data() will be undefined in this case
+    console.log("No such document!");
+    return {};
+  }
 }
 // todo: AVERIGUAR SI EXISTE ALGÚN METODO EXCLUSIVO PARA SABER SI EL USUARIO EXISTE
 // todo: EN FIRESTORE O EN AUTH
@@ -128,13 +132,13 @@ export async function changePasswordFirestore(user_id, password) {
 
   return updateDoc(userDocRef, {
     user_password: password,
-  })
-    // .then((data) => {
-    //   console.log("Si se actualizó el usuario en el firestore , ", data);
-    // })
-    // .catch((err) => {
-    //   console.log("No se puede actualizar el usuario en el firestore ", err);
-    // });
+  });
+  // .then((data) => {
+  //   console.log("Si se actualizó el usuario en el firestore , ", data);
+  // })
+  // .catch((err) => {
+  //   console.log("No se puede actualizar el usuario en el firestore ", err);
+  // });
 }
 
 export function changeBasicDataFirestore(user_id, objNewData) {
