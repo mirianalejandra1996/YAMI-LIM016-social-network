@@ -1,80 +1,71 @@
-const getFirestore = jest.fn();
-const getStorage = jest.fn();
-
-const newLocal = "fake-uid";
-
 const auth = {
   currentUser: {
-    uid: newLocal,
-    displayName: "fake-name"
+    uid: "fake-uid",
+    displayName: "fake-name",
+    providerData: [{ providerId: "google.com" }],
+    email: "fake-email",
+    photoURL: "fake-photo",
+    metadata: {
+      createdAt: "fake-time",
+    },
   },
 };
 
-const userRef = {
-  user: newLocal,
-}
+// const setDoc = jest.fn((document, values) => Promise.resolve({values}));
 
-// const enviarIngreso = jest.fn(() => Promise.resolve({
-//   user: {
-//     emailVerified: true,
-//   },
-// }
-// ));
-const enviarIngreso = jest.fn(() => new Promise((resolve, reject) => {
-
-    resolve({
-      user: {
-        emailVerified: true,
-      }
-    });
-    reject();
-  })
-)
-
-
-// const enviarIngreso  = jest.fn((auth,email)=>Promise.resolve({values}))
-const loginGoogle = jest.fn((auth, email) => Promise.resolve({
-  values
-}))
-const sendPasswordResetEmail = jest.fn(() => Promise.resolve());
-const GoogleAuthProvider = jest.fn(() => Promise.resolve({}));
-const collection = jest.fn((db, values) => Promise.resolve(values));
-const getDoc = jest.fn((userRef) => Promise.resolve({
-  values: {
-    name: "fake-name",
-    src: "fake-src"
-  }
-}))
-const setDoc = jest.fn((document, values) => Promise.resolve({
-  values
-}));
-const doc = jest.fn(() => Promise.resolve({}));
+const setDoc = jest.fn((document, values) => Promise.resolve({ values }));
+const doc = jest.fn((db, collection, docId) => Promise.resolve({}));
 const db = {};
-const app = {};
-const storage = {};
+const collection = jest.fn((db, nameColletion) => Promise.resolve({}));
 
-const getUserData = jest.fn((newLocal) => Promise.resolve({
-  values: {
-    name: "fake-name",
-    src: "fake-src"
-  }
-}))
+// const db = jest.fn(() => Promise.resolve({}));
 
 export {
-  getFirestore,
-  getUserData,
-  getStorage,
   auth,
-  enviarIngreso,
-  loginGoogle,
-  sendPasswordResetEmail,
-  getDoc,
   setDoc,
   doc,
   db,
-  app,
-  storage,
   collection,
-  GoogleAuthProvider
-
+  // getFirestore,
+  // getUserData,
+  // getStorage,
+  // loginGoogle,
+  // sendPasswordResetEmail,
+  // getDoc,
+  // app,
+  // storage,
+  // signInWithPopup,
+  // GoogleAuthProvider,
+  // signInWithEmailAndPassword,
 };
+
+// ! no sirvió con getUserData -----------------------------------------------------------
+// const getUserData = jest.fn((newLocal) =>
+//   Promise.resolve({
+//     values: {
+//       name: "fake-name",
+//       src: "fake-src",
+//     },
+//   })
+// );
+
+// const signInWithEmailAndPassword = jest.fn(() =>
+//   Promise.resolve({
+//     user: {},
+//   })
+// );
+
+// const storage = {};
+
+// const getFirestore = jest.fn();
+// const getStorage = jest.fn();
+
+// const loginGoogle = jest.fn((auth, email) =>
+//   Promise.resolve({
+//     values,
+//   })
+// );
+// const sendPasswordResetEmail = jest.fn(() => Promise.resolve());
+// const GoogleAuthProvider = jest.fn(() => Promise.resolve({}));
+
+const signInWithPopup = jest.fn((auth, provider) => Promise.resolve({}));
