@@ -1,18 +1,18 @@
 export function Menu(toggleModalPlus, toggleModalProfile) {
   const d = document;
   //Menu
-  const $menu = d.createElement("nav");
-  $menu.classList.add("menu");
-  $menu.id = "menu";
+  const menu = d.createElement("nav");
+  menu.classList.add("menu");
+  menu.id = "menu";
 
   //iconos del menu
   //icono 1
   const itemHome = d.createElement("a");
   itemHome.classList.add("menu__link", "home");
-  const $iconHome = document.createElement("i");
-  $iconHome.classList.add("icon-home");
+  const iconHome = document.createElement("i");
+  iconHome.classList.add("icon-home");
 
-  itemHome.append($iconHome);
+  itemHome.append(iconHome);
 
   //evento del ancla
   itemHome.addEventListener(
@@ -23,17 +23,17 @@ export function Menu(toggleModalPlus, toggleModalProfile) {
   //icono 2
   const itemLupa = d.createElement("a");
   itemLupa.classList.add("menu__link");
-  const $iconLupa = document.createElement("i");
-  $iconLupa.classList.add("icon-lupa");
+  const iconLupa = document.createElement("i");
+  iconLupa.classList.add("icon-lupa");
 
-  itemLupa.append($iconLupa);
+  itemLupa.append(iconLupa);
   //icono 3
   const itemPlus = d.createElement("a");
   itemPlus.classList.add("menu__link");
-  const $iconPlus = document.createElement("i");
-  $iconPlus.classList.add("icon-addPost");
+  const iconPlus = document.createElement("i");
+  iconPlus.classList.add("icon-addPost");
 
-  itemPlus.append($iconPlus);
+  itemPlus.append(iconPlus);
   itemPlus.addEventListener("click", () => {
     const modalProfile = document.getElementById("modalProfile");
     if (!modalProfile.classList.contains("cerrado")) {
@@ -44,17 +44,17 @@ export function Menu(toggleModalPlus, toggleModalProfile) {
   //icono 4
   const itemReseña = d.createElement("a");
   itemReseña.classList.add("menu__link");
-  const $iconReseña = document.createElement("i");
-  $iconReseña.classList.add("icon-comment");
+  const iconReseña = document.createElement("i");
+  iconReseña.classList.add("icon-comment");
 
-  itemReseña.append($iconReseña);
+  itemReseña.append(iconReseña);
   //icono 5
   const itemPerfil = d.createElement("a");
   itemPerfil.classList.add("menu__link", "user");
-  const $iconPerfil = document.createElement("i");
-  $iconPerfil.classList.add("icon-user1");
+  const iconPerfil = document.createElement("i");
+  iconPerfil.classList.add("icon-user1");
 
-  itemPerfil.append($iconPerfil);
+  itemPerfil.append(iconPerfil);
   itemPerfil.addEventListener("click", () => {
     const modalPlus = document.getElementById("modalPlus");
     if (!modalPlus.classList.contains("cerrado")) {
@@ -63,109 +63,109 @@ export function Menu(toggleModalPlus, toggleModalProfile) {
     toggleModalProfile();
   });
 
-  $menu.append(itemHome);
-  // $menu.append(itemLupa);
-  $menu.append(itemPlus);
-  // $menu.append(itemReseña);
-  $menu.append(itemPerfil);
+  menu.append(itemHome);
+  // menu.append(itemLupa);
+  menu.append(itemPlus);
+  // menu.append(itemReseña);
+  menu.append(itemPerfil);
 
-  return $menu;
+  return menu;
 }
 
 // LISTAS DESPLEGABLES
 
 export function MenuList(abrirModalCreatePost) {
-  const $modalContenedor = document.createElement("div");
-  $modalContenedor.id = "modalPlus";
-  $modalContenedor.classList.add("modal__contenedor", "align-end", "cerrado");
+  const modalContenedor = document.createElement("div");
+  modalContenedor.id = "modalPlus";
+  modalContenedor.classList.add("modal__contenedor", "align-end", "cerrado");
 
-  const $modalLista = document.createElement("div");
-  $modalLista.classList.add("modal__lista");
+  const modalLista = document.createElement("div");
+  modalLista.classList.add("modal__lista");
 
-  const $itemsPublicacion = document.createElement("button");
-  $itemsPublicacion.classList.add("modal__button");
-  $itemsPublicacion.textContent = "Publicación";
+  const itemsPublicacion = document.createElement("button");
+  itemsPublicacion.classList.add("modal__button");
+  itemsPublicacion.textContent = "Publicación";
 
-  $itemsPublicacion.addEventListener("click", () => {
+  itemsPublicacion.addEventListener("click", () => {
     abrirModalCreatePost();
   });
 
-  const $itemsReseña = document.createElement("button");
-  $itemsReseña.classList.add("modal__button");
-  $itemsReseña.textContent = "Reseña";
+  const itemsReseña = document.createElement("button");
+  itemsReseña.classList.add("modal__button");
+  itemsReseña.textContent = "Reseña";
 
-  const $itemsHistoria = document.createElement("button");
-  $itemsHistoria.classList.add("modal__button");
-  $itemsHistoria.textContent = "Historia";
+  const itemsHistoria = document.createElement("button");
+  itemsHistoria.classList.add("modal__button");
+  itemsHistoria.textContent = "Historia";
 
-  $modalLista.append($itemsPublicacion);
-  $modalLista.append($itemsReseña);
-  $modalLista.append($itemsHistoria);
+  modalLista.append(itemsPublicacion);
+  modalLista.append(itemsReseña);
+  modalLista.append(itemsHistoria);
 
-  $modalContenedor.append($modalLista);
+  modalContenedor.append(modalLista);
 
-  $modalContenedor.addEventListener("click", () => {
+  modalContenedor.addEventListener("click", () => {
     toggleModalPlus();
   });
   const toggleModalPlus = () => {
-    $modalContenedor.classList.toggle("cerrado");
+    modalContenedor.classList.toggle("cerrado");
   };
 
   return {
-    menuModalPlus: $modalContenedor,
+    menuModalPlus: modalContenedor,
     toggleModalPlus: toggleModalPlus,
   };
 }
 
 export function ProfileList(abrilModalCerrarSesion) {
-  const $modalContenedorPerfil = document.createElement("div");
-  $modalContenedorPerfil.id = "modalProfile";
-  $modalContenedorPerfil.classList.add(
+  const modalContenedorPerfil = document.createElement("div");
+  modalContenedorPerfil.id = "modalProfile";
+  modalContenedorPerfil.classList.add(
     "modal__contenedor",
     "align-end",
     "cerrado"
   );
 
-  const $modalLista = document.createElement("div");
-  $modalLista.classList.add("modal__lista");
+  const modalLista = document.createElement("div");
+  modalLista.classList.add("modal__lista");
 
-  const $itemsPerfil = document.createElement("button");
-  $itemsPerfil.classList.add("modal__button");
-  $itemsPerfil.textContent = "Ver perfil";
+  const itemsPerfil = document.createElement("button");
+  itemsPerfil.classList.add("modal__button");
+  itemsPerfil.textContent = "Ver perfil";
 
-  const $itemsCerrarSesion = document.createElement("button");
-  $itemsCerrarSesion.classList.add("modal__button");
-  $itemsCerrarSesion.textContent = "Cerrar sesión";
+  const itemsCerrarSesion = document.createElement("button");
+  itemsCerrarSesion.classList.add("modal__button");
+  itemsCerrarSesion.textContent = "Cerrar sesión";
 
-  $itemsCerrarSesion.addEventListener("click", () => {
+  itemsCerrarSesion.addEventListener("click", () => {
     abrilModalCerrarSesion();
   });
   /********************************************/
 
-  $itemsPerfil.addEventListener("click", () => {
+  itemsPerfil.addEventListener("click", () => {
     console.log("cambiando de vista a Muro!");
     window.location.hash = "#/muro";
   });
 
-  $itemsCerrarSesion.addEventListener("click", (e) => {
+  itemsCerrarSesion.addEventListener("click", (e) => {
     e.preventDefault();
     abrirModal();
   });
   /****************************************/
-  $modalLista.append($itemsPerfil);
-  $modalLista.append($itemsCerrarSesion);
+  modalLista.append(itemsPerfil);
+  modalLista.append(itemsCerrarSesion);
 
-  $modalContenedorPerfil.append($modalLista);
+  modalContenedorPerfil.append(modalLista);
 
-  $modalContenedorPerfil.addEventListener("click", () => {
+  modalContenedorPerfil.addEventListener("click", () => {
     toggleModalProfile();
   });
   const toggleModalProfile = () => {
-    $modalContenedorPerfil.classList.toggle("cerrado");
+    modalContenedorPerfil.classList.toggle("cerrado");
   };
 
   return {
-    menuModalProfile: $modalContenedorPerfil,
+    menuModalProfile: modalContenedorPerfil,
     toggleModalProfile: toggleModalProfile,
   };
 }

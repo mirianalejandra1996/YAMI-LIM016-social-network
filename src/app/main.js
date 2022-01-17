@@ -5,5 +5,3 @@ import { Router } from "./view-controller/Router.js";
 document.addEventListener("DOMContentLoaded", () => {
   Router();
 });
-
-

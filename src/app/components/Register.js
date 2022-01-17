@@ -8,191 +8,191 @@ export const Registro = () => {
   const root= document.getElementById("root")
   root.classList.add("main-container")
 
-  const $register = document.createElement("div");
-  $register.classList.add("register-container");
+  const register = document.createElement("div");
+  register.classList.add("register-container");
 
-  const $logoContainer = Logo();
-  const $eslogan = Eslogan("¿Listo para una nueva aventura culinaria?");
+  const logoContainer = Logo();
+  const eslogan = Eslogan("¿Listo para una nueva aventura culinaria?");
 
-  const $inputsContainer = document.createElement("div");
-  $inputsContainer.classList.add("inputs-container");
+  const inputsContainer = document.createElement("div");
+  inputsContainer.classList.add("inputs-container");
 
-  const $form = document.createElement("form");
-  $form.classList.add("form");
-  $form.id = "form-register";
-
-  // ---------------------
-
-  const $formInputContainerNombre = document.createElement("div");
-  $formInputContainerNombre.classList.add("form__input-container");
-  const $iconName = document.createElement("span");
-  $iconName.classList.add("icon-user");
-  $iconName.classList.add("form__icon");
-  $iconName.classList.add("form__icon--black");
-  const $formInputName = document.createElement("input");
-  $formInputName.classList.add("form__input");
-
-
-
-  $formInputName.type = "text";
-  $formInputName.id = "rname";
-  $formInputName.name = "nombre";
-  $formInputName.placeholder = "Nombre";
-
-  $formInputContainerNombre.append($iconName);
-  $formInputContainerNombre.append($formInputName);
+  const form = document.createElement("form");
+  form.classList.add("form");
+  form.id = "form-register";
 
   // ---------------------
 
-  const $formInputContainerEmail = document.createElement("div");
-  $formInputContainerEmail.classList.add("form__input-container");
-  const $iconMail = document.createElement("span");
-  $iconMail.classList.add("icon-mail");
-  $iconMail.classList.add("form__icon");
-  $iconMail.classList.add("form__icon--black");
-  const $formInputFirst = document.createElement("input");
-  $formInputFirst.classList.add("form__input");
-  $formInputFirst.type = "email";
-  $formInputFirst.id = "remail";
-  $formInputFirst.name = "remail";
-  $formInputFirst.placeholder = "Correo electrónico";
+  const formInputContainerNombre = document.createElement("div");
+  formInputContainerNombre.classList.add("form__input-container");
+  const iconName = document.createElement("span");
+  iconName.classList.add("icon-user");
+  iconName.classList.add("form__icon");
+  iconName.classList.add("form__icon--black");
+  const formInputName = document.createElement("input");
+  formInputName.classList.add("form__input");
 
-  $formInputContainerEmail.append($iconMail);
-  $formInputContainerEmail.append($formInputFirst);
 
-  const $formInputContainerPassword = document.createElement("div");
-  $formInputContainerPassword.classList.add("form__input-container");
-  const $iconLock = document.createElement("span");
-  $iconLock.classList.add("icon-lock");
-  $iconLock.classList.add("form__icon");
-  $iconLock.classList.add("form__icon--black");
-  const $formInputSecond = document.createElement("input");
-  $formInputSecond.classList.add("form__input");
-  $formInputSecond.type = "password";
-  $formInputSecond.id = "rpassword";
-  $formInputSecond.name = "rpassword";
-  $formInputSecond.placeholder = "Contraseña";
 
-  $formInputContainerPassword.append($iconLock);
-  $formInputContainerPassword.append($formInputSecond);
+  formInputName.type = "text";
+  formInputName.id = "rname";
+  formInputName.name = "nombre";
+  formInputName.placeholder = "Nombre";
 
-  $form.append($formInputContainerNombre);
-  $form.append($formInputContainerEmail);
-  $form.append($formInputContainerPassword);
+  formInputContainerNombre.append(iconName);
+  formInputContainerNombre.append(formInputName);
 
-  const $errorContainer = document.createElement("div");
-  $errorContainer.classList.add("err-container");
+  // ---------------------
+
+  const formInputContainerEmail = document.createElement("div");
+  formInputContainerEmail.classList.add("form__input-container");
+  const iconMail = document.createElement("span");
+  iconMail.classList.add("icon-mail");
+  iconMail.classList.add("form__icon");
+  iconMail.classList.add("form__icon--black");
+  const formInputFirst = document.createElement("input");
+  formInputFirst.classList.add("form__input");
+  formInputFirst.type = "email";
+  formInputFirst.id = "remail";
+  formInputFirst.name = "remail";
+  formInputFirst.placeholder = "Correo electrónico";
+
+  formInputContainerEmail.append(iconMail);
+  formInputContainerEmail.append(formInputFirst);
+
+  const formInputContainerPassword = document.createElement("div");
+  formInputContainerPassword.classList.add("form__input-container");
+  const iconLock = document.createElement("span");
+  iconLock.classList.add("icon-lock");
+  iconLock.classList.add("form__icon");
+  iconLock.classList.add("form__icon--black");
+  const formInputSecond = document.createElement("input");
+  formInputSecond.classList.add("form__input");
+  formInputSecond.type = "password";
+  formInputSecond.id = "rpassword";
+  formInputSecond.name = "rpassword";
+  formInputSecond.placeholder = "Contraseña";
+
+  formInputContainerPassword.append(iconLock);
+  formInputContainerPassword.append(formInputSecond);
+
+  form.append(formInputContainerNombre);
+  form.append(formInputContainerEmail);
+  form.append(formInputContainerPassword);
+
+  const errorContainer = document.createElement("div");
+  errorContainer.classList.add("err-container");
 
   // aquiiii
-  const $msgError = document.createElement("small");
-  $msgError.classList.add("error-msg");
-  $msgError.id = "errorLogin";
-  $msgError.textContent = "";
+  const msgError = document.createElement("small");
+  msgError.classList.add("error-msg");
+  msgError.id = "errorLogin";
+  msgError.textContent = "";
 
-  $errorContainer.append($msgError);
+  errorContainer.append(msgError);
 
-  const $btn = document.createElement("div");
-  $btn.classList.add("btn");
-  $btn.id = "submit-register";
-  $btn.addEventListener("click", enviarRegistro);
-  $btn.href = "/#timeline";
-  const $ingresar = document.createElement("span");
-  $ingresar.classList.add("btn__text");
-  $ingresar.textContent = `Registrarse`;
+  const btn = document.createElement("div");
+  btn.classList.add("btn");
+  btn.id = "submit-register";
+  btn.addEventListener("click", enviarRegistro);
+  btn.href = "/#timeline";
+  const ingresar = document.createElement("span");
+  ingresar.classList.add("btn__text");
+  ingresar.textContent = `Registrarse`;
 
-  $btn.append($ingresar);
+  btn.append(ingresar);
 
-  const $btnG = document.createElement("div");
-  $btnG.classList.add("btn-g");
-  $btn.href = "/#nada";
-  const $googleIcon = document.createElement("span");
-  $googleIcon.classList.add("icon-google");
-  $googleIcon.classList.add("form__icon");
+  const btnG = document.createElement("div");
+  btnG.classList.add("btn-g");
+  btn.href = "/#nada";
+  const googleIcon = document.createElement("span");
+  googleIcon.classList.add("icon-google");
+  googleIcon.classList.add("form__icon");
 
-  const $span1 = document.createElement("span");
-  $span1.classList.add("path1");
-  const $span2 = document.createElement("span");
-  $span2.classList.add("path2");
-  const $span3 = document.createElement("span");
-  $span3.classList.add("path3");
-  const $span4 = document.createElement("span");
-  $span4.classList.add("path4");
-  const $span5 = document.createElement("span");
-  $span5.classList.add("path5");
-  const $span6 = document.createElement("span");
-  $span6.classList.add("path6");
+  const span1 = document.createElement("span");
+  span1.classList.add("path1");
+  const span2 = document.createElement("span");
+  span2.classList.add("path2");
+  const span3 = document.createElement("span");
+  span3.classList.add("path3");
+  const span4 = document.createElement("span");
+  span4.classList.add("path4");
+  const span5 = document.createElement("span");
+  span5.classList.add("path5");
+  const span6 = document.createElement("span");
+  span6.classList.add("path6");
 
-  $googleIcon.append($span1);
-  $googleIcon.append($span2);
-  $googleIcon.append($span3);
-  $googleIcon.append($span4);
-  $googleIcon.append($span5);
-  $googleIcon.append($span6);
+  googleIcon.append(span1);
+  googleIcon.append(span2);
+  googleIcon.append(span3);
+  googleIcon.append(span4);
+  googleIcon.append(span5);
+  googleIcon.append(span6);
 
-  const $google = document.createElement("span");
-  $google.textContent = `Continuar con Google`;
-  $google.addEventListener("click", loginGoogle);
+  const google = document.createElement("span");
+  google.textContent = `Continuar con Google`;
+  google.addEventListener("click", loginGoogle);
 
-  $btnG.append($googleIcon);
-  $btnG.append($google);
+  btnG.append(googleIcon);
+  btnG.append(google);
 
   const linkLogIn = document.createElement("div");
   linkLogIn.id = "linkLogin";
   linkLogIn.classList.add("redirect-text");
 
-  const $spanAsk = document.createElement("span");
-  $spanAsk.textContent = `¿Ya tienes una cuenta?`;
-  $spanAsk.classList.add("redirect-text__left");
-  const $link = document.createElement("span");
-  $link.classList.add("redirect-text__link");
-  $link.id = "log-in";
+  const spanAsk = document.createElement("span");
+  spanAsk.textContent = `¿Ya tienes una cuenta?`;
+  spanAsk.classList.add("redirect-text__left");
+  const link = document.createElement("span");
+  link.classList.add("redirect-text__link");
+  link.id = "log-in";
 
-  $link.textContent = `Inicia sesión`;
-  $link.addEventListener("click", () => {
+  link.textContent = `Inicia sesión`;
+  link.addEventListener("click", () => {
     window.location.hash = "#/";
   });
 
-  linkLogIn.append($spanAsk);
-  linkLogIn.append($link);
+  linkLogIn.append(spanAsk);
+  linkLogIn.append(link);
 
   // Terminos y Condiciones
-  const $termsContainer = document.createElement("div");
-  $termsContainer.id = "termsAndConditions";
-  $termsContainer.classList.add("redirect-text");
+  const termsContainer = document.createElement("div");
+  termsContainer.id = "termsAndConditions";
+  termsContainer.classList.add("redirect-text");
 
-  const $terminosText = document.createElement("span");
-  $terminosText.textContent = "Al continuar acepto los ";
-  $terminosText.classList.add("redirect-text__left-small");
+  const terminosText = document.createElement("span");
+  terminosText.textContent = "Al continuar acepto los ";
+  terminosText.classList.add("redirect-text__left-small");
 
-  const $terminosLink = document.createElement("span");
-  $terminosLink.textContent = "Términos de Servicio y Política de Privacidad";
-  $terminosLink.classList.add("redirect-text__link");
-  $terminosLink.classList.add("redirect-text__link--noMarginLeft");
-  $terminosLink.classList.add("redirect-text__link-small");
+  const terminosLink = document.createElement("span");
+  terminosLink.textContent = "Términos de Servicio y Política de Privacidad";
+  terminosLink.classList.add("redirect-text__link");
+  terminosLink.classList.add("redirect-text__link--noMarginLeft");
+  terminosLink.classList.add("redirect-text__link-small");
 
-  $termsContainer.append($terminosText);
-  $termsContainer.append($terminosLink);
+  termsContainer.append(terminosText);
+  termsContainer.append(terminosLink);
 
-  $inputsContainer.append($form);
-  $inputsContainer.append($termsContainer);
-  $inputsContainer.append($errorContainer);
-  $inputsContainer.append($btn);
-  $inputsContainer.append($btnG);
-  $inputsContainer.append(linkLogIn);
+  inputsContainer.append(form);
+  inputsContainer.append(termsContainer);
+  inputsContainer.append(errorContainer);
+  inputsContainer.append(btn);
+  inputsContainer.append(btnG);
+  inputsContainer.append(linkLogIn);
 
-  $register.append($logoContainer);
-  $register.append($eslogan);
-  $register.append($inputsContainer);
+  register.append(logoContainer);
+  register.append(eslogan);
+  register.append(inputsContainer);
 
-  const { $modalContenedor, abrirModal } = ModalTerminos();
+  const { modalContenedor, abrirModal } = ModalTerminos();
 
-  $register.append($modalContenedor);
+  register.append(modalContenedor);
 
-  $terminosLink.addEventListener("click", (e) => {
+  terminosLink.addEventListener("click", (e) => {
     e.preventDefault();
     abrirModal();
   });
 
-  return $register;
+  return register;
 
 };
