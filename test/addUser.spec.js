@@ -17,15 +17,21 @@ describe("Testing AddUser firestore MOCK", () => {
     // no deberían servir de nada
     const name = "";
     const password = "";
+    const fakeInfo = {"values": {
+        "user_birth": "",
+        "user_createdAt": "fake-time",
+        "user_email": "fake-email",
+        "user_id": "fake-uid",
+        "user_logedBy": "google",
+        "user_name": "fake-name",
+        "user_password": null,
+        "user_photo": "fake-photo",
+      }
+    }
     
     addUser(user.currentUser, name, password)
-      .then((res) => {
-        console.log("response esssssssssss ", res);
-        
-        expect(res).toEqual({ probando: "algo" });
+      .then((res) => {        
+        expect(res).toEqual(fakeInfo);
       })
-      .catch((err) => {
-        console.log("un errooooooooooooooooooor", err);
-      });
   });
 });
