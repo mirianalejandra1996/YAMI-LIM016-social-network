@@ -5,7 +5,6 @@
  import {
     olvideContrasena,
     Login,
-    handleSubmit,
   } from "../src/app/components/Login";
   
   import { enviarIngreso } from "../src/app/firebase/firebase-auth.js";

@@ -18,10 +18,10 @@ export const Post = (
   abrirModalEditCom,
   setDataModalEditCom
 ) => {
-   console.log("aquiiiii",post)
+  //  console.log("aquiiiii",post)
 
   const user_id = auth.currentUser.uid;
-  // console.log("currentuser", user_id);
+  
   const $card = document.createElement("div");
   $card.classList.add("card");
 
@@ -236,7 +236,7 @@ export const Post = (
   //   todo: HACER EVENTO a icono de like para actualizar datos
 
   initListenerPost(post.post_id, (postDoc) => {
-    console.log("holaaaaaa",postDoc)
+    // console.log("holaaaaaa",postDoc)
     //se podria cambiar cualquier campo de post pero en este caso solo necesitamos los likes
 
     // console.log(postDoc.data())

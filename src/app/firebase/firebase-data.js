@@ -32,8 +32,8 @@ export function addUser(user, name, password) {
     passwordN,
     birthN = "";
 
-  console.log("tu eres el user", user);
-  console.log("tu eres el provider", user.providerData);
+  // console.log("tu eres el user", user);
+  // console.log("tu eres el provider", user.providerData);
   // user.currentUser.providerData[0].providerId
   if (user.providerData[0].providerId === "google.com") {
     // console.log("tu eres el user", user);
@@ -66,8 +66,11 @@ export function addUser(user, name, password) {
     user_logedBy: logedByN,
     user_birth: birthN,
   })
-    .then(() => {
+    .then((userDocRef) => {
       console.log("usuario subido al firestore!");
+      console.log("esto es setdoc", userdoc)
+      console.log("esto es userdocref", userDocRef)
+      return userDocRef
     })
     .catch((err) => console.log(err));
 }
@@ -174,7 +177,7 @@ export function addPost(message) {
     likes: [],
   })
     .then((postDocRef) => {
-      console.log("post subido al firestore!");
+      console.log("post subido al firestore!", postDocRef);
       return postDocRef;
     })
     .catch((err) => console.log(err));

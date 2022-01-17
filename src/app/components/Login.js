@@ -162,7 +162,7 @@ export const Login = () => {
   $login.append($eslogan);
   $login.append($inputsContainer);
 
-  console.log("esto es login", $login);
+  // console.log("esto es login", $login);
   return $login;
 };
 
