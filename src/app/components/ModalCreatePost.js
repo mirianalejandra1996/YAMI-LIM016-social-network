@@ -188,7 +188,8 @@ function changeImageInputLabelText($label, text) {
       }
 
       cerrarModal();
-      window.location.hash = '#/timeline'
+      location.reload()
+//       window.location.hash = '#/timeline'
 
     }
   });
