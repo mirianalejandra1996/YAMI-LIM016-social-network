@@ -38,8 +38,8 @@ export const enviarIngreso = (email, password) =>
 //   const email = document.getElementById("lemail").value;
 //   const password = document.getElementById("lpassword").value;
 
-//   let $email = document.getElementById("lemail");
-//   let $password = document.getElementById("lpassword");
+//   let email = document.getElementById("lemail");
+//   let password = document.getElementById("lpassword");
 
 //   // console.log(email);
 //   // console.log(password);
@@ -54,8 +54,8 @@ export const enviarIngreso = (email, password) =>
 //     .catch((error) => {
 //       const errorCode = error.code;
 
-//       $email.classList.add("error");
-//       $password.classList.add("error");
+//       email.classList.add("error");
+//       password.classList.add("error");
 
 //       switch (errorCode) {
 //         case "auth/user-not-found":
@@ -119,29 +119,29 @@ export function enviarRegistro() {
   document.getElementById("errorLogin").textContent = "";
   // Primera vista de registro
 
-  let $name = document.getElementById("rname");
-  let $email = document.getElementById("remail");
-  let $password = document.getElementById("rpassword");
+  let name = document.getElementById("rname");
+  let email = document.getElementById("remail");
+  let password = document.getElementById("rpassword");
 
-  $name.classList.remove("error");
-  $email.classList.remove("error");
-  $password.classList.remove("error");
+  name.classList.remove("error");
+  email.classList.remove("error");
+  password.classList.remove("error");
 
-  let name = $name.value.trim();
-  let email = $email.value.trim();
-  let password = $password.value.trim();
+  let nameV = name.value.trim();
+  let emailV = email.value.trim();
+  let passwordV = password.value.trim();
   // Validando los campos
 
   // ------------------------------------
 
-  if (!validate_email(email) || !validate_password(password)) {
+  if (!validate_email(emailV) || !validate_password(passwordV)) {
     document.getElementById("errorLogin").textContent = "Datos inválidos";
   }
 
   if (
-    !validate_field(name) ||
-    !validate_field(email) ||
-    !validate_field(password)
+    !validate_field(nameV) ||
+    !validate_field(emailV) ||
+    !validate_field(passwordV)
   ) {
     // ------------------------------------
 
@@ -151,21 +151,21 @@ export function enviarRegistro() {
 
     // Pinta el input
 
-    $name.classList.remove("success");
-    $email.classList.remove("success");
-    $password.classList.remove("success");
+    name.classList.remove("success");
+    email.classList.remove("success");
+    password.classList.remove("success");
 
-    $name.classList.add("error");
-    $email.classList.add("error");
-    $password.classList.add("error");
+    name.classList.add("error");
+    email.classList.add("error");
+    password.classList.add("error");
   } else {
-    $name.classList.remove("error");
-    $email.classList.remove("error");
-    $password.classList.remove("error");
+    name.classList.remove("error");
+    email.classList.remove("error");
+    password.classList.remove("error");
 
-    $name.classList.add("success");
-    $email.classList.add("success");
-    $password.classList.add("success");
+    name.classList.add("success");
+    email.classList.add("success");
+    password.classList.add("success");
 
     // Validando los campos de la siguiente vista, si están vacios
 
@@ -222,7 +222,7 @@ export function enviarRegistro() {
 }
 
 // todo: pendiente hacer funcionalidad de validación de nombre
-// nombre: /^[a-zA-ZÀ-ÿ\s]{1,40}$/, // Letras y espacios, pueden llevar acentos.
+// nombre: /^[a-zA-ZÀ-ÿ\s]{1,40}/, // Letras y espacios, pueden llevar acentos.
 // Funciones validadoras
 // export function validate_email(email) {
 //   const expression = /^([\.\_a-zA-Z0-9]+)@([a-zA-A]+)\.([a-zA-Z]){2,8}/;
@@ -233,7 +233,7 @@ export function enviarRegistro() {
 // export function validate_password(password) {
 //   // La contraseña debe tener entre 8 a 14 caracteres
 
-//   const expression = /^.{6,14}$/;
+//   const expression = /^.{6,14}/;
 
 //   // si hace match
 //   if (!expression.test(password)) {
@@ -244,7 +244,7 @@ export function enviarRegistro() {
 // }
 
 // export function validate_field(field) {
-//   // const expression = /^[a-zA-ZÀ-ÿ\s]{1,40}$/;
+//   // const expression = /^[a-zA-ZÀ-ÿ\s]{1,40}/;
 
 //   // if (!expression.test(field) == true){
 //   //   return false
@@ -267,7 +267,7 @@ export function enviarRegistro() {
 //     .then(() => {
 //       document.getElementById(
 //         "errorLogin"
-//       ).innerHTML = ` Se envió un mensaje al correo ${email}`;
+//       ).innerHTML = ` Se envió un mensaje al correo {email}`;
 //     })
 //     .catch((error) => {
 //       const errorCode = error.code;
