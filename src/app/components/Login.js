@@ -171,7 +171,7 @@ export function olvideContrasena(email) {
     .then(() => {
       document.getElementById(
         "errorLogin"
-      ).innerHTML = `Se envió un mensaje al correo {email}`;
+      ).innerHTML = `Se envió un mensaje al correo ${email}`;
     })
     .catch((error) => {
       const errorCode = error.code;

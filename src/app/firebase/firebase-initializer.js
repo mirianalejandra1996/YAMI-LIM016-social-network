@@ -1,5 +1,5 @@
 // eslint-disable-next-line import/no-unresolved
-import { initializeApp } from 'https://www.gstatic.com/firebasejs/9.5.0/firebase-app.js';
+import { initializeApp } from "https://www.gstatic.com/firebasejs/9.5.0/firebase-app.js";
 
 // Importacion de metodos
 import {
@@ -14,7 +14,9 @@ import {
   updatePassword,
   updateProfile,
   reauthenticateWithCredential,
-  EmailAuthProvider, // updatePassword,
+  EmailAuthProvider,
+  onAuthStateChanged,
+  // updatePassword,
   // eslint-disable-next-line import/no-unresolved
 } from "https://www.gstatic.com/firebasejs/9.5.0/firebase-auth.js";
 
@@ -101,4 +103,5 @@ export {
   reauthenticateWithCredential,
   EmailAuthProvider,
   initializeApp,
+  onAuthStateChanged,
 };

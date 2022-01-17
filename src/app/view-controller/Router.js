@@ -1,6 +1,7 @@
 import { auth } from "../firebase/firebase-auth.js";
 import { components } from "../view-controller/index.js";
-import { onAuthStateChanged } from "https://www.gstatic.com/firebasejs/9.5.0/firebase-auth.js";
+// import { onAuthStateChanged } from "https://www.gstatic.com/firebasejs/9.5.0/firebase-auth.js";
+import { onAuthStateChanged } from "../firebase/firebase-initializer.js";
 import { Loader } from "../view-controller/Loader.js";
 
 //se ejecuta una sola vez
