@@ -5,14 +5,14 @@ import {
 } from "../firebase/firebase-data.js";
 import {
   auth,
-  // validate_email,
-  // validate_field,
+  // validateEmail,
+  // validateField,
   changeNameAndPhotoAuth,
   changeEmailAuth,
   createCredential,
   reautentificacion,
 } from "../firebase/firebase-auth.js";
-import { validate_email, validate_field } from "../helpers/forms-validation.js";
+import { validateEmail, validateField } from "../helpers/forms-validation.js";
 
 import { uploadUserProfileImg } from "../firebase/firebase-storage.js";
 import { Loader } from "../view-controller/Loader.js";
@@ -278,7 +278,7 @@ export const ModalEditProfile = () => {
 
     throwMsg.textContent = "";
     // Validamos el nombre
-    if (!validate_field(newData.user_name)) {
+    if (!validateField(newData.user_name)) {
       throwMsg.textContent = "Ingrese un nombre válido";
 
       // Activa campo como obligatorio
@@ -286,7 +286,7 @@ export const ModalEditProfile = () => {
       return;
     }
     // Validamos el correo
-    if (!validate_email(newData.user_email)) {
+    if (!validateEmail(newData.user_email)) {
       throwMsg.textContent = "Ingrese un correo válido";
       // Activa campo como obligatorio
       requiredEmail.classList.add("modal-profile__required--active");

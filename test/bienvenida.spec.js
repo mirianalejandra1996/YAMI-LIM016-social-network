@@ -15,7 +15,7 @@
 //     document.body.id = 'root'
 //     document.body.innerHTML = ""
 //     document.body.append(Bienvenida())
-//       done(); 
+//       done();
 //   })
 // // it methods will go here ...
 //   it('obtenerUsuario',  (done) =>{
@@ -31,7 +31,6 @@
 //     //   )
 // })})
 
-describe("Testing bienvenida con getUserData firestore MOCK", () => {
-    it("should do something", () => {});
-  });
-  
+describe('Testing bienvenida con getUserData firestore MOCK', () => {
+  it('should do something', () => {});
+});

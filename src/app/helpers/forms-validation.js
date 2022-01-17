@@ -1,4 +1,4 @@
-export function validate_email(email) {
+export function validateEmail(email) {
   const expression = /^([\.\_a-zA-Z0-9]+)@([a-zA-A]+)\.([a-zA-Z]){2,8}/;
 
   if (!email) {
@@ -12,7 +12,7 @@ export function validate_email(email) {
     : expression.test("" + email);
 }
 
-export function validate_password(password) {
+export function validatePassword(password) {
   // La contraseña debe tener entre 8 a 14 caracteres
 
   const expression = /^.{6,14}$/;
@@ -26,7 +26,7 @@ export function validate_password(password) {
     : expression.test("" + password);
 }
 
-export function validate_field(field) {
+export function validateField(field) {
   if (typeof field !== "string") {
     return false;
   }

@@ -4,8 +4,8 @@ import {
   changePasswordFirestore,
 } from "../firebase/firebase-data.js";
 import {
-  validate_field,
-  validate_password,
+  validateField,
+  validatePassword,
 } from "../helpers/forms-validation.js";
 import {
   auth,
@@ -171,9 +171,9 @@ export const ChangePassword = () => {
     msgError.classList.remove("success-msg");
 
     if (
-      !validate_field(newData.inputOldPassword) ||
-      !validate_field(newData.newPassword) ||
-      !validate_field(newData.confirmedPassword)
+      !validateField(newData.inputOldPassword) ||
+      !validateField(newData.newPassword) ||
+      !validateField(newData.confirmedPassword)
     ) {
       document.getElementById("error-msg").textContent =
         "Rellene todos los campos";
@@ -181,7 +181,7 @@ export const ChangePassword = () => {
     }
 
     // Validamos la contraseña nueva
-    if (!validate_password(newData.newPassword)) {
+    if (!validatePassword(newData.newPassword)) {
       document.getElementById("error-msg").textContent =
         "La contraseña debe tener entre 8 a 14 carácteres";
       return;

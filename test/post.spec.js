@@ -35,6 +35,6 @@
 //     });
 // });
 
-describe("Testing post DOM component with firestore MOCK", () => {
-  it(" should do something", () => {});
+describe('Testing post DOM component with firestore MOCK', () => {
+  it(' should do something', () => {});
 });
