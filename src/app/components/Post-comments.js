@@ -1,46 +1,46 @@
-import { addComment } from "../firebase/firebase-data.js";
-import { auth } from "../firebase/firebase-auth.js";
-import { traerComments } from "../firebase/firebase-data.js";
-import { Comment } from "./Comment.js";
+import { addComment, traerComments } from '../firebase/firebase-data.js';
+import { auth } from '../firebase/firebase-auth.js';
+
+import { Comment } from './Comment.js';
 
 export function NewComments(idPost) {
-  const commentsDiv = document.createElement("div");
+  const commentsDiv = document.createElement('div');
 
   const current_user = auth.currentUser;
 
-  const newComment = document.createElement("div");
-  newComment.classList.add("newComment");
+  const newComment = document.createElement('div');
+  newComment.classList.add('newComment');
 
-  const avatarDiv = document.createElement("div");
-  avatarDiv.classList.add("avatarDiv");
+  const avatarDiv = document.createElement('div');
+  avatarDiv.classList.add('avatarDiv');
 
-  const avatarContainer = document.createElement("div");
-  avatarContainer.classList.add("avatarContainer");
-  const avatarImage = document.createElement("img");
-  avatarImage.classList.add("avatarImage");
+  const avatarContainer = document.createElement('div');
+  avatarContainer.classList.add('avatarContainer');
+  const avatarImage = document.createElement('img');
+  avatarImage.classList.add('avatarImage');
   // avatarImage.src = "./app/assets/user-img.jpg"
-  avatarImage.src =auth.currentUser.photoURL
+  avatarImage.src = auth.currentUser.photoURL;
   avatarContainer.append(avatarImage);
   avatarDiv.append(avatarContainer);
 
-  const inputComment = document.createElement("textarea");
+  const inputComment = document.createElement('textarea');
   inputComment.id = `comment_${idPost}`;
-  inputComment.placeholder = `Escribe un comentario...`;
-  inputComment.classList.add("postComment_input");
+  inputComment.placeholder = 'Escribe un comentario...';
+  inputComment.classList.add('postComment_input');
 
-  const commentBtn = document.createElement("div");
-  commentBtn.classList.add("commentBtnDiv");
-  const commentIcon = document.createElement("span");
-  commentIcon.classList.add("icon-send");
-  commentIcon.classList.add("iconComment");
+  const commentBtn = document.createElement('div');
+  commentBtn.classList.add('commentBtnDiv');
+  const commentIcon = document.createElement('span');
+  commentIcon.classList.add('icon-send');
+  commentIcon.classList.add('iconComment');
 
   commentBtn.append(commentIcon);
 
-  commentBtn.addEventListener("click", async() => {
+  commentBtn.addEventListener('click', async () => {
     const comment = document.getElementById(`comment_${idPost}`).value;
-    if (comment !== "") {
+    if (comment !== '') {
       await addComment(current_user, idPost, comment);
-      window.location.hash = '#/'
+      window.location.hash = '#/';
     }
   });
 

@@ -1,12 +1,12 @@
 const auth = {
   currentUser: {
-    uid: "fake-uid",
-    displayName: "fake-name",
-    providerData: [{ providerId: "google.com" }],
-    email: "fake-email",
-    photoURL: "fake-photo",
+    uid: 'fake-uid',
+    displayName: 'fake-name',
+    providerData: [{ providerId: 'google.com' }],
+    email: 'fake-email',
+    photoURL: 'fake-photo',
     metadata: {
-      createdAt: "fake-time",
+      createdAt: 'fake-time',
     },
   },
 };
