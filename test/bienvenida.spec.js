@@ -10,7 +10,7 @@
 // jest.mock('../src/app/firebase/firebase-initializer.js');
 // jest.mock('../src/app/firebase/firebase-data.js');
 
-// describe('Testing DOM manipulation', function(){
+// describe("Testing bienvenida con getUserData firestore MOCK", function(){
 //   beforeAll((done) => {
 //     document.body.id = 'root'
 //     document.body.innerHTML = ""
@@ -31,6 +31,6 @@
 //     //   )
 // })})
 
-describe("Testing bienvenida con getUserData firestore MOCK", () => {
-  it("should do something", () => {});
+describe('Testing bienvenida con getUserData firestore MOCK', () => {
+  it('should do something', () => {});
 });

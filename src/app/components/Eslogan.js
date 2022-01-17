@@ -3,7 +3,7 @@ export function Eslogan(eslogan) {
   esloganElement.classList.add("eslogan-container");
   const esloganText = document.createElement("h2");
   esloganText.classList.add("eslogan-text");
-  esloganText.textContent = esloganElement;
+  esloganText.textContent = eslogan;
 
   esloganElement.append(esloganText);
 

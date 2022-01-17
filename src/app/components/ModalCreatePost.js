@@ -189,8 +189,7 @@ function changeImageInputLabelText(label, text) {
 
       cerrarModal();
       location.reload()
-//       window.location.hash = '#/timeline'
-
+      
     }
   });
 

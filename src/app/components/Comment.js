@@ -13,11 +13,10 @@ export const Comment = (
   abrirModalEditCom,
   setDataModalEditCom
 ) => {
-  // console.log(com)
+
+  console.log("esto es auth", auth)
 
   const user_id = auth.currentUser.uid;
-
-  // console.log(postId, com, com.com_id, com.id_user)
 
   const container = document.createElement("div");
   container.classList.add("commentContainer");
@@ -28,7 +27,6 @@ export const Comment = (
   avatarCircle.classList.add("commentAvatarCircle");
   const avatarImg = document.createElement("img");
   avatarImg.src = com.user_photo;
-  // "./app/assets/user-img.jpg"
   avatarImg.classList.add("commentAvatar");
 
   avatarCircle.append(avatarImg);
@@ -46,7 +44,6 @@ export const Comment = (
   likesCounter.textContent = `X`;
   likesCounter.classList.add("likesCounter");
   likesCounter.id = `likeComCounter_${com.com_id}`;
-  // likesCounter.textContent = /*`${com.likes.length}`*/`X`
 
   likesDiv.append(likesCounter);
   likesDiv.append(likesSpan);
@@ -74,9 +71,6 @@ export const Comment = (
   commentInfo.append(commentMessage);
   commentInfo.append(commentBottom);
   commentDiv.append(commentInfo);
-
-  // console.log(com)
-  // console.log(user_id, com.id_user)
 
   const optionsDiv = document.createElement("div");
   optionsDiv.classList.add("commentsOptionDiv");
@@ -113,16 +107,16 @@ export const Comment = (
   initListenerComLike(postId, com.com_id, (comDoc) => {
     //se podria cambiar cualquier campo de post pero en este caso solo necesitamos los likes
 
-    console.log(comDoc.data());
+    // console.log(comDoc.data());
 
     const likes = comDoc.data().likes;
-    // console.log("array de likes", likes);
+    
     if (likes.find((like) => like === user_id)) {
       likesDiv.classList.add("selected");
-      // console.log("si se encuentra");
+      
     } else {
       likesDiv.classList.remove("selected");
-      console.log("no se encuentra");
+      // console.log("no se encuentra");
     }
 
     likesCounter.textContent = `${likes.length}`;
@@ -130,7 +124,6 @@ export const Comment = (
 
   container.append(avatarDiv);
   container.append(commentDiv);
-  // container.append(likesDiv)
   container.append(optionsDiv);
 
   return container;

@@ -18,9 +18,9 @@ import {
 export { sendPasswordResetEmail, auth };
 
 import {
-  validate_field,
-  validate_password,
-  validate_email,
+  validateField,
+  validatePassword,
+  validateEmail,
 } from "../helpers/forms-validation.js";
 
 import { addUser } from "./firebase-data.js";
@@ -134,14 +134,14 @@ export function enviarRegistro() {
 
   // ------------------------------------
 
-  if (!validate_email(emailV) || !validate_password(passwordV)) {
+  if (!validateEmail(emailV) || !validatePassword(passwordV)) {
     document.getElementById("errorLogin").textContent = "Datos inválidos";
   }
 
   if (
-    !validate_field(nameV) ||
-    !validate_field(emailV) ||
-    !validate_field(passwordV)
+    !validateField(nameV) ||
+    !validateField(emailV) ||
+    !validateField(passwordV)
   ) {
     // ------------------------------------
 
@@ -224,13 +224,13 @@ export function enviarRegistro() {
 // todo: pendiente hacer funcionalidad de validación de nombre
 // nombre: /^[a-zA-ZÀ-ÿ\s]{1,40}/, // Letras y espacios, pueden llevar acentos.
 // Funciones validadoras
-// export function validate_email(email) {
+// export function validateEmail(email) {
 //   const expression = /^([\.\_a-zA-Z0-9]+)@([a-zA-A]+)\.([a-zA-Z]){2,8}/;
 
 //   return expression.test(email);
 // }
 
-// export function validate_password(password) {
+// export function validatePassword(password) {
 //   // La contraseña debe tener entre 8 a 14 caracteres
 
 //   const expression = /^.{6,14}/;
@@ -243,7 +243,7 @@ export function enviarRegistro() {
 //   return expression.test(password);
 // }
 
-// export function validate_field(field) {
+// export function validateField(field) {
 //   // const expression = /^[a-zA-ZÀ-ÿ\s]{1,40}/;
 
 //   // if (!expression.test(field) == true){

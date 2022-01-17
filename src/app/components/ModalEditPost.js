@@ -184,7 +184,7 @@ export const ModalEditPost = () => {
   };
   
   const setPost = (postData) => {
-    post.value = `{postData.message}`;
+    post.value = `${postData.message}`;
     let label = ''
     if(postData.imageUrl) {
       imagenFileEdit.src = postData.imageUrl;
