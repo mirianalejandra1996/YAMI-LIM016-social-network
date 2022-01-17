@@ -1,15 +1,15 @@
 // eslint-disable-next-line import/named
-import { onAuthStateChanged } from '../firebase/firebase-initializer.js';
-import { auth } from '../firebase/firebase-auth.js';
-import { components } from './index.js';
-import { Loader } from './Loader.js';
+import { onAuthStateChanged } from "../firebase/firebase-initializer.js";
+import { auth } from "../firebase/firebase-auth.js";
+import { components } from "./index.js";
+import { Loader } from "./Loader.js";
 
 // se ejecuta una sola vez
 export const Router = () => {
   // console.log("entró a función router");
 
-  const $root = document.getElementById('root');
-  $root.textContent = '';
+  const $root = document.getElementById("root");
+  $root.textContent = "";
 
   const loader = Loader();
   $root.appendChild(loader);
@@ -17,64 +17,64 @@ export const Router = () => {
   // eslint-disable-next-line consistent-return
   function render() {
     const route = window.location.hash;
-    $root.textContent = '';
+    $root.textContent = "";
 
     switch (route) {
-      case '#': {
-        if (auth.currentUser) window.location.hash = '#/timeline';
+      case "#": {
+        if (auth.currentUser) window.location.hash = "#/timeline";
         return $root.appendChild(components.login());
       }
-      case '#/': {
-        if (auth.currentUser) window.location.hash = '#/timeline';
+      case "#/": {
+        if (auth.currentUser) window.location.hash = "#/timeline";
         return $root.appendChild(components.login());
       }
-      case '#/register': {
-        if (auth.currentUser) window.location.hash = '#/timeline';
+      case "#/register": {
+        if (auth.currentUser) window.location.hash = "#/timeline";
         return $root.appendChild(components.registro());
       }
-      case '#/timeline': {
+      case "#/timeline": {
         if (auth.currentUser) {
-          $root.classList.remove('main-container');
+          $root.classList.remove("main-container");
           return $root.appendChild(components.timeline());
         }
-        window.location.hash = '#/';
+        window.location.hash = "#/";
         break;
       }
-      case '#/editPost': {
+      case "#/editPost": {
         if (auth.currentUser) {
-          $root.classList.remove('main-container');
+          $root.classList.remove("main-container");
           return $root.appendChild(components.editPost());
         }
-        window.location.hash = '#/';
+        window.location.hash = "#/";
         break;
       }
-      case '#/muro': {
+      case "#/muro": {
         if (auth.currentUser) {
-          $root.classList.remove('main-container');
+          $root.classList.remove("main-container");
           return $root.appendChild(components.muro());
         }
-        window.location.hash = '#/';
+        window.location.hash = "#/";
         break;
       }
-      case '#/profile': {
+      case "#/profile": {
         if (auth.currentUser) {
-          $root.classList.remove('main-container');
+          $root.classList.remove("main-container");
           return $root.appendChild(components.profile());
         }
-        window.location.hash = '#/';
+        window.location.hash = "#/";
         break;
       }
-      case '#/passwordChange': {
-        if (auth.currentUser.providerData[0].providerId === 'google.com') {
+      case "#/passwordChange": {
+        if (auth.currentUser.providerData[0].providerId === "google.com") {
           // console.log(
           //   'AQUÍ HAREMOS APPEND DE UN COMPONENTE DE 404 NOT FOUND O ALGO'
           // );
         }
         if (auth.currentUser) {
-          $root.classList.remove('main-container');
+          $root.classList.remove("main-container");
           return $root.appendChild(components.changePassword());
         }
-        window.location.hash = '#/';
+        window.location.hash = "#/";
         break;
       }
       default:
@@ -84,7 +84,7 @@ export const Router = () => {
           return $root.appendChild(components.timeline());
         }
         return $root.appendChild(components.login());
-          // return (window.location.hash = "#/");
+      // return (window.location.hash = "#/");
 
       // break;
     }
@@ -96,7 +96,7 @@ export const Router = () => {
   // se ejecuta una sola vez
   function start() {
     render();
-    window.addEventListener('hashchange', () => {
+    window.addEventListener("hashchange", () => {
       render();
     });
     // ya me ejecute
@@ -107,7 +107,7 @@ export const Router = () => {
 
   onAuthStateChanged(auth, (user) => {
     if (!user) {
-      window.location.hash = '#/';
+      window.location.hash = "#/";
       // console.log('el usuario ya está sign out!');
     }
 
