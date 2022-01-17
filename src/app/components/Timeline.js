@@ -16,17 +16,17 @@ import { auth } from "../firebase/firebase-auth.js";
 
 export function Timeline() {
   console.log("esto es auth", auth);
-  const $timeline = document.createElement("div");
-  $timeline.classList.add("timeline");
+  const timeline = document.createElement("div");
+  timeline.classList.add("timeline");
   // Importamos la cabecera
-  const $header = HeaderSimple();
+  const header = HeaderSimple();
   // Contenedor de las publicaciones
-  const $postsContainer = document.createElement("div");
-  $postsContainer.classList.add("notification-grid");
+  const postsContainer = document.createElement("div");
+  postsContainer.classList.add("notification-grid");
 
   //Cerrar Sesion
-  const { $modalCerrarSesion, abrilModalCerrarSesion } = ModalCerrarSesion();
-  const { $modalCreatePost, abrirModalCreatePost } = ModalCreatePost();
+  const { modalCerrarSesion, abrilModalCerrarSesion } = ModalCerrarSesion();
+  const { modalCreatePost, abrirModalCreatePost } = ModalCreatePost();
   // Crea un Post
   const { menuModalPlus, toggleModalPlus } = MenuList(abrirModalCreatePost);
   // Perfil usuario
@@ -35,21 +35,21 @@ export function Timeline() {
   );
   // Importamos la Bienvenida al usuario
   const user = auth.currentUser;
-  const $bienvenidaUser = Bienvenida(abrirModalCreatePost, user);
+  const bienvenidaUser = Bienvenida(abrirModalCreatePost, user);
   //Enviamos los eventos a Menu
-  const $menu = Menu(toggleModalPlus, toggleModalProfile);
+  const menu = Menu(toggleModalPlus, toggleModalProfile);
 
   // -----------------------------------------------------------------------------------
   // Lista desplegable de opciones de post EDITAR ELIMINAR POST
   // -----------------------------------------------------------------------------------
   const {
-    $modalContenedor: $modalEditPost,
+    modalContenedor: modalEditPost,
     abrirModal: abrirModalEdit,
     setPost: setDataModalEdit,
   } = ModalEditPost();
 
   const {
-    modalEliminarPost: $modalRemovePost,
+    modalEliminarPost: modalRemovePost,
     abrirModalEliminar: abrirModalRemove,
     setDataModalRemove: setDataModalRemove,
   } = ModalEliminarPost();
@@ -58,13 +58,13 @@ export function Timeline() {
   // Lista desplegable de opciones de comentario EDITAR ELIMINAR COMENTARIO
   // -----------------------------------------------------------------------------------
   const {
-    modalEliminarCom: $modalRemoveCom,
+    modalEliminarCom: modalRemoveCom,
     abrirModalEliminarCom: abrirModalRemoveCom,
     setDataModalRemoveCom: setDataModalRemoveCom,
   } = ModalEliminarCom();
 
   const {
-    $modalContenedor: $modalEditCom,
+    modalContenedor: modalEditCom,
     abrirModal: abrirModalEditCom,
     setCom: setDataModalEditCom,
   } = ModalEditCom();
@@ -72,31 +72,31 @@ export function Timeline() {
   // -----------------------------------------------------------------------------------
   // Construye el TIMELINE
   // -----------------------------------------------------------------------------------
-  $timeline.append($header);
-  $timeline.append($bienvenidaUser);
-  $timeline.append($postsContainer);
-  $timeline.append(menuModalPlus);
-  $timeline.append(menuModalProfile);
-  $timeline.append($menu);
-  $timeline.append($modalCreatePost);
-  $timeline.append($modalEditPost);
-  $timeline.append($modalRemovePost);
-  $timeline.append($modalEditCom);
-  $timeline.append($modalRemoveCom);
-  $timeline.append($modalCerrarSesion);
+  timeline.append(header);
+  timeline.append(bienvenidaUser);
+  timeline.append(postsContainer);
+  timeline.append(menuModalPlus);
+  timeline.append(menuModalProfile);
+  timeline.append(menu);
+  timeline.append(modalCreatePost);
+  timeline.append(modalEditPost);
+  timeline.append(modalRemovePost);
+  timeline.append(modalEditCom);
+  timeline.append(modalRemoveCom);
+  timeline.append(modalCerrarSesion);
 
   // cosas que pasan asincronamente
 
-  //mientras cargan post, al $postsContainer le hago append de un loader
-  $postsContainer.textContent = "Cargando posts...";
+  //mientras cargan post, al postsContainer le hago append de un loader
+  postsContainer.textContent = "Cargando posts...";
 
   traerPost()
     .then((postsLista) => {
       // una vez que tengo la lista le quito el loader
-      $postsContainer.textContent = "";
-      //lleno el $postContainer con los nodos de post
+      postsContainer.textContent = "";
+      //lleno el postContainer con los nodos de post
       postsLista.forEach((post) => {
-        const $post = Post(
+        const postComponent = Post(
           post,
           setDataModalEdit,
           abrirModalEdit,
@@ -107,18 +107,18 @@ export function Timeline() {
           abrirModalEditCom,
           setDataModalEditCom
         );
-        $postsContainer.append($post);
+        postsContainer.append(postComponent);
       });
     })
     .catch((error) => {
       // mostrar mensaje de que no se pudo cargar los posts
       console.error(error);
-      $postsContainer.textContent = "No hay posts";
+      postsContainer.textContent = "No hay posts";
     });
 
-  return $timeline;
+  return timeline;
 }
 
-//en vez de devolver $timeline, devuelve Promise que en el then devuelve $timeline
+//en vez de devolver timeline, devuelve Promise que en el then devuelve timeline
 // Timeline() // cuando es async retorna es una promesa pendiente
-//Timeline().then(($timeline) => {})
+//Timeline().then((timeline) => {})

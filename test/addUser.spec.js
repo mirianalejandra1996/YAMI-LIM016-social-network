@@ -1,12 +1,5 @@
 import { addUser } from "../src/app/firebase/firebase-data.js";
-
-import {
-  setDoc,
-  doc,
-  db,
-  auth,
-  collection,
-} from "../src/app/firebase/firebase-initializer.js";
+import { auth } from "../src/app/firebase/firebase-initializer.js"
 
 jest.mock("../src/app/firebase/firebase-initializer.js");
 

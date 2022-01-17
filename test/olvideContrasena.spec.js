@@ -27,11 +27,10 @@
       const testEmail = "test@testing.com";
       await olvideContrasena(testEmail);
   
-      const $errorLoginMessage = document.getElementById("errorLogin");
-      expect($errorLoginMessage).not.toBeUndefined();
+      const errorLoginMessage = document.getElementById("errorLogin");
+      expect(errorLoginMessage).not.toBeUndefined();
   
       expect(document.getElementById("errorLogin").textContent).toBe(
-        `Se envió un mensaje al correo ${testEmail}`
-      );
+        `Se envió un mensaje al correo ${testEmail}`);
     });
   });
