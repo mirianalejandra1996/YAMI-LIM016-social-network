@@ -271,6 +271,7 @@ export const ModalEditProfile = () => {
     const requiredFields = document.getElementsByClassName(
       'modal-profile__required',
     );
+    // eslint-disable-next-line no-restricted-syntax
     for (const element of requiredFields) {
       element.classList.remove('modal-profile__required--active');
     }
@@ -306,6 +307,7 @@ export const ModalEditProfile = () => {
       return;
     }
 
+    // eslint-disable-next-line no-restricted-syntax
     for (const element of requiredFields) {
       element.classList.remove('modal-profile__required--active');
     }

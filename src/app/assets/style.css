@@ -11,7 +11,6 @@ html {
   box-sizing: inherit;
   margin: 0;
   padding: 0;
-  /* font-family: "Lato", sans-serif; */
 }
 
 body {
@@ -46,7 +45,6 @@ body {
 }
 
 .logo {
-  /*  background-color: red; */
   width: 100px;
   height: auto;
   text-align: center;
@@ -207,13 +205,6 @@ input[type="password"]:focus {
   font-size: 0.9rem;
 }
 
-/* .timeline {
-  background-color: black;
-  height: 100%;
-  width: 100%;
-  color: #ff6f00;
-} */
-
 /* registro */
 
 .register-container {
@@ -272,16 +263,13 @@ input[type="password"]:focus {
 
 .success-msg {
   color: #2ecc71;
-  /* font-size: 0.9rem; */
 }
 
 .msgContainer {
   height: 1.3rem;
-  /* background-color: blue; */
 }
 .google-msg {
   color: #0f0f0f;
-  /* font-size: 0.9rem; */
 }
 .form__button-g {
   height: 35px;
@@ -305,20 +293,6 @@ input[type="password"]:focus {
   justify-content: center;
   align-items: center;
 }
-
-/* .modal__contenedor {
-  position: fixed;
-  position: absolute;
-  z-index: 1;
-  width: 100%;
-  height: 100vh;
-  top: 0;
-  left: 0;
-  background: rgba(0, 0, 0, 0.5);
-  display: flex;
-  justify-content: center;
-  align-items: center;
-} */
 
 .modal {
   width: 90%;
@@ -354,6 +328,12 @@ input[type="password"]:focus {
   transform: translateY(-200%);
 }
 
+.button__content{
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 85px;
+}
 /* ----------------- */
 
 .form__input.success {
@@ -364,9 +344,6 @@ input[type="password"]:focus {
   border-color: #e74c3c;
 }
 
-/* .red_hover:hover {
-  color: red;
-} */
 /* terminos y condiciones */
 .parrafo-terminos {
   font-size: smaller;
@@ -374,21 +351,18 @@ input[type="password"]:focus {
 .parrafo-politica:hover {
   color: #f51616;
 }
-/*EsTILOS Spinner*/
+/*Estilos Spinner*/
 .spinnerContainer {
   display: flex;
   justify-content: center;
   align-items: center;
-  /* height: 100%; */
   height: 100vh;
-  /* position: absolute; */
 }
 
 .spinnerContainer--absolute {
   display: flex;
   justify-content: center;
   align-items: center;
-  /* height: 100%; */
   height: 100vh;
   position: absolute;
 }
@@ -412,9 +386,6 @@ input[type="password"]:focus {
   border-radius: 17px;
   display: flex;
   flex-direction: column;
-  /* justify-content: space-between; */
-  /* height: 500px; */
-  /* max-height: 500px; */
   max-width: 100%;
   padding: 1em;
   margin: 0 auto;
@@ -450,11 +421,9 @@ input[type="password"]:focus {
 }
 
 .card__avatar-img {
-  /* display: block; */
   width: 100%;
   transition: 0.3s ease;
   height: auto;
-  /* backface-visibility: hidden; */
 }
 
 .card__avatar-overlay {
@@ -540,21 +509,6 @@ input[type="password"]:focus {
   padding: 0;
   z-index: -1;
 }
-/* .card__dropdown::after{
-  content:'';
-  /* background-color: #f51616; */
-/* width: 5px;
-  height: 5px;
-  top: -40px;
-  position: absolute;
-  display: block;
-  right: 8px;
-  border-left: 20px solid transparent;
-  border-right: 20px solid transparent;
-  border-bottom: 20px solid white;
-  border-top: 20px solid transparent; */
-/* box-shadow: 4px 4px 0px 4px #878787; 
-}*/
 
 .card__options-icon {
   color: #848484;
@@ -590,7 +544,6 @@ input[type="password"]:focus {
 }
 
 .card__icon-container:hover .card__icon {
-  /* color: #ffb800; */
   color: #ccc;
 }
 
@@ -625,8 +578,6 @@ input[type="password"]:focus {
   display: flex;
   justify-content: center;
   align-items: center;
-  /* visibility: hidden; */
-  /* opacity: 0; */
   transition: visibility 0s opacity 0.5s;
 }
 
@@ -652,7 +603,6 @@ input[type="password"]:focus {
   display: flex;
   align-items: center;
   width: 100%;
-  /* justify-content: space-between; */
 }
 
 .modal__title {
@@ -667,13 +617,11 @@ input[type="password"]:focus {
 .modal__close {
   margin-top: 0.2rem;
   font-size: 0.8rem;
-  /* color: #ccc; */
   color: #848484;
 }
 
 .modal__close:hover {
   cursor: pointer;
-  /* color: #000; */
 }
 
 .modal__sectionContainer {
@@ -684,7 +632,6 @@ input[type="password"]:focus {
 .modal__classification {
   display: flex;
   flex-direction: column;
-  /* background-color: #cbbdbd; */
   width: 100%;
 }
 
@@ -719,12 +666,14 @@ input[type="password"]:focus {
 @media (min-width: 1200px) {
   .card {
     max-width: 90%;
-    /* overflow: hidden; */
+  }
+
+  .card__icon-container { 
+    margin-left: 15px;
   }
 
   .card__icon-container:hover .card__icon {
     color: #ffb800;
-    /* color: #ccc */
   }
 }
 /*Header simple*/
@@ -772,11 +721,13 @@ input[type="password"]:focus {
   background-color: #fff;
   height: auto;
   border-radius: 10px;
+  /* width: 500px; */
 }
 .formPost_h2 {
   padding-top: 20px;
   font-size: 15px;
   font-weight: normal;
+  margin-left: 15px;
 }
 .formPost_title {
   padding: 20px 35px;
@@ -787,6 +738,7 @@ input[type="password"]:focus {
   font-size: 14px;
   font-weight: bold;
   color: #fa610c;
+  margin-right: 15px;
 }
 
 .modal__cabecera {
@@ -797,11 +749,14 @@ input[type="password"]:focus {
   display: flex;
   justify-content: space-between;
 }
+
+.modal__opcionesCabecera--multiple {
+  display: flex;
+  justify-content: space-between;
+}
 .formPost_inputs {
-  /* text-align: center; */
   display: flex;
   flex-direction: column;
-  /* justify-content: center; */
   width: 100%;
   align-items: center;
 }
@@ -840,16 +795,20 @@ input[type="password"]:focus {
 .formPost_btns {
   display: flex;
   justify-content: space-around;
+  margin-bottom: 15px;
 }
 
 .formPost_button {
   margin-bottom: 5px;
-  width: 100px;
+  width: 80%;
   border-radius: 7px;
   background-color: #fa610c;
   border: none;
   color: #ffff;
   height: 2.5rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 .btnContent {
@@ -888,7 +847,6 @@ input[type="password"]:focus {
 }
 .menu__link {
   color: white;
-  /* overflow: hidden; */
   white-space: nowrap;
   text-decoration: none;
   cursor: pointer;
@@ -905,11 +863,6 @@ input[type="password"]:focus {
   transition: opacity 0.5s;
 }
 .modal__lista {
-  /* nuevo */
-  /* bottom: 0; */
-  /* position: absolute; */
-
-  /* original */
   display: flex;
   flex-direction: column;
   margin-bottom: 60px;
@@ -935,7 +888,6 @@ input[type="password"]:focus {
 .modal__contenedor.cerrado {
   opacity: 0;
   z-index: -1;
-  /* z-index: 0; */
   padding: 0;
 }
 .modal__contenedor.cerrado .modal__lista {
@@ -974,14 +926,12 @@ input[type="password"]:focus {
   transform: translateY(0%);
   border-radius: 10px;
 }
-/*es muy tarde*/
 .formPost-edit {
   height: 100%;
   display: flex;
   justify-content: center;
   flex-direction: column;
   width: 90%;
-  /* background: red; */
   background-color: #fff;
   height: auto;
   position: fixed;
@@ -999,12 +949,10 @@ input[type="password"]:focus {
 }
 
 .main-container__profile {
-  /* height: calc(100% - 80px); */
   display: flex;
   justify-content: center;
   width: 100%;
   align-items: center;
-  /* background-color: red; */
 }
 
 .profile-container {
@@ -1025,9 +973,6 @@ input[type="password"]:focus {
   flex-direction: column;
   margin: 20px 0px;
 }
-/* .photo__container.row {
-  flex-direction: row;
-} */
 
 .photo__avatar-container {
   width: 90px;
@@ -1044,7 +989,6 @@ input[type="password"]:focus {
   width: 100%;
   height: 100%;
   transition: 0.3s ease;
-  /* height: auto; */
 }
 
 .photo__edit-img {
@@ -1075,7 +1019,6 @@ input[type="password"]:focus {
   display: grid;
   gap: 1.5em;
   width: 100%;
-  /* margin-top: 30px; */
 }
 
 .formProfile__group {
@@ -1086,7 +1029,6 @@ input[type="password"]:focus {
 .formProfile__input {
   width: 100%;
   background: none;
-  /* color: #706c6c; */
   color: #0f0f0f;
   font-size: 1rem;
   padding: 0.6em 0.3em;
@@ -1108,7 +1050,6 @@ input[type="password"]:focus {
   position: absolute;
   top: -12px;
   right: 0px;
-  /* color: #f51616; */
 }
 
 .modal-profile__required--active {
@@ -1120,7 +1061,6 @@ input[type="password"]:focus {
   display: grid;
   gap: 0.5em;
   width: 100%;
-  /* margin-top: 30px; */
 }
 
 .modal-profile__btns-container {
@@ -1137,7 +1077,6 @@ input[type="password"]:focus {
   color: #ffff;
   height: 2.5rem;
   font-size: 0.85rem;
-  /* margin-top: 1rem; */
   margin-top: -0.5rem;
   cursor: pointer;
 }
@@ -1164,14 +1103,6 @@ input[type="password"]:focus {
   right: 8px;
 }
 
-/* :invalid::-webkit-datetime-edit {
-  color: #636c72;
-  position: absolute;
-  left: 0.3em;
-  margin-left: -1em;
-  margin-left: -12px;
-} */
-
 .formProfile__icon {
   position: absolute;
   right: 10px;
@@ -1179,12 +1110,10 @@ input[type="password"]:focus {
 }
 
 .errContainer {
-  /* background-color: red; */
   height: 20px;
 }
 
 .errContainer--modal {
-  /* background-color: red; */
   margin-bottom: 1rem;
   height: 1.3rem;
 }
@@ -1200,14 +1129,10 @@ input[type="password"]:focus {
 /* Modal de Edit Profile */
 
 .modal-profile {
-  /* height: calc(100% - 80px); */
   display: flex;
   width: 300px;
   flex-direction: column;
-  /* background-color: blue; */
-  /* justify-content: space-between; */
   align-items: center;
-  /* margin-top: 35px; */
   background: #fff;
   padding: 20px;
   border-radius: 10px;
@@ -1262,10 +1187,6 @@ input[type="password"]:focus {
   display: flex;
   align-items: center;
   position: relative;
-  /* border-top: 1px solid #efeff1; */
-  /* margin-top: 5px; */
-  /* padding-top: 10px; */
-  /* margin-top: 1em; */
 }
 
 .avatarContainer {
@@ -1277,9 +1198,7 @@ input[type="password"]:focus {
 }
 
 .avatarImage {
-  /* display: block; */
   width: 100%;
-  /* transition: 0.3s ease; */
   height: auto;
 }
 
@@ -1298,7 +1217,6 @@ input[type="password"]:focus {
 }
 .commentBtnDiv {
   height: 35px;
-  /* width: 35px; */
   display: flex;
   align-items: center;
   justify-content: center;
@@ -1337,7 +1255,6 @@ input[type="password"]:focus {
   transition: 0.3s ease;
   margin-left: 8px;
   margin-top: 12px;
-  /* align-self: center; */
 }
 .commentOptionIcon {
   color: #848484;
@@ -1346,7 +1263,6 @@ input[type="password"]:focus {
   height: 35px;
 }
 .commentsContainer {
-  /* padding-top: 14px; */
   overflow: auto;
   max-height: 200px;
 }
@@ -1381,7 +1297,6 @@ input[type="password"]:focus {
   height: 20px;
   transition: 0.3s ease;
   margin-left: 8px;
-  /* align-self: center; */
 }
 .likesIcon {
   color: #ccc;
@@ -1413,7 +1328,6 @@ input[type="password"]:focus {
 
 .userNameContainer {
   height: 1.3rem;
-  /* background-color: red; */
   width: 100%;
   display: flex;
   justify-content: center;
@@ -1422,6 +1336,7 @@ input[type="password"]:focus {
 .userNameTitle {
   font-size: 1rem;
   font-weight: 700;
+  text-align: center;
 }
 
 /* Agregar archivo imagen a post */
@@ -1434,7 +1349,6 @@ input[type="file"] {
   z-index: -1;
 }
 
-/* ! Mirian: cambió esto por una clase para que no le afecte un label de un componente */
 .modal__fileInput {
   padding: 0px 12px 0px 0px;
   font-size: 14px;
@@ -1445,16 +1359,6 @@ input[type="file"] {
   align-items: center;
   justify-content: space-between;
 }
-/* label[for="file"] {
-  padding: 0px 12px 0px 0px;
-  font-size: 14px;
-  color: #ccc;
-  cursor: pointer;
-  width: 100%;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-} */
 
 .imagenFileContainer {
   position: relative;
@@ -1582,7 +1486,7 @@ input[type="file"] {
     height: fit-content;
     position: sticky;
     top: 18px;
-    margin: 0;
+    margin-top: 55px;
   }
   .photo__container.perfil {
     position:relative;
@@ -1611,7 +1515,6 @@ input[type="file"] {
     border-top-right-radius: 0px;
     overflow: hidden;
     background-color: white;
-    /* padding: 0 10px; */
     transition: transform 0.5s ease-in-out;
     transform: translateY(0%);
     border-radius: 0px 0 10px 10px;
@@ -1632,8 +1535,27 @@ input[type="file"] {
   .timeline {
     display: flex;
   }
-  /* !Mirian */
+  
   .buttonAddPost_desktop {
+    background: none;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 20px;
+    margin-top: 15px;
+    cursor: pointer;
+    height: 39px;
+    width: 350px;
+    border-radius: 25px;
+    border: 1px solid transparent;
+    background-image: linear-gradient(white, white),
+      radial-gradient(circle at top left, #ffb800, #ff6f00);
+    background-origin: border-box;
+    background-clip: content-box, border-box;
+    transition: color 0.3s ease;
+  }
+
+  .buttonAddPost_desktop--profile {
     background: none;
     display: flex;
     justify-content: center;
@@ -1652,7 +1574,8 @@ input[type="file"] {
     transition: color 0.3s ease;
   }
 
-  .icon-addPost {
+
+  .btn-addPost__text {
     color: #ffb800;
     transition: color 0.3s ease;
     transition-property: all;
@@ -1660,21 +1583,31 @@ input[type="file"] {
     transition-timing-function: ease;
     transition-delay: 0s;
   }
-  .buttonAddPost_desktop:hover .icon-addPost {
+
+  .btn-addPost__text--centered {
+    display: flex;
+    width: 95px;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .btn-addPost__text--small {
+    color: #ffb800;
+    transition: color 0.3s ease;
+    transition-property: all;
+    transition-duration: 0.3s;
+    transition-timing-function: ease;
+    transition-delay: 0s;
+    font-size: 14px;
+  }
+
+  .buttonAddPost_desktop:hover .btn-addPost__text, 
+  .buttonAddPost_desktop:hover .btn-addPost__text--small {
     transition: color 0.3s ease;
     color: #ff6f00;
   }
-
-  /* .buttonAddPost_desktop {
-    display: block;
-    width: 100%;
-    background: linear-gradient(45deg, #ffbd00, #fa610c);
-    margin-bottom: 5px;
-    border-radius: 7px;
-    /* background-color: #fa610c; */
-  /* border: none;
-    color: #ffff;
-    height: 2.5rem;
-    font-size: 20px;
-  } */
+  
+  .formPost, .formPost-edit {
+    width: 500px;
+  }
 }

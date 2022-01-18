@@ -283,9 +283,6 @@ export const Post = (
     }
 
     counterLikes.textContent = `${likes.length}`;
-
-    post.likes = likes;
-    post.imageUrl = postDoc.data().imageUrl;
   });
   //   -----------------------------------------------------------
 

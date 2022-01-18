@@ -60,8 +60,19 @@ export function MiMuro() {
 
   const iconPlus = document.createElement('i');
   iconPlus.classList.add('icon-addPost');
+  iconPlus.classList.add('btn-addPost__text');
 
-  buttonAddPost.append(iconPlus);
+  const textBtn = document.createElement('span');
+  textBtn.textContent = 'Crear Post';
+  // textBtn.classList.add('btn-addPost__text-small');
+  textBtn.classList.add('btn-addPost__text--small');
+
+  const buttonContent = document.createElement('div');
+  buttonContent.classList.add('btn-addPost__text--centered');
+  buttonContent.append(textBtn);
+  buttonContent.append(iconPlus);
+
+  buttonAddPost.append(buttonContent);
 
   buttonAddPost.addEventListener('click', () => {
     abrirModalCreatePost();

@@ -169,17 +169,15 @@ export function enviarRegistro() {
         // Añadimos a este usuario en nuestra base de datos
         return addUser(user, nameV, passwordV);
       })
-      .then(() => {
-        return updateProfile(auth.currentUser, {
-          displayName: nameV,
-          photoURL:
+      .then(() => updateProfile(auth.currentUser, {
+        displayName: nameV,
+        photoURL:
             'https://firebasestorage.googleapis.com/v0/b/yami-cbaa4.appspot.com/o/user.png?alt=media&token=bfe80508-5817-4d84-83e1-6a074a16f198',
-        })
-          .then(() => {
-            // Profile updated!
-            window.location.hash = '#/timeline';
-          });
       })
+        .then(() => {
+          // Profile updated!
+          window.location.hash = '#/timeline';
+        }))
       .catch((error) => {
         const errorCode = error.code;
 

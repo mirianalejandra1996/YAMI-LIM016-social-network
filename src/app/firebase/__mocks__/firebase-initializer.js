@@ -15,10 +15,8 @@ const auth = {
 
 const db = {};
 const setDoc = jest.fn((document, values) => Promise.resolve({ values }));
-const doc = jest.fn((/*db, collection, docId*/) => Promise.resolve({}));
-const collection = jest.fn((/*db, nameColletion*/) => Promise.resolve({}));
-
-// const db = jest.fn(() => Promise.resolve({}));
+const doc = jest.fn(() => Promise.resolve({}));
+const collection = jest.fn(() => Promise.resolve({}));
 
 export {
   auth,
@@ -26,17 +24,6 @@ export {
   doc,
   db,
   collection,
-  // getFirestore,
-  // getUserData,
-  // getStorage,
-  // loginGoogle,
-  // sendPasswordResetEmail,
-  // getDoc,
-  // app,
-  // storage,
-  // signInWithPopup,
-  // GoogleAuthProvider,
-  // signInWithEmailAndPassword,
 };
 
 // ! no sirvió con getUserData -----------------------------------------------------------
