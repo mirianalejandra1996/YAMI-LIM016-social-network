@@ -196,17 +196,28 @@ export const ModalCreatePost = () => {
   // Crea el icono del Boton Publicar
   const postBtnDiv = document.createElement('div');
   postBtnDiv.classList.add('btnContent');
-  postBtn.append(postBtnDiv);
+  // postBtn.append(postBtnDiv);
+
+  const btnContent = document.createElement('div');
+  // btnContent.classList.add('button__content')
+  btnContent.classList.add('button__content');
 
   const iconSend = document.createElement('span');
   iconSend.classList.add('icon-send');
   iconSend.classList.add('btnIconsPost');
-  postBtnDiv.append(iconSend);
 
   const textPost = document.createElement('span');
   textPost.classList.add('postTextSpan');
   textPost.textContent = 'Publicar';
-  postBtnDiv.append(textPost);
+
+  btnContent.append(iconSend);
+  btnContent.append(textPost);
+  postBtn.append(btnContent);
+
+  // postBtnDiv.append(iconSend);
+  // postBtnDiv.append(textPost);
+
+  btnContent.append(textPost);
 
   // Contruye el Modal Crear Post
   formPost.append(header);

@@ -19,6 +19,7 @@ export const ModalEditPost = () => {
   // Opciones de Cabecera
   const opcionesCabecera = document.createElement('div');
   opcionesCabecera.classList.add('modal__opcionesCabecera');
+  opcionesCabecera.classList.add('modal__opcionesCabecera--multiple');
 
   // Opcion Cerrar
   const cerrarContainer = document.createElement('div');
