@@ -27,21 +27,19 @@ export function Bienvenida(abrirModalCreatePost, user) {
   const buttonAddPost = document.createElement('button');
   buttonAddPost.classList.add('buttonAddPost_desktop');
 
-  
   const iconPlus = document.createElement('i');
   iconPlus.classList.add('icon-addPost');
   iconPlus.classList.add('btn-addPost__text');
-  
+
   const textBtn = document.createElement('span');
   textBtn.textContent = 'Crear Post';
   // textBtn.classList.add('btn-addPost__text-small');
   textBtn.classList.add('btn-addPost__text--small');
 
   const buttonContent = document.createElement('div');
-  buttonContent.classList.add('btn-addPost__text--centered')
+  buttonContent.classList.add('btn-addPost__text--centered');
   buttonContent.append(textBtn);
   buttonContent.append(iconPlus);
-
 
   buttonAddPost.append(buttonContent);
   // buttonAddPost.append(iconPlus);

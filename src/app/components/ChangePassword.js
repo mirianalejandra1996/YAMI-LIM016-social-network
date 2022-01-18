@@ -10,7 +10,7 @@ import {
 import {
   auth,
   changePasswordAuth,
-  reautentificacion,
+  reauth,
   createCredential,
 } from '../firebase/firebase-auth.js';
 
@@ -199,7 +199,7 @@ export const ChangePassword = () => {
 
     const credential = await createCredential(user, newData.inputOldPassword);
 
-    reautentificacion(user, credential)
+    reauth(user, credential)
       .then(() => {
         const promises = [
           changePasswordAuth(user, newData.newPassword),

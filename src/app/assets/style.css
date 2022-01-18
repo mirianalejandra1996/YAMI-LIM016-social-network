@@ -537,7 +537,6 @@ input[type="password"]:focus {
 .card__icon-container {
   display: flex;
   align-items: center;
-  margin-left: 15px;
 }
 
 .card__icon-container:hover {
@@ -1036,7 +1035,7 @@ input[type="password"]:focus {
   border: none;
   outline: none;
   border-bottom: 1px solid #5757577e;
-  font-family: lato;
+  font-family: "Lato", sans-serif;
 }
 
 .formProfile__label {
@@ -1044,7 +1043,7 @@ input[type="password"]:focus {
   top: -17px;
   left: 5px;
   font-size: 0.9rem;
-  font-family: lato;
+  font-family: "Lato", sans-serif;
 }
 
 .modal-profile__required {
@@ -1167,7 +1166,7 @@ input[type="password"]:focus {
   border-radius: 10px;
   text-indent: 12px;
   margin-bottom: 10px;
-  font-family: lato;
+  font-family: "Lato", sans-serif;
 }
 
 .modal-profile__input::placeholder {
@@ -1487,7 +1486,7 @@ input[type="file"] {
     height: fit-content;
     position: sticky;
     top: 18px;
-    margin: 0;
+    margin-top: 55px;
   }
   .photo__container.perfil {
     position:relative;

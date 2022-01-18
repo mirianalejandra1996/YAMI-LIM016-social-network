@@ -1,42 +1,41 @@
-import { Bienvenida } from "./Bienvenida.js";
-import { Post } from "./Post.js";
-import { ModalCreatePost } from "./ModalCreatePost.js";
-import { ModalEditPost } from "./ModalEditPost.js";
-import { ModalEliminarPost } from "./ModalDeletePost.js";
-import { Menu, MenuList, ProfileList } from "./Menu.js";
-import { traerPost } from "../firebase/firebase-data.js";
-import { HeaderSimple } from "./Header_simple.js";
-import { ModalCerrarSesion } from "./Modal_cerrarSesion.js";
-import { ModalEliminarCom } from "./ModalDeleteComment.js";
-import { ModalEditCom } from "./ModalEditComment.js";
-import { auth } from "../firebase/firebase-auth.js";
+import { Bienvenida } from './Bienvenida.js';
+import { Post } from './Post.js';
+import { ModalCreatePost } from './ModalCreatePost.js';
+import { ModalEditPost } from './ModalEditPost.js';
+import { ModalEliminarPost } from './ModalDeletePost.js';
+import { Menu, MenuList, ProfileList } from './Menu.js';
+import { traerPost } from '../firebase/firebase-data.js';
+import { HeaderSimple } from './Header_simple.js';
+import { ModalCerrarSesion } from './Modal_cerrarSesion.js';
+import { ModalEliminarCom } from './ModalDeleteComment.js';
+import { ModalEditCom } from './ModalEditComment.js';
+import { auth } from '../firebase/firebase-auth.js';
 
 // import { ModalEditPost } from './Edit_post.js'
 // import { ModalCerrarSesion } from "./Modal_cerrar.js";
 
 export function Timeline() {
-  console.log("esto es auth", auth);
-  const timeline = document.createElement("div");
-  timeline.classList.add("timeline");
+  const timeline = document.createElement('div');
+  timeline.classList.add('timeline');
   // Importamos la cabecera
   const header = HeaderSimple();
   // Contenedor de las publicaciones
-  const postsContainer = document.createElement("div");
-  postsContainer.classList.add("notification-grid");
+  const postsContainer = document.createElement('div');
+  postsContainer.classList.add('notification-grid');
 
-  //Cerrar Sesion
+  // Cerrar Sesion
   const { modalCerrarSesion, abrilModalCerrarSesion } = ModalCerrarSesion();
   const { modalCreatePost, abrirModalCreatePost } = ModalCreatePost();
   // Crea un Post
   const { menuModalPlus, toggleModalPlus } = MenuList(abrirModalCreatePost);
   // Perfil usuario
   const { menuModalProfile, toggleModalProfile } = ProfileList(
-    abrilModalCerrarSesion
+    abrilModalCerrarSesion,
   );
   // Importamos la Bienvenida al usuario
   const user = auth.currentUser;
   const bienvenidaUser = Bienvenida(abrirModalCreatePost, user);
-  //Enviamos los eventos a Menu
+  // Enviamos los eventos a Menu
   const menu = Menu(toggleModalPlus, toggleModalProfile);
 
   // -----------------------------------------------------------------------------------
@@ -51,7 +50,7 @@ export function Timeline() {
   const {
     modalEliminarPost: modalRemovePost,
     abrirModalEliminar: abrirModalRemove,
-    setDataModalRemove: setDataModalRemove,
+    setDataModalRemove,
   } = ModalEliminarPost();
 
   // -----------------------------------------------------------------------------------
@@ -60,7 +59,7 @@ export function Timeline() {
   const {
     modalEliminarCom: modalRemoveCom,
     abrirModalEliminarCom: abrirModalRemoveCom,
-    setDataModalRemoveCom: setDataModalRemoveCom,
+    setDataModalRemoveCom,
   } = ModalEliminarCom();
 
   const {
@@ -87,14 +86,14 @@ export function Timeline() {
 
   // cosas que pasan asincronamente
 
-  //mientras cargan post, al postsContainer le hago append de un loader
-  postsContainer.textContent = "Cargando posts...";
+  // mientras cargan post, al postsContainer le hago append de un loader
+  postsContainer.textContent = 'Cargando posts...';
 
   traerPost()
     .then((postsLista) => {
       // una vez que tengo la lista le quito el loader
-      postsContainer.textContent = "";
-      //lleno el postContainer con los nodos de post
+      postsContainer.textContent = '';
+      // lleno el postContainer con los nodos de post
       postsLista.forEach((post) => {
         const postComponent = Post(
           post,
@@ -105,20 +104,19 @@ export function Timeline() {
           abrirModalRemoveCom,
           setDataModalRemoveCom,
           abrirModalEditCom,
-          setDataModalEditCom
+          setDataModalEditCom,
         );
         postsContainer.append(postComponent);
       });
     })
-    .catch((error) => {
+    .catch(() => {
       // mostrar mensaje de que no se pudo cargar los posts
-      console.error(error);
-      postsContainer.textContent = "No hay posts";
+      postsContainer.textContent = 'No hay posts';
     });
 
   return timeline;
 }
 
-//en vez de devolver timeline, devuelve Promise que en el then devuelve timeline
+// en vez de devolver timeline, devuelve Promise que en el then devuelve timeline
 // Timeline() // cuando es async retorna es una promesa pendiente
-//Timeline().then((timeline) => {})
+// Timeline().then((timeline) => {})

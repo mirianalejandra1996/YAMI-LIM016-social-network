@@ -9,6 +9,29 @@ import { ModalCreatePost } from './ModalCreatePost.js';
 import { ModalEditPost } from './ModalEditPost.js';
 
 export function MiMuro() {
+  // Cerrar Sesion
+  const { modalCerrarSesion, abrilModalCerrarSesion } = ModalCerrarSesion();
+  // Crea un Post
+  const { modalCreatePost, abrirModalCreatePost } = ModalCreatePost();
+
+  // Edita un post
+  const {
+    modalContenedor,
+  // abrirModal, cerrarModal, setPost,
+  } = ModalEditPost();
+
+  const { menuModalPlus, toggleModalPlus } = MenuList(abrirModalCreatePost);
+  // Perfil usuario
+
+  const { menuModalProfile, toggleModalProfile } = ProfileList(
+    abrilModalCerrarSesion,
+  );
+
+  // Enviamos los eventos a Menu
+  const menu = Menu(toggleModalPlus, toggleModalProfile);
+
+  // -----------------------------------------------------------------------------------
+
   const user = auth.currentUser;
 
   const contenedorMuro = document.createElement('div');
@@ -32,39 +55,24 @@ export function MiMuro() {
   nombre.classList.add('userNameTitle');
   nombre.textContent = '{user.displayName}';
 
-  // const buttonAddPost = document.createElement('button');
-  // buttonAddPost.classList.add('buttonAddPost_desktop');
-
-
-  // ! -------------------  MIRIAN!!!
-
   const buttonAddPost = document.createElement('button');
   buttonAddPost.classList.add('buttonAddPost_desktop');
 
-  
   const iconPlus = document.createElement('i');
   iconPlus.classList.add('icon-addPost');
   iconPlus.classList.add('btn-addPost__text');
-  
+
   const textBtn = document.createElement('span');
   textBtn.textContent = 'Crear Post';
   // textBtn.classList.add('btn-addPost__text-small');
   textBtn.classList.add('btn-addPost__text--small');
 
   const buttonContent = document.createElement('div');
-  buttonContent.classList.add('btn-addPost__text--centered')
+  buttonContent.classList.add('btn-addPost__text--centered');
   buttonContent.append(textBtn);
   buttonContent.append(iconPlus);
 
-
   buttonAddPost.append(buttonContent);
-
-  // ! TERMINA AQUI ---------------
-
-  // const iconPlus = document.createElement('i');
-  // iconPlus.classList.add('icon-addPost');
-
-  // buttonAddPost.append(iconPlus);
 
   buttonAddPost.addEventListener('click', () => {
     abrirModalCreatePost();
@@ -111,43 +119,17 @@ export function MiMuro() {
         });
       }
     })
-    .catch((error) => {
-      console.error(error);
+    .catch(() => {
       misPostsContainer.textContent = 'No hay post...';
 
       // mostrar mensaje de que no se pudo cargar los posts
     });
 
   getUserData(user.uid)
-    .then((user) => {
-      photoAvatar.src = user.user_photo;
-      nombre.textContent = `${user.user_name}`;
-    })
-    .catch((err) => {
-      console.log(err);
+    .then((u) => {
+      photoAvatar.src = u.user_photo;
+      nombre.textContent = `${u.user_name}`;
     });
-
-  // Cerrar Sesion
-  const { modalCerrarSesion, abrilModalCerrarSesion } = ModalCerrarSesion();
-  // Crea un Post
-  const { modalCreatePost, abrirModalCreatePost } = ModalCreatePost();
-
-  // Edita un post
-  const {
-    modalContenedor, abrirModal, cerrarModal, setPost,
-  } = ModalEditPost();
-
-  const { menuModalPlus, toggleModalPlus } = MenuList(abrirModalCreatePost);
-  // Perfil usuario
-
-  const { menuModalProfile, toggleModalProfile } = ProfileList(
-    abrilModalCerrarSesion,
-  );
-
-  // Enviamos los eventos a Menu
-  const menu = Menu(toggleModalPlus, toggleModalProfile);
-
-  // -----------------------------------------------------------------------------------
 
   contenedorMuro.append(header);
   contenedorMuro.append(photoContainer);

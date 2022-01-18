@@ -1,24 +1,22 @@
 const auth = {
   currentUser: {
-    uid: "fake-uid",
-    displayName: "fake-name",
-    providerData: [{ providerId: "google.com" }],
-    email: "fake-email",
-    photoURL: "fake-photo",
+    uid: 'fake-uid',
+    displayName: 'fake-name',
+    providerData: [{ providerId: 'google.com' }],
+    email: 'fake-email',
+    photoURL: 'fake-photo',
     metadata: {
-      createdAt: "fake-time",
+      createdAt: 'fake-time',
     },
   },
 };
 
 // const setDoc = jest.fn((document, values) => Promise.resolve({values}));
 
-const setDoc = jest.fn((document, values) => Promise.resolve({ values }));
-const doc = jest.fn((db, collection, docId) => Promise.resolve({}));
 const db = {};
-const collection = jest.fn((db, nameColletion) => Promise.resolve({}));
-
-// const db = jest.fn(() => Promise.resolve({}));
+const setDoc = jest.fn((document, values) => Promise.resolve({ values }));
+const doc = jest.fn(() => Promise.resolve({}));
+const collection = jest.fn(() => Promise.resolve({}));
 
 export {
   auth,
@@ -26,17 +24,6 @@ export {
   doc,
   db,
   collection,
-  // getFirestore,
-  // getUserData,
-  // getStorage,
-  // loginGoogle,
-  // sendPasswordResetEmail,
-  // getDoc,
-  // app,
-  // storage,
-  // signInWithPopup,
-  // GoogleAuthProvider,
-  // signInWithEmailAndPassword,
 };
 
 // ! no sirvió con getUserData -----------------------------------------------------------
@@ -68,4 +55,4 @@ export {
 // const sendPasswordResetEmail = jest.fn(() => Promise.resolve());
 // const GoogleAuthProvider = jest.fn(() => Promise.resolve({}));
 
-const signInWithPopup = jest.fn((auth, provider) => Promise.resolve({}));
+// const signInWithPopup = jest.fn((auth, provider) => Promise.resolve({}));
