@@ -10,7 +10,7 @@ import {
 import {
   auth,
   changePasswordAuth,
-  reautentificacion,
+  reauth,
   createCredential,
 } from "../firebase/firebase-auth.js";
 
@@ -205,7 +205,7 @@ export const ChangePassword = () => {
 
     console.log("credencial : ", credential);
 
-    reautentificacion(user, credential)
+    reauth(user, credential)
       .then(() => {
         console.log("si se logró la reautentificación");
 

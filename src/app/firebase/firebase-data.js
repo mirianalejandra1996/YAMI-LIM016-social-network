@@ -1,7 +1,6 @@
 // import { initializeApp } from "https://www.gstatic.com/firebasejs/9.5.0/firebase-app.js";
 import {
   db,
-  getFirestore,
   collection,
   doc,
   addDoc,
@@ -64,29 +63,25 @@ export function addUser(user, name, password) {
     user_password: passwordN,
     user_logedBy: logedByN,
     user_birth: birthN,
-  })
-    .then((userDocRef) => {
-      console.log('usuario subido al firestore!');
-      console.log('esto es setdoc', userdoc);
-      console.log('esto es userdocref', userDocRef);
-      return userDocRef;
-    })
-    .catch((err) => console.log(err));
+  });
+  // .then((userDocRef) => {
+  //   console.log('esto es userdocref', userDocRef);
+  //   return userDocRef;
+  // })
+  // .catch((err) => console.log(err));
 }
 
 // Get User Data
-export async function getUserData(user_id) {
-  const userRef = doc(db, 'users', user_id);
+export async function getUserData(userId) {
+  const userRef = doc(db, 'users', userId);
   const docSnap = await getDoc(userRef);
 
   const usuario = docSnap.data();
-  console.log({ usuario });
   if (docSnap.exists()) {
     //   console.log("Document data:", docSnap.data());
     return usuario;
   }
-  //   // doc.data() will be undefined in this case
-  console.log('No such document!');
+  // doc.data() will be undefined in this case
   return {};
 }
 // todo: AVERIGUAR SI EXISTE ALGÚN METODO EXCLUSIVO PARA SABER SI EL USUARIO EXISTE
@@ -98,8 +93,8 @@ export async function isExistingUser(email) {
 
   const userEmailMatch = [];
 
-  docSnap.forEach((doc) => {
-    userEmailMatch.push(doc.data());
+  docSnap.forEach((d) => {
+    userEmailMatch.push(d.data());
   });
 
   let userExist;
@@ -107,7 +102,6 @@ export async function isExistingUser(email) {
   // let pwdUserSearched;
 
   if (userEmailMatch.length === 0) {
-    console.log(userEmailMatch.length);
     userExist = false;
     emailUserSearched = null;
     // pwdUserSearched = null;
@@ -127,9 +121,8 @@ export async function isExistingUser(email) {
 }
 
 // Actualiza el usuario
-export async function changePasswordFirestore(user_id, password) {
-  console.log('función updateUser va a actualizar los datos');
-  const userDocRef = await doc(db, 'users', user_id);
+export async function changePasswordFirestore(userId, password) {
+  const userDocRef = await doc(db, 'users', userId);
 
   return updateDoc(userDocRef, {
     user_password: password,
@@ -142,22 +135,16 @@ export async function changePasswordFirestore(user_id, password) {
   // });
 }
 
-export function changeBasicDataFirestore(user_id, objNewData) {
-  console.log('función updateUser va a actualizar los datos');
-  const userDocRef = doc(db, 'users', user_id);
+export function changeBasicDataFirestore(userId, objNewData) {
+  // console.log('función updateUser va a actualizar los datos');
+  const userDocRef = doc(db, 'users', userId);
 
   updateDoc(userDocRef, {
     user_photo: objNewData.user_photo,
     user_name: objNewData.user_name,
     user_birth: objNewData.user_birth,
     user_email: objNewData.user_email,
-  })
-    .then(() => {
-      console.log('Si se actualizó el usuario en el firestore ');
-    })
-    .catch((err) => {
-      console.log('No se puede actualizar el usuario en el firestore ', err);
-    });
+  });
 }
 
 /** ****************Funciones del POST******************** */
@@ -173,12 +160,12 @@ export function addPost(message) {
     message,
     date: Date.now(),
     likes: [],
-  })
-    .then((postDocRef) => {
-      console.log('post subido al firestore!', postDocRef);
-      return postDocRef;
-    })
-    .catch((err) => console.log(err));
+  });
+  // .then((postDocRef) => {
+  //   console.log('post subido al firestore!', postDocRef);
+  //   return postDocRef;
+  // })
+  // .catch((err) => console.log(err));
 }
 
 // Recopila todos los posts
@@ -188,9 +175,9 @@ export async function traerPost() {
   const q = query(postsRef, orderBy('date', 'desc'));
   const querySnapshotPosts = await getDocs(q);
 
-  querySnapshotPosts.forEach((doc) => {
-    const post = doc.data();
-    post.post_id = doc.id;
+  querySnapshotPosts.forEach((d) => {
+    const post = d.data();
+    post.post_id = d.id;
     postsData.push(post);
   });
   // retorna un array de objetos
@@ -198,22 +185,16 @@ export async function traerPost() {
 }
 
 // Toggle Likes Post
-export async function toggleLikes(post_id) {
-  // console.log(post.post_id);
-
-  console.log(post_id);
+export async function toggleLikes(postId) {
   // en la colección posts, nos vamos a la propiedad "like" (campo) del documento
-  const postRef = doc(db, 'posts', post_id); // documentRef
+  const postRef = doc(db, 'posts', postId); // documentRef
 
-  console.log('este es postRef', postRef);
   const userId = auth.currentUser.uid;
-  console.log(userId);
 
   const post = await getDoc(postRef);
   const likes = post.data().likes;
-  const userLike = likes.find((like) =>
-    // .find defines true o false hasta q las entencia se cumple
-    like === userId);
+  const userLike = likes.find((like) => like === userId);
+  // .find defines true o false hasta q las entencia se cumple
 
   if (userLike) {
     await updateDoc(postRef, {
@@ -227,19 +208,19 @@ export async function toggleLikes(post_id) {
 }
 
 // Actualizar Post
-export async function updatePost(post_id, { message, imageUrl = '' }) {
-  const postRef = doc(db, 'posts', post_id);
+export async function updatePost(postId, { message, imageUrl = '' }) {
+  const postRef = doc(db, 'posts', postId);
 
-  return await updateDoc(postRef, {
+  return updateDoc(postRef, {
     message,
     imageUrl,
   });
 }
 
 // Eliminar Post
-export async function deletePost(post_id) {
-  const postRef = doc(db, 'posts', post_id);
-  return await deleteDoc(postRef);
+export async function deletePost(postId) {
+  const postRef = doc(db, 'posts', postId);
+  return deleteDoc(postRef);
 }
 
 // Traer Posts de un Usuario
@@ -253,10 +234,10 @@ export async function traerMisPost(userId) {
   const postsFiltradocs = querySnapshotPosts.docs; // es un Array
   const postsData = [];
 
-  postsFiltradocs.forEach((doc) => {
+  postsFiltradocs.forEach((d) => {
     // doc.data() is never undefined for query doc snapshots
-    const post = doc.data();
-    post.post_id = doc.id;
+    const post = d.data();
+    post.post_id = d.id;
     postsData.push(post);
   });
   // retornamos un array de objetos
@@ -264,36 +245,34 @@ export async function traerMisPost(userId) {
 }
 
 // Comentar un Post
-export function addComment(current_user, idPost, comment) {
+export function addComment(currentUser, idPost, comment) {
   const commentsRef = collection(db, 'posts', idPost, 'comments');
 
-  console.log(current_user);
-
   addDoc(commentsRef, {
-    id_user: current_user.uid,
-    user_name: current_user.displayName,
+    id_user: currentUser.uid,
+    user_name: currentUser.displayName,
     message: comment,
     date: Date.now(),
     likes: [],
-    user_photo: current_user.photoURL,
-  })
-    .then(() => {
-      console.log('comentario en firestore');
-    })
-    .catch((err) => console.log(err));
+    user_photo: currentUser.photoURL,
+  });
+  // .then(() => {
+  //   console.log('comentario en firestore');
+  // })
+  // .catch((err) => console.log(err));
 }
 
 /** ****************Funciones de los Comentarios******************** */
 // Traer los Comentarios
-export async function traerComments(id_post) {
+export async function traerComments(idPost) {
   const commentsData = [];
-  const commentsRef = collection(db, 'posts', id_post, 'comments');
+  const commentsRef = collection(db, 'posts', idPost, 'comments');
   const q = query(commentsRef, orderBy('date', 'desc'));
   const querySnapshotComments = await getDocs(q);
 
-  querySnapshotComments.forEach((doc) => {
-    const comment = doc.data();
-    comment.com_id = doc.id;
+  querySnapshotComments.forEach((d) => {
+    const comment = d.data();
+    comment.com_id = d.id;
     commentsData.push(comment);
     // console.log(postData)
     // console.log(doc.id, " => ", doc.data());
@@ -303,20 +282,19 @@ export async function traerComments(id_post) {
 }
 
 // Toggle Likes Comments
-export async function toggleComLikes(post_id, com_id) {
+export async function toggleComLikes(postId, comId) {
   // console.log(post.post_id);
   // console.log(post_id);
   // en la colección posts, nos vamos a la propiedad "like" (campo) del documento
-  const comRef = doc(db, 'posts', post_id, 'comments', com_id); // documentRef
+  const comRef = doc(db, 'posts', postId, 'comments', comId); // documentRef
   // console.log("este es comRef", comRef);
   const userId = auth.currentUser.uid;
   // console.log(userId);
   const comment = await getDoc(comRef);
   const likes = comment.data().likes;
 
-  const userLike = likes.find((like) =>
-    // .find defines true o false hasta q las entencia se cumple
-    like === userId);
+  const userLike = likes.find((like) => like === userId);
+  // .find defines true o false hasta q las entencia se cumple
 
   if (userLike) {
     await updateDoc(comRef, {
@@ -332,14 +310,14 @@ export async function toggleComLikes(post_id, com_id) {
 // Actualizar comentario
 export async function updateCom(postId, comId, message) {
   const postRef = doc(db, 'posts', postId, 'comments', comId);
-  return await updateDoc(postRef, {
+  return updateDoc(postRef, {
     message,
   });
 }
 
 export async function deleteCom(postId, comId) {
   const comRef = doc(db, 'posts', postId, 'comments', comId);
-  return await deleteDoc(comRef);
+  return deleteDoc(comRef);
 }
 
 /** ****************Funciones del LISTENERS******************** */

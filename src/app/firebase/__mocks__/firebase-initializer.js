@@ -13,10 +13,10 @@ const auth = {
 
 // const setDoc = jest.fn((document, values) => Promise.resolve({values}));
 
-const setDoc = jest.fn((document, values) => Promise.resolve({ values }));
-const doc = jest.fn((db, collection, docId) => Promise.resolve({}));
 const db = {};
-const collection = jest.fn((db, nameColletion) => Promise.resolve({}));
+const setDoc = jest.fn((document, values) => Promise.resolve({ values }));
+const doc = jest.fn((/*db, collection, docId*/) => Promise.resolve({}));
+const collection = jest.fn((/*db, nameColletion*/) => Promise.resolve({}));
 
 // const db = jest.fn(() => Promise.resolve({}));
 
@@ -68,4 +68,4 @@ export {
 // const sendPasswordResetEmail = jest.fn(() => Promise.resolve());
 // const GoogleAuthProvider = jest.fn(() => Promise.resolve({}));
 
-const signInWithPopup = jest.fn((auth, provider) => Promise.resolve({}));
+// const signInWithPopup = jest.fn((auth, provider) => Promise.resolve({}));

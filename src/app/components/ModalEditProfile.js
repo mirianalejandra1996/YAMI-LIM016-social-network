@@ -10,7 +10,7 @@ import {
   changeNameAndPhotoAuth,
   changeEmailAuth,
   createCredential,
-  reautentificacion,
+  reauth,
 } from '../firebase/firebase-auth.js';
 import { validateEmail, validateField } from '../helpers/forms-validation.js';
 
@@ -75,6 +75,10 @@ export const ModalEditProfile = () => {
   const iconPhotoContainer = document.createElement('label');
   iconPhotoContainer.id = '';
   iconPhotoContainer.htmlFor = 'file';
+
+  const throwMsg = document.createElement('span');
+  throwMsg.classList.add('error-msg');
+  throwMsg.id = 'error-msg';
 
   iconPhotoContainer.addEventListener('click', () => {
     throwMsg.textContent = '';
@@ -179,10 +183,6 @@ export const ModalEditProfile = () => {
   //   Contenedor de campos obligatorios
   const errContainer = document.createElement('div');
   errContainer.classList.add('errContainer--modal');
-
-  const throwMsg = document.createElement('span');
-  throwMsg.classList.add('error-msg');
-  throwMsg.id = 'error-msg';
 
   errContainer.append(throwMsg);
   // -----------------------------
@@ -317,7 +317,7 @@ export const ModalEditProfile = () => {
 
     const credential = await createCredential(user, newData.user_password);
 
-    reautentificacion(user, credential)
+    reauth(user, credential)
       .then(() => {
         // Verifica si el usuario adjuntó alguna imagen para su perfil
         if (inputFileNone.files[0]) {
@@ -335,12 +335,12 @@ export const ModalEditProfile = () => {
       .then(() => changeNameAndPhotoAuth(newData))
       .then(() => changeBasicDataFirestore(user.uid, newData))
       .then(() => getUserData(user.uid))
-      .then((user) => {
-        userPasswordFirestore = user.user_password;
-        userNameFirestore = user.user_name;
-        userBirthFirestore = user.user_birth;
-        userEmailFirestore = user.user_email;
-        userPhoto = user.user_photo;
+      .then((u) => {
+        userPasswordFirestore = u.user_password;
+        userNameFirestore = u.user_name;
+        userBirthFirestore = u.user_birth;
+        userEmailFirestore = u.user_email;
+        userPhoto = u.user_photo;
       })
       .then(() => {
         throwMsg.classList.remove('error-msg');
@@ -349,25 +349,22 @@ export const ModalEditProfile = () => {
         // Cuando termine todos los procesos se oculta el spinner
         loader.remove();
       })
-      .catch((err) => {
+      .catch(() => {
         throwMsg.textContent = 'Error de autentificación ';
       });
   });
 
   getUserData(user.uid)
-    .then((user) => {
-      photoAvatar.src = user.user_photo;
-      inputName.value = user.user_name;
-      inputDate.value = user.user_birth;
-      inputEmail.value = user.user_email;
-      userPhoto = user.user_photo;
-      userNameFirestore = user.user_name;
-      userBirthFirestore = user.user_birth;
-      userEmailFirestore = user.user_email;
-      userPasswordFirestore = user.user_password;
-    })
-    .catch((err) => {
-      // Deberia crear algun tipo de error? o un 404 not found
+    .then((u) => {
+      photoAvatar.src = u.user_photo;
+      inputName.value = u.user_name;
+      inputDate.value = u.user_birth;
+      inputEmail.value = u.user_email;
+      userPhoto = u.user_photo;
+      userNameFirestore = u.user_name;
+      userBirthFirestore = u.user_birth;
+      userEmailFirestore = u.user_email;
+      userPasswordFirestore = u.user_password;
     });
 
   return {

@@ -1,12 +1,10 @@
-import { addComment, traerComments } from '../firebase/firebase-data.js';
+import { addComment } from '../firebase/firebase-data.js';
 import { auth } from '../firebase/firebase-auth.js';
-
-import { Comment } from './Comment.js';
 
 export function NewComments(idPost) {
   const commentsDiv = document.createElement('div');
 
-  const current_user = auth.currentUser;
+  const currentUser = auth.currentUser;
 
   const newComment = document.createElement('div');
   newComment.classList.add('newComment');
@@ -39,7 +37,7 @@ export function NewComments(idPost) {
   commentBtn.addEventListener('click', async () => {
     const comment = document.getElementById(`comment_${idPost}`).value;
     if (comment !== '') {
-      await addComment(current_user, idPost, comment);
+      await addComment(currentUser, idPost, comment);
       window.location.hash = '#/';
     }
   });

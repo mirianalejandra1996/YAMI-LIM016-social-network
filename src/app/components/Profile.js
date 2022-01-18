@@ -148,7 +148,7 @@ export const Profile = () => {
 
   // -----------------------------
 
-  const { modalEditProfile, abrirModalEditProfile, cerrarModalEditProfile } = ModalEditProfile();
+  const { modalEditProfile, abrirModalEditProfile } = ModalEditProfile();
 
   btnEdit.addEventListener('click', () => {
     abrirModalEditProfile();
@@ -164,14 +164,14 @@ export const Profile = () => {
   //   --------------
   initListenerProfile(user.uid, () => {
     getUserData(user.uid)
-      .then((user) => {
-        photoAvatar.src = user.user_photo;
+      .then((u) => {
+        photoAvatar.src = u.user_photo;
         inputDate.type = 'date';
-        inputName.value = user.user_name;
-        inputDate.value = user.user_birth;
-        inputEmail.value = user.user_email;
+        inputName.value = u.user_name;
+        inputDate.value = u.user_birth;
+        inputEmail.value = u.user_email;
 
-        if (user.user_logedBy === 'google') {
+        if (u.user_logedBy === 'google') {
           groupDate.classList.add('hidden');
           formContainer.append(msgContainer);
           msgContainer.append(msgLogedByGoogle);
@@ -181,7 +181,7 @@ export const Profile = () => {
           msgContainer.append(changePwd);
         }
       })
-      .catch((err) => {});
+      .catch(() => {});
   });
 
   return profileComponent;

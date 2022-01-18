@@ -109,9 +109,8 @@ export function Timeline() {
         postsContainer.append(postComponent);
       });
     })
-    .catch((error) => {
+    .catch(() => {
       // mostrar mensaje de que no se pudo cargar los posts
-      console.error(error);
       postsContainer.textContent = 'No hay posts';
     });
 

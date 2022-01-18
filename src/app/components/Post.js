@@ -7,6 +7,39 @@ import { timeSince } from '../helpers/forms-validation.js';
 
 // import { Menu, OptionListPost } from "./Menu.js";
 
+// Lista desplegable para editar o eliminar post
+function OptionListPost(onClickRemove, onClickEdit) {
+  const modalLista = document.createElement('div');
+  modalLista.classList.add('card__dropdown', 'cerrar');
+
+  const itemEditPublication = document.createElement('button');
+  itemEditPublication.classList.add('modal__button');
+  itemEditPublication.textContent = 'Editar';
+  // itemEditPublication.id=`edit_${post_id}`
+
+  const itemRemovePublication = document.createElement('button');
+  itemRemovePublication.classList.add('modal__button');
+  itemRemovePublication.textContent = 'Remover';
+
+  // modalLista.append(modalEditPost)
+  modalLista.append(itemEditPublication);
+  modalLista.append(itemRemovePublication);
+
+  // modalLista.append(modalContenedor)
+
+  itemEditPublication.addEventListener('click', onClickEdit);
+  itemRemovePublication.addEventListener('click', onClickRemove);
+
+  const toggleModalOptionsPost = () => {
+    modalLista.classList.toggle('cerrar');
+  };
+
+  return {
+    menuModalOptionsPost: modalLista,
+    toggleModalOptionsPost,
+  };
+}
+
 export const Post = (
   post,
   setDataModalEdit,
@@ -18,7 +51,7 @@ export const Post = (
   abrirModalEditCom,
   setDataModalEditCom,
 ) => {
-  const user_id = auth.currentUser.uid;
+  const userId = auth.currentUser.uid;
   const card = document.createElement('div');
   card.classList.add('card');
 
@@ -72,12 +105,12 @@ export const Post = (
   // optionsContainer.id = `optionsPost_{post.post_id}`;
 
   textAndIconContainer.append(dataContainer);
-  if (post.id_user == user_id) {
+  if (post.id_user === userId) {
     textAndIconContainer.append(optionsContainer);
   }
 
   // ! Si el usuario no es dueño del post, no debería salir la lista desplegable
-  // if (user_id !== post.id_user) optionsContainer.classList.add("hidden");
+  // if (userId !== post.id_user) optionsContainer.classList.add("hidden");
 
   //
 
@@ -99,8 +132,6 @@ export const Post = (
 
   // EVENTO 3 PUNTITOS OPCIONES
   optionsContainer.addEventListener('click', () => {
-    console.log('deberia salir la lista desplegable de opciones de post');
-    // console.log("este es el post id", post.post_id);
     toggleModalOptionsPost();
   });
 
@@ -170,6 +201,8 @@ export const Post = (
   /// //CARD comentarios container
   const comentContainer = document.createElement('div');
   comentContainer.classList.add('card__icon-container');
+  const commentsBlock = document.createElement('div');
+  commentsBlock.classList.add('close');
   comentContainer.addEventListener('click', () => {
     commentsBlock.classList.toggle('close');
   });
@@ -183,9 +216,6 @@ export const Post = (
   comentarioTitle.id = 'comentario';
 
   /** ************************* */
-
-  const commentsBlock = document.createElement('div');
-  commentsBlock.classList.add('close');
 
   const commentsDiv = document.createElement('div');
   commentsDiv.classList.add('commentsDiv');
@@ -212,8 +242,7 @@ export const Post = (
         commentsContainer.append(comment);
         // console.log("entra")
       });
-    })
-    .catch((err) => console.log(err));
+    });
 
   commentsDiv.append(commentsContainer);
 
@@ -240,9 +269,8 @@ export const Post = (
 
     const likes = postDoc.data().likes;
     // console.log("array de likes", likes);
-    if (likes.find((like) => like === user_id)) {
+    if (likes.find((like) => like === userId)) {
       likeContainer.classList.add('selected');
-      console.log('si se encuentra');
     } else {
       likeContainer.classList.remove('selected');
       // console.log("no se encuentra");
@@ -271,36 +299,3 @@ export const Post = (
 
   return card;
 };
-
-// Lista desplegable para editar o eliminar post
-function OptionListPost(onClickRemove, onClickEdit) {
-  const modalLista = document.createElement('div');
-  modalLista.classList.add('card__dropdown', 'cerrar');
-
-  const itemEditPublication = document.createElement('button');
-  itemEditPublication.classList.add('modal__button');
-  itemEditPublication.textContent = 'Editar';
-  // itemEditPublication.id=`edit_${post_id}`
-
-  const itemRemovePublication = document.createElement('button');
-  itemRemovePublication.classList.add('modal__button');
-  itemRemovePublication.textContent = 'Remover';
-
-  // modalLista.append(modalEditPost)
-  modalLista.append(itemEditPublication);
-  modalLista.append(itemRemovePublication);
-
-  // modalLista.append(modalContenedor)
-
-  itemEditPublication.addEventListener('click', onClickEdit);
-  itemRemovePublication.addEventListener('click', onClickRemove);
-
-  const toggleModalOptionsPost = () => {
-    modalLista.classList.toggle('cerrar');
-  };
-
-  return {
-    menuModalOptionsPost: modalLista,
-    toggleModalOptionsPost,
-  };
-}

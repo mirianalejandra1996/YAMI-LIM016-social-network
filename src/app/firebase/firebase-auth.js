@@ -2,7 +2,6 @@ import {
   auth,
   app,
   signInWithEmailAndPassword,
-  getAuth,
   createUserWithEmailAndPassword,
   GoogleAuthProvider,
   signInWithPopup,
@@ -78,38 +77,33 @@ export const enviarIngreso = (email, password) => signInWithEmailAndPassword(aut
 
 /** **********************Continuar con Google********************************* */
 
-const user = auth.currentUser;
+// const user = auth.currentUser;
 // console.log("este es el user actual", user);
 // console.log("esto es auth", auth);
 
-export const loginGoogle = () =>
-  // ! Deberiamos chequear primero si esta cuenta ya se encuentra registrada en el firebase,
+export const loginGoogle = () => signInWithPopup(auth, provider)
+// ! Deberiamos chequear primero si esta cuenta ya se encuentra registrada en el firebase,
   // ! en caso de estar en el firestore, pedirle que ingrese sus datos
-  signInWithPopup(auth, provider)
-    .then((response) => {
-      const user = response.user;
-      console.log('sign in pop exitoso', response);
-      // console.log("sign in pop exitoso", user);
-      addUser(user, '', '');
-      window.location.hash = '#/timeline';
-    })
-    .catch((err) => console.log(err))
-;
+  .then((response) => {
+    const user = response.user;
+    addUser(user, '', '');
+    window.location.hash = '#/timeline';
+  });
 
 /** *************************Cerrar sesión************************** */
 
 export const logOutGoogle = () => {
-  const auth = getAuth();
-  signOut(auth)
-    .then(() => {
-      // Sign-out successful.
-      console.log('Haz salido de tu cuenta');
-      // window.location.hash = "#/";
-    })
-    .catch((error) => {
-      // An error happened.
-      console.log('Problemas al salir');
-    });
+  // const auth = getAuth();
+  signOut(auth);
+  // .then(() => {
+  //   // Sign-out successful.
+  //   console.log('Haz salido de tu cuenta');
+  //   // window.location.hash = "#/";
+  // })
+  // .catch((error) => {
+  //   // An error happened.
+  //   console.log('Problemas al salir');
+  // });
 };
 
 /** ****************Registro con correo************************* */
@@ -168,42 +162,22 @@ export function enviarRegistro() {
 
     // Validando los campos de la siguiente vista, si están vacios
 
-    createUserWithEmailAndPassword(auth, email, password)
+    createUserWithEmailAndPassword(auth, emailV, passwordV)
       .then((userCredential) => {
         // Signed in
         const user = userCredential.user;
-        // const userCurrent = auth.currentUser;
-
         // Añadimos a este usuario en nuestra base de datos
-        console.log('usuario creado');
-        return addUser(user, name, password);
+        return addUser(user, nameV, passwordV);
       })
       .then(() => {
-        console.log(
-          'entramos al primer then de CreateUserWithEmailAndPassword',
-        );
-
         return updateProfile(auth.currentUser, {
-          displayName: name,
-          // password: password,
+          displayName: nameV,
           photoURL:
             'https://firebasestorage.googleapis.com/v0/b/yami-cbaa4.appspot.com/o/user.png?alt=media&token=bfe80508-5817-4d84-83e1-6a074a16f198',
         })
           .then(() => {
-            console.log(
-              'entramos al primer then anidado interno de updateProfile',
-            );
             // Profile updated!
-            console.log('Ya se le modificó el nombre al usuario');
             window.location.hash = '#/timeline';
-          })
-          .catch((error) => {
-            console.log(
-              'se presentó un problema al cambiar el displayName del usuario',
-              error,
-            );
-            // An error occurred
-            // ...
           });
       })
       .catch((error) => {
@@ -287,23 +261,23 @@ export function enviarRegistro() {
 // }
 
 export function changeNameAndPhotoAuth(objNewData) {
-  const auth = getAuth();
+  // const auth = getAuth();
 
   // console.log("probando ando", auth.currentUser);
   updateProfile(auth.currentUser, {
     displayName: objNewData.user_name,
     photoURL: objNewData.user_photo,
-  })
-    .then(() => {
-      // Profile updated!
-      // console.log("función updateBasicInfoUserAuth exitosa!");
-      // ...
-    })
-    .catch((error) => {
-      // An error occurred
-      // console.log("función updateBasicInfoUserAuth fracasada!");
-      // ...
-    });
+  });
+  // .then(() => {
+  //   // Profile updated!
+  //   // console.log("función updateBasicInfoUserAuth exitosa!");
+  //   // ...
+  // })
+  // .catch((error) => {
+  //   // An error occurred
+  //   // console.log("función updateBasicInfoUserAuth fracasada!");
+  //   // ...
+  // });
 }
 
 // Siempre me pedirán credencial para eliminar cuenta, cambiar contraseña o correo
@@ -316,20 +290,20 @@ export const createCredential = (user, password) => {
 
 // El método indicará la funcion (si es para actualizar el correo o la contraseña)
 
-export const reautentificacion = async (user, credential) => await reauthenticateWithCredential(user, credential);
+export const reauth = async (user, credential) => reauthenticateWithCredential(user, credential);
 
-export const changePasswordAuth = (user, newPassword) => updatePassword(user, newPassword)
-  .then(() => {
-    console.log('si cambió la contraseña');
-    // Update successful.
-  })
-  .catch((error) => {
-    // An error ocurred
-    console.log(
-      'problemas para cambiar la contraseña en updatePassword',
-      error,
-    );
-    // ...
-  });
+export const changePasswordAuth = (user, newPassword) => updatePassword(user, newPassword);
+// .then(() => {
+//   console.log('si cambió la contraseña');
+//   // Update successful.
+// })
+// .catch((error) => {
+//   // An error ocurred
+//   console.log(
+//     'problemas para cambiar la contraseña en updatePassword',
+//     error,
+//   );
+//   // ...
+// });
 
 export const changeEmailAuth = (user, newEmail) => updateEmail(user, newEmail);

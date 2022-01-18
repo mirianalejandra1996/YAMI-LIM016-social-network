@@ -9,6 +9,29 @@ import { ModalCreatePost } from './ModalCreatePost.js';
 import { ModalEditPost } from './ModalEditPost.js';
 
 export function MiMuro() {
+  // Cerrar Sesion
+  const { modalCerrarSesion, abrilModalCerrarSesion } = ModalCerrarSesion();
+  // Crea un Post
+  const { modalCreatePost, abrirModalCreatePost } = ModalCreatePost();
+
+  // Edita un post
+  const {
+    modalContenedor,
+  // abrirModal, cerrarModal, setPost,
+  } = ModalEditPost();
+
+  const { menuModalPlus, toggleModalPlus } = MenuList(abrirModalCreatePost);
+  // Perfil usuario
+
+  const { menuModalProfile, toggleModalProfile } = ProfileList(
+    abrilModalCerrarSesion,
+  );
+
+  // Enviamos los eventos a Menu
+  const menu = Menu(toggleModalPlus, toggleModalProfile);
+
+  // -----------------------------------------------------------------------------------
+
   const user = auth.currentUser;
 
   const contenedorMuro = document.createElement('div');
@@ -85,43 +108,17 @@ export function MiMuro() {
         });
       }
     })
-    .catch((error) => {
-      console.error(error);
+    .catch(() => {
       misPostsContainer.textContent = 'No hay post...';
 
       // mostrar mensaje de que no se pudo cargar los posts
     });
 
   getUserData(user.uid)
-    .then((user) => {
-      photoAvatar.src = user.user_photo;
-      nombre.textContent = `${user.user_name}`;
-    })
-    .catch((err) => {
-      console.log(err);
+    .then((u) => {
+      photoAvatar.src = u.user_photo;
+      nombre.textContent = `${u.user_name}`;
     });
-
-  // Cerrar Sesion
-  const { modalCerrarSesion, abrilModalCerrarSesion } = ModalCerrarSesion();
-  // Crea un Post
-  const { modalCreatePost, abrirModalCreatePost } = ModalCreatePost();
-
-  // Edita un post
-  const {
-    modalContenedor, abrirModal, cerrarModal, setPost,
-  } = ModalEditPost();
-
-  const { menuModalPlus, toggleModalPlus } = MenuList(abrirModalCreatePost);
-  // Perfil usuario
-
-  const { menuModalProfile, toggleModalProfile } = ProfileList(
-    abrilModalCerrarSesion,
-  );
-
-  // Enviamos los eventos a Menu
-  const menu = Menu(toggleModalPlus, toggleModalProfile);
-
-  // -----------------------------------------------------------------------------------
 
   contenedorMuro.append(header);
   contenedorMuro.append(photoContainer);
