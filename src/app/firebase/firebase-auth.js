@@ -1,7 +1,7 @@
 import {
+  auth,
   app,
   signInWithEmailAndPassword,
-  getAuth,
   createUserWithEmailAndPassword,
   GoogleAuthProvider,
   signInWithPopup,
@@ -12,201 +12,178 @@ import {
   updateProfile,
   reauthenticateWithCredential,
   EmailAuthProvider,
-} from "../firebase/firebase-initializer.js";
-import {
-  validate_field,
-  validate_password,
-  validate_email,
-} from "../helpers/forms-validation.js";
+} from './firebase-initializer.js';
 
-import { addUser } from "./firebase-data.js";
-export const auth = getAuth(app);
+import {
+  validateField,
+  validatePassword,
+  validateEmail,
+} from '../helpers/forms-validation.js';
+
+import { addUser } from './firebase-data.js';
+
+export { sendPasswordResetEmail, auth };
 
 const provider = new GoogleAuthProvider(app);
 
 // ! Qué dará esto?
-auth.languageCode = "es";
+auth.languageCode = 'es';
 
-/*******************Inicio de sesion con correo***************************/
-export function enviarIngreso() {
-  const email = document.getElementById("lemail").value;
-  const password = document.getElementById("lpassword").value;
+/** *****************Inicio de sesion con correo************************** */
+export const enviarIngreso = (email, password) => signInWithEmailAndPassword(auth, email, password);
 
-  let $email = document.getElementById("lemail");
-  let $password = document.getElementById("lpassword");
+// export function enviarIngreso() {
+//   const email = document.getElementById("lemail").value;
+//   const password = document.getElementById("lpassword").value;
 
-  // console.log(email);
-  // console.log(password);
+//   let email = document.getElementById("lemail");
+//   let password = document.getElementById("lpassword");
 
-  signInWithEmailAndPassword(auth, email, password)
-    .then((userCredential) => {
-      console.log("entramos al then de fn Enviar Ingreso");
-      const user = userCredential.user;
-      console.log({ user });
-      window.location.hash = "#/timeline";
-    })
-    .catch((error) => {
-      const errorCode = error.code;
+//   // console.log(email);
+//   // console.log(password);
 
-      $email.classList.add("error");
-      $password.classList.add("error");
+//   signInWithEmailAndPassword(auth, email, password)
+//     .then((userCredential) => {
+//       console.log("entramos al then de fn Enviar Ingreso");
+//       const user = userCredential.user;
+//       console.log({ user });
+//       window.location.hash = "#/timeline";
+//     })
+//     .catch((error) => {
+//       const errorCode = error.code;
 
-      switch (errorCode) {
-        case "auth/user-not-found":
-          document.getElementById("errorLogin").innerHTML =
-            "Usuario no registrado";
-          break;
-        case "auth/wrong-password":
-          document.getElementById("errorLogin").innerHTML =
-            "Contraseña inválida";
-          break;
-        case "auth/invalid-email":
-          document.getElementById("errorLogin").innerHTML = "Ingrese su correo";
-          break;
-        case "auth/internal-error":
-          document.getElementById("errorLogin").innerHTML =
-            "Ingrese su contraseña";
-          break;
-      }
-    });
-}
+//       email.classList.add("error");
+//       password.classList.add("error");
 
-/************************Continuar con Google**********************************/
+//       switch (errorCode) {
+//         case "auth/user-not-found":
+//           document.getElementById("errorLogin").innerHTML =
+//             "Usuario no registrado";
+//           break;
+//         case "auth/wrong-password":
+//           document.getElementById("errorLogin").innerHTML =
+//             "Contraseña inválida";
+//           break;
+//         case "auth/invalid-email":
+//           document.getElementById("errorLogin").innerHTML = "Ingrese su correo";
+//           break;
+//         case "auth/internal-error":
+//           document.getElementById("errorLogin").innerHTML =
+//             "Ingrese su contraseña";
+//           break;
+//       }
+//     });
+// }
 
-const user = auth.currentUser;
+/** **********************Continuar con Google********************************* */
+
+// const user = auth.currentUser;
 // console.log("este es el user actual", user);
-console.log("esto es auth", auth);
+// console.log("esto es auth", auth);
 
-export const loginGoogle = () => {
-  // ! Deberiamos chequear primero si esta cuenta ya se encuentra registrada en el firebase,
+export const loginGoogle = () => signInWithPopup(auth, provider)
+// ! Deberiamos chequear primero si esta cuenta ya se encuentra registrada en el firebase,
   // ! en caso de estar en el firestore, pedirle que ingrese sus datos
-  signInWithPopup(auth, provider)
-    .then((response) => {
-      const user = response.user;
-      console.log("sign in pop exitoso", user);
-      addUser(user, "", "");
-      window.location.hash = "#/timeline";
-    })
-    .catch((err) => console.log(err));
-};
+  .then((response) => {
+    const user = response.user;
+    addUser(user, '', '');
+    window.location.hash = '#/timeline';
+  });
 
-/***************************Cerrar sesión***************************/
+/** *************************Cerrar sesión************************** */
 
 export const logOutGoogle = () => {
-  const auth = getAuth();
-  signOut(auth)
-    .then(() => {
-      // Sign-out successful.
-      console.log("Haz salido de tu cuenta");
-      // window.location.hash = "#/";
-    })
-    .catch((error) => {
-      // An error happened.
-      console.log("Problemas al salir");
-    });
+  // const auth = getAuth();
+  signOut(auth);
+  // .then(() => {
+  //   // Sign-out successful.
+  //   console.log('Haz salido de tu cuenta');
+  //   // window.location.hash = "#/";
+  // })
+  // .catch((error) => {
+  //   // An error happened.
+  //   console.log('Problemas al salir');
+  // });
 };
 
-/******************Registro con correo**************************/
+/** ****************Registro con correo************************* */
 
 export function enviarRegistro() {
-  document.getElementById("errorLogin").textContent = "";
+  document.getElementById('errorLogin').textContent = '';
   // Primera vista de registro
 
-  let $name = document.getElementById("rname");
-  let $email = document.getElementById("remail");
-  let $password = document.getElementById("rpassword");
+  const name = document.getElementById('rname');
+  const email = document.getElementById('remail');
+  const password = document.getElementById('rpassword');
 
-  $name.classList.remove("error");
-  $email.classList.remove("error");
-  $password.classList.remove("error");
+  name.classList.remove('error');
+  email.classList.remove('error');
+  password.classList.remove('error');
 
-  let name = $name.value.trim();
-  let email = $email.value.trim();
-  let password = $password.value.trim();
+  const nameV = name.value.trim();
+  const emailV = email.value.trim();
+  const passwordV = password.value.trim();
   // Validando los campos
 
   // ------------------------------------
 
-  if (!validate_email(email) || !validate_password(password)) {
-    document.getElementById("errorLogin").textContent = "Datos inválidos";
+  if (!validateEmail(emailV) || !validatePassword(passwordV)) {
+    document.getElementById('errorLogin').textContent = 'Datos inválidos';
   }
 
   if (
-    !validate_field(name) ||
-    !validate_field(email) ||
-    !validate_field(password)
+    !validateField(nameV)
+    || !validateField(emailV)
+    || !validateField(passwordV)
   ) {
     // ------------------------------------
 
-    document.getElementById("errorLogin").textContent = "Datos inválidos";
+    document.getElementById('errorLogin').textContent = 'Datos inválidos';
     // document.getElementById("errorLogin").textContent =
     //   "Datos inválidos, ingrese un correo y una clave entre 8-14 dìgitos";
 
     // Pinta el input
 
-    $name.classList.remove("success");
-    $email.classList.remove("success");
-    $password.classList.remove("success");
+    name.classList.remove('success');
+    email.classList.remove('success');
+    password.classList.remove('success');
 
-    $name.classList.add("error");
-    $email.classList.add("error");
-    $password.classList.add("error");
+    name.classList.add('error');
+    email.classList.add('error');
+    password.classList.add('error');
   } else {
-    $name.classList.remove("error");
-    $email.classList.remove("error");
-    $password.classList.remove("error");
+    name.classList.remove('error');
+    email.classList.remove('error');
+    password.classList.remove('error');
 
-    $name.classList.add("success");
-    $email.classList.add("success");
-    $password.classList.add("success");
+    name.classList.add('success');
+    email.classList.add('success');
+    password.classList.add('success');
 
     // Validando los campos de la siguiente vista, si están vacios
 
-    createUserWithEmailAndPassword(auth, email, password)
+    createUserWithEmailAndPassword(auth, emailV, passwordV)
       .then((userCredential) => {
         // Signed in
         const user = userCredential.user;
-        // const userCurrent = auth.currentUser;
-
-        //Añadimos a este usuario en nuestra base de datos
-        console.log("usuario creado");
-        return addUser(user, name, password);
+        // Añadimos a este usuario en nuestra base de datos
+        return addUser(user, nameV, passwordV);
       })
-      .then(() => {
-        console.log(
-          "entramos al primer then de CreateUserWithEmailAndPassword"
-        );
-
-        return updateProfile(auth.currentUser, {
-          displayName: name,
-          // password: password,
-          photoURL:
-            "https://firebasestorage.googleapis.com/v0/b/yami-cbaa4.appspot.com/o/user.png?alt=media&token=bfe80508-5817-4d84-83e1-6a074a16f198",
-        })
-          .then(() => {
-            console.log(
-              "entramos al primer then anidado interno de updateProfile"
-            );
-            // Profile updated!
-            console.log("Ya se le modificó el nombre al usuario");
-            window.location.hash = "#/timeline";
-          })
-          .catch((error) => {
-            console.log(
-              "se presentó un problema al cambiar el displayName del usuario",
-              error
-            );
-            // An error occurred
-            // ...
-          });
+      .then(() => updateProfile(auth.currentUser, {
+        displayName: nameV,
+        photoURL:
+            'https://firebasestorage.googleapis.com/v0/b/yami-cbaa4.appspot.com/o/user.png?alt=media&token=bfe80508-5817-4d84-83e1-6a074a16f198',
       })
+        .then(() => {
+          // Profile updated!
+          window.location.hash = '#/timeline';
+        }))
       .catch((error) => {
         const errorCode = error.code;
 
         switch (errorCode) {
-          case "auth/email-already-in-use":
-            document.getElementById("errorLogin").textContent =
-              "El correo ingresado ya está en uso";
+          case 'auth/email-already-in-use':
+            document.getElementById('errorLogin').textContent = 'El correo ingresado ya está en uso';
             break;
           default:
         }
@@ -215,18 +192,18 @@ export function enviarRegistro() {
 }
 
 // todo: pendiente hacer funcionalidad de validación de nombre
-// nombre: /^[a-zA-ZÀ-ÿ\s]{1,40}$/, // Letras y espacios, pueden llevar acentos.
+// nombre: /^[a-zA-ZÀ-ÿ\s]{1,40}/, // Letras y espacios, pueden llevar acentos.
 // Funciones validadoras
-// export function validate_email(email) {
+// export function validateEmail(email) {
 //   const expression = /^([\.\_a-zA-Z0-9]+)@([a-zA-A]+)\.([a-zA-Z]){2,8}/;
 
 //   return expression.test(email);
 // }
 
-// export function validate_password(password) {
+// export function validatePassword(password) {
 //   // La contraseña debe tener entre 8 a 14 caracteres
 
-//   const expression = /^.{6,14}$/;
+//   const expression = /^.{6,14}/;
 
 //   // si hace match
 //   if (!expression.test(password)) {
@@ -236,8 +213,8 @@ export function enviarRegistro() {
 //   return expression.test(password);
 // }
 
-// export function validate_field(field) {
-//   // const expression = /^[a-zA-ZÀ-ÿ\s]{1,40}$/;
+// export function validateField(field) {
+//   // const expression = /^[a-zA-ZÀ-ÿ\s]{1,40}/;
 
 //   // if (!expression.test(field) == true){
 //   //   return false
@@ -251,54 +228,54 @@ export function enviarRegistro() {
 //   }
 // }
 
-/********************Olvide mi contraseña**************************/
+/** ******************Olvide mi contraseña************************* */
 
-export function olvideContrasena() {
-  //const auth = getAuth();
-  const email = document.getElementById("lemail").value;
-  sendPasswordResetEmail(auth, email)
-    .then(() => {
-      document.getElementById(
-        "errorLogin"
-      ).innerHTML = ` Se envió un mensaje al correo ${email}`;
-    })
-    .catch((error) => {
-      const errorCode = error.code;
-      console.log(errorCode);
-      switch (errorCode) {
-        case "auth/user-not-found":
-          document.getElementById("errorLogin").innerHTML =
-            "Usuario no registrado";
-          break;
-        case "auth/missing-email":
-          document.getElementById("errorLogin").innerHTML = "Ingrese su correo";
-          break;
-        case "auth/invalid-email":
-          document.getElementById("errorLogin").innerHTML = "Correo inválido";
-          break;
-      }
-      // ..
-    });
-}
+// export function olvideContrasena() {
+//   //const auth = getAuth();
+//   const email = document.getElementById("lemail").value;
+//   return sendPasswordResetEmail(auth, email)
+//     .then(() => {
+//       document.getElementById(
+//         "errorLogin"
+//       ).innerHTML = ` Se envió un mensaje al correo {email}`;
+//     })
+//     .catch((error) => {
+//       const errorCode = error.code;
+//       console.log(errorCode);
+//       switch (errorCode) {
+//         case "auth/user-not-found":
+//           document.getElementById("errorLogin").innerHTML =
+//             "Usuario no registrado";
+//           break;
+//         case "auth/missing-email":
+//           document.getElementById("errorLogin").innerHTML = "Ingrese su correo";
+//           break;
+//         case "auth/invalid-email":
+//           document.getElementById("errorLogin").innerHTML = "Correo inválido";
+//           break;
+//       }
+//       // ..
+//     });
+// }
 
 export function changeNameAndPhotoAuth(objNewData) {
-  const auth = getAuth();
+  // const auth = getAuth();
 
   // console.log("probando ando", auth.currentUser);
   updateProfile(auth.currentUser, {
     displayName: objNewData.user_name,
     photoURL: objNewData.user_photo,
-  })
-    .then(() => {
-      // Profile updated!
-      // console.log("función updateBasicInfoUserAuth exitosa!");
-      // ...
-    })
-    .catch((error) => {
-      // An error occurred
-      // console.log("función updateBasicInfoUserAuth fracasada!");
-      // ...
-    });
+  });
+  // .then(() => {
+  //   // Profile updated!
+  //   // console.log("función updateBasicInfoUserAuth exitosa!");
+  //   // ...
+  // })
+  // .catch((error) => {
+  //   // An error occurred
+  //   // console.log("función updateBasicInfoUserAuth fracasada!");
+  //   // ...
+  // });
 }
 
 // Siempre me pedirán credencial para eliminar cuenta, cambiar contraseña o correo
@@ -311,32 +288,20 @@ export const createCredential = (user, password) => {
 
 // El método indicará la funcion (si es para actualizar el correo o la contraseña)
 
-export const reautentificacion = async (user, credential) => {
-  return await reauthenticateWithCredential(user, credential);
-};
+export const reauth = async (user, credential) => reauthenticateWithCredential(user, credential);
 
-export const changePasswordAuth = (user, newPassword) => {
-  return updatePassword(user, newPassword)
-    .then(() => {
-      console.log("si cambió la contraseña");
-      // Update successful.
-    })
-    .catch((error) => {
-      // An error ocurred
-      console.log(
-        "problemas para cambiar la contraseña en updatePassword",
-        error
-      );
-      // ...
-    });
-};
+export const changePasswordAuth = (user, newPassword) => updatePassword(user, newPassword);
+// .then(() => {
+//   console.log('si cambió la contraseña');
+//   // Update successful.
+// })
+// .catch((error) => {
+//   // An error ocurred
+//   console.log(
+//     'problemas para cambiar la contraseña en updatePassword',
+//     error,
+//   );
+//   // ...
+// });
 
-export const changeEmailAuth = (user, newEmail) => {
-  return updateEmail(user, newEmail);
-  // .then(() => {
-  //   console.log("Email updated! del metodo firebase");
-  // })
-  // .catch((error) => {
-  //   console.log("catch para updateEmail de firebase method", error);
-  // });
-};
+export const changeEmailAuth = (user, newEmail) => updateEmail(user, newEmail);
