@@ -343,6 +343,7 @@ export const ModalEditProfile = () => {
         userBirthFirestore = u.user_birth;
         userEmailFirestore = u.user_email;
         userPhoto = u.user_photo;
+        photoAvatar.src = userPhoto;
       })
       .then(() => {
         throwMsg.classList.remove('error-msg');
