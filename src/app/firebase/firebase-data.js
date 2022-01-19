@@ -17,9 +17,6 @@ import {
   orderBy,
   auth,
 } from './firebase-initializer.js';
-// import { db } from "../firebase/firebase-initializer.js";
-
-// export const auth =
 
 /** ****************Funciones de los Usuario******************** */
 // Agrega un usuario a FS
@@ -31,12 +28,8 @@ export function addUser(user, name, password) {
   let passwordN;
   const birthN = '';
 
-  // console.log("tu eres el user", user);
-  // console.log("tu eres el provider", user.providerData);
-  // user.currentUser.providerData[0].providerId
   if (user.providerData[0].providerId === 'google.com') {
-    // console.log("tu eres el user", user);
-    // console.log("estás logueado con google!!");
+    // Si esta logueado con google
     nameN = user.displayName;
     emailN = user.email;
     photoUrlN = user.photoURL;
@@ -51,7 +44,8 @@ export function addUser(user, name, password) {
     passwordN = password;
   }
   // console.log("entramos a AddUsers");
-  const userdoc = doc(db, 'users', user.uid); // Creamos un documento con el id de nuestro usuario
+  const userdoc = doc(db, 'users', user.uid);
+  // Creamos un documento con el id de nuestro usuario
   // setDoc lo usamos para especificar un id único que nosotros vamos a colocarle,
   // El addDoc autogenera el id
   return setDoc(userdoc, {
@@ -64,11 +58,6 @@ export function addUser(user, name, password) {
     user_logedBy: logedByN,
     user_birth: birthN,
   });
-  // .then((userDocRef) => {
-  //   console.log('esto es userdocref', userDocRef);
-  //   return userDocRef;
-  // })
-  // .catch((err) => console.log(err));
 }
 
 // Get User Data
@@ -78,19 +67,15 @@ export async function getUserData(userId) {
 
   const usuario = docSnap.data();
   if (docSnap.exists()) {
-    //   console.log("Document data:", docSnap.data());
     return usuario;
   }
-  // doc.data() will be undefined in this case
   return {};
 }
 // todo: AVERIGUAR SI EXISTE ALGÚN METODO EXCLUSIVO PARA SABER SI EL USUARIO EXISTE
 // todo: EN FIRESTORE O EN AUTH
 export async function isExistingUser(email) {
   const q = query(collection(db, 'users'), where('user_email', '==', email));
-
   const docSnap = await getDocs(q);
-
   const userEmailMatch = [];
 
   docSnap.forEach((d) => {
@@ -116,8 +101,6 @@ export async function isExistingUser(email) {
     // pwdUserSearched,
     userExist,
   };
-
-  // return userExist;
 }
 
 // Actualiza el usuario
@@ -127,16 +110,9 @@ export async function changePasswordFirestore(userId, password) {
   return updateDoc(userDocRef, {
     user_password: password,
   });
-  // .then((data) => {
-  //   console.log("Si se actualizó el usuario en el firestore , ", data);
-  // })
-  // .catch((err) => {
-  //   console.log("No se puede actualizar el usuario en el firestore ", err);
-  // });
 }
 
 export function changeBasicDataFirestore(userId, objNewData) {
-  // console.log('función updateUser va a actualizar los datos');
   const userDocRef = doc(db, 'users', userId);
 
   updateDoc(userDocRef, {
@@ -161,11 +137,6 @@ export function addPost(message) {
     date: Date.now(),
     likes: [],
   });
-  // .then((postDocRef) => {
-  //   console.log('post subido al firestore!', postDocRef);
-  //   return postDocRef;
-  // })
-  // .catch((err) => console.log(err));
 }
 
 // Recopila todos los posts
@@ -184,13 +155,11 @@ export async function traerPost() {
   return postsData;
 }
 
-// Toggle Likes Post
+// Pone y Quita likes del Post
 export async function toggleLikes(postId) {
   // en la colección posts, nos vamos a la propiedad "like" (campo) del documento
   const postRef = doc(db, 'posts', postId); // documentRef
-
   const userId = auth.currentUser.uid;
-
   const post = await getDoc(postRef);
   const likes = post.data().likes;
   const userLike = likes.find((like) => like === userId);
@@ -223,7 +192,7 @@ export async function deletePost(postId) {
   return deleteDoc(postRef);
 }
 
-// Traer Posts de un Usuario
+// Traer Posts del Usuario logueado
 export async function traerMisPost(userId) {
   const q1 = query(
     collection(db, 'posts'),
@@ -256,10 +225,6 @@ export function addComment(currentUser, idPost, comment) {
     likes: [],
     user_photo: currentUser.photoURL,
   });
-  // .then(() => {
-  //   console.log('comentario en firestore');
-  // })
-  // .catch((err) => console.log(err));
 }
 
 /** ****************Funciones de los Comentarios******************** */
@@ -274,22 +239,15 @@ export async function traerComments(idPost) {
     const comment = d.data();
     comment.com_id = d.id;
     commentsData.push(comment);
-    // console.log(postData)
-    // console.log(doc.id, " => ", doc.data());
   });
-  // console.log(commentsData);
   return commentsData;
 }
 
 // Toggle Likes Comments
 export async function toggleComLikes(postId, comId) {
-  // console.log(post.post_id);
-  // console.log(post_id);
   // en la colección posts, nos vamos a la propiedad "like" (campo) del documento
   const comRef = doc(db, 'posts', postId, 'comments', comId); // documentRef
-  // console.log("este es comRef", comRef);
   const userId = auth.currentUser.uid;
-  // console.log(userId);
   const comment = await getDoc(comRef);
   const likes = comment.data().likes;
 
@@ -320,21 +278,24 @@ export async function deleteCom(postId, comId) {
   return deleteDoc(comRef);
 }
 
-/** ****************Funciones del LISTENERS******************** */
+/** ****************Funciones del LISTENERS cambios en tiempo Real******************** */
 // Init Listener Post
 export function initListenerPost(postId, actualizarPost) {
-  return onSnapshot(doc(db, 'posts', postId), actualizarPost);
+  return onSnapshot(
+    doc(db, 'posts', postId), actualizarPost,
+  );
 }
 
 // Init Listener Profile Component
 export function initListenerProfile(userId, actualizarProfile) {
-  return onSnapshot(doc(db, 'users', userId), actualizarProfile);
+  return onSnapshot(
+    doc(db, 'users', userId), actualizarProfile,
+  );
 }
 
 // Init listener comment likes
 export function initListenerComLike(postId, comId, actualizarComment) {
   return onSnapshot(
-    doc(db, 'posts', postId, 'comments', comId),
-    actualizarComment,
+    doc(db, 'posts', postId, 'comments', comId), actualizarComment,
   );
 }
