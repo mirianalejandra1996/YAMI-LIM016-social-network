@@ -97,8 +97,8 @@ export function MenuList(abrirModalCreatePost) {
   itemsHistoria.textContent = 'Historia';
 
   modalLista.append(itemsPublicacion);
-  modalLista.append(itemsReseña);
-  modalLista.append(itemsHistoria);
+  // modalLista.append(itemsReseña);
+  // modalLista.append(itemsHistoria);
 
   modalContenedor.append(modalLista);
 

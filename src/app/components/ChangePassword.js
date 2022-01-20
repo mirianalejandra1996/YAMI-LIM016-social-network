@@ -13,12 +13,29 @@ import {
   reauth,
   createCredential,
 } from '../firebase/firebase-auth.js';
+import { ModalEditProfile } from './ModalEditProfile.js';
+import { Menu, ProfileList, MenuList } from './Menu.js';
+import { ModalCerrarSesion } from './Modal_cerrarSesion.js';
+import { ModalCreatePost } from './ModalCreatePost.js';
 
 export const ChangePassword = () => {
   const user = auth.currentUser;
   //    Contenedor principal
   const profileComponent = document.createElement('div');
   profileComponent.classList.add('allView');
+
+  const { modalCerrarSesion, abrilModalCerrarSesion } = ModalCerrarSesion();
+  const { menuModalProfile, toggleModalProfile } = ProfileList(
+    abrilModalCerrarSesion,
+  );
+
+  const { modalCreatePost, abrirModalCreatePost } = ModalCreatePost();
+
+  const { menuModalPlus, toggleModalPlus } = MenuList(abrirModalCreatePost);
+
+  const { modalEditProfile } = ModalEditProfile();
+  // const menu = Menu(toggleModalProfile);
+  const menu = Menu(toggleModalPlus, toggleModalProfile);
 
   const headerBack = HeaderRetroceder();
 
@@ -156,6 +173,14 @@ export const ChangePassword = () => {
   mainContainer.append(profileContainer);
   profileContainer.append(photoContainer);
   profileContainer.append(formContainer);
+  // ---
+  profileComponent.append(modalCreatePost);
+  profileComponent.append(menuModalProfile);
+  profileComponent.append(menuModalPlus);
+  profileComponent.append(menu);
+  // -----
+  profileComponent.append(modalEditProfile);
+  profileComponent.append(modalCerrarSesion);
 
   //   --------------
 

@@ -2,8 +2,9 @@ import { HeaderRetroceder } from './Header_retro.js';
 import { auth } from '../firebase/firebase-auth.js';
 import { getUserData, initListenerProfile } from '../firebase/firebase-data.js';
 import { ModalEditProfile } from './ModalEditProfile.js';
-import { Menu, ProfileList } from './Menu.js';
+import { Menu, ProfileList, MenuList } from './Menu.js';
 import { ModalCerrarSesion } from './Modal_cerrarSesion.js';
+import { ModalCreatePost } from './ModalCreatePost.js';
 
 export const Profile = () => {
   const user = auth.currentUser;
@@ -16,7 +17,12 @@ export const Profile = () => {
   const { menuModalProfile, toggleModalProfile } = ProfileList(
     abrilModalCerrarSesion,
   );
-  const menu = Menu(toggleModalProfile);
+
+  const { modalCreatePost, abrirModalCreatePost } = ModalCreatePost();
+
+  const { menuModalPlus, toggleModalPlus } = MenuList(abrirModalCreatePost);
+  // const menu = Menu(toggleModalProfile);
+  const menu = Menu(toggleModalPlus, toggleModalProfile);
 
   //   Contenedor Base de la vista
   const mainContainer = document.createElement('div');
@@ -161,7 +167,9 @@ export const Profile = () => {
     abrirModalEditProfile();
   });
 
+  profileComponent.append(modalCreatePost);
   profileComponent.append(menuModalProfile);
+  profileComponent.append(menuModalPlus);
   profileComponent.append(menu);
   profileComponent.append(headerBack);
   profileComponent.append(mainContainer);
