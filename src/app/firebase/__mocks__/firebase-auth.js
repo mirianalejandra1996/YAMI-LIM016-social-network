@@ -1,4 +1,45 @@
-const enviarIngreso = jest.fn(() => Promise.resolve());
+// const dataBase = [usuario]
+
+const enviarIngreso = jest.fn((email, password) => {
+  const error = new Error();
+  if (email === 'laboratoria@gmail.com' && password === 'labolabo') {
+    return Promise.resolve({});
+  }
+  if (email === 'laboratoria@gmail.com' && password === 'incorrectpwd') {
+    error.code = 'auth/wrong-password';
+    return Promise.reject(error);
+  }
+  if (email === 'usernotregistered@gmail.com') {
+    error.code = 'auth/user-not-found';
+    // return Promise.reject(error.code);
+    return Promise.reject(error);
+  }
+  if (email === '') {
+    error.code = 'auth/invalid-email';
+    return Promise.reject(error);
+  }
+  // if (email === 'emailwithoutformatting') {
+  //   error.code = 'auth/user-not-found';
+  //   return Promise.reject(error);
+  //   // return Promise.reject(error.code);
+  // }
+  if (password === '') {
+    error.code = 'auth/internal-error';
+    return Promise.reject(error);
+  }
+  // if (password === 'wrongpassword') {
+  //   error.code = 'auth/wrong-password';
+  //   return Promise.reject(error);
+  // }
+  // if (password === 'wrongpassword') {
+  //   error.code = 'auth/wrong-password';
+  //   return Promise.reject(error);
+  // }
+  return 'ok';
+});
+
+// const signInWithEmailAndPassword = jest.fn((auth, email, password) => {});
+
 const loginGoogle = jest.fn(() => Promise.resolve());
 const sendPasswordResetEmail = jest.fn(() => Promise.resolve());
 const signInWithPopup = jest.fn(() => Promise.resolve('fake-id-user'));

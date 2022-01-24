@@ -204,7 +204,7 @@ export const handleSubmit = () => {
     })
     .catch((error) => {
       const errorCode = error.code;
-
+      // console.log('este es el errorCode, ', errorCode);
       email.classList.add('error');
       password.classList.add('error');
 

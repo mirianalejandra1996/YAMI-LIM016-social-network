@@ -15,6 +15,7 @@ import { auth } from '../firebase/firebase-auth.js';
 // import { ModalCerrarSesion } from "./Modal_cerrar.js";
 
 export function Timeline() {
+  console.log(auth.currentUser)
   const timeline = document.createElement('div');
   timeline.classList.add('timeline');
   // Importamos la cabecera
@@ -83,6 +84,7 @@ export function Timeline() {
   timeline.append(modalEditCom);
   timeline.append(modalRemoveCom);
   timeline.append(modalCerrarSesion);
+  // timeline.appendChild(menu,modal,xxxx,xxxxx)
 
   // cosas que pasan asincronamente
 

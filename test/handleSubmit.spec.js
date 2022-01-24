@@ -34,7 +34,7 @@ describe('Testing DOM manipulation of olvideContrasena', () => {
     expect(document.getElementById('errorLogin').textContent).toBe('');
   });
 
-  it('should send a successful message when handleSubmit function was success', (done) => {
+  it('should send an successful message when handleSubmit function was success', (done) => {
     const email = document.getElementById('lemail');
     email.value = 'laboratoria@gmail.com';
 
@@ -56,10 +56,125 @@ describe('Testing DOM manipulation of olvideContrasena', () => {
           'Ingresando',
         );
 
-        // Verificamos si después de que handleSubmit fue exitoso, chequear
-        // si entraron los argumentos del correo y contraseña al metodo de firebase de auth.
         expect(enviarIngreso.mock.calls[0][0]).toBe('laboratoria@gmail.com');
         expect(enviarIngreso.mock.calls[0][1]).toBe('labolabo');
+
+        done();
+      })
+      .catch(done);
+  });
+
+  it('should send an error message if user is not registered', (done) => {
+    const email = document.getElementById('lemail');
+    email.value = 'usernotregistered@gmail.com';
+
+    const password = document.getElementById('lpassword');
+    password.value = 'labolabo';
+
+    handleSubmit()
+      .then(() => {
+        // Verificamos si nuestro componente a probar tiene en sus inputs los valores asignados
+        expect(email.value).toBe('usernotregistered@gmail.com');
+        expect(password.value).toBe('labolabo');
+
+        expect(document.getElementById('lemail').value).toBe(
+          'usernotregistered@gmail.com',
+        );
+        expect(document.getElementById('lpassword').value).toBe('labolabo');
+
+        expect(document.getElementById('errorLogin').textContent).toBe(
+          'Usuario no registrado',
+        );
+
+        expect(enviarIngreso.mock.calls[1][0]).toBe('usernotregistered@gmail.com');
+        expect(enviarIngreso.mock.calls[1][1]).toBe('labolabo');
+
+        done();
+      })
+      .catch(done);
+  });
+
+  it('should send an error message if password is invalid to specific user account', (done) => {
+    const email = document.getElementById('lemail');
+    email.value = 'laboratoria@gmail.com';
+
+    const password = document.getElementById('lpassword');
+    password.value = 'incorrectpwd';
+
+    handleSubmit()
+      .then(() => {
+        expect(email.value).toBe('laboratoria@gmail.com');
+        expect(password.value).toBe('incorrectpwd');
+
+        expect(document.getElementById('lemail').value).toBe(
+          'laboratoria@gmail.com',
+        );
+        expect(document.getElementById('lpassword').value).toBe('incorrectpwd');
+
+        expect(document.getElementById('errorLogin').textContent).toBe(
+          'Contraseña inválida',
+        );
+
+        expect(enviarIngreso.mock.calls[2][0]).toBe('laboratoria@gmail.com');
+        expect(enviarIngreso.mock.calls[2][1]).toBe('incorrectpwd');
+
+        done();
+      })
+      .catch(done);
+  });
+
+  it('should send an error message if email is not entered', (done) => {
+    const email = document.getElementById('lemail');
+    email.value = '';
+
+    const password = document.getElementById('lpassword');
+    password.value = 'labolabo';
+
+    handleSubmit()
+      .then(() => {
+        expect(email.value).toBe('');
+        expect(password.value).toBe('labolabo');
+
+        expect(document.getElementById('lemail').value).toBe(
+          '',
+        );
+        expect(document.getElementById('lpassword').value).toBe('labolabo');
+
+        expect(document.getElementById('errorLogin').textContent).toBe(
+          'Ingrese su correo',
+        );
+
+        expect(enviarIngreso.mock.calls[3][0]).toBe('');
+        expect(enviarIngreso.mock.calls[3][1]).toBe('labolabo');
+
+        done();
+      })
+      .catch(done);
+  });
+
+  it('should send an error message if password is not entered', (done) => {
+    const email = document.getElementById('lemail');
+    email.value = 'laboratoria@gmail.com';
+
+    const password = document.getElementById('lpassword');
+    password.value = '';
+
+    handleSubmit()
+      .then(() => {
+        expect(email.value).toBe('laboratoria@gmail.com');
+        expect(password.value).toBe('');
+
+        expect(document.getElementById('lemail').value).toBe(
+          'laboratoria@gmail.com',
+        );
+        expect(document.getElementById('lpassword').value).toBe('');
+
+        expect(document.getElementById('errorLogin').textContent).toBe(
+          'Ingrese su contraseña',
+        );
+
+        expect(enviarIngreso.mock.calls[4][0]).toBe('laboratoria@gmail.com');
+        expect(enviarIngreso.mock.calls[4][1]).toBe('');
 
         done();
       })
