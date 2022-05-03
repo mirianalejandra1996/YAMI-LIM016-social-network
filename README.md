@@ -284,3 +284,12 @@ Tuvimos un percance al inicio del testeo, olvidamos colocar el url del deploy en
 <p align="center" width="100%"><img src="https://github.com/lucerogoga/LIM016-social-network/blob/main/readme-images/yami-desktop.PNG" width=1000></p>
 
 ### [Link al deploy de la aplicación](https://lucerogoga.github.io/YAMI-LIM016-social-network/src/#/)
+
+## 7. Autores
+
+[Mirian Alejandra Arévalo 🙋](https://github.com/mirianalejandra1996).
+
+[Lucero Gonzáles 🙋](https://github.com/lucerogoga).
+
+[Gabriela Díaz 🙋](https://github.com/G9D4).
+
