@@ -61,6 +61,7 @@ export const ModalCreatePost = () => {
   const picture = document.createElement('input');
   picture.id = 'file';
   picture.type = 'file';
+  picture.accept = 'image/*';
   // label del inputFile
   const pictureLabel = document.createElement('label');
   pictureLabel.setAttribute('for', 'file');

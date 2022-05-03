@@ -68,6 +68,7 @@ export const ModalEditPost = () => {
   const pictureEdit = document.createElement('input');
   pictureEdit.id = 'fileEdit';
   pictureEdit.type = 'file';
+  pictureEdit.accept = 'image/*';
   // Label dentro del inputFie
   const pictureLabel = document.createElement('label');
   pictureLabel.setAttribute('for', 'fileEdit');

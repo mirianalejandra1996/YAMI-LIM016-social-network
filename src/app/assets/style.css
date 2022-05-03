@@ -737,8 +737,14 @@ input[type="password"]:focus {
 .formPost_h1 {
   font-size: 14px;
   font-weight: bold;
-  color: #fa610c;
+  color: #ffb800;
   margin-right: 15px;
+  cursor: pointer;
+  transition: color 0.3s ease;
+}
+.formPost_h1:hover{
+  transition: color 0.3s ease;
+  color: #fa610c;
 }
 
 .modal__cabecera {

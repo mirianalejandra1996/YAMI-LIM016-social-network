@@ -2,7 +2,7 @@
 
 ## Índice
 
-* [0. Link al deploy de la app](https://lucerogoga.github.io/LIM016-social-network/src/#/)
+* [0. Link al deploy de la app](https://lucerogoga.github.io/YAMI-LIM016-social-network/src/#/)
 * [1. Preámbulo](#1-preámbulo)
 * [2. Yami, una aventura culinaria](#2-yami-una-aventura-culinaria)
 * [3. Historias de usuario](#3-historias-de-usuario)
@@ -283,4 +283,4 @@ Tuvimos un percance al inicio del testeo, olvidamos colocar el url del deploy en
 
 <p align="center" width="100%"><img src="https://github.com/lucerogoga/LIM016-social-network/blob/main/readme-images/yami-desktop.PNG" width=1000></p>
 
-### [Link al deploy de la aplicación](https://lucerogoga.github.io/LIM016-social-network/src/#/)
+### [Link al deploy de la aplicación](https://lucerogoga.github.io/YAMI-LIM016-social-network/src/#/)
